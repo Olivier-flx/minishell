@@ -1,0 +1,57 @@
+{
+  readline_leak
+  Memcheck:Leak
+  fun:malloc
+  obj:/usr/lib/x86_64-linux-gnu/libreadline.so.*
+}
+
+{
+  libtinfo_leak
+  Memcheck:Leak
+  fun:calloc
+  obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.*
+}
+
+{
+  readline_leak
+  Memcheck:Leak
+  obj:/usr/lib/x86_64-linux-gnu/libreadline.so.*
+}
+
+{
+  libtinfo_leak
+  Memcheck:Leak
+  obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.*
+}
+
+{
+   strdup_libtinfo
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:strdup
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.*
+}
+
+{
+   rl_init_terminal_io
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:_rl_init_terminal_io
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.*
+}
+
+{
+   nc_trim_sgr0
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:_nc_trim_sgr0
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.*
+}
+
+{
+   tgetent_sp
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:tgetent_sp
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.*
+}
