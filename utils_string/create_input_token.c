@@ -1,37 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   customs.h                                          :+:      :+:    :+:   */
+/*   create_input_token.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/01/20 18:07:59 by ofilloux         ###   ########.fr       */
+/*   Created: 2025/01/20 17:57:45 by ofilloux          #+#    #+#             */
+/*   Updated: 2025/01/20 17:59:28 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../header/minishell.h"
 
-#ifndef CUSTOMS
-# define CUSTOMS
-#endif
-
-typedef struct s_token_line t_tok_line;
-
-typedef struct data
+int	create_input_token (char *src, t_tok_line **line)
 {
-	char		**env;
-	t_tok_line	*input;
-} t_data;
-
-typedef struct s_token_line
-{
-	char		*word;
-	struct token_line	*prev;
-	struct token_line	*next;
-} t_tok_line;
-
-// buildins
-int	echo(char string);
-int	env(char **env);
-int b_exit(int ret_val, t_data data);
-int	create_input_token (char *src, t_tok_line **line);
+	(*line)->word = src;
+	printf("token test = %s\n", (*line)->word);
+	return (0);
+}

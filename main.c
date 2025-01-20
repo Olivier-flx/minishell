@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:23:22 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/01/12 20:36:46 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/01/20 18:09:59 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,24 @@
 
 int	process_line(char **line)
 {
-	printf("%s\n", line);
-	free (line);
+	printf("%s\n", *line);
+	free (*line);
 	return (0);
 }
 
 int	run_minishell(t_data	*data)
 {
-	char	*line;
+	char		*line;
+	t_tok_line	*token_list;
 
 	while (true && data->env)
 	{
 		line = readline("minishell> ");
 		if (line)
 		{
-			add_history(line);
-			process_line(line);
+			create_input_token(line, &token_list);
+		//	add_history(line);
+			process_line(&line);
 			free(line);
 		}
 		else
