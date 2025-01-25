@@ -4,7 +4,10 @@ INC = ./header/minishell.h
 LDFLAGS = -lreadline
 
 
-UTILS = ./utils_string/create_input_token.c
+UTILS = ./utils/string/create_input_token.c \
+		./utils/string/ft_split.c \
+		./utils/list/list_utils.c \
+		./utils/custom_frees.c
 
 SRC = main.c \
 		$(UTILS)
