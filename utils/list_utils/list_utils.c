@@ -6,34 +6,38 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 11:26:31 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/01/25 11:41:09 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/01/25 12:08:35 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell.h"
 
-t_tok_line	*ft_lst_new_node(t_tok_line **new_node)
+//Crea un nuevo nodo
+t_tok_line	*ft_lst_new_node(void *content)
 {
-	t_tok_line	*new;
+	t_tok_line	*new_node;
 
-	new = malloc(sizeof(t_tok_line));
-	if (!new)
-	{
-		free_stacks(new_node);
+	new_node = malloc(sizeof(t_tok_line));
+	if (!new_node)
 		return (NULL);
-	}
-	new->next = NULL;
-	return (new);
+	new_node->content = content;
+	new_node->next = NULL;
+	return (new_node);
 }
 
-int	add_to_list(t_tok_line **line)
+//Crea un nuevo nodo y lo añade a la lista
+// devuelve 1 si error, 0 si todo bien
+// i_node es iterador nodo
+int	add_to_list(t_tok_line **line, void *content)
 {
 	t_tok_line	*new_node;
 	t_tok_line	*i_node;
 
-	new_node = ft_lst_new_node(new_node);
+	new_node = ft_lst_new_node(content);
 	if (!new_node)
-		return (1);
+		return (free_node(line), 1); // A verificar luego si est necesario o relevente
+									// hacer el free de toda la lista
+									// si hay un error con el nuevo nodo
 	if (*line == NULL)
 	{
 		*line = new_node;
@@ -50,6 +54,7 @@ int	add_to_list(t_tok_line **line)
 	return (0);
 }
 
+// devuelve el puntero hacia el útlimo nodo de la lista
 t_tok_line	*find_last_node(t_tok_line **lst)
 {
 	t_tok_line	*tmp;
@@ -64,6 +69,7 @@ t_tok_line	*find_last_node(t_tok_line **lst)
 	return (tmp);
 }
 
+//calcula el tamaño de la lista.
 long	stack_lenght(t_tok_line **list)
 {
 	t_tok_line	*tmp;
@@ -81,15 +87,16 @@ long	stack_lenght(t_tok_line **list)
 	return (i);
 }
 
-void	ft_lstadd_back(t_tok_line **lst, t_tok_line *new)
+// añade el nodo "new" al final de la lista
+void	ft_lstadd_back(t_tok_line **list, t_tok_line *new)
 {
 	t_tok_line	*temp;
 
-	if (!*lst)
-		*lst = new;
+	if (!*list)
+		*list = new;
 	else
 	{
-		temp = *lst;
+		temp = *list;
 		while (temp->next)
 			temp = temp->next;
 		temp->next = new;

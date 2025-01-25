@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/01/20 18:37:28 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/01/25 12:09:21 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ typedef struct data
 
 typedef struct s_token_line
 {
-	char				*word;
+	void				*content;
 	struct token_line	*prev;
 	struct token_line	*next;
 } t_tok_line;

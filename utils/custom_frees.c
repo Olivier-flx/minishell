@@ -6,13 +6,13 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 11:31:40 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/01/25 11:34:09 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/01/25 12:01:03 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
 
-void    free_stacks(t_tok_line **stack_to_free)
+void    free_list(t_tok_line **stack_to_free)
 {
         t_tok_line       *next_node;
 
