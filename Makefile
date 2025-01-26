@@ -6,7 +6,9 @@ LDFLAGS = -lreadline
 
 UTILS = ./utils/string/create_input_token.c \
 		./utils/string/ft_split.c \
+		./utils/string/basics.c \
 		./utils/list/list_utils.c \
+		./utils/msg/error_msg.c \
 		./utils/custom_frees.c
 
 SRC = main.c \

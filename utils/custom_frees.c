@@ -6,15 +6,15 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 11:31:40 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/01/25 12:01:03 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/01/25 13:09:44 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
 
-void    free_list(t_tok_line **stack_to_free)
+void    free_list(t_list **stack_to_free)
 {
-        t_tok_line       *next_node;
+        t_list       *next_node;
 
 	if (*stack_to_free == NULL)
 		return ;

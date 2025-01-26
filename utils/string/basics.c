@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create_input_token.c                               :+:      :+:    :+:   */
+/*   basics.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/20 17:57:45 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/01/25 11:33:46 by ofilloux         ###   ########.fr       */
+/*   Created: 2025/01/26 10:05:22 by ofilloux          #+#    #+#             */
+/*   Updated: 2025/01/26 10:05:33 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,22 +41,4 @@ char	*s_dup(char *s)
 		}
 		cpy[i] = '\0';
 		return (cpy);
-}
-
-t_tok_line *input_to_token(char *src)
-{
-
-
-}
-
-int	create_input_token (char *src, t_tok_line **line)
-{
-	//(*line)->word = s_dup(src);
-	input_to_token(line);
-
-	(*line)->word = src;
-	printf("token test = %s\n", (*line)->word);
-
-	//free ((*line)->word);
-	return (0);
 }

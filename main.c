@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:23:22 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/01/20 22:18:42 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/01/26 09:23:02 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,17 @@ int	process_line(char **line)
 int	run_minishell(t_data	*data)
 {
 	char		*line;
-	t_tok_line	*token_list;
+	t_list	*cmd_list;
 
-	token_list = malloc(sizeof(t_tok_line));
-	if (!token_list)
+	cmd_list = malloc(sizeof(t_list));
+	if (!cmd_list)
 		return (1);
 	while (true && data->env)
 	{
 		line = readline("minishell> ");
 		if (line)
 		{
-			create_input_token(line, &token_list);
+			create_input_token(line, &cmd_list);
 		//	add_history(line);
 		//	clear_history();
 			process_line(&line);
@@ -45,7 +45,7 @@ int	run_minishell(t_data	*data)
 			continue ;
 		break ; // to remove when more advanced
 	}
-	free(token_list);
+	free(cmd_list);
 	return (0);
 }
 

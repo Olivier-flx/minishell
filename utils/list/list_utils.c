@@ -6,18 +6,18 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 11:26:31 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/01/25 12:08:35 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/01/25 13:09:44 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell.h"
 
 //Crea un nuevo nodo
-t_tok_line	*ft_lst_new_node(void *content)
+t_list	*ft_lst_new_node(void *content)
 {
-	t_tok_line	*new_node;
+	t_list	*new_node;
 
-	new_node = malloc(sizeof(t_tok_line));
+	new_node = malloc(sizeof(t_list));
 	if (!new_node)
 		return (NULL);
 	new_node->content = content;
@@ -28,10 +28,10 @@ t_tok_line	*ft_lst_new_node(void *content)
 //Crea un nuevo nodo y lo añade a la lista
 // devuelve 1 si error, 0 si todo bien
 // i_node es iterador nodo
-int	add_to_list(t_tok_line **line, void *content)
+int	add_to_list(t_list **line, void *content)
 {
-	t_tok_line	*new_node;
-	t_tok_line	*i_node;
+	t_list	*new_node;
+	t_list	*i_node;
 
 	new_node = ft_lst_new_node(content);
 	if (!new_node)
@@ -55,9 +55,9 @@ int	add_to_list(t_tok_line **line, void *content)
 }
 
 // devuelve el puntero hacia el útlimo nodo de la lista
-t_tok_line	*find_last_node(t_tok_line **lst)
+t_list	*find_last_node(t_list **lst)
 {
-	t_tok_line	*tmp;
+	t_list	*tmp;
 
 	tmp = *(lst);
 	if (!(*lst) || !lst)
@@ -70,9 +70,9 @@ t_tok_line	*find_last_node(t_tok_line **lst)
 }
 
 //calcula el tamaño de la lista.
-long	stack_lenght(t_tok_line **list)
+long	stack_lenght(t_list **list)
 {
-	t_tok_line	*tmp;
+	t_list	*tmp;
 	long		i;
 
 	if (!(*list))
@@ -88,9 +88,9 @@ long	stack_lenght(t_tok_line **list)
 }
 
 // añade el nodo "new" al final de la lista
-void	ft_lstadd_back(t_tok_line **list, t_tok_line *new)
+void	ft_lstadd_back(t_list **list, t_list *new)
 {
-	t_tok_line	*temp;
+	t_list	*temp;
 
 	if (!*list)
 		*list = new;
