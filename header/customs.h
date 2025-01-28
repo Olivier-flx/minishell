@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/01/26 10:10:12 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/01/28 08:31:41 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ typedef struct data
 
 typedef struct s_list
 {
-	void				*content;
+	void			*content;
 	struct t_list	*prev;
 	struct t_list	*next;
 } t_list;
@@ -37,7 +37,8 @@ typedef struct s_input_tocken
 	bool	is_double_quoted;
 	bool	quote_closed;
 	bool	is_var
-}
+} t_input_tocken
+
 
 // buildins
 int	echo(char string);

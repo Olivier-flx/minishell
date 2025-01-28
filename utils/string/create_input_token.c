@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 17:57:45 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/01/26 10:09:06 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/01/28 08:43:54 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,15 +88,16 @@ static int	is_var_call(src, i, cmd_list)
 static int	is_operator(char *src,int i, t_list cmd_list)
 {
 	if (src[i] == '<')
-		return(add_to_list(cmd_list,{sdup("<"),false,false,true,false}), 1);
+		return(add_to_list(cmd_list,{sdup("<"), NULL, false, false, true, false}), 1);
+		// ver si hay manera más bonita rellenar el t_input_tocken
 	if (src[i] == '>')
-		return(add_to_list(cmd_list,{sdup(">"),false,false,true,false}), 1);
+		return(add_to_list(cmd_list,{sdup(">"), NULL, false, false, true, false}), 1);
 	if (src[i] == '|')
-		return(add_to_list(cmd_list,{sdup("|"),false,false,true,false}), 1);
+		return(add_to_list(cmd_list,{sdup("|"), NULL, false, false, true, false}), 1);
 	if (src[i] == '>' && s[i + 1] && s[i + 1] =='>')
-		return(add_to_list(cmd_list,{'>>',false,false,true,false}), 2);
+		return(add_to_list(cmd_list,{sdup(">>"), NULL, false, false, true, false}), 2);
 	if (src[i] == '<' && s[i + 1] && s[i + 1] =='<')
-		return(add_to_list(cmd_list,{'<<',false,false,true,false}), 2);
+		return(add_to_list(cmd_list,{sdup("<<", NULL, false, false, true, false}), 2);
 	return (0);
 }
 
@@ -128,10 +129,14 @@ int	create_input_to_commands(char *src, t_list **cmd_list)
 			in_double_quote++;
 		if (s[i] == '\'' && in_dbl_quote % 2 == 0)
 			in_single_quote++;
-		if (in_sgl_quote % 2 == 1)
+		if (in_dbl_quote % 2 == 1)
 			i += is_var_call(src, i, cmd_list);
 		if( in_sgl_quote % 2 == 0  && in_dbl_quote % 2 == 0)
+		{
 			i += is_operator(src, i, cmd_list);
+			i += is_var_call(src, i, cmd_list);
+		}
+
 
 		/// TODO
 			// Crear una funccion para poner los commandos entre operadores en la lista
