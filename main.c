@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:23:22 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/01/26 09:23:02 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/02/06 17:06:15 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	process_line(char **line)
 int	run_minishell(t_data	*data)
 {
 	char		*line;
-	t_list	*cmd_list;
+	t_list		*cmd_list;
 
 	cmd_list = malloc(sizeof(t_list));
 	if (!cmd_list)
@@ -35,7 +35,7 @@ int	run_minishell(t_data	*data)
 		line = readline("minishell> ");
 		if (line)
 		{
-			create_input_token(line, &cmd_list);
+			create_input_to_commands(line, &cmd_list);
 		//	add_history(line);
 		//	clear_history();
 			process_line(&line);
@@ -54,8 +54,8 @@ int	main(int ac, char **av, char **env)
 	t_data	data;
 
 	data.env = env;
-	if (ac == 1 && env && av)
-		run_minishell(&data);
+	if (ac == 1 && env && av) // modificcar para arrancar igual si no hay env
+		return (run_minishell(&data));
 	else
 		return (1);
 	return (0);

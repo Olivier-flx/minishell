@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 11:26:31 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/01/25 13:09:44 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/02/06 15:57:43 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,24 +28,24 @@ t_list	*ft_lst_new_node(void *content)
 //Crea un nuevo nodo y lo añade a la lista
 // devuelve 1 si error, 0 si todo bien
 // i_node es iterador nodo
-int	add_to_list(t_list **line, void *content)
+int	add_to_list(t_list **list, void *content)
 {
 	t_list	*new_node;
 	t_list	*i_node;
 
 	new_node = ft_lst_new_node(content);
 	if (!new_node)
-		return (free_node(line), 1); // A verificar luego si est necesario o relevente
+		return (free_list(list), 1); // A verificar luego si est necesario o relevente
 									// hacer el free de toda la lista
 									// si hay un error con el nuevo nodo
-	if (*line == NULL)
+	if (*list == NULL)
 	{
-		*line = new_node;
+		*list = new_node;
 		new_node->prev = NULL;
 	}
 	else
 	{
-		i_node = *line;
+		i_node = *list;
 		while (i_node->next != NULL)
 			i_node = i_node->next;
 		new_node->prev = i_node;
@@ -73,7 +73,7 @@ t_list	*find_last_node(t_list **lst)
 long	stack_lenght(t_list **list)
 {
 	t_list	*tmp;
-	long		i;
+	long	i;
 
 	if (!(*list))
 		return (0);

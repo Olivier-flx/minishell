@@ -3,39 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:46:36 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/01/12 20:41:18 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/02/06 14:12:50 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL
-# define MINISHELL
-#endif
+#ifndef MINISHELL_H
+# define MINISHELL_H
 
-#include <stdio.h> // printf
-#include <unistd.h> // write, read, close
+
+# include <stdio.h> // printf
+# include <unistd.h> // write, read, close
 					// fork, execve, _exit
 					// dup, dup2, pipe
 					// isatty, ttyname, ttyslot
-#include <stdlib.h> // malloc, free
-#include <readline/readline.h>   // readline, rl_clear_history, rl_on_new_line,
+# include <stdlib.h> // malloc, free
+# include <readline/readline.h>   // readline, rl_clear_history, rl_on_new_line,
 								// rl_replace_line, rl_redisplay
-#include <readline/history.h>   // add_history
-#include <fcntl.h>      // open
-#include <sys/stat.h>   // stat, lstat, fstat
-#include <dirent.h>     // opendir, readdir, closedir
-#include <sys/wait.h>   // wait, waitpid, wait3, wait4
-#include <signal.h>     // signal, sigaction, sigemptyset, sigaddset, kill
-#include <termios.h>    // tcsetattr, tcgetattr
-#include <termcap.h>    // tgetent, tgetflag, tgetnum, tgetstr, tgoto, tputs
-#include <string.h>     // strerror
-#include <stdio.h>      // perror
+# include <readline/history.h>   // add_history
+# include <fcntl.h>      // open
+# include <sys/stat.h>   // stat, lstat, fstat
+# include <dirent.h>     // opendir, readdir, closedir
+# include <sys/wait.h>   // wait, waitpid, wait3, wait4
+# include <signal.h>     // signal, sigaction, sigemptyset, sigaddset, kill
+# include <termios.h>    // tcsetattr, tcgetattr
+# include <termcap.h>    // tgetent, tgetflag, tgetnum, tgetstr, tgoto, tputs
+# include <string.h>     // strerror
+# include <stdio.h>      // perror
 
-#include <stdbool.h>
+# include <stdbool.h>
 
-#include "customs.h"
+# include "customs.h"
+
+#endif
 
 /*
 
