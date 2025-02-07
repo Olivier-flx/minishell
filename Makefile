@@ -6,9 +6,11 @@ YELLOW=\033[1;33m
 
 
 NAME = mini
-COMP = cc -Wall -Wextra -Werror -g -O0
-INC = ./header/minishell.h
+CC = cc 
+CFLAGS = -Wall -Wextra -Werror -g -O0
 LDFLAGS = -lreadline
+
+INC = ./header/minishell.h
 
 
 UTILS = ./utils/string/create_input_token.c \
@@ -26,27 +28,29 @@ OBJ = $(SRC:.c=.o)
 
 ###################
 LIBFT_PATH = ./libs/libft/libft.a
-all : .libft $(NAME)
 
-$(NAME) : $(LIBFT_PATH) $(OBJ)
-		$(COMP) $(OBJ) $(LIBFT_PATH) -o $(NAME) $(LDFLAGS)
-		@printf "\033[1;32m%s\033[0m\n" "[minishell] Compiled successfully."
+all : $(NAME)
+
+$(NAME) : $(OBJ) $(LIBFT_PATH)
+		@$(CC)$(CFLAGS) $(OBJ) $(LIBFT_PATH) -o $@ $(LDFLAGS)	
+		@printf "$(GREEN)[minishell] Compiled successfully.$(NC)\n"
+
+$(LIBFT_PATH):
+		@$(MAKE) -C ./libs/libft > /dev/null 2>&1
+		@printf "$(GREEN)[minishell] libft compiled successfully.$(NC)\n"
 
 %.o : %.c $(INC) Makefile
-		$(COMP) -c $< -o $@
-
-.libft:
-	@make -s -C ./libs/libft DEBUG=$(DEBUG)
+		@$(CC) $(CFLAGS) -c $< -o $@
 
 clean :
 		@make -s clean -C ./libs/libft
 		rm -f $(OBJ)
-		@printf "\033[1;31m%s\033[0m\n" "[minishell] Object files cleaned."
+		@printf "$(RED)[minishell] Object files cleaned.$(NC)\n"
 
 fclean : clean
 		@make -s fclean -C ./libs/libft
 		rm -f $(NAME)
-		@printf "\033[1;31m%s\033[0m\n" "[minishell] Cleaned successfully."
+		@printf "$(RED)[minishell] Cleaned successfully.$(NC)\n"
 
 re: fclean all
 
