@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   customs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/06 15:56:14 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/02/07 16:59:21 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ char	*s_dup(char *s);
 // List Utils
 void	free_list(t_list **stack_to_free);
 int		add_to_list(t_list **line, void *content);
+void	print_list(t_list **list);
+
 
 // ERROR
 	//MSG

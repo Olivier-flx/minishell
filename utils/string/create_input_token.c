@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_input_token.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 17:57:45 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/06 17:06:12 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/02/07 17:09:05 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,6 +155,8 @@ int	create_input_to_commands(char *src, t_list **cmd_list)
 
 		i++;
 	}
+	printf("la list est ici ->\n");
+	print_list(cmd_list);
 
 	//printf("token test = %s\n", (*line)->content);
 
