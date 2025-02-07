@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: laufarin <laufarin@student.42barcel>       +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/24 17:13:05 by laufarin          #+#    #+#             */
-/*   Updated: 2023/09/25 03:14:04 by laufarin         ###   ########.fr       */
+/*   Updated: 2025/02/07 16:37:35 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,10 @@ char	*ft_itoa(int n)
 {
 	char	*ptr;
 	int		len;
-	int		sign;
 
 	if (n == -2147483648)
 		return (ft_strdup("-2147483648"));
 	len = ft_len(n);
-	sign = -1;
 	ptr = (char *)malloc(sizeof (char) * (len + 1));
 	if (!ptr)
 		return (NULL);
@@ -58,7 +56,7 @@ char	*ft_itoa(int n)
 /*
 #include <stdio.h>
 #include <string.h>
-int main() 
+int main()
 {
    	int	num = 12345;
     char	*str = ft_itoa(num);

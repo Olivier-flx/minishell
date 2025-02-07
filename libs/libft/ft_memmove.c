@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: laufarin <laufarin@student.42barcel>       +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 15:37:35 by laufarin          #+#    #+#             */
-/*   Updated: 2023/09/08 19:19:01 by laufarin         ###   ########.fr       */
+/*   Updated: 2025/02/07 16:36:15 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+	//unsigned int	i;
 void	*ft_memmove(void *dst, const void *src, size_t len)
 {
 	char			*pdst;
 	char			*psrc;
-	unsigned int	i;
 
 	pdst = (char *)dst;
 	psrc = (char *)src;
@@ -24,7 +24,6 @@ void	*ft_memmove(void *dst, const void *src, size_t len)
 		return (NULL);
 	if (dst > src)
 	{
-		i = 0;
 		while (len)
 		{
 			pdst[len -1] = psrc[len -1];
@@ -35,6 +34,7 @@ void	*ft_memmove(void *dst, const void *src, size_t len)
 		ft_memcpy(pdst, psrc, len);
 	return (dst);
 }
+//		i = 0;
 /*
 int main(void)
 {
@@ -53,7 +53,7 @@ int main(void)
 	a[7] = 'm';
 	a[8] = 'o';
 	a[9] = '\0';
-	b[5] = '\0';	
+	b[5] = '\0';
 	ft_memmove(b,a,5);
 	printf("En b ahors tengo |%s|\n", b);
 }

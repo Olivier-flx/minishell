@@ -6,7 +6,7 @@ YELLOW=\033[1;33m
 
 
 NAME = mini
-CC = cc 
+CC = cc
 CFLAGS = -Wall -Wextra -Werror -g -O0
 LDFLAGS = -lreadline
 
@@ -32,12 +32,23 @@ LIBFT_PATH = ./libs/libft/libft.a
 all : $(NAME)
 
 $(NAME) : $(OBJ) $(LIBFT_PATH)
-		@$(CC)$(CFLAGS) $(OBJ) $(LIBFT_PATH) -o $@ $(LDFLAGS)	
+		@$(CC)$(CFLAGS) $(OBJ) $(LIBFT_PATH) -o $@ $(LDFLAGS)
 		@printf "$(GREEN)[minishell] Compiled successfully.$(NC)\n"
 
 $(LIBFT_PATH):
 		@$(MAKE) -C ./libs/libft > /dev/null 2>&1
 		@printf "$(GREEN)[minishell] libft compiled successfully.$(NC)\n"
+##
+# ┌────────────────────────────────────────────┬─────────────────────┬─────────────────┬─────────────────┐
+# │ Comando                                    │ ¿Oculta el comando? │ ¿Oculta stdout? │ ¿Oculta stderr? │
+# ├────────────────────────────────────────────┼─────────────────────┼─────────────────┼─────────────────┤
+# │ $(MAKE) -C ./libs/libft                    │ ❌ No               │ ❌ No          │ ❌ No           │
+# │ @$(MAKE) -C ./libs/libft                   │ ✅ Sí               │ ❌ No          │ ❌ No           │
+# │ @$(MAKE) -C ./libs/libft > /dev/null       │ ✅ Sí               │ ✅ Sí          │ ❌ No           │
+# │ @$(MAKE) -C ./libs/libft > /dev/null 2>&1  │ ✅ Sí               │ ✅ Sí          │ ✅ Sí           │
+# └────────────────────────────────────────────┴─────────────────────┴─────────────────┴─────────────────┘
+
+
 
 %.o : %.c $(INC) Makefile
 		@$(CC) $(CFLAGS) -c $< -o $@
