@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 17:57:45 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/07 17:59:43 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/02/07 18:13:40 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,32 +50,32 @@ int	segment_count(char *src)
 //	varname = "rao"; --> j = 3;
 //	i = 12
 // put var name into the list of commands;
-static int	is_var_call(char *src, int i, t_list **cmd_list)
-{
-	int		j;
-	int		k;
-	char	*var_name;
+// static int	is_var_call(char *src, int i, t_list **cmd_list)
+// {
+// 	int		j;
+// 	int		k;
+// 	char	*var_name;
 
-	if (!src)
-		return (0);
-	j = 0;
-	k = 0;
-	if (src[i] == '$')
-	{
-		while (src[i] && (src[i] != ' ' || src[i] != '\t' || src[i] != '\n'))
-		{//contar las caracteres de la variable
-			j++;
-			i++;
-		}
-		i++;
-	}
-	var_name = malloc((j + 1) * sizeof(char));
-	if (!var_name)
-		return (simple_error_msg("varName_malloc error"), -1);
-	while (src[i] && k < j)
-		var_name[k++] = src[i++];
-	return (add_to_list(cmd_list, ((t_input_tocken){var_name,false,false,true,true})), j + 1);
-}
+// 	if (!src)
+// 		return (0);
+// 	j = 0;
+// 	k = 0;
+// 	if (src[i] == '$')
+// 	{
+// 		while (src[i] && (src[i] != ' ' && src[i] != '\t' && src[i] != '\n'))
+// 		{//contar las caracteres de la variable
+// 			j++;
+// 			i++;
+// 		}
+// 		i++;
+// 	}
+// 	var_name = malloc((j + 1) * sizeof(char));
+// 	if (!var_name)
+// 		return (simple_error_msg("varName_malloc error"), -1);
+// 	while (src[i] && k < j)
+// 		var_name[k++] = src[i++];
+// 	return (add_to_list(cmd_list, &((t_input_tocken){var_name,false,false,true,true})), j + 1);
+// }
 //ret j + 1 por el "$"
 
 /// Operator to handle
@@ -110,7 +110,6 @@ static int	is_operator(char *src, int i, t_list **cmd_list)
 		if (!token)
 			return (-1);
 		*token = (t_input_tocken){operador, false, false, true, false};
-		printf("tocken content : %s\n", token->content);
 		return (add_to_list(cmd_list, token), s_len(operador));
 	}
 	return (0);
@@ -142,19 +141,19 @@ int	create_input_to_commands(char *src, t_list **cmd_list)
 			in_dbl_quote++;
 		if (src[i] == '\'' && in_dbl_quote % 2 == 0)
 			in_sgl_quote++;
-		if (in_dbl_quote % 2 == 1)
-			i += is_var_call(src, i, cmd_list);
+		//if (in_dbl_quote % 2 == 1)
+		//	i += is_var_call(src, i, cmd_list);
 		if (in_sgl_quote % 2 == 0  && in_dbl_quote % 2 == 0)
 		{
 			i += is_operator(src, i, cmd_list);
-			//i += is_var_call(src, i, cmd_list); // not working properly with previous cmd
+			//i += is_var_call(src, i, cmd_list); //create seg fault
 		}
 
 
 		/// TODO
 			// Crear una funccion para poner los commandos entre operadores en la lista
 
-		i++;
+		//i++;
 	}
 	printf("la list est ici ->\n");
 	print_list(cmd_list);
