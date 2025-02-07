@@ -32,7 +32,7 @@ LIBFT_PATH = ./libs/libft/libft.a
 all : $(NAME)
 
 $(NAME) : $(OBJ) $(LIBFT_PATH)
-		@$(CC)$(CFLAGS) $(OBJ) $(LIBFT_PATH) -o $@ $(LDFLAGS)
+		@$(CC) $(CFLAGS) $(OBJ) $(LIBFT_PATH) -o $@ $(LDFLAGS)
 		@printf "$(GREEN)[minishell] Compiled successfully.$(NC)\n"
 
 $(LIBFT_PATH):
