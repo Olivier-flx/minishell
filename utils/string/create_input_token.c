@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 17:57:45 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/07 17:09:05 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/02/07 17:59:43 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static int	is_var_call(char *src, int i, t_list **cmd_list)
 		return (simple_error_msg("varName_malloc error"), -1);
 	while (src[i] && k < j)
 		var_name[k++] = src[i++];
-	return (add_to_list(cmd_list, &((t_input_tocken){var_name,false,false,true,true})), j + 1);
+	return (add_to_list(cmd_list, ((t_input_tocken){var_name,false,false,true,true})), j + 1);
 }
 //ret j + 1 por el "$"
 
@@ -93,7 +93,7 @@ static int	is_operator(char *src, int i, t_list **cmd_list)
 	token = NULL;
 	operador = NULL;
 
-	if (src[i] == '|')
+	if (src[i] == 124)
 		operador = s_dup("|");
 	else if (src[i] == '>' && src[i + 1] && src[i + 1] == '>')
 		operador = s_dup(">>");
@@ -110,7 +110,8 @@ static int	is_operator(char *src, int i, t_list **cmd_list)
 		if (!token)
 			return (-1);
 		*token = (t_input_tocken){operador, false, false, true, false};
-		return (add_to_list(cmd_list, &token), s_len(operador));
+		printf("tocken content : %s\n", token->content);
+		return (add_to_list(cmd_list, token), s_len(operador));
 	}
 	return (0);
 }
@@ -146,7 +147,7 @@ int	create_input_to_commands(char *src, t_list **cmd_list)
 		if (in_sgl_quote % 2 == 0  && in_dbl_quote % 2 == 0)
 		{
 			i += is_operator(src, i, cmd_list);
-			i += is_var_call(src, i, cmd_list);
+			//i += is_var_call(src, i, cmd_list); // not working properly with previous cmd
 		}
 
 

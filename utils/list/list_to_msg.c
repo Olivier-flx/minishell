@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 16:51:49 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/07 17:12:44 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/02/07 17:19:37 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	print_list(t_list **list)
 	t_list	*i_node;
 
 	i_node = *list;
-
 	while (i_node)
 	{
 		if (i_node->content)
