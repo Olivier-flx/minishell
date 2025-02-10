@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:23:22 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/07 17:05:45 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/02/10 21:25:53 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	run_minishell(t_data	*data)
 		line = readline("minishell> ");
 		if (line)
 		{
-			create_input_to_commands(line, &cmd_list);
+			create_input_to_commands(line, &cmd_list, data);
 		//	add_history(line);
 		//	clear_history();
 			process_line(&line);

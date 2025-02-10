@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:37:48 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/10 19:10:25 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/02/10 21:55:05 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 //return 0 if not operator, if operator return lenght
 int	is_operator(char *src, int i, t_quote *quote)
 {
-	if (quote->slg % 2 == 0  && quote->dbl % 2 == 0)
+	if (quote->sgl % 2 == 0  && quote->dbl % 2 == 0)
 	{
 		if (src[i] == '>' && src[i + 1] && src[i + 1] == '>')
 			return(2);
@@ -50,12 +50,17 @@ void	set_operator_info(char *src, int i, t_operator	*operador_data, int *op_coun
 }
 
 
-static void	init_operador_var(t_quote *quote, int *op_count, int *i)
+void	init_operador_var(t_quote *quote, int *op_count, int *i)
 {
-	*quote->slg = 0;
-	*quote->dbl = 0;
-	*op_count = 0;
-	*i = 0;
+	if(quote)
+	{
+		*quote->sgl = 0;
+		*quote->dbl = 0;
+	}
+	if (op_count)
+		*op_count = 0;
+	if (i)
+		*i = 0;
 }
 
 // return the number of operator present in src
@@ -106,10 +111,10 @@ int	get_operador_index(char *src, t_list **cmd_list)
 
 	while (src[i])
 	{
-		if (src[i] == '"' && quote.slg % 2 == 0)
+		if (src[i] == '"' && quote.sgl % 2 == 0)
 			quote.dbl++;
 		if (src[i] == '\'' && quote.dbl % 2 == 0)
-			quote.slg++;
+			quote.sgl++;
 		tmp = is_operator(src, i, quote);
 		if(tmp > 0);
 		{
@@ -122,3 +127,66 @@ int	get_operador_index(char *src, t_list **cmd_list)
 	}
 	return (0);
 }
+
+
+void set_operator_char_i_size(char *src, t_int_array *arr)
+{
+	int			op_count;
+	int			i;
+	t_quote		quote;
+	int 		tmp;
+
+	tmp = 0;
+	init_operador_var(&quote, &op_count, &i);
+	while (src[i])
+	{
+		if (src[i] == '"' && quote.sgl % 2 == 0)
+			quote.dbl++;
+		if (src[i] == '\'' && quote.dbl % 2 == 0)
+			quote.sgl++;
+		tmp = is_operator(src, i, quote);
+		if (tmp > 0)
+		{
+			op_count += tmp;
+			i += tmp;
+			continue ;
+		}
+		i++;
+	}
+	arr->size = op_count;
+}
+
+void set_operator_char_i_arr(char *src, t_int_array *arr)
+{
+	int			op_count;
+	int			i;
+	int			j;
+	t_quote		quote;
+
+	j = 0;
+	if(arr->size == 0)
+		return ;
+	arr->array = malloc (arr->size * sizeof(int));
+	if (arr->array)
+		return;
+	init_operador_var(&quote, &op_count, &i);
+	while (src[i])
+	{
+		increment_quotes(src, i, &quote);
+		// if (src[i] == '"' && quote.sgl % 2 == 0)
+		// 	quote.dbl++;
+		// if (src[i] == '\'' && quote.dbl % 2 == 0)
+		// 	quote.sgl++;
+		op_count = is_operator(src, i, quote);
+		if (op_count > 0)
+		{
+			arr->array[j] = i;
+			if (op_count == 2)
+				arr->array[++j] = i + 1;
+			i += op_count;
+			continue ;
+		}
+		i++;
+	}
+}
+
