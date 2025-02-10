@@ -20,7 +20,8 @@ UTILS = ./utils/string/create_input_token.c \
 		./utils/list/list_free.c \
 		./utils/list/list_to_msg.c \
 		./utils/msg/error_msg.c \
-		./utils/custom_frees.c
+		./utils/custom_frees.c \
+		./src/tokens/operator.c
 
 SRC = main.c \
 		$(UTILS)
