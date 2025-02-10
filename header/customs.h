@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/10 20:10:27 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/02/10 20:12:43 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ typedef struct s_list
 
 typedef struct s_input_tocken
 {
-	char		*content;
+	char		*tocken;
 	string_type	type;
 	bool		is_single_quoted;
 	bool		is_double_quoted;
@@ -50,9 +50,9 @@ typedef struct s_input_tocken
 
 typedef struct s_operator
 {
+	char	*tocken;
 	int		index;
 	int		len;
-	char	*operator;
 }	t_operator;
 
 typedef struct s_quote
