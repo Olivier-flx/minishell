@@ -13,14 +13,14 @@ LDFLAGS = -lreadline
 INC = ./header/minishell.h
 
 
-UTILS = ./utils/string/create_input_token.c \
-		./utils/string/ft_split.c \
+UTILS = ./utils/string/ft_split.c \
 		./utils/string/basics.c \
 		./utils/list/list_utils.c \
 		./utils/list/list_free.c \
 		./utils/list/list_to_msg.c \
 		./utils/msg/error_msg.c \
 		./utils/custom_frees.c \
+		./src/tokens/create_input_token.c \
 		./src/tokens/operator.c
 
 SRC = main.c \
