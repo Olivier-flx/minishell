@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/07 16:59:21 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/02/10 17:47:03 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,11 @@ typedef struct s_input_tocken
 	bool	is_var;
 }	t_input_tocken;
 
+typedef struct s_operator
+{
+	int		index;
+	int		len;
+}	t_operator;
 
 // buildins
 int		echo(char string);
@@ -48,12 +53,17 @@ int		b_exit(int ret_val, t_data data);
 
 
 
+/////////////// SRC //////////////
+	///// Tokens /////
+		// operators.c
+int		is_operator(char *src, int i)
+int		count_operador(char *src)
+int		get_operador_index(char *src, t_list **cmd_list)
 
+int		create_input_to_commands(char *src, t_list **cmd_list);
 
 /////////////// UTILS ///////////////
 	/////  string //////
-// par el shell
-int		create_input_to_commands(char *src, t_list **cmd_list);
 
 // basics
 int		s_len(const char *s);
