@@ -6,23 +6,23 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:37:48 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/10 18:16:06 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/02/10 19:06:26 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell.h"
 
 //return 0 if not operator, if operator return lenght
-int	is_operator(char *src, int i, int in_sgl_quote, int in_dbl_quote)
+int	is_operator(char *src, int i, t_quote *quote)
 {
-	if (in_sgl_quote % 2 == 0  && in_dbl_quote % 2 == 0)
+	if (quote->slg % 2 == 0  && quote->dbl % 2 == 0)
 	{
-		if (src[i] == 124)
-			return(1);
-		else if (src[i] == '>' && src[i + 1] && src[i + 1] == '>')
+		if (src[i] == '>' && src[i + 1] && src[i + 1] == '>')
 			return(2);
 		else if (src[i] == '<' && src[i + 1] && src[i + 1] == '<')
 			return(2);
+		else if (src[i] == 124)
+			return(1);
 		else if (src[i] == '<')
 			return(1);
 		else if (src[i] == '>')
@@ -31,33 +31,52 @@ int	is_operator(char *src, int i, int in_sgl_quote, int in_dbl_quote)
 	return (0);
 }
 
-static void	init_quote(int *sgl_quote, int *dbl_quote, int *i)
+
+void	set_operator_info(char *src, int i, t_operator	*operador_data, int *op_count)
 {
-	*sgl_quote = 0;
-	*dbl_quote = 0;
+	*operador_data->index = i;
+	if (src[i] == '>' && src[i + 1] && src[i + 1] == '>')
+		*operador_data->operator = ft_strdup(">>");
+	else if (src[i] == '<' && src[i + 1] && src[i + 1] == '<')
+		*operador_data->operator = ft_strdup("<<");
+	else if (src[i] == 124)
+		*operador_data->operator = ft_strdup("|");
+	else if (src[i] == '<')
+		*operador_data->operator = ft_strdup("<");
+	else if (src[i] == '>')
+		*operador_data->operator = ft_strdup(">");
+	*operador_data->len = s_len(operador_data->operator);
+	*op_count++;
+}
+
+
+static void	init_operador_var(t_quote *quote, int *op_count, int *i)
+{
+	*quote->slg = 0;
+	*quote->dbl = 0;
+	*op_count = 0;
 	*i = 0;
 }
 
 // return the number of operator present in src
 int	count_operador(char *src)
 {
-	int		in_sgl_quote;
-	int		in_dbl_quote;
+	t_quote		quote;
 	int		i;
 	int		tmp;
 	int		op_count;
 
 	op_count = 0;
-	init_quote(&in_sgl_quote, &in_dbl_quote, &i);
+	init_operador_var(&quote, &op_count, &i);
 	if (!src)
 		return (1);
 	while (src[i])
 	{
-		if (src[i] == '"' && in_sgl_quote % 2 == 0)
-			in_dbl_quote++;
-		if (src[i] == '\'' && in_dbl_quote % 2 == 0)
-			in_sgl_quote++;
-		tmp = is_operator(src, i, in_sgl_quote, in_dbl_quote);
+		if (src[i] == '"' && quote.sgl % 2 == 0)
+			quote.dbl++;
+		if (src[i] == '\'' && quote.dbl % 2 == 0)
+			quote.sgl++;
+		tmp = is_operator(src, i, quote);
 		if (tmp > 0)
 		{
 			i += tmp;
@@ -71,10 +90,10 @@ int	count_operador(char *src)
 
 int	get_operador_index(char *src, t_list **cmd_list)
 {
-	int			in_sgl_quote;
-	int			in_dbl_quote;
 	int			i;
 	int			op_count;
+	int			tmp;
+	t_quote		quote;
 	t_operator	*operador_data;
 
 	if (!src)
@@ -84,20 +103,19 @@ int	get_operador_index(char *src, t_list **cmd_list)
 	if (!operador_data)
 		return (1); // error
 	operador_data[op_count + 1] = NULL;
+	init_operador_var(&quote, &op_count, &i);
 
-	init_var(&in_sgl_quote, &in_dbl_quote, NULL, &i);
-	op_count = 0;
 	while (src[i])
 	{
-		if (src[i] == '"' && in_sgl_quote % 2 == 0)
-			in_dbl_quote++;
-		if (src[i] == '\'' && in_dbl_quote % 2 == 0)
-			in_sgl_quote++;
-		if (in_sgl_quote % 2 == 0  && in_dbl_quote % 2 == 0)
+		if (src[i] == '"' && quote.slg % 2 == 0)
+			quote.dbl++;
+		if (src[i] == '\'' && quote.dbl % 2 == 0)
+			quote.slg++;
+		tmp = is_operator(src, i, quote);
+		if(tmp > 0);
 		{
-			is_operator(src, i, cmd_list);
+			set_operator_info(src, i, &operador_data[op_count], &op_count);
 			op_count++;
-			//i += is_var_call(src, i, cmd_list); //create seg fault
 		}
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/10 18:06:39 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/02/10 18:30:08 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,12 @@ typedef struct s_operator
 	int		len;
 	char	*operator;
 }	t_operator;
+
+typedef struct s_quote
+{
+	int		slg;
+	int		dbl;
+}	t_quote;
 
 // buildins
 int		echo(char string);
