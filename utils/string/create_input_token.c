@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 17:57:45 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/07 18:14:53 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/02/10 17:49:26 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	segment_count(char *src)
 /// $
 /// <<
 /// >>
-static int	is_operator(char *src, int i, t_list **cmd_list)
+static int	operator_list(char *src, int i, t_list **cmd_list)
 {
 	char			*operador;
 	t_input_tocken	*token;
@@ -150,6 +150,8 @@ int	create_input_to_commands(char *src, t_list **cmd_list)
 		}
 
 
+
+
 		/// TODO
 			// Crear una funccion para poner los commandos entre operadores en la lista
 
@@ -163,3 +165,4 @@ int	create_input_to_commands(char *src, t_list **cmd_list)
 	//free ((*line)->word);
 	return (0);
 }
+
