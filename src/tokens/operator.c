@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:37:48 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/10 19:06:26 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/02/10 19:10:25 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,11 @@ static void	init_operador_var(t_quote *quote, int *op_count, int *i)
 // return the number of operator present in src
 int	count_operador(char *src)
 {
-	t_quote		quote;
+	t_quote	quote;
 	int		i;
 	int		tmp;
 	int		op_count;
 
-	op_count = 0;
 	init_operador_var(&quote, &op_count, &i);
 	if (!src)
 		return (1);
@@ -116,6 +115,8 @@ int	get_operador_index(char *src, t_list **cmd_list)
 		{
 			set_operator_info(src, i, &operador_data[op_count], &op_count);
 			op_count++;
+			i += tmp;
+			continue ;
 		}
 		i++;
 	}
