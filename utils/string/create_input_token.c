@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 17:57:45 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/10 17:49:26 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/02/10 18:14:58 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ static int	operator_list(char *src, int i, t_list **cmd_list)
 	return (0);
 }
 
-void	init_var(int *sgl_quote, int *dbl_quote, bool *in_word, int *i)
+static void	init_var(int *sgl_quote, int *dbl_quote, bool *in_word, int *i)
 {
 	*sgl_quote = 0;
 	*dbl_quote = 0;
