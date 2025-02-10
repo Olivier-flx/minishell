@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/10 18:30:08 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/02/10 20:10:27 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,14 @@
 
 
 typedef struct s_list	t_list;
+
+typedef enum {
+    CMD,
+    OPERATOR,
+    ARG,
+    VAR
+} string_type;
+
 
 typedef struct data
 {
@@ -32,11 +40,12 @@ typedef struct s_list
 
 typedef struct s_input_tocken
 {
-	char	*content;
-	bool	is_single_quoted;
-	bool	is_double_quoted;
-	bool	quote_closed;
-	bool	is_var;
+	char		*content;
+	string_type	type;
+	bool		is_single_quoted;
+	bool		is_double_quoted;
+	bool		quote_closed;
+	bool		is_var;
 }	t_input_tocken;
 
 typedef struct s_operator
