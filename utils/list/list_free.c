@@ -1,9 +1,9 @@
 
 #include "../../header/minishell.h"
 
-void	free_list(t_list **stack_to_free)
+void	free_list(t_dlist **stack_to_free)
 {
-	t_list	*next_node;
+	t_dlist	*next_node;
 
 	if (*stack_to_free == NULL)
 		return ;

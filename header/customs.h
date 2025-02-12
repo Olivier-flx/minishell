@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/12 16:44:49 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/02/12 19:21:16 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 # define CUSTOMS_H
 
 
-typedef struct s_list	t_list;
 
 typedef enum {
     CMD,
@@ -35,20 +34,20 @@ typedef struct {
 	int	size;
 } t_int_array;
 
+typedef struct s_dlist
+{
+	void			*content;
+	struct s_dlist	*prev;
+	struct s_dlist	*next;
+}	t_dlist;
+
 typedef struct data
 {
 	char		**env;
-	t_list		*input;
-	t_int_array	operator_char_i; //index of operators characters in string input
+	t_dlist		*input;
+	t_int_array	ope_char_i; //index of operators characters in string input
 	int			chunks; //number of commands and argv separated by operators
 }	t_data;
-
-typedef struct s_list
-{
-	void			*content;
-	struct s_list	*prev;
-	struct s_list	*next;
-}	t_list;
 
 typedef struct s_input_tocken
 {
@@ -76,28 +75,29 @@ typedef struct s_operator
 int		echo(char string);
 int		env(char **env);
 int		b_exit(int ret_val, t_data data);
-//int		create_input_token(char *src, t_list **line);
+//int		create_input_token(char *src, t_dlist **line);
 
 
 
 /////////////// SRC //////////////
 	///// Tokens /////
 		// operators.c
-int		is_operator(char *src, int i);
+int		is_operator(char *src, int i, t_quote *quote);
 int		count_operador(char *src);
-int		get_operador_index(char *src, t_list **cmd_list);
+int		get_operador_index(char *src, t_dlist **cmd_list);
 void	init_operador_var(t_quote *quote, int *op_count, int *i);
 
 
-void set_operator_char_i_struc_arr(char *src, t_int_array *arr);
-void set_operator_char_i_arr(char *src, t_int_array *arr);
+void set_ope_char_i_struc_arr(char *src, t_int_array *arr);
+void set_ope_char_i_arr(char *src, t_int_array *arr);
 
 
-int		create_input_to_commands(char *src, t_list **cmd_list, t_data *data);
+int		create_input_to_commands(char *src, t_dlist **cmd_list, t_data *data);
 
 /////////////// UTILS ///////////////
 	/////  string //////
 void	increment_quotes(char *src, int i, t_quote *quote);
+char	**split_sglquote(char const *s, char c);
 
 // basics
 int		s_len(const char *s);
@@ -105,12 +105,12 @@ char	*s_dup(char *s);
 
 
 // List Utils
-void	free_list(t_list **stack_to_free);
-int		add_to_list(t_list **line, void *content);
-void	print_list(t_list **list);
+void	free_list(t_dlist **stack_to_free);
+int		add_to_list(t_dlist **line, void *content);
+void	print_dlist(t_dlist **list);
 
 // arrays
-bool	int_var_in_arr(int var, t_int_array arr);
+bool	int_var_in_arr(int var, t_int_array *arr);
 
 
 // ERROR

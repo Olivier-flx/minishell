@@ -19,6 +19,7 @@ UTILS = ./utils/string/ft_split.c \
 		./utils/list/list_utils.c \
 		./utils/list/list_free.c \
 		./utils/list/list_to_msg.c \
+		./utils/arrays/methods.c \
 		./utils/msg/error_msg.c \
 		./utils/custom_frees.c \
 		./src/tokens/create_input_token.c \

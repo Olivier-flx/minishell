@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 11:18:50 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/06 15:47:13 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/02/12 17:46:27 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ static char	**ft_new_string_arr(char const *s, char c, char **ns_ar, int nb_segm
 	return (ns_ar);
 }
 
-char	**split_to_list(char const *s, char c)
+char	**split_sglquote(char const *s, char c)
 {
 	char	**ns_ar;
 	int		segments_number;

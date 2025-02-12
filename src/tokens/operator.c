@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:37:48 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/12 15:57:54 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/02/12 19:22:00 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,33 +32,36 @@ int	is_operator(char *src, int i, t_quote *quote)
 }
 
 
-void	set_operator_info(char *src, int i, t_operator	*operador_data, int *op_count)
-{
-	*operador_data->index = i;
-	if (src[i] == '>' && src[i + 1] && src[i + 1] == '>')
-		*operador_data->operator = ft_strdup(">>");
-	else if (src[i] == '<' && src[i + 1] && src[i + 1] == '<')
-		*operador_data->operator = ft_strdup("<<");
-	else if (src[i] == 124)
-		*operador_data->operator = ft_strdup("|");
-	else if (src[i] == '<')
-		*operador_data->operator = ft_strdup("<");
-	else if (src[i] == '>')
-		*operador_data->operator = ft_strdup(">");
-	*operador_data->len = s_len(operador_data->operator);
-	*op_count++;
-}
+////// NOT USED /////
+// void	set_operator_info(char *src, int i, t_operator	*operador_data, int *op_count)
+// {
+// 	*operador_data->index = i;
+// 	if (src[i] == '>' && src[i + 1] && src[i + 1] == '>')
+// 		*operador_data->operator = ft_strdup(">>");
+// 	else if (src[i] == '<' && src[i + 1] && src[i + 1] == '<')
+// 		*operador_data->operator = ft_strdup("<<");
+// 	else if (src[i] == 124)
+// 		*operador_data->operator = ft_strdup("|");
+// 	else if (src[i] == '<')
+// 		*operador_data->operator = ft_strdup("<");
+// 	else if (src[i] == '>')
+// 		*operador_data->operator = ft_strdup(">");
+// 	*operador_data->len = s_len(operador_data->operator);
+// 	*op_count++;
+// }
 
 
 void	init_operador_var(t_quote *quote, int *op_count, int *i)
 {
 	if(quote)
 	{
-		*quote->sgl = 0;
-		*quote->dbl = 0;
+		quote->sgl = 0;
+		quote->dbl = 0;
 	}
 	if (op_count)
+	{
 		*op_count = 0;
+	}
 	if (i)
 		*i = 0;
 }
@@ -80,7 +83,7 @@ int	count_operador(char *src)
 			quote.dbl++;
 		if (src[i] == '\'' && quote.dbl % 2 == 0)
 			quote.sgl++;
-		tmp = is_operator(src, i, quote);
+		tmp = is_operator(src, i, &quote);
 		if (tmp > 0)
 		{
 			i += tmp;
@@ -92,44 +95,44 @@ int	count_operador(char *src)
 	return (op_count);
 }
 
-int	get_operador_index(char *src, t_list **cmd_list)
-{
-	int			i;
-	int			op_count;
-	int			tmp;
-	t_quote		quote;
-	t_operator	*operador_data;
+// int	get_operador_index(char *src, t_dlist **cmd_list)
+// {
+// 	int			i;
+// 	int			op_count;
+// 	int			tmp;
+// 	t_quote		quote;
+// 	t_operator	*operador_data;
 
-	if (!src)
-		return (1);
-	op_count = count_operador(src);
-	operador_data = malloc((op_count + 1) * sizeof(t_operator));
-	if (!operador_data)
-		return (1); // error
-	operador_data[op_count + 1] = NULL;
-	init_operador_var(&quote, &op_count, &i);
+// 	if (!src)
+// 		return (1);
+// 	op_count = count_operador(src);
+// 	operador_data = malloc((op_count + 1) * sizeof(t_operator));
+// 	if (!operador_data)
+// 		return (1); // error
+// 	operador_data[op_count] = (t_operator *) NULL;
+// 	init_operador_var(&quote, &op_count, &i);
 
-	while (src[i])
-	{
-		if (src[i] == '"' && quote.sgl % 2 == 0)
-			quote.dbl++;
-		if (src[i] == '\'' && quote.dbl % 2 == 0)
-			quote.sgl++;
-		tmp = is_operator(src, i, quote);
-		if(tmp > 0);
-		{
-			set_operator_info(src, i, &operador_data[op_count], &op_count);
-			op_count++;
-			i += tmp;
-			continue ;
-		}
-		i++;
-	}
-	return (0);
-}
+// 	while (src[i])
+// 	{
+// 		if (src[i] == '"' && quote.sgl % 2 == 0)
+// 			quote.dbl++;
+// 		if (src[i] == '\'' && quote.dbl % 2 == 0)
+// 			quote.sgl++;
+// 		tmp = is_operator(src, i, &quote);
+// 		if(tmp > 0);
+// 		{
+// 			set_operator_info(src, i, &operador_data[op_count], &op_count);
+// 			op_count++;
+// 			i += tmp;
+// 			continue ;
+// 		}
+// 		i++;
+// 	}
+// 	return (0);
+// }
 
 //fill the array on indexes of char that are operators in src
-void set_operator_char_i_arr(char *src, t_int_array *arr)
+void set_ope_char_i_arr(char *src, t_int_array *arr)
 {
 	int			op_count;
 	int			i;
@@ -137,6 +140,7 @@ void set_operator_char_i_arr(char *src, t_int_array *arr)
 	t_quote		quote;
 
 	j = 0;
+	op_count = 0;
 	if(arr->size == 0)
 		return ;
 	arr->array = malloc (arr->size * sizeof(int));
@@ -146,7 +150,7 @@ void set_operator_char_i_arr(char *src, t_int_array *arr)
 	while (src[i])
 	{
 		increment_quotes(src, i, &quote);
-		op_count = is_operator(src, i, quote);
+		op_count = is_operator(src, i, &quote);
 		if (op_count > 0)
 		{
 			arr->array[j] = i;
@@ -160,7 +164,7 @@ void set_operator_char_i_arr(char *src, t_int_array *arr)
 }
 
 //calculate the lenght of the array on indexes of char that are operators in src
-void set_operator_char_i_struc_arr(char *src, t_int_array *arr)
+void set_ope_char_i_struc_arr(char *src, t_int_array *arr)
 {
 	int			op_count;
 	int			i;
@@ -169,10 +173,11 @@ void set_operator_char_i_struc_arr(char *src, t_int_array *arr)
 
 	tmp = 0;
 	init_operador_var(&quote, &op_count, &i);
+	printf("opcount = %i\n", op_count);
 	while (src[i])
 	{
 		increment_quotes(src, i, &quote);
-		tmp = is_operator(src, i, quote);
+		tmp = is_operator(src, i, &quote);
 		if (tmp > 0)
 		{
 			op_count += tmp;
@@ -182,5 +187,5 @@ void set_operator_char_i_struc_arr(char *src, t_int_array *arr)
 		i++;
 	}
 	arr->size = op_count;
-	set_operator_char_i_arr(src, arr);
+	set_ope_char_i_arr(src, arr);
 }
