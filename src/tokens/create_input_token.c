@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 17:57:45 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/10 22:12:08 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/02/12 16:44:37 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,19 +94,10 @@ t_input_tocken *create_token(char **str, int type, int i, t_quote quotes)
 	return (token);
 }
 
-/// Operator to handle
-/// <
-/// >
-/// |
-/// $
-/// <<
-/// >>
-static int	operator_list(char *src, int i, t_list **cmd_list)
+char	*operator_sdup(char *src, int i)
 {
-	char			*operador;
-	t_input_tocken	*token;
+	char	*operador;
 
-	token = NULL;
 	operador = NULL;
 	if (src[i] == 124)
 		operador = s_dup("|");
@@ -118,10 +109,32 @@ static int	operator_list(char *src, int i, t_list **cmd_list)
 		operador = s_dup("<");
 	else if (src[i] == '>')
 		operador = s_dup(">");
+	return (operador);
+}
 
+/// Operator to handle
+/// <
+/// >
+/// |
+/// $
+/// <<
+/// >>
+static int	operator_list(char *src, int i, t_list **cmd_list)
+{
+	char			*operador;
+	char			**operador_to_arr;
+	t_input_tocken	*token;
+
+	token = NULL;
+	operador = operator_sdup(src, i);
 	if (operador != NULL)
 	{
-		token = create_token(&operador, OPERATOR, i, (t_quote) {0});
+		operador_to_arr = malloc (2 * sizeof (char *))
+		if (!operador_to_arr)
+			return (free(operator), 0);
+		operador_to_arr[0] = operador;
+		operador_to_arr[1] = NULL;
+		token = create_token(&operador_to_arr, OPERATOR, i, (t_quote) {0});
 		return (add_to_list(cmd_list, token), token->len);
 	}
 	return (0);
@@ -137,16 +150,22 @@ int	create_input_to_commands(char *src, t_list **cmd_list, t_data *data)
 	if (!src)
 		return (1); //Error
 	init_operador_var(&quotes, NULL, &i);
-	chunks = count_operador(src) + 1;
-	set_operator_char_i_size(src, &(data->operator_char_i));
-	set_operator_char_i_arr(src, &(data->operator_char_i));
+	chunks = count_operador(src) + 1; // no util de momento
+	set_operator_char_i_struc_arr(src, &(data->operator_char_i));
 	while (src[i])
 	{
 		if(int_var_in_arr(i, data->operator_char_i))
+			i += operator_list(src, i, cmd_list); // se puede cambiar facilmente si se quere una lista para oper y una para argvs
+		else
 		{
-			i += operator_list(src, i, cmd_list);
-			continue ;
+			while (!int_var_in_arr(i, data->operator_char_i))
+
 		}
+
+
+
+
+
 		increment_quotes(src, i, &quotes);
 		if (chunks >= 0) // à supprimer par la suite--> juste pour compile
 			printf("chunks");

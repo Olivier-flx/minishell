@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:37:48 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/10 21:55:05 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/02/12 15:57:54 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,34 +128,7 @@ int	get_operador_index(char *src, t_list **cmd_list)
 	return (0);
 }
 
-
-void set_operator_char_i_size(char *src, t_int_array *arr)
-{
-	int			op_count;
-	int			i;
-	t_quote		quote;
-	int 		tmp;
-
-	tmp = 0;
-	init_operador_var(&quote, &op_count, &i);
-	while (src[i])
-	{
-		if (src[i] == '"' && quote.sgl % 2 == 0)
-			quote.dbl++;
-		if (src[i] == '\'' && quote.dbl % 2 == 0)
-			quote.sgl++;
-		tmp = is_operator(src, i, quote);
-		if (tmp > 0)
-		{
-			op_count += tmp;
-			i += tmp;
-			continue ;
-		}
-		i++;
-	}
-	arr->size = op_count;
-}
-
+//fill the array on indexes of char that are operators in src
 void set_operator_char_i_arr(char *src, t_int_array *arr)
 {
 	int			op_count;
@@ -173,10 +146,6 @@ void set_operator_char_i_arr(char *src, t_int_array *arr)
 	while (src[i])
 	{
 		increment_quotes(src, i, &quote);
-		// if (src[i] == '"' && quote.sgl % 2 == 0)
-		// 	quote.dbl++;
-		// if (src[i] == '\'' && quote.dbl % 2 == 0)
-		// 	quote.sgl++;
 		op_count = is_operator(src, i, quote);
 		if (op_count > 0)
 		{
@@ -190,3 +159,28 @@ void set_operator_char_i_arr(char *src, t_int_array *arr)
 	}
 }
 
+//calculate the lenght of the array on indexes of char that are operators in src
+void set_operator_char_i_struc_arr(char *src, t_int_array *arr)
+{
+	int			op_count;
+	int			i;
+	t_quote		quote;
+	int 		tmp;
+
+	tmp = 0;
+	init_operador_var(&quote, &op_count, &i);
+	while (src[i])
+	{
+		increment_quotes(src, i, &quote);
+		tmp = is_operator(src, i, quote);
+		if (tmp > 0)
+		{
+			op_count += tmp;
+			i += tmp;
+			continue ;
+		}
+		i++;
+	}
+	arr->size = op_count;
+	set_operator_char_i_arr(src, arr);
+}

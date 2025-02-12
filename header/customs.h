@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/10 22:09:18 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/02/12 16:44:49 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ typedef struct s_list
 
 typedef struct s_input_tocken
 {
-	char		*content;
+	char		**content;
 	string_type	type;
 	int			index;
 	int			len;
@@ -89,7 +89,7 @@ int		get_operador_index(char *src, t_list **cmd_list);
 void	init_operador_var(t_quote *quote, int *op_count, int *i);
 
 
-void set_operator_char_i_size(char *src, t_int_array *arr);
+void set_operator_char_i_struc_arr(char *src, t_int_array *arr);
 void set_operator_char_i_arr(char *src, t_int_array *arr);
 
 
