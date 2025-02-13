@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:46:36 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/12 17:54:05 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/02/13 19:42:22 by laufarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@
 # include <stdbool.h>
 
 # include "customs.h"
+# include "builtins.h"
 # include "../libs/libft/libft.h"
 
 #endif

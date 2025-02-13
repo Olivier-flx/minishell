@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/12 19:21:16 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/02/13 20:06:16 by laufarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ typedef struct s_dlist
 	struct s_dlist	*next;
 }	t_dlist;
 
-typedef struct data
+typedef struct data//aqui iremos agregando todo lo que este alocado.A partir de esta poder acceder a toda la info.
 {
 	char		**env;
 	t_dlist		*input;
