@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_input_token.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 17:57:45 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/12 19:37:14 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/02/14 16:30:56 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,13 +79,13 @@ int	segment_count(char *src)
 //ret j + 1 por el "$"
 
 
-t_input_tocken *create_token(char ***str, int type, int i, t_quote quotes)
+t_input_tocken	*create_token(char ***str, int type, int i, t_quote quotes)
 {
 	t_input_tocken	*token;
 
 	token = malloc(sizeof(t_input_tocken));
 	if (!token)
-			return (NULL);
+		return (NULL);
 	token->content = *str;
 	token->type = type;
 	token->index = i;
@@ -146,11 +146,11 @@ static int	operator_list(char *src, int i, t_dlist **cmd_list)
 
 int	create_input_to_commands(char *src, t_dlist **cmd_list, t_data *data)
 {
-	t_quote		quotes;
-	int			chunks_n;
-	int			i;
-	int			j = 0;
-	char		**chunk;
+	t_quote			quotes;
+	int				chunks_n;
+	int				i;
+	int				j = 0;
+	char			**chunk;
 	t_input_tocken	*token;
 
 	token = NULL;
@@ -188,7 +188,7 @@ int	create_input_to_commands(char *src, t_dlist **cmd_list, t_data *data)
 
 
 		if (chunks_n >= 0) // à supprimer par la suite--> juste pour compile
-			printf("chunks");
+			printf("chunks\n");
 		//if (quotes.dbl % 2 == 1)
 		//	i += is_var_call(src, i, cmd_list);
 		// if (quotes.sgl % 2 == 0  && quotes.dbl % 2 == 0)
