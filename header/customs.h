@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   customs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/12 19:21:16 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/02/14 18:22:28 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@
 
 
 typedef enum {
-    CMD,
-    OPERATOR,
-    ARG,
-    VAR
+	CMD,
+	OPERATOR,
+	ARG,
+	VAR
 } string_type;
 
 typedef struct s_quote
@@ -29,10 +29,11 @@ typedef struct s_quote
 	int		dbl;
 }	t_quote;
 
-typedef struct {
+typedef struct s_int_array
+{
 	int	*array;
 	int	size;
-} t_int_array;
+}	t_int_array;
 
 typedef struct s_dlist
 {
@@ -53,9 +54,9 @@ typedef struct s_input_tocken
 {
 	char		**content;
 	string_type	type;
-	int			index;
-	int			len;
-	t_quote		quotes;
+	int			index; // util ?
+	int			len; // util ?
+	t_quote		quotes; // util ?
 }	t_input_tocken;
 
 
@@ -88,8 +89,8 @@ int		get_operador_index(char *src, t_dlist **cmd_list);
 void	init_operador_var(t_quote *quote, int *op_count, int *i);
 
 
-void set_ope_char_i_struc_arr(char *src, t_int_array *arr);
-void set_ope_char_i_arr(char *src, t_int_array *arr);
+void	set_ope_char_i_struc_arr(char *src, t_int_array *arr);
+void	set_ope_char_i_arr(char *src, t_int_array *arr);
 
 
 int		create_input_to_commands(char *src, t_dlist **cmd_list, t_data *data);

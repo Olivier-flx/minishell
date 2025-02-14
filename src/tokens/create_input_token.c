@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 17:57:45 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/14 16:30:56 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/02/14 18:35:44 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,9 +157,9 @@ int	create_input_to_commands(char *src, t_dlist **cmd_list, t_data *data)
 
 	if (!src)
 		return (1); //Error
-	init_operador_var(&quotes, NULL, &i);
+	init_operador_var(&quotes, &j, &i);
 	chunks_n = count_operador(src) + 1; // no util de momento
-	set_ope_char_i_struc_arr(src, &(data)->ope_char_i);
+	set_ope_char_i_struc_arr(src, &(data->ope_char_i));
 	while (src[i])
 	{
 		if(int_var_in_arr(i, &(data)->ope_char_i))
@@ -169,7 +169,7 @@ int	create_input_to_commands(char *src, t_dlist **cmd_list, t_data *data)
 			increment_quotes(src, i, &quotes);
 			if(data->ope_char_i.size > 0)
 			{
-				printf("(data->ope_char_i).array[j] = %i\n",data->ope_char_i.array[j]);
+				printf("(data->ope_char_i).array[j] = %i\n",data->ope_char_i.size);
 				chunk = split_sglquote(ft_substr(src, i, (data->ope_char_i).array[j]), ' '); // remplacar luego con soporte a dbl quote
 				i += data->ope_char_i.array[j] - i;
 				j++;
@@ -182,12 +182,12 @@ int	create_input_to_commands(char *src, t_dlist **cmd_list, t_data *data)
 				chunk = split_sglquote(ft_substr(src, i, s_len(src)), ' '); // remplacar luego con soporte a dbl quote
 /*redondant*/	token = create_token(&chunk, CMD, i, (t_quote) {0});
 /*redondant*/	add_to_list(cmd_list, token);
-				break ;
 			}
+				break ;
 		}
 
 
-		if (chunks_n >= 0) // à supprimer par la suite--> juste pour compile
+		if (chunks_n > 0) // à supprimer par la suite--> juste pour compile
 			printf("chunks\n");
 		//if (quotes.dbl % 2 == 1)
 		//	i += is_var_call(src, i, cmd_list);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   operator.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:37:48 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/12 19:22:00 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/02/14 18:22:33 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,11 @@ void	init_operador_var(t_quote *quote, int *op_count, int *i)
 		quote->sgl = 0;
 		quote->dbl = 0;
 	}
-	if (op_count)
-	{
+	//if (op_count)
+	//{
 		*op_count = 0;
-	}
-	if (i)
+	//}
+	//if (i)
 		*i = 0;
 }
 
@@ -88,7 +88,7 @@ int	count_operador(char *src)
 		{
 			i += tmp;
 			op_count++;
-			continue;
+			continue ;
 		}
 		i++;
 	}
@@ -132,7 +132,7 @@ int	count_operador(char *src)
 // }
 
 //fill the array on indexes of char that are operators in src
-void set_ope_char_i_arr(char *src, t_int_array *arr)
+void	set_ope_char_i_arr(char *src, t_int_array *arr)
 {
 	int			op_count;
 	int			i;
@@ -141,11 +141,11 @@ void set_ope_char_i_arr(char *src, t_int_array *arr)
 
 	j = 0;
 	op_count = 0;
-	if(arr->size == 0)
+	if (arr->size == 0)
 		return ;
 	arr->array = malloc (arr->size * sizeof(int));
 	if (arr->array)
-		return;
+		return ;
 	init_operador_var(&quote, &op_count, &i);
 	while (src[i])
 	{
@@ -164,16 +164,15 @@ void set_ope_char_i_arr(char *src, t_int_array *arr)
 }
 
 //calculate the lenght of the array on indexes of char that are operators in src
-void set_ope_char_i_struc_arr(char *src, t_int_array *arr)
+void	set_ope_char_i_struc_arr(char *src, t_int_array *arr)
 {
 	int			op_count;
 	int			i;
 	t_quote		quote;
-	int 		tmp;
+	int			tmp;
 
 	tmp = 0;
 	init_operador_var(&quote, &op_count, &i);
-	printf("opcount = %i\n", op_count);
 	while (src[i])
 	{
 		increment_quotes(src, i, &quote);
@@ -186,6 +185,7 @@ void set_ope_char_i_struc_arr(char *src, t_int_array *arr)
 		}
 		i++;
 	}
+	printf("opcount = %i\n", op_count);
 	arr->size = op_count;
 	set_ope_char_i_arr(src, arr);
 }
