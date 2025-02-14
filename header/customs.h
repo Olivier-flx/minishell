@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/14 18:22:28 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/02/14 19:37:34 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,8 @@ int		count_operador(char *src);
 int		get_operador_index(char *src, t_dlist **cmd_list);
 void	init_operador_var(t_quote *quote, int *op_count, int *i);
 
+		//cleaning.c
+char	*ft_trim(char *src, bool is_malloced);
 
 void	set_ope_char_i_struc_arr(char *src, t_int_array *arr);
 void	set_ope_char_i_arr(char *src, t_int_array *arr);

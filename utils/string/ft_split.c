@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 11:18:50 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/12 17:46:27 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/02/14 18:43:42 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static int	ft_segment_count(const char *s, char c)
 
 static int	ft_segment_len(int i, const char *s, char c)
 {
-	int	len;
+	int		len;
 	bool	in_quote;
 
 	len = 0;
@@ -57,17 +57,17 @@ static int	ft_segment_len(int i, const char *s, char c)
 		{
 			in_quote = true;
 			i++;
-			continue;
+			continue ;
 		}
 		if (s[i] == '\'' && in_quote)
-			break;
+			break ;
 
 		if (!in_quote && s[i] != c)
 			len++;
 		else if (in_quote && s[i] != '\'')
 			len++;
 		else if (!in_quote && s[i] == c)
-			break;
+			break ;
 		i++;
 	}
 	return (len + 1);
@@ -87,10 +87,10 @@ static char	**freeall(char **ns_ar, int i)
 
 static char	**ft_new_string_arr(char const *s, char c, char **ns_ar, int nb_segment)
 {
-	int	i;
-	int	segment_i;
-	int	s_i;
-	bool in_quote;
+	int		i;
+	int		segment_i;
+	int		s_i;
+	bool	in_quote;
 
 	i = 0;
 	segment_i = 0;

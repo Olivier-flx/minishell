@@ -23,7 +23,8 @@ UTILS = ./utils/string/ft_split.c \
 		./utils/msg/error_msg.c \
 		./utils/custom_frees.c \
 		./src/tokens/create_input_token.c \
-		./src/tokens/operator.c
+		./src/tokens/operator.c \
+		./src/tokens/cleaning.c
 
 SRC = main.c \
 		$(UTILS)
