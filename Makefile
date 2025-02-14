@@ -7,11 +7,10 @@ YELLOW=\033[1;33m
 
 NAME = mini
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g -O0
+CFLAGS = -Wall -Wextra -Werror -g -O0 -I./header
 LDFLAGS = -lreadline
 
-INC = ./header/minishell.h
-
+#INC = -I./header
 
 UTILS = ./utils/string/ft_split.c \
 		./utils/string/basics.c \
@@ -41,7 +40,7 @@ $(NAME) : $(OBJ) $(LIBFT_PATH)
 
 $(LIBFT_PATH):
 		@$(MAKE) -C ./libs/libft > /dev/null 2>&1
-		@printf "$(GREEN)[minishell] libft compiled successfully.$(NC)\n"
+		@printf "$(GREEN)[minishell] libft compiled successfully.$(NC)\n" > /dev/null
 ##
 # ┌────────────────────────────────────────────┬─────────────────────┬─────────────────┬─────────────────┐
 # │ Comando                                    │ ¿Oculta el comando? │ ¿Oculta stdout? │ ¿Oculta stderr? │
@@ -59,12 +58,12 @@ $(LIBFT_PATH):
 
 clean :
 		@make -s clean -C ./libs/libft
-		rm -f $(OBJ)
+		@rm -f $(OBJ)
 		@printf "$(RED)[minishell] Object files cleaned.$(NC)\n"
 
 fclean : clean
 		@make -s fclean -C ./libs/libft
-		rm -f $(NAME)
+		@rm -f $(NAME)
 		@printf "$(RED)[minishell] Cleaned successfully.$(NC)\n"
 
 re: fclean all

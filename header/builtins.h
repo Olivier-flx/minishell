@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: laufarin <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: laufarin <laufarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/13 15:57:31 by laufarin          #+#    #+#             */
-/*   Updated: 2025/02/13 20:02:23 by laufarin         ###   ########.fr       */
+/*   Created: 2025/02/14 18:13:34 by laufarin          #+#    #+#             */
+/*   Updated: 2025/02/14 18:15:28 by laufarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 
 #ifndef BUILTINS_H
 # define BUILTINS_H
@@ -16,12 +18,13 @@
 # include "minishell.h"  // Para reutilizar structs y funciones comunes
 
 
-typedef struct	//estructura para el env
+typedef struct	s_env
 {
-	//name
-	//value
-	//next
-}	
+    char	*key;
+    char	*value;
+    struct	s_env *next;
+}	t_env;
+	
 
 // Prototipos de built-ins
 int	ft_echo(char **args);
