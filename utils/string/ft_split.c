@@ -6,43 +6,11 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 11:18:50 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/17 18:32:57 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/02/17 18:35:55 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell.h"
-
-// static int	ft_segment_count(const char *s, char c)
-// {
-// 	int		i;
-// 	int		count;
-// 	bool	in_word;
-// 	bool	in_quotes;
-
-// 	i = 0;
-// 	count = 0;
-// 	in_word = false;
-// 	in_quotes = false;
-// 	while (s[i] != '\0')
-// 	{
-// 		if (s[i] == '\'' && in_quotes)
-// 			in_quotes = false;
-// 		else if (s[i] == '\'' && !in_quotes)
-// 		{
-// 			in_quotes = true;
-// 			count++;
-// 		}
-// 		else if (s[i] == c)
-// 			in_word = false;
-// 		else if (s[i] != c && !in_quotes && !in_word)
-// 		{
-// 			count++;
-// 			in_word = true;
-// 		}
-// 		i++;
-// 	}
-// 	return (count);
-// }
 
 static int	ft_segment_count(const char *s, char c)
 {
