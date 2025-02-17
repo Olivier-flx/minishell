@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 18:48:17 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/17 15:14:49 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/02/17 15:52:04 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,9 @@
 
 static int	count_r_useless_spc(char *src, int i)
 {
-	int	spc_flg;
 	int	k;
 
 	k = 0;
-	spc_flg = 0;
 	i--;
 	while (src && i >= 0 && (src[i] == ' ' || src[i] == '\t' || src[i] == '\n'))
 	{

@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/17 15:14:45 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/02/17 18:32:39 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int		create_input_to_commands(char *src, t_dlist **cmd_list, t_data *data);
 /////////////// UTILS ///////////////
 	/////  string //////
 void	increment_quotes(char *src, int i, t_quote *quote);
-char	**split_sglquote(char const *s, char c);
+char	**split_quoted(char const *s, char c);
 
 char	*ft_trim(char *src, bool is_malloced);
 

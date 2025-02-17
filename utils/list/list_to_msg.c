@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_to_msg.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 16:51:49 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/14 16:34:23 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/02/17 15:54:09 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	print_dlist(t_dlist **list)
 		if (i_node->content)
 		{
 			while (((t_input_tocken *)i_node->content)->content[i])
-				printf("%s\n", ((t_input_tocken *)i_node->content)->content[i++]);
+				printf("`%s`\n", ((t_input_tocken *)i_node->content)->content[i++]);
 		}
 		//else
 		//	printf("Error: content is NULL in node.\n");

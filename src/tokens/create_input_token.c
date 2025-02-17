@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_input_token.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 17:57:45 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/14 18:35:44 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/02/17 18:32:39 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,7 +170,7 @@ int	create_input_to_commands(char *src, t_dlist **cmd_list, t_data *data)
 			if(data->ope_char_i.size > 0)
 			{
 				printf("(data->ope_char_i).array[j] = %i\n",data->ope_char_i.size);
-				chunk = split_sglquote(ft_substr(src, i, (data->ope_char_i).array[j]), ' '); // remplacar luego con soporte a dbl quote
+				chunk = split_quoted(ft_substr(src, i, (data->ope_char_i).array[j]), ' '); // remplacar luego con soporte a dbl quote
 				i += data->ope_char_i.array[j] - i;
 				j++;
 
@@ -179,12 +179,13 @@ int	create_input_to_commands(char *src, t_dlist **cmd_list, t_data *data)
 			}
 			else
 			{
-				chunk = split_sglquote(ft_substr(src, i, s_len(src)), ' '); // remplacar luego con soporte a dbl quote
+				chunk = split_quoted(ft_substr(src, i, s_len(src)), ' '); // remplacar luego con soporte a dbl quote
 /*redondant*/	token = create_token(&chunk, CMD, i, (t_quote) {0});
 /*redondant*/	add_to_list(cmd_list, token);
 			}
 				break ;
 		}
+		i++;
 
 
 		if (chunks_n > 0) // à supprimer par la suite--> juste pour compile
