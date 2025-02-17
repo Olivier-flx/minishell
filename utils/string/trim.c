@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cleaning.c                                         :+:      :+:    :+:   */
+/*   trim.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 18:48:17 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/17 15:12:28 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/02/17 15:14:49 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell.h"
-#include <stdio.h>
+//#include <stdio.h>
 
 static int	count_r_useless_spc(char *src, int i)
 {
@@ -31,7 +31,6 @@ static int	count_r_useless_spc(char *src, int i)
 	else
 		return (0);
 }
-
 
 int	count_useless_spaces(char *src)
 {
@@ -85,14 +84,12 @@ void	generate_trimed_str(char **new_string, char *src, int ns_len)
 			spc_flg = 0;
 			(*new_string)[j++] = src[i++];
 		}
-		// i++;
 	}
 	(*new_string)[ns_len] = '\0';
 }
 
 char	*ft_trim(char *src, bool is_malloced)
 {
-	// int		i;
 	char	*new_string;
 	int		dbl_spaces;
 	int		src_len;
@@ -103,8 +100,6 @@ char	*ft_trim(char *src, bool is_malloced)
 	if (!new_string)
 		return (NULL);
 	generate_trimed_str(&new_string, src, src_len - dbl_spaces);
-	//TO CONTINUE
-
 	if (is_malloced)
 		free(src);
 	return (new_string);

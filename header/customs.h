@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   customs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/14 19:37:34 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/02/17 15:14:45 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ int		get_operador_index(char *src, t_dlist **cmd_list);
 void	init_operador_var(t_quote *quote, int *op_count, int *i);
 
 		//cleaning.c
-char	*ft_trim(char *src, bool is_malloced);
 
 void	set_ope_char_i_struc_arr(char *src, t_int_array *arr);
 void	set_ope_char_i_arr(char *src, t_int_array *arr);
@@ -101,6 +100,8 @@ int		create_input_to_commands(char *src, t_dlist **cmd_list, t_data *data);
 	/////  string //////
 void	increment_quotes(char *src, int i, t_quote *quote);
 char	**split_sglquote(char const *s, char c);
+
+char	*ft_trim(char *src, bool is_malloced);
 
 // basics
 int		s_len(const char *s);
