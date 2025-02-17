@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 18:48:17 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/17 15:10:13 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/02/17 15:12:28 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,12 +111,12 @@ char	*ft_trim(char *src, bool is_malloced)
 }
 
 // cc ./src/tokens/cleaning.c ./utils/string/basics.c -g -o test
-int main()
-{
-	char	*new_string;
+// int main()
+// {
+// 	char	*new_string;
 
-	new_string = ft_trim(" le  monde ", false);
-	printf("valeur : `%s`\n", new_string);
-	free(new_string);
-	return (0);
-}
+// 	new_string = ft_trim(" le  monde ", false);
+// 	printf("valeur : `%s`\n", new_string);
+// 	free(new_string);
+// 	return (0);
+// }
