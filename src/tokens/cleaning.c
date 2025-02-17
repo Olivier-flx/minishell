@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleaning.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 18:48:17 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/14 19:37:01 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/02/17 15:10:13 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,14 +59,50 @@ int	count_useless_spaces(char *src)
 	return (k);
 }
 
+void	generate_trimed_str(char **new_string, char *src, int ns_len)
+{
+	int	i;
+	int	j;
+	int	spc_flg;
+
+	i = 0;
+	j = 0;
+	spc_flg = 0;
+	while (src && src[i] && (src[i] == ' ' || src[i] == '\t' || src[i] == '\n'))
+		i++;
+	while (src && src[i] && j < ns_len)
+	{
+		if (spc_flg == 0 && (src[i] == ' ' || src[i] == '\t' || src[i] == '\n'))
+		{
+			spc_flg = 1;
+			(*new_string)[j++] = src[i++];
+		}
+		else if (spc_flg == 1 && (src[i] == ' ' || src[i] == '\t' \
+				|| src[i] == '\n'))
+			i++;
+		else
+		{
+			spc_flg = 0;
+			(*new_string)[j++] = src[i++];
+		}
+		// i++;
+	}
+	(*new_string)[ns_len] = '\0';
+}
+
 char	*ft_trim(char *src, bool is_malloced)
 {
-	int		i;
+	// int		i;
 	char	*new_string;
 	int		dbl_spaces;
+	int		src_len;
 
 	dbl_spaces = count_useless_spaces(src);
-
+	src_len = s_len(src);
+	new_string = malloc ((src_len - dbl_spaces + 1) * sizeof(char));
+	if (!new_string)
+		return (NULL);
+	generate_trimed_str(&new_string, src, src_len - dbl_spaces);
 	//TO CONTINUE
 
 	if (is_malloced)
@@ -74,8 +110,13 @@ char	*ft_trim(char *src, bool is_malloced)
 	return (new_string);
 }
 
+// cc ./src/tokens/cleaning.c ./utils/string/basics.c -g -o test
+int main()
+{
+	char	*new_string;
 
-// int main()
-// {
-// 	return (printf("valeur : %i\n",count_useless_spaces(" le  monde ")));
-// }
+	new_string = ft_trim(" le  monde ", false);
+	printf("valeur : `%s`\n", new_string);
+	free(new_string);
+	return (0);
+}
