@@ -15,6 +15,7 @@ INC = ./header/minishell.h
 
 UTILS = ./utils/string/ft_split.c \
 		./utils/string/basics.c \
+		./utils/string/custom_basics.c \
 		./utils/string/quotes.c \
 		./utils/string/trim.c \
 		./utils/list/list_utils.c \

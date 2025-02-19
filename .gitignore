@@ -4,3 +4,4 @@
 *.out
 mini
 utils/string/ft_split_single.c
+test

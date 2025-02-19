@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   customs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/17 18:32:39 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/02/19 16:05:37 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,9 @@ void	increment_quotes(char *src, int i, t_quote *quote);
 char	**split_quoted(char const *s, char c);
 
 char	*ft_trim(char *src, bool is_malloced);
+	//quotes
+void	init_quotes(t_quote *quote);
+bool	all_quote_closed(char *s);
 
 // basics
 int		s_len(const char *s);

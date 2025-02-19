@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:23:22 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/12 19:26:32 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/02/19 16:38:07 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,20 @@ int	process_line(char **line)
 int	run_minishell(t_data	*data)
 {
 	char		*line;
+	char		*tmp;
 	t_dlist		*cmd_list;
 
+	tmp = NULL;
+	line = NULL;
 	cmd_list = malloc(sizeof(t_dlist));
 	if (!cmd_list)
 		return (1);
 	while (true && data->env)
 	{
 		line = readline("minishell> ");
-		if (line)
+		while (line && !all_quote_closed(line))
+			line = c_strjoin(line, readline("dquote> "), '\n');
+		if (line && all_quote_closed(line))
 		{
 			create_input_to_commands(line, &cmd_list, data);
 		//	add_history(line);
@@ -41,6 +46,7 @@ int	run_minishell(t_data	*data)
 			process_line(&line);
 			free(line);
 		}
+
 		else
 			continue ;
 		break ; // to remove when more advanced

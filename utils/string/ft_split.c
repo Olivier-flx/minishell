@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 11:18:50 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/17 18:35:55 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/02/19 15:59:23 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,7 @@ static int	ft_segment_count(const char *s, char c)
 	i = 0;
 	count = 0;
 	in_word = false;
-	quote.sgl = 0;
-	quote.dbl = 0;
-
+	init_quotes(&quote);
 	while (s[i] != '\0')
 	{
 		if (s[i] == '\''&& quote.sgl % 2 == 1 && quote.dbl % 2 == 0)
@@ -50,7 +48,6 @@ static int	ft_segment_count(const char *s, char c)
 		}
 		i++;
 	}
-	printf("count  : %i\n", count);
 	return (count);
 }
 
@@ -59,8 +56,7 @@ static int	ft_segment_len(int i, const char *s, char c)
 	int		len;
 	t_quote	quote;
 
-	quote.sgl = 0;
-	quote.dbl = 0;
+	init_quotes(&quote);
 	len = 0;
 	while (s[i])
 	{
@@ -94,6 +90,7 @@ static int	ft_segment_len(int i, const char *s, char c)
 	return (len + 1);
 }
 
+// USEFULL ?? TO MODIFY ??
 static char	**freeall(char **ns_ar, int i)
 {
 	i--;
@@ -113,8 +110,7 @@ static char	**ft_new_string_arr(char const *s, char c, char **ns_ar, int nb_segm
 	int		s_i;
 	t_quote	quote;
 
-	quote.sgl = 0;
-	quote.dbl = 0;
+	init_quotes(&quote);
 	i = 0;
 	segment_i = 0;
 	while (s[i] && segment_i < nb_segment)

@@ -3,48 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   create_input_token.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 17:57:45 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/17 18:32:39 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/02/19 15:28:55 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell.h"
 
-
-/////// NOT USED ///// 26-01-2024
-int	segment_count(char *src)
-{
-	int		i;
-	int		count;
-	bool	in_word;
-	bool	in_quotes;
-
-	i = 0;
-	count = 0;
-	in_word = false;
-	in_quotes = false;
-	while (src[i] != '\0')
-	{
-		if (src[i] == '\'' && in_quotes)
-			in_quotes = false;
-		else if (src[i] == '\'' && !in_quotes)
-		{
-			in_quotes = true;
-			count++;
-		}
-		else if (src[i] == ' ')
-			in_word = false;
-		else if (src[i] != ' ' && !in_quotes && !in_word)
-		{
-			count++;
-			in_word = true;
-		}
-		i++;
-	}
-	return (count);
-}
 
 //	i = 9
 //	varname = "rao"; --> j = 3;
@@ -214,50 +181,3 @@ int	create_input_to_commands(char *src, t_dlist **cmd_list, t_data *data)
 	//free ((*line)->word);
 	return (0);
 }
-
-/*
-////PREVIOUS VERSION//
-int	create_input_to_commands(char *src, t_dlist **cmd_list)
-{
-	int		in_sgl_quote;
-	int		in_dbl_quote;
-	bool	in_word;
-	int		i;
-	t_quote		quote;
-
-	init_var(&in_sgl_quote, &in_dbl_quote, &in_word, &i);
-
-	if (!src)
-		return (1); //Error
-
-	while (src[i])
-	{
-		if (src[i] == '"' && in_sgl_quote % 2 == 0)
-			in_dbl_quote++;
-		if (src[i] == '\'' && in_dbl_quote % 2 == 0)
-			in_sgl_quote++;
-		//if (in_dbl_quote % 2 == 1)
-		//	i += is_var_call(src, i, cmd_list);
-		if (in_sgl_quote % 2 == 0  && in_dbl_quote % 2 == 0)
-		{
-			i += is_operator(src, i, cmd_list);
-			//i += is_var_call(src, i, cmd_list); //create seg fault
-		}
-
-
-
-
-		/// TODO
-			// Crear una funccion para poner los commandos entre operadores en la lista
-
-		//i++;
-	}
-	printf("la list est ici ->\n");
-	print_dlist(cmd_list);
-
-	//printf("token test = %s\n", (*line)->content);
-
-	//free ((*line)->word);
-	return (0);
-}
-*/
