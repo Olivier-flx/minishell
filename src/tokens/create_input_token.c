@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 17:57:45 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/19 18:12:10 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/02/19 19:19:05 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,26 +133,27 @@ int	create_input_to_commands(char *src, t_dlist **cmd_list, t_data *data)
 			i += operator_list(src, i, cmd_list); // se puede cambiar facilmente cmd_list si se quere una lista para oper y una para argvs
 		else
 		{
-			increment_quotes(src, i, &quotes);
-			if(data->ope_char_i.size > 0)
+			if(data->ope_char_i.size > 0 && j < data->ope_char_i.size)
 			{
-				printf("(data->ope_char_i).size = %i\n",data->ope_char_i.size);
-				printf("(data->ope_char_i).array[j] = %i\n",data->ope_char_i.array[j]);
-				printf("substr = `%s`\n", ft_substr(src, i, (data->ope_char_i).array[j]));
+				printf("(data->ope_char_i).array[%i] = %i\n",j, data->ope_char_i.array[j]);
+				printf("substr = `%s`\n", ft_substr(src, i, data->ope_char_i.array[j]));
+				if ((data->ope_char_i).array[j] == i)
+				{
+					j++;
+					i++;
+					continue ;
+				}
 				chunk = split_quoted(ft_substr(src, i, (data->ope_char_i).array[j]), ' ');
 				i += data->ope_char_i.array[j] - i;
 				j++;
-/*redondant*/	token = create_token(&chunk, CMD, i, (t_quote) {0});
-/*redondant*/	add_to_list(cmd_list, token);
 			}
 			else
-			{
 				chunk = split_quoted(ft_substr(src, i, s_len(src)), ' ');
-/*redondant*/	token = create_token(&chunk, CMD, i, (t_quote) {0});
-/*redondant*/	add_to_list(cmd_list, token);
-			}
-			break ;
+			token = create_token(&chunk, CMD, i, (t_quote) {0});
+			add_to_list(cmd_list, token);
+
 		}
+
 		i++;
 
 		if(data->ope_char_i.size > 0)

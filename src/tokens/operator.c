@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:37:48 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/19 18:23:52 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/02/19 19:21:55 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,12 +152,18 @@ void	set_ope_char_i_arr(char *src, t_int_array *arr)
 		op_count = is_operator(src, i, &quote);
 		if (op_count > 0)
 		{
-			arr->array[j] = i;
+			arr->array[j++] = i;
 			if (op_count == 2)
-				arr->array[++j] = i + 1;
+				arr->array[j++] = i + 1;
 			i += op_count;
 			continue ;
 		}
+		i++;
+	}
+	i = 0;
+	while (i < arr->size)
+	{
+		printf("arr val[%i] = %i\n", i, arr->array[i]);
 		i++;
 	}
 }
