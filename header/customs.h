@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/19 16:05:37 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/02/19 17:21:09 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,9 @@ bool	all_quote_closed(char *s);
 // basics
 int		s_len(const char *s);
 char	*s_dup(char *s);
+
+// custom basics
+char	*c_strjoin(char *s1, char *s2, char c);
 
 
 // List Utils
