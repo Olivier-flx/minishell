@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:37:48 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/19 18:08:14 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/02/19 18:23:52 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,12 +140,10 @@ void	set_ope_char_i_arr(char *src, t_int_array *arr)
 	t_quote		quote;
 
 	j = 0;
-	op_count = 0;
 	if (arr->size == 0)
 		return ;
-	printf("arr->size = %i\n",arr->size);
 	arr->array = malloc (arr->size * sizeof(int));
-	if (arr->array)
+	if (!(arr->array))
 		return ;
 	init_operador_var(&quote, &op_count, &i);
 	while (src[i])
