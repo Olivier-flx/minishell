@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:23:22 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/19 17:21:57 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/02/19 17:31:22 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,14 @@ int	run_minishell(t_data	*data)
 		line = readline("minishell> ");
 		while (line && !all_quote_closed(line))
 			line = c_strjoin(line, readline("dquote> "), '\n');
+		while (true)// structure for the heredoc @ TODO
+			break ; // structure for the heredoc @ TODO
 		if (line && all_quote_closed(line))
 		{
-			create_input_to_commands(line, &cmd_list, data);
 		//	add_history(line);
-		//	clear_history();
+			create_input_to_commands(line, &cmd_list, data);
 			process_line(&line);
+		//	clear_history(); //--> donde ponerlo??
 			free(line);
 		}
 

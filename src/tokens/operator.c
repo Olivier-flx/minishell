@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:37:48 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/14 18:22:33 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/02/19 18:08:14 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,7 @@ void	set_ope_char_i_arr(char *src, t_int_array *arr)
 	op_count = 0;
 	if (arr->size == 0)
 		return ;
+	printf("arr->size = %i\n",arr->size);
 	arr->array = malloc (arr->size * sizeof(int));
 	if (arr->array)
 		return ;
@@ -185,7 +186,6 @@ void	set_ope_char_i_struc_arr(char *src, t_int_array *arr)
 		}
 		i++;
 	}
-	printf("opcount = %i\n", op_count);
 	arr->size = op_count;
 	set_ope_char_i_arr(src, arr);
 }
