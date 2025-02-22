@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/22 10:24:49 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/02/22 10:42:14 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,7 @@ t_dlist	*find_last_node(t_dlist **lst);
 // arrays
 bool	int_var_in_arr(int var, t_int_array *arr);
 void	print_int_arr(t_int_array *arr);
+void	print_pp_char_arr(char **str);
 
 // ERROR
 	//MSG

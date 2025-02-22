@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 17:57:45 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/22 10:27:52 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/02/22 10:53:19 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,50 +128,51 @@ int	create_input_to_commands(char *src, t_dlist **cmd_list, t_data *data)
 	init_operador_var(&quotes, &j, &i);
 	chunks_n = count_operador(src) + 1; // no util de momento
 	set_ope_char_i_struc_arr(src, &(data->ope_char_i));
-	print_int_arr(&(data->ope_char_i));
+//	print_int_arr(&(data->ope_char_i)); // for debuging/
 
-	// while (src[i])
-	// {
-	// 	if(int_var_in_arr(i, &(data)->ope_char_i))
-	// 	{
-	// 		i += operator_list(src, i, cmd_list); // se puede cambiar facilmente cmd_list si se quere una lista para oper y una para argvs
-	// 		j += ((t_input_tocken *)find_last_node(cmd_list)->content)->len;
-	// 	}
-	// 	else
-	// 	{
-	// 		if(data->ope_char_i.size > 0 && j < data->ope_char_i.size)
-	// 		{
-	// 			printf("(data->ope_char_i).array[%i] = %i\n", j, data->ope_char_i.array[j] - i);
-	// 			printf("substr = `%s`\n", c_ft_substr(src, i, data->ope_char_i.array[j] - i));
-	// 			tmp = c_ft_substr(src, i, data->ope_char_i.array[j] - i);
-	// 			if (!tmp)
-	// 			{
-	// 				i++;
-	// 				continue ;
-	// 			}
-	// 			// if ((data->ope_char_i).array[j] == i)
-	// 			// {
-	// 			// 	j++;
-	// 			// 	i++;
-	// 			// 	continue ;
-	// 			// }
-	// 			chunk = split_quoted(tmp, ' ');
-	// 			i += data->ope_char_i.array[j] - i;
-	// 			j++;
-	// 		}
-	// 		else
-	// 		{
-	// 			chunk = split_quoted(ft_substr(src, i, s_len(src)), ' ');
-	// 			token = create_token(&chunk, CMD, i, (t_quote) {0});
-	// 			add_to_list(cmd_list, token);
-	// 			break ;
-	// 		}
-	// 		token = create_token(&chunk, CMD, i, (t_quote) {0});
-	// 		add_to_list(cmd_list, token);
-
-	// 	printf("i++ [%i] \n", i);
-	// 	}
-	// }
+	while (src[i])
+	{
+		if(int_var_in_arr(i, &(data)->ope_char_i))
+		{
+			i += operator_list(src, i, cmd_list); // se puede cambiar facilmente cmd_list si se quere una lista para oper y una para argvs
+			j += ((t_input_tocken *)find_last_node(cmd_list)->content)->len;
+		}
+		else
+		{
+			if(data->ope_char_i.size > 0 && j < data->ope_char_i.size)
+			{
+				printf("(data->ope_char_i).array[%i] - i = %i\n", j, data->ope_char_i.array[j] - i);
+				printf("(data->ope_char_i).array[%i] = %i\n", j, data->ope_char_i.array[j]);
+				printf("substr = `%s`\n", c_ft_substr(src, i, data->ope_char_i.array[j] - i));
+				tmp = c_ft_substr(src, i, data->ope_char_i.array[j] - i);
+				if (!tmp)
+				{
+					i++;
+					continue ;
+				}
+				// if ((data->ope_char_i).array[j] == i)
+				// {
+				// 	j++;
+				// 	i++;
+				// 	continue ;
+				// }
+				chunk = split_quoted(tmp, ' ');
+				print_pp_char_arr(chunk);
+				token = create_token(&chunk, CMD, i, (t_quote) {0});
+				i += data->ope_char_i.array[j] - i;
+				j++;
+				add_to_list(cmd_list, token);
+			}
+			else
+			{
+				chunk = split_quoted(ft_substr(src, i, s_len(src)), ' ');
+				token = create_token(&chunk, CMD, i, (t_quote) {0});
+				add_to_list(cmd_list, token);
+				break ;
+			}
+		printf("i++ [%i] \n", i);
+		}
+	}
 		if (chunks_n > 0) // à supprimer par la suite--> juste pour compile
 			printf(" ");
 		if(data->ope_char_i.size > 0)
