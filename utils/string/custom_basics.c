@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   custom_basics.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:13:36 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/19 16:37:42 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/02/21 17:51:04 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,45 @@ char	*c_strjoin(char *s1, char *s2, char c)
 	ptr[i + 1 + j] = '\0';
 	free (s1);
 	free (s2);
+	return (ptr);
+}
+
+static size_t	calc_malloc_len(char const *s, unsigned int start, size_t len)
+{
+	if (start > ft_strlen(s))
+		len = 0;
+	if (ft_strlen(s) - start < len)
+		len = ft_strlen(s) - start;
+	return (len);
+}
+
+char	*c_ft_substr(char const *s, unsigned int start, size_t len)
+{
+	unsigned int	i;
+	unsigned int	j;
+	char			*ptr;
+
+	if(len <= 0 || start >= s_len(s))
+		return (NULL);
+	i = 0;
+	j = 0;
+	len = calc_malloc_len(s, start, len);
+	ptr = malloc(sizeof(char) * len + 1);
+	if (ptr == NULL)
+		return (NULL);
+	while (s[i])
+	{
+		if (start == i)
+		{
+			while (j < len)
+			{
+				ptr[j] = s[i + j];
+				j++;
+			}
+		}
+		i++;
+	}
+	ptr[j] = '\0';
 	return (ptr);
 }
 

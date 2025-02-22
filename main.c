@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:23:22 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/19 17:31:22 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/02/21 17:01:02 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,8 @@ int	process_line(char **line)
 int	run_minishell(t_data	*data)
 {
 	char		*line;
-	char		*tmp;
 	t_dlist		*cmd_list;
 
-	tmp = NULL;
 	line = NULL;
 	cmd_list = malloc(sizeof(t_dlist));
 	if (!cmd_list)

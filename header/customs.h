@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   customs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/19 17:21:09 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/02/22 10:24:49 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,16 +112,17 @@ char	*s_dup(char *s);
 
 // custom basics
 char	*c_strjoin(char *s1, char *s2, char c);
-
+char	*c_ft_substr(char const *s, unsigned int start, size_t len);
 
 // List Utils
 void	free_list(t_dlist **stack_to_free);
 int		add_to_list(t_dlist **line, void *content);
 void	print_dlist(t_dlist **list);
+t_dlist	*find_last_node(t_dlist **lst);
 
 // arrays
 bool	int_var_in_arr(int var, t_int_array *arr);
-
+void	print_int_arr(t_int_array *arr);
 
 // ERROR
 	//MSG
