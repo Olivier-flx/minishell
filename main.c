@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:23:22 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/26 16:25:22 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/02/26 16:57:35 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,31 +27,32 @@ int	run_minishell(t_data	*data)
 	char		*line;
 	t_dlist		*cmd_list;
 
-	line = NULL;
-	cmd_list = malloc(sizeof(t_dlist));
-	if (!cmd_list)
-		return (1);
 	while (true && data->env)
 	{
+		line = NULL;
+		cmd_list = malloc(sizeof(t_dlist));
+		if (!cmd_list)
+			return (1);
 		line = readline("minishell> ");
 		while (line && !all_quote_closed(line))
 			line = c_strjoin(line, readline("dquote> "), '\n');
 
 		//////////////// To include in process line /////////
-		while (line && contains_heredoc(line))// structure for the heredoc @ TODO
-		{
-			line = c_strjoin(line, readline("heredoc> "), '\n');
-			break ; // structure for the heredoc @ TODO
-			// manage cat << EOF | cat << END
-			// manage cat<test.txt << EOF
-		}
+		// while (line && contains_heredoc(line))// structure for the heredoc @ TODO
+		// {
+		// 	line = c_strjoin(line, readline("heredoc> "), '\n');
+		// 	break ; // structure for the heredoc @ TODO
+		// 	// manage cat << EOF | cat << END
+		// 	// manage cat<test.txt << EOF
+		// }
 		////////////////////////////////
 		if (line && all_quote_closed(line))
 		{
-		//	add_history(line);
 			create_input_to_commands(line, &cmd_list, data);
 			check_for_user_input_error(&cmd_list);
+			// process herdocs
 			process_line(&line);
+		//	add_history(line);
 		//	clear_history(); //--> donde ponerlo??
 			free(line);
 		}
