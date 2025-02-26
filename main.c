@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:23:22 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/26 16:57:35 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/02/26 18:20:53 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,11 @@ int	run_minishell(t_data	*data)
 		if (line && all_quote_closed(line))
 		{
 			create_input_to_commands(line, &cmd_list, data);
-			check_for_user_input_error(&cmd_list);
+			if(check_for_user_input_error(&cmd_list) > 0)
+			{
+				free(line);
+				continue ;
+			}
 			// process herdocs
 			process_line(&line);
 		//	add_history(line);
@@ -57,11 +61,11 @@ int	run_minishell(t_data	*data)
 			free(line);
 		}
 
-		else
-			continue ;
+		// else
+		// 	continue ;
+		free(cmd_list);
 		break ; // to remove when more advanced
 	}
-	free(cmd_list);
 	return (0);
 }
 
