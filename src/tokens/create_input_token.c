@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 17:57:45 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/22 10:53:19 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/02/22 11:56:24 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,15 +147,10 @@ int	create_input_to_commands(char *src, t_dlist **cmd_list, t_data *data)
 				tmp = c_ft_substr(src, i, data->ope_char_i.array[j] - i);
 				if (!tmp)
 				{
+					printf("tmp = NULL\n");
 					i++;
 					continue ;
 				}
-				// if ((data->ope_char_i).array[j] == i)
-				// {
-				// 	j++;
-				// 	i++;
-				// 	continue ;
-				// }
 				chunk = split_quoted(tmp, ' ');
 				print_pp_char_arr(chunk);
 				token = create_token(&chunk, CMD, i, (t_quote) {0});
@@ -170,7 +165,6 @@ int	create_input_to_commands(char *src, t_dlist **cmd_list, t_data *data)
 				add_to_list(cmd_list, token);
 				break ;
 			}
-		printf("i++ [%i] \n", i);
 		}
 	}
 		if (chunks_n > 0) // à supprimer par la suite--> juste pour compile
