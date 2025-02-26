@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:23:22 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/21 17:01:02 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/02/26 16:25:22 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,21 @@ int	run_minishell(t_data	*data)
 		line = readline("minishell> ");
 		while (line && !all_quote_closed(line))
 			line = c_strjoin(line, readline("dquote> "), '\n');
-		while (true)// structure for the heredoc @ TODO
+
+		//////////////// To include in process line /////////
+		while (line && contains_heredoc(line))// structure for the heredoc @ TODO
+		{
+			line = c_strjoin(line, readline("heredoc> "), '\n');
 			break ; // structure for the heredoc @ TODO
+			// manage cat << EOF | cat << END
+			// manage cat<test.txt << EOF
+		}
+		////////////////////////////////
 		if (line && all_quote_closed(line))
 		{
 		//	add_history(line);
 			create_input_to_commands(line, &cmd_list, data);
+			check_for_user_input_error(&cmd_list);
 			process_line(&line);
 		//	clear_history(); //--> donde ponerlo??
 			free(line);

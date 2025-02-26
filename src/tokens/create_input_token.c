@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_input_token.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 17:57:45 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/22 11:56:24 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/02/26 15:11:57 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ static int	operator_list(char *src, int i, t_dlist **cmd_list)
 		operador_to_arr[0] = operador;
 		operador_to_arr[1] = NULL;
 		token = create_token(&operador_to_arr, OPERATOR, i, (t_quote) {0});
+		printf("s_len(operador) = %i\n", s_len(operador));
 		return (add_to_list(cmd_list, token), s_len(operador));
 	}
 	return (0);
@@ -132,6 +133,7 @@ int	create_input_to_commands(char *src, t_dlist **cmd_list, t_data *data)
 
 	while (src[i])
 	{
+		printf("i = %i\n", i);
 		if(int_var_in_arr(i, &(data)->ope_char_i))
 		{
 			i += operator_list(src, i, cmd_list); // se puede cambiar facilmente cmd_list si se quere una lista para oper y una para argvs
@@ -141,13 +143,10 @@ int	create_input_to_commands(char *src, t_dlist **cmd_list, t_data *data)
 		{
 			if(data->ope_char_i.size > 0 && j < data->ope_char_i.size)
 			{
-				printf("(data->ope_char_i).array[%i] - i = %i\n", j, data->ope_char_i.array[j] - i);
-				printf("(data->ope_char_i).array[%i] = %i\n", j, data->ope_char_i.array[j]);
-				printf("substr = `%s`\n", c_ft_substr(src, i, data->ope_char_i.array[j] - i));
 				tmp = c_ft_substr(src, i, data->ope_char_i.array[j] - i);
 				if (!tmp)
 				{
-					printf("tmp = NULL\n");
+					printf("tmp = NULL\n");//for debuging
 					i++;
 					continue ;
 				}
@@ -155,7 +154,6 @@ int	create_input_to_commands(char *src, t_dlist **cmd_list, t_data *data)
 				print_pp_char_arr(chunk);
 				token = create_token(&chunk, CMD, i, (t_quote) {0});
 				i += data->ope_char_i.array[j] - i;
-				j++;
 				add_to_list(cmd_list, token);
 			}
 			else
@@ -167,7 +165,7 @@ int	create_input_to_commands(char *src, t_dlist **cmd_list, t_data *data)
 			}
 		}
 	}
-		if (chunks_n > 0) // à supprimer par la suite--> juste pour compile
+		if (chunks_n > 0) // quitar luego -> solo para que compile
 			printf(" ");
 		if(data->ope_char_i.size > 0)
 			free(data->ope_char_i.array);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   customs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/22 10:42:14 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/02/26 15:21:41 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,11 @@ int		count_operador(char *src);
 int		get_operador_index(char *src, t_dlist **cmd_list);
 void	init_operador_var(t_quote *quote, int *op_count, int *i);
 
+		// verifications //
+			//user_input_validation
+void	check_for_user_input_error(t_dlist *cmd_list);
+			//system_input_validation
+void	check_system_input_error(t_data *data, t_dlist *cmd_list);
 		//cleaning.c
 
 void	set_ope_char_i_struc_arr(char *src, t_int_array *arr);
