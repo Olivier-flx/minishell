@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_input_token.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 17:57:45 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/26 15:11:57 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/03/05 17:23:40 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,16 @@
 // 		return (simple_error_msg("varName_malloc error"), -1);
 // 	while (src[i] && k < j)
 // 		var_name[k++] = src[i++];
-// 	return (add_to_list(cmd_list, &((t_input_tocken){var_name,false,false,true,true})), j + 1);
+// 	return (add_to_list(cmd_list, &((t_chunk){var_name,false,false,true,true})), j + 1);
 // }
 //ret j + 1 por el "$"
 
 
-t_input_tocken	*create_token(char ***str, int type, int i, t_quote quotes)
+t_chunk	*create_token(char ***str, int type, int i, t_quote quotes)
 {
-	t_input_tocken	*token;
+	t_chunk	*token;
 
-	token = malloc(sizeof(t_input_tocken));
+	token = malloc(sizeof(t_chunk));
 	if (!token)
 		return (NULL);
 	token->content = *str;
@@ -93,7 +93,7 @@ static int	operator_list(char *src, int i, t_dlist **cmd_list)
 {
 	char			*operador;
 	char			**operador_to_arr;
-	t_input_tocken	*token;
+	t_chunk	*token;
 
 	token = NULL;
 	operador = operator_sdup(src, i);
@@ -110,7 +110,7 @@ static int	operator_list(char *src, int i, t_dlist **cmd_list)
 	}
 	return (0);
 }
-		//*token = (t_input_tocken){operador, false, false, true, false};
+		//*token = (t_chunk){operador, false, false, true, false};
 
 int	create_input_to_commands(char *src, t_dlist **cmd_list, t_data *data)
 {
@@ -119,7 +119,7 @@ int	create_input_to_commands(char *src, t_dlist **cmd_list, t_data *data)
 	int				i;
 	int				j = 0;
 	char			**chunk;
-	t_input_tocken	*token;
+	t_chunk	*token;
 	char			*tmp;
 
 	token = NULL;
@@ -137,7 +137,7 @@ int	create_input_to_commands(char *src, t_dlist **cmd_list, t_data *data)
 		if(int_var_in_arr(i, &(data)->ope_char_i))
 		{
 			i += operator_list(src, i, cmd_list); // se puede cambiar facilmente cmd_list si se quere una lista para oper y una para argvs
-			j += ((t_input_tocken *)find_last_node(cmd_list)->content)->len;
+			j += ((t_chunk *)find_last_node(cmd_list)->content)->len;
 		}
 		else
 		{

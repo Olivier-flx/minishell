@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   customs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/26 17:41:21 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/03/05 17:23:40 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ typedef struct s_input_tocken
 	int			index; // util ?
 	int			len; // util ?
 	t_quote		quotes; // util ?
-}	t_input_tocken;
+}	t_chunk;
 
 
 

@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:13:36 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/21 17:51:04 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/03/05 17:34:44 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	*c_ft_substr(char const *s, unsigned int start, size_t len)
 	unsigned int	j;
 	char			*ptr;
 
-	if(len <= 0 || start >= s_len(s))
+	if(len <= 0 || start >= (unsigned int) s_len(s))
 		return (NULL);
 	i = 0;
 	j = 0;

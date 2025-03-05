@@ -7,8 +7,7 @@ YELLOW=\033[1;33m
 
 NAME = mini
 CC = cc
-CFLAGS =  -g -O0
-# -Werror -Wall -Wextra
+CFLAGS =  -g -O0 -Werror -Wall -Wextra
 LDFLAGS = -lreadline
 
 INC = ./header/minishell.h

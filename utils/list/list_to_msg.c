@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 16:51:49 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/22 10:51:09 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/03/05 17:23:40 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ void	print_dlist(t_dlist **list)
 			j++;
 			fflush(stdout);
 			i = 0;
-			while (((t_input_tocken *)i_node->content)->content[i])
+			while (((t_chunk *)i_node->content)->content[i])
 			{
-				printf("`%s`;", ((t_input_tocken *)i_node->content)->content[i++]);
+				printf("`%s`;", ((t_chunk *)i_node->content)->content[i++]);
 				fflush(stdout);
 			}
 			printf("\n");
