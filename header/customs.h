@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   customs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/03/05 17:23:40 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/03/12 17:27:42 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,9 @@ typedef struct s_input_tocken
 {
 	char		**content;
 	string_type	type;
+	bool		has_redir
+	char		**redir;// list of redir in a chunk ex: > >> >
+	char		**fichier_redir;// ex:test ; test1; test2
 	int			index; // util ?
 	int			len; // util ?
 	t_quote		quotes; // util ?
