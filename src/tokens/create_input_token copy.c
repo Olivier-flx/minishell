@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 17:57:45 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/03/19 18:29:56 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/03/14 16:33:32 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,9 @@ char	*operator_sdup(char *src, int i)
 	char	*operador;
 
 	operador = NULL;
-	if (src[i] == '>' && src[i + 1] && src[i + 1] == '>')
+	if (src[i] == 124)
+		operador = s_dup("|");
+	else if (src[i] == '>' && src[i + 1] && src[i + 1] == '>')
 		operador = s_dup(">>");
 	else if (src[i] == '<' && src[i + 1] && src[i + 1] == '<')
 		operador = s_dup("<<");
@@ -79,7 +81,6 @@ char	*operator_sdup(char *src, int i)
 		operador = s_dup(">");
 	return (operador);
 }
-
 
 /// Operator to handle
 /// <
@@ -111,14 +112,6 @@ static int	operator_list(char *src, int i, t_dlist **cmd_list)
 }
 		//*token = (t_chunk){operador, false, false, true, false};
 
-// int	tockenize(char *src, t_dlist **cmd_list, t_data *data)
-// {
-
-// 	set_ope_char_i_struc_arr(src, &(data->ope_char_i));
-// 	return (0);
-// }
-
-
 int	create_input_to_commands(char *src, t_dlist **cmd_list, t_data *data)
 {
 	t_quote			quotes;
@@ -132,7 +125,7 @@ int	create_input_to_commands(char *src, t_dlist **cmd_list, t_data *data)
 	token = NULL;
 
 	if (!src)
-		return (1); //Error //seems useless
+		return (1); //Error
 	init_operador_var(&quotes, &j, &i);
 	chunks_n = count_operador(src) + 1; // no util de momento
 	set_ope_char_i_struc_arr(src, &(data->ope_char_i));
@@ -150,7 +143,7 @@ int	create_input_to_commands(char *src, t_dlist **cmd_list, t_data *data)
 		{
 			if(data->ope_char_i.size > 0 && j < data->ope_char_i.size)
 			{
-				tmp = c_ft_substr(src, i, data->ope_char_i.array[j] - i); // data->ope_char_i.array[j] - i --> corresponde a indice del proximo operador - i  --> len de lo que se debe hace la substring  -- > enable chunks
+				tmp = c_ft_substr(src, i, data->ope_char_i.array[j] - i); // data->ope_char_i.array[j] - i --> corresponde a indice del proximo operador - i  --> len de lo que se debe hace la substring
 				if (!tmp)
 				{
 					printf("tmp = NULL\n");//for debuging

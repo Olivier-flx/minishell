@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:23:22 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/26 18:20:53 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/03/19 18:46:25 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,12 @@ int	run_minishell(t_data	*data)
 		////////////////////////////////
 		if (line && all_quote_closed(line))
 		{
-			create_input_to_commands(line, &cmd_list, data);
-			if(check_for_user_input_error(&cmd_list) > 0)
-			{
-				free(line);
-				continue ;
-			}
+			create_main_chunks(line, &cmd_list, data);
+			// if(check_for_user_input_error(&cmd_list) > 0)
+			// {
+			// 	free(line);
+			// 	continue ;
+			// }
 			// process herdocs
 			process_line(&line);
 		//	add_history(line);

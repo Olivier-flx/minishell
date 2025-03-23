@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   operator.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:37:48 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/26 15:12:19 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/03/19 18:29:16 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,6 +162,8 @@ void	set_ope_char_i_arr(char *src, t_int_array *arr)
 	}
 	i = 0;
 }
+
+
 
 //calculate the lenght of the array on indexes of char that are operators in src
 void	set_ope_char_i_struc_arr(char *src, t_int_array *arr)

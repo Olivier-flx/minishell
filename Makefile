@@ -16,6 +16,7 @@ INC = ./header/minishell.h
 UTILS = ./utils/string/ft_split.c \
 		./utils/string/basics.c \
 		./utils/string/custom_basics.c \
+		./utils/string/select_from_substring_arr.c \
 		./utils/string/quotes.c \
 		./utils/string/trim.c \
 		./utils/list/list_utils.c \
@@ -26,7 +27,8 @@ UTILS = ./utils/string/ft_split.c \
 		./utils/custom_frees.c \
 		./src/tokens/create_input_token.c \
 		./src/tokens/operator.c \
-		./src/tokens/user_input_validation.c
+		./src/tokens/user_input_validation.c\
+		./src/tokens/creat_tockens_v2.c
 
 
 SRC = main.c \

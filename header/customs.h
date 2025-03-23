@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   customs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/03/12 17:27:42 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/03/19 21:49:42 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 #ifndef CUSTOMS_H
 # define CUSTOMS_H
 
-
+///// NOT FORGET TO REMOVE FFLUSH() in list_to_msg
 
 typedef enum {
 	CMD,
+	PIPE,
 	OPERATOR,
 	ARG,
 	VAR
@@ -48,21 +49,27 @@ typedef struct data
 	t_dlist		*input;
 	t_int_array	ope_char_i; //index of operators characters in string input
 	int			chunks; //number of commands and argv separated by operators
+	t_dlist		*local_var;
 }	t_data;
 
 typedef struct s_input_tocken
 {
-	char		**content;
+	char		**content; // basic chunks that are taken from line splited by "|"
+	char		**argv;
 	string_type	type;
-	bool		has_redir
+	bool		has_redir;
 	char		**redir;// list of redir in a chunk ex: > >> >
-	char		**fichier_redir;// ex:test ; test1; test2
+	char		**redir_files;// ex:test ; test1; test2
 	int			index; // util ?
 	int			len; // util ?
 	t_quote		quotes; // util ?
 }	t_chunk;
 
-
+typedef struct s_local_var
+{
+	char	*content;
+	char	*var_name;
+} t_loc_var;
 
 
 //NOT USED
@@ -85,6 +92,9 @@ int		b_exit(int ret_val, t_data data);
 
 /////////////// SRC //////////////
 	///// Tokens /////
+t_chunk	*create_token(char ***str, int type, int i, t_quote quotes);
+
+
 		// operators.c
 int		is_operator(char *src, int i, t_quote *quote);
 int		count_operador(char *src);
@@ -108,6 +118,7 @@ int		create_input_to_commands(char *src, t_dlist **cmd_list, t_data *data);
 	/////  string //////
 void	increment_quotes(char *src, int i, t_quote *quote);
 char	**split_quoted(char const *s, char c);
+char	**dup_pp_char(char **substring_arr, int start, int end);
 
 char	*ft_trim(char *src, bool is_malloced);
 	//quotes
@@ -133,8 +144,16 @@ bool	int_var_in_arr(int var, t_int_array *arr);
 void	print_int_arr(t_int_array *arr);
 void	print_pp_char_arr(char **str);
 
+//custom_frees
+void	free_av(char **av);
+char	**free_uncomplete_av(char **av, int i);
+
 // ERROR
 	//MSG
 void	simple_error_msg(char *msg);
+
+
+//Temporal for pruebas
+int	create_main_chunks(char *src, t_dlist **cmd_list, t_data *data);
 
 #endif

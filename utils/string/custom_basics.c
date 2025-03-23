@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:13:36 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/03/05 17:34:44 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/03/19 17:45:37 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ static size_t	calc_malloc_len(char const *s, unsigned int start, size_t len)
 	return (len);
 }
 
+//substring a string between a start point  en a end point
 char	*c_ft_substr(char const *s, unsigned int start, size_t len)
 {
 	unsigned int	i;

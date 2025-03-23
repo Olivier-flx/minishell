@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 11:18:50 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/19 15:59:23 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/03/19 17:46:17 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ static int	ft_segment_len(int i, const char *s, char c)
 	return (len + 1);
 }
 
-// USEFULL ?? TO MODIFY ??
+// // duplicate with char	**free_uncomplete_av(char **av, int i); in custom_frees.c
 static char	**freeall(char **ns_ar, int i)
 {
 	i--;
