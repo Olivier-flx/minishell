@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   creat_tockens_v2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:49:47 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/03/19 21:49:40 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/03/23 17:33:22 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static int	create_pipe_chunk(int i, t_dlist **cmd_list)
 	return (0);
 }
 
-void	create_main_chunks(char *src, t_dlist **cmd_list)
+int	create_main_chunks(char *src, t_dlist **cmd_list)
 {
 	char	**all_tokens;
 	char	**chunk;
@@ -52,13 +52,15 @@ void	create_main_chunks(char *src, t_dlist **cmd_list)
 	int		i;
 	int		flag_last_pipe;
 
+	if (!cmd_list)
+		return( printf("cmd_list = NULL\n"));
+
 	i = 0;
 	flag_last_pipe = 0;
-	all_tokens = split_quoted(src, ' ');
-	print_pp_char_arr(all_tokens);
+	all_tokens = split_quoted(src, ' '); // @TODO anadir luego el split por operador
 	while (all_tokens && all_tokens[i] && all_tokens[i][0])
 	{
-		if (all_tokens[i][0] == '|')
+		if (all_tokens[i][0] == '|') // @info : Si encuentra '|' crea el chunk de antes y el chunk de '|'
 		{
 			chunk = dup_pp_char(all_tokens, flag_last_pipe, i - 1 );
 			token = create_token(&chunk, CMD, i, (t_quote) {0}); // i correspond au numéro du chunk / index du chunk dans la string. à retirer
@@ -68,72 +70,107 @@ void	create_main_chunks(char *src, t_dlist **cmd_list)
 		}
 		i++;
 	}
-	chunk = dup_pp_char(all_tokens, flag_last_pipe, i - 1 );
-	token = create_token(&chunk, CMD, i, (t_quote) {0}); // i correspond au numéro du chunk / index du chunk dans la string. à retirer
-	add_to_list(cmd_list, token);
+	if (i > 0)
+		i--;
+	if (all_tokens && all_tokens[i] && all_tokens[i][0])// @info : crea el ultimo chunK
+	{
+		chunk = dup_pp_char(all_tokens, flag_last_pipe, i);
+		token = create_token(&chunk, CMD, i, (t_quote) {0}); // i correspond au numéro du chunk / index du chunk dans la string. à retirer
+		add_to_list(cmd_list, token);
+	}
 	free(all_tokens);
-
-	printf("la list est ici ->\n");
-	print_dlist(cmd_list);
+	return (0);
 }
 
-void	init_redir_arr_and_files(t_chunk chunk)
+void	init_redir_arr_and_files(t_chunk *chunk)
 {
-	int	redir_count;
-
-	redir_count = count_operador(chunk->content);
-	chunk->redir = malloc(sizeof(char *) * (redir_count + 1));
+	chunk->redir_count = count_operador_from_pp_char(chunk->content);
+	chunk->redir = malloc(sizeof(char *) * (chunk->redir_count + 1));
 	if (!chunk->redir)
-		return (NULL);
-	chunk->redir_files = malloc(sizeof(char *) * (redir_count + 1))
+		return ; // @confirm
+	chunk->redir[chunk->redir_count] = 0;
+	chunk->redir_files = malloc(sizeof(char *) * (chunk->redir_count + 1));
+	if (!chunk->redir_files)
+		return ; // @confirm
+	chunk->redir_files[chunk->redir_count] = 0;
 }
 
-void	separate_arg_and_operator(t_chunk * chunk)
+void	init_argv(t_chunk *chunk)
+{
+	int	len_argv;
+
+	len_argv = pp_char_len(chunk->content) - (chunk->redir_count * 2); //@info : x2 para redir y et nombre del file
+	chunk->argv = malloc (sizeof(char *) * (len_argv + 1));
+	if (NULL == chunk->argv)
+	{
+		printf("Malloc error : al asignar el argv\n");
+		return ;// @confirm
+	}
+	chunk->argv[len_argv] = 0;
+}
+
+void	separate_arg_and_operator(t_chunk *chunk)
 {
 	int	i;
-	int	j;
+	int	i_redir;
+	int	i_argv;
+	t_quote	quote = {0,0};
 
 	i = 0;
-	j = 0;
+	i_redir = 0;
+	i_argv = 0;
+	init_redir_arr_and_files(chunk);
+	init_argv(chunk);
 	while (chunk->content[i])
 	{
-		init_redir_arr(chunk);
-		if (is_operator(chunk->content[i], 0, t_quote *{0,0}))
+		if (is_redirection(chunk->content[i], 0, &quote) > 0) // @info: fil the t_chunk redir file with the corresponding redirections
 		{
-			chunk->redir[j] = s_dup(chunk->content[i]);
+			chunk->redir[i_redir] = s_dup(chunk->content[i]);
 			if (chunk->content[i + 1])
-				chunk->redir[j] = s_dup(chunk->content[++i]);
+				chunk->redir_files[i_redir] = s_dup(chunk->content[++i]);
 			else
 				printf("Error --> No file name after a redir\n");
+			chunk->has_redir = true; // @Util : 2025-03-23, no se si util?
+			i_redir++;
 		}
 		else
+			chunk->argv[i_argv++] = s_dup(chunk->content[i]);
 
-
-		printf("`%s`;", chunk->content[i++]);
-		fflush(stdout);
+		printf("`%s`;", chunk->content[i]); // @debug
+		fflush(stdout);  // @debug
 		i++;
 	}
-
-
 }
 
 int	create_argvs(t_dlist **cmd_list)
 {
 	t_dlist	*i_node;
 
-	i_node = cmd_list;
+	i_node = *cmd_list;
 
 	while (i_node)
 	{
-		separate_arg_and_operator((t_chunk *)i_node->content)
+		separate_arg_and_operator((t_chunk *)i_node->content);
+		printf("argv is :");// @debug
+		print_pp_char_arr(((t_chunk *)i_node->content)->argv); // @debug
+		printf("end argv\n");// @debug
+		printf("redir is :");// @debug
+		print_pp_char_arr(((t_chunk *)i_node->content)->redir); // @debug
+		print_pp_char_arr(((t_chunk *)i_node->content)->redir_files); //@debug
+		printf("end redir\n");// @debug
 		i_node = i_node->next;
 	}
+	return (0); // @confirm : what value to return if success ? is returning void couldn't be better ?
 }
 
-int	create_input_token_v3(char *line,  t_dlist **cmd_list, , t_data *data)
+int	create_input_token_v3(char *line,  t_dlist **cmd_list, t_data *data)
 {
-	create_main_chunks(line, cmd_list);
+	if (! data)
+		return(0);
+	if (create_main_chunks(line, cmd_list) > 0)
+		return (printf("Error : create_main_chunks"));
 	create_argvs(cmd_list);
-	printf("la list est ici ->\n");
-	print_dlist(cmd_list);
+	// printf("la list est ici ->\n");
+	// print_dlist(cmd_list);
+	return(0); // @confirm : what value to return if success ? is returning void couldn't be better ?
 }

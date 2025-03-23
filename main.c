@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:23:22 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/03/19 18:46:25 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/03/23 17:06:36 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ int	run_minishell(t_data	*data)
 		line = NULL;
 		cmd_list = malloc(sizeof(t_dlist));
 		if (!cmd_list)
-			return (1);
+			return (printf("Error : Mallo cmd_list\n"),1);
+		cmd_list = NULL; //@info :initialize to avoir conditional jump or move depending on uninitialised value
 		line = readline("minishell> ");
 		while (line && !all_quote_closed(line))
 			line = c_strjoin(line, readline("dquote> "), '\n');
@@ -46,9 +47,14 @@ int	run_minishell(t_data	*data)
 		// 	// manage cat<test.txt << EOF
 		// }
 		////////////////////////////////
+
+
 		if (line && all_quote_closed(line))
 		{
-			create_main_chunks(line, &cmd_list, data);
+			//////////// Anadir Validation del input /////////
+			// fonction de validacion de input
+			/////////////////////////////
+			create_input_token_v3(line, &cmd_list, data);
 			// if(check_for_user_input_error(&cmd_list) > 0)
 			// {
 			// 	free(line);
@@ -64,7 +70,7 @@ int	run_minishell(t_data	*data)
 		// else
 		// 	continue ;
 		free(cmd_list);
-		break ; // to remove when more advanced
+		break ; // @debug : to remove when more advanced
 	}
 	return (0);
 }

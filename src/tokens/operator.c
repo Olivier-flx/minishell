@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   operator.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:37:48 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/03/19 18:29:16 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/03/23 17:31:17 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,23 @@ int	is_operator(char *src, int i, t_quote *quote)
 			return(2);
 		else if (src[i] == 124)
 			return(1);
+		else if (src[i] == '<')
+			return(1);
+		else if (src[i] == '>')
+			return(1);
+	}
+	return (0);
+}
+
+
+int	is_redirection(char *src, int i, t_quote *quote)
+{
+	if (quote->sgl % 2 == 0  && quote->dbl % 2 == 0)
+	{
+		if (src[i] == '>' && src[i + 1] && src[i + 1] == '>')
+			return(2);
+		else if (src[i] == '<' && src[i + 1] && src[i + 1] == '<')
+			return(2);
 		else if (src[i] == '<')
 			return(1);
 		else if (src[i] == '>')
@@ -65,6 +82,25 @@ void	init_operador_var(t_quote *quote, int *op_count, int *i)
 	//if (i)
 		*i = 0;
 }
+
+// return the number of operator present in src
+int	count_operador_from_pp_char(char **content)
+{
+	int		i;
+	int		k;
+	t_quote	quote = {0,0};
+
+	i = 0;
+	k = 0;
+	while (content[i])
+	{
+		if (is_operator(content[i], 0, &quote) > 0) //Modifier apres
+			k++;
+		i++;
+	}
+	return (k);
+}
+
 
 // return the number of operator present in src
 int	count_operador(char *src)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   customs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/03/19 21:49:42 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/03/23 16:31:52 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,17 @@
 # define CUSTOMS_H
 
 ///// NOT FORGET TO REMOVE FFLUSH() in list_to_msg
+
+//////// Tipos de commentarios ///////
+/*
+	// @TODO	--> queda por hacer
+	// @Util	--> Todavia no se se si va a ser util pero se imagino que si, comprobar en el futuro
+	// @debug	--> lineas de codigo hechas para debugear, quitar antes de entregar el proyecto
+	// @info	--> informaciones adicionales sobre la logica o un bloc de codigo
+	// @confirm	--> need to confirm if it's the best way to do it
+*/
+///////
+
 
 typedef enum {
 	CMD,
@@ -58,8 +69,11 @@ typedef struct s_input_tocken
 	char		**argv;
 	string_type	type;
 	bool		has_redir;
+	int			redir_count;
 	char		**redir;// list of redir in a chunk ex: > >> >
 	char		**redir_files;// ex:test ; test1; test2
+	char		**input_redir;
+	char		**input_redir_file;
 	int			index; // util ?
 	int			len; // util ?
 	t_quote		quotes; // util ?
@@ -88,15 +102,18 @@ int		env(char **env);
 int		b_exit(int ret_val, t_data data);
 //int		create_input_token(char *src, t_dlist **line);
 
+///// core functions
+int	create_input_token_v3(char *line,  t_dlist **cmd_list, t_data *data);
 
 
 /////////////// SRC //////////////
 	///// Tokens /////
 t_chunk	*create_token(char ***str, int type, int i, t_quote quotes);
 
-
 		// operators.c
 int		is_operator(char *src, int i, t_quote *quote);
+int		is_redirection(char *src, int i, t_quote *quote);
+int		count_operador_from_pp_char(char **content);
 int		count_operador(char *src);
 int		get_operador_index(char *src, t_dlist **cmd_list);
 void	init_operador_var(t_quote *quote, int *op_count, int *i);
@@ -141,6 +158,7 @@ t_dlist	*find_last_node(t_dlist **lst);
 
 // arrays
 bool	int_var_in_arr(int var, t_int_array *arr);
+int		pp_char_len(char **array);
 void	print_int_arr(t_int_array *arr);
 void	print_pp_char_arr(char **str);
 
@@ -154,6 +172,6 @@ void	simple_error_msg(char *msg);
 
 
 //Temporal for pruebas
-int	create_main_chunks(char *src, t_dlist **cmd_list, t_data *data);
+int	create_main_chunks(char *src, t_dlist **cmd_list);
 
 #endif

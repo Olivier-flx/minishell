@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   select_from_substring_arr.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 17:29:54 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/03/19 18:27:18 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/03/23 16:11:04 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell.h"
 
+// @info : duplicate a segmented substring, in a char **;
+// from a start point included to a end point included.
 char	**dup_pp_char(char **substring_arr, int start, int end)
 {
 	char	**chunk;
@@ -21,7 +23,7 @@ char	**dup_pp_char(char **substring_arr, int start, int end)
 	i = start;
 	j = 0;
 	chunk = NULL;
-	chunk = malloc(sizeof(char *) * (end - start + 1));
+	chunk = malloc(sizeof(char *) * (end - start + 1 + 1)); //@info end - start +1 to include the starst and the end ;  +1 for the null
 	if (!chunk)
 		return (NULL);
 	while (i <= end)

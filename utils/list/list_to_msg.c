@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_to_msg.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 16:51:49 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/03/05 17:23:40 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/03/23 16:29:18 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void	print_dlist(t_dlist **list)
 
 	i = 0;
 	j = 0;
+	if (!list)
+		return ;
 	i_node = *list;
 	while (i_node)
 	{
