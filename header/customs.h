@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/03/23 16:31:52 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/03/24 17:24:40 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 	// @debug	--> lineas de codigo hechas para debugear, quitar antes de entregar el proyecto
 	// @info	--> informaciones adicionales sobre la logica o un bloc de codigo
 	// @confirm	--> need to confirm if it's the best way to do it
+	// @optimize --> Codigo que se puede optimisar
+	// @NF		--> New Feater : used temporarly while modifying a function
 */
 ///////
 
@@ -60,7 +62,7 @@ typedef struct data
 	t_dlist		*input;
 	t_int_array	ope_char_i; //index of operators characters in string input
 	int			chunks; //number of commands and argv separated by operators
-	t_dlist		*local_var;
+	t_dlist		*local_var; // Util ?
 }	t_data;
 
 typedef struct s_input_tocken

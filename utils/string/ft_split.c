@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 11:18:50 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/03/19 17:46:17 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/03/24 16:04:39 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static int	ft_segment_len(int i, const char *s, char c)
 			i++;
 			continue ;
 		}
-		if (s[i] == '"' && quote.sgl % 2 == 0 && quote.dbl % 1 == 0)
+		if (s[i] == '"' && quote.sgl % 2 == 0 && quote.dbl % 2 == 0)
 			break ;
 
 		if (quote.sgl % 2 == 0 && quote.dbl % 2 == 0 && s[i] != c)

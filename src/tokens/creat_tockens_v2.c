@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:49:47 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/03/23 17:33:22 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/03/24 15:06:55 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,8 @@ void	separate_arg_and_operator(t_chunk *chunk)
 	i_argv = 0;
 	init_redir_arr_and_files(chunk);
 	init_argv(chunk);
+	printf("token != operator = "); // @debug
+	fflush(stdout);  // @debug
 	while (chunk->content[i])
 	{
 		if (is_redirection(chunk->content[i], 0, &quote) > 0) // @info: fil the t_chunk redir file with the corresponding redirections
@@ -135,11 +137,11 @@ void	separate_arg_and_operator(t_chunk *chunk)
 		}
 		else
 			chunk->argv[i_argv++] = s_dup(chunk->content[i]);
-
 		printf("`%s`;", chunk->content[i]); // @debug
 		fflush(stdout);  // @debug
 		i++;
 	}
+	printf("\n"); // @debug
 }
 
 int	create_argvs(t_dlist **cmd_list)
@@ -151,13 +153,13 @@ int	create_argvs(t_dlist **cmd_list)
 	while (i_node)
 	{
 		separate_arg_and_operator((t_chunk *)i_node->content);
-		printf("argv is :");// @debug
+		printf("argv is :\n");// @debug
 		print_pp_char_arr(((t_chunk *)i_node->content)->argv); // @debug
-		printf("end argv\n");// @debug
-		printf("redir is :");// @debug
+		printf("end argv\n\n");// @debug
+		printf("redir is :\n");// @debug
 		print_pp_char_arr(((t_chunk *)i_node->content)->redir); // @debug
 		print_pp_char_arr(((t_chunk *)i_node->content)->redir_files); //@debug
-		printf("end redir\n");// @debug
+		printf("end redir\n\n");// @debug
 		i_node = i_node->next;
 	}
 	return (0); // @confirm : what value to return if success ? is returning void couldn't be better ?
