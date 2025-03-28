@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:49:47 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/03/24 15:06:55 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/03/28 17:43:51 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	create_main_chunks(char *src, t_dlist **cmd_list)
 
 	i = 0;
 	flag_last_pipe = 0;
-	all_tokens = split_quoted(src, ' '); // @TODO anadir luego el split por operador
+	all_tokens = split_quoted(src, ' '); // @TODO anadir luego el split por operador split_quoted2
 	while (all_tokens && all_tokens[i] && all_tokens[i][0])
 	{
 		if (all_tokens[i][0] == '|') // @info : Si encuentra '|' crea el chunk de antes y el chunk de '|'

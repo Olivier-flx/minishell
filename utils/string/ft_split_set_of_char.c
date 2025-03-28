@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 11:18:50 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/03/24 18:04:32 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/03/28 19:19:48 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,8 @@ int	simple_quote_increment_segment_count(char *s, int *i, t_quote *quote, bool i
 	return (count);
 }
 
+// si s[i] = ' ' or operator then segment count ++
+//v3
 static int	ft_segment_count(char *s)
 {
 	int		i;
@@ -95,27 +97,9 @@ static int	ft_segment_count(char *s)
 	init_quotes(&quote);
 	while (s[i] != '\0')
 	{
-		count += simple_quote_increment_segment_count(s, &i, &quote, in_word);
-
-		/////// @legacy //////
-		// if (s[i] == '\''&& quote.sgl % 2 == 1 && quote.dbl % 2 == 0)
-		// 	quote.sgl++;
-		// else if (s[i] == '\'' && quote.sgl % 2 == 0 && quote.dbl % 2 == 0 && !in_word)
-		// {
-		// 	quote.sgl++;
-		// 	count++;
-		// }
-		// else if (s[i] == '"' && quote.sgl % 2 == 0 && quote.dbl  % 2 == 1)
-		// 	quote.dbl++;
-		// else if (s[i] == '"' && quote.sgl % 2 == 0 && quote.dbl  % 2 == 0 && !in_word)
-		// {
-		// 	quote.dbl++;
-		// 	count++;
-		// }
-		///////////////////////
-		if (is_operator_or_space(s, i, &quote) > 0 && s[i] == ' ')// @optimize
+		if (is_operator_or_space(s, i, &quote) > 0 && s[i] == ' ')// @optimize // si space separator to ignore
 			in_word = false;
-		else if (is_operator_or_space(s, i, &quote) > 0 && s[i] != ' ') // NF
+		else if (is_operator_or_space(s, i, &quote) > 0 && s[i] != ' ') // si operateur
 		{
 			count++;
 			in_word = false;
@@ -133,6 +117,61 @@ static int	ft_segment_count(char *s)
 	}
 	return (count);
 }
+
+
+
+//v2
+// static int	ft_segment_count(char *s)
+// {
+// 	int		i;
+// 	int		count;
+// 	bool	in_word;
+// 	t_quote	quote;
+
+// 	i = 0;
+// 	count = 0;
+// 	in_word = false;
+// 	init_quotes(&quote);
+// 	while (s[i] != '\0')
+// 	{
+// 		count += simple_quote_increment_segment_count(s, &i, &quote, in_word);
+
+// 		/////// @legacy //////
+// 		// if (s[i] == '\''&& quote.sgl % 2 == 1 && quote.dbl % 2 == 0)
+// 		// 	quote.sgl++;
+// 		// else if (s[i] == '\'' && quote.sgl % 2 == 0 && quote.dbl % 2 == 0 && !in_word)
+// 		// {
+// 		// 	quote.sgl++;
+// 		// 	count++;
+// 		// }
+// 		// else if (s[i] == '"' && quote.sgl % 2 == 0 && quote.dbl  % 2 == 1)
+// 		// 	quote.dbl++;
+// 		// else if (s[i] == '"' && quote.sgl % 2 == 0 && quote.dbl  % 2 == 0 && !in_word)
+// 		// {
+// 		// 	quote.dbl++;
+// 		// 	count++;
+// 		// }
+// 		///////////////////////
+// 		if (is_operator_or_space(s, i, &quote) > 0 && s[i] == ' ')// @optimize
+// 			in_word = false;
+// 		else if (is_operator_or_space(s, i, &quote) > 0 && s[i] != ' ') // NF
+// 		{
+// 			count++;
+// 			in_word = false;
+// 			i += is_operator_or_space(s, i, &quote);
+// 			continue;
+// 		}
+// 		else if (is_operator_or_space(s, i, &quote) == 0 && quote.sgl % 2 == 0 && quote.dbl % 2 == 0 && !in_word)
+// 		{
+// 			count++;
+// 			in_word = true;
+// 			i++;
+// 			continue;
+// 		}
+// 		i++;
+// 	}
+// 	return (count);
+// }
 
 
 // static int	ft_segment_count(const char *s, char c)
@@ -204,20 +243,18 @@ int	quote_incrementation_len(char *s, int *i, t_quote *quote, int *len)
 	return (-1);
 }
 
-static int	ft_segment_len(int i, char *s)
+static int	ft_segment_len(int i, char *s, t_quote *quote)
 {
 	int		len;
-	t_quote	quote;
 	int 	flag;
 
-	init_quotes(&quote);
 	len = 0;
 	flag = 0;
-	if (is_operator_or_space(s, i, &quote) > 0 && s[i]!= ' ')
-		return(is_operator_or_space(s, i, &quote));
+	if (is_operator_or_space(s, i, quote) > 0 && s[i]!= ' ')
+		return(is_operator_or_space(s, i, quote));
 	while (s[i])
 	{
-		flag = quote_incrementation_len(s, &i, &quote, &len);
+		flag = quote_incrementation_len(s, &i, quote, &len);
 		if (flag == 0)
 			continue ;
 		else if (flag == 1)
@@ -250,7 +287,7 @@ static int	ft_segment_len(int i, char *s)
 		///////////////////////
 
 		// @info : if not an delim and all quotes are closed, the len++
-		if (quote.sgl % 2 == 0 && quote.dbl % 2 == 0 && is_operator_or_space(s, i, &quote) == 0)
+		if (quote->sgl % 2 == 0 && quote->dbl % 2 == 0 && is_operator_or_space(s, i, quote) == 0)
 			len++;
 		// @Util : if we take in account quotes in the segment len, it seem useless
 			// else if (quote.sgl % 2 == 1 && quote.dbl % 2 == 0 && s[i] != '\'')
@@ -264,11 +301,11 @@ static int	ft_segment_len(int i, char *s)
 		// 	i += is_operator_or_space(s, i, &quote); // @optimize
 		// 	continue;
 		// }
-		else if (quote.sgl % 2 == 0 && quote.dbl % 2 == 0 && is_operator_or_space(s, i, &quote) > 0 /*&& s[i] == ' '*/)
+		else if (quote->sgl % 2 == 0 && quote->dbl % 2 == 0 && is_operator_or_space(s, i, quote) > 0 /*&& s[i] == ' '*/)
 			break ;
 		i++;
 	}
-	return (len + 1);
+	return (len);
 }
 
 // // duplicate with char	**free_uncomplete_av(char **av, int i); in custom_frees.c
@@ -284,46 +321,114 @@ static char	**freeall(char **ns_ar, int i)
 	return (NULL);
 }
 
+//v1
+// static char	**ft_new_string_arr(char *s, char **ns_ar, int nb_segment)
+// {
+// 	int		i;
+// 	int		segment_i;
+// 	int		s_i;
+// 	t_quote	quote;
+// 	int		debug = 0; //@debug
+
+// 	init_quotes(&quote);
+// 	i = 0;
+// 	segment_i = 0;
+// 	while (s[i] && segment_i < nb_segment)
+// 	{
+// 		s_i = 0;
+// 		while (is_operator_or_space(s, i, &quote) > 0 && s[i] == ' ' && quote.sgl % 2 == 0 && quote.dbl % 2 == 0)
+// 			i++;
+// 		//debug
+// 		printf("segment len = %i\n", ft_segment_len(i, s) - 1); // @debug
+// 		ns_ar[segment_i] = malloc(ft_segment_len(i, s) * sizeof(char));
+// 		if (ns_ar[segment_i] == NULL)
+// 		{
+// 			freeall(ns_ar, segment_i);
+// 			return (NULL);
+// 		}
+// 		while (s[i] && (quote.sgl % 2 == 1 || quote.dbl % 2 == 1 || (is_operator_or_space(s, i, &quote) >= 0 && s[i] != ' ')))
+// 		{
+// 			if (s[i] == '\'' && quote.dbl % 2 == 0)
+// 				quote.sgl++;
+// 			if (s[i] == '"' && quote.sgl % 2 == 0)
+// 				quote.dbl++;
+// 			ns_ar[segment_i][s_i++] = s[i];
+// 			i++;
+// 		}
+// 		ns_ar[segment_i][s_i] = '\0';
+// 		segment_i++;
+// 	}
+// 	ns_ar[segment_i] = 0;
+// 	return (ns_ar);
+// }
+
+//v2
 static char	**ft_new_string_arr(char *s, char **ns_ar, int nb_segment)
 {
 	int		i;
 	int		segment_i;
 	int		s_i;
 	t_quote	quote;
+	int		seg_len;
 	int		debug = 0; //@debug
+	int		flag = 0;
 
 	init_quotes(&quote);
 	i = 0;
 	segment_i = 0;
+	seg_len = 0;
 	while (s[i] && segment_i < nb_segment)
 	{
 		s_i = 0;
-		while (is_operator_or_space(s, i, &quote) > 0 && s[i] == ' ' && quote.sgl % 2 == 0 && quote.dbl % 2 == 0)
+		while (is_operator_or_space(s, i, &quote) > 0 && s[i] == ' ') // if space not in quote, ignore
 			i++;
-		debug
-		printf("segment len = %i\n", ft_segment_len(i, s) - 1); // @debug
-		ns_ar[segment_i] = malloc(ft_segment_len(i, s) * sizeof(char));
+
+		seg_len = ft_segment_len(i, s, &quote);
+		printf("segment len = %i\n", seg_len); // @debug
+
+		ns_ar[segment_i] = malloc(sizeof(char) * (seg_len + 1));
 		if (ns_ar[segment_i] == NULL)
 		{
 			freeall(ns_ar, segment_i);
 			return (NULL);
 		}
-		while (s[i] && (quote.sgl % 2 == 1 || quote.dbl % 2 == 1 || (is_operator_or_space(s, i, &quote) >= 0 && s[i] != ' ')))
+
+		/// DEBUG ce while est la source du probleme !!
+		while (s[i])
 		{
 			if (s[i] == '\'' && quote.dbl % 2 == 0)
 				quote.sgl++;
 			if (s[i] == '"' && quote.sgl % 2 == 0)
 				quote.dbl++;
-			ns_ar[segment_i][s_i++] = s[i];
-			i++;
+			flag = is_operator_or_space(s, i, &quote);
+			if(flag > 0)
+			{
+				while (s_i < flag)
+					ns_ar[segment_i][s_i++] = s[i++];
+				break;
+			}
+			else
+				ns_ar[segment_i][s_i++] = s[i++];
 		}
+		printf("ft_new_string_arr[%i] = `%s`\n", segment_i,ns_ar[segment_i]); // @debug
 		ns_ar[segment_i][s_i] = '\0';
 		segment_i++;
 	}
 	ns_ar[segment_i] = 0;
 	return (ns_ar);
 }
+		// while (s[i] && (quote.sgl % 2 == 1 || quote.dbl % 2 == 1 || (is_operator_or_space(s, i, &quote) >= 0 && s[i] != ' ')))
+		// {
+		// 	if (s[i] == '\'' && quote.dbl % 2 == 0)
+		// 		quote.sgl++;
+		// 	if (s[i] == '"' && quote.sgl % 2 == 0)
+		// 		quote.dbl++;
 
+
+
+		// 	ns_ar[segment_i][s_i++] = s[i];
+		// 	i++;
+		// }
 
 // static char	**ft_new_string_arr(char *s, char **ns_ar, int nb_segment)
 // {
@@ -363,7 +468,7 @@ static char	**ft_new_string_arr(char *s, char **ns_ar, int nb_segment)
 // 	return (ns_ar);
 // }
 
-char	**split_quoted2(char *s)
+char	**split_quoted2(char *s,t_data *data)
 {
 	char	**ns_ar;
 	int		segments_number;
@@ -371,6 +476,7 @@ char	**split_quoted2(char *s)
 	ns_ar = NULL;
 	if (s == NULL)
 		return (NULL);
+	//set_ope_char_i_struc_arr(s, &(data->ope_char_i));
 	segments_number = ft_segment_count(s);
 	printf("segments_number = %i\n", segments_number); // @debug
 	ns_ar = malloc(((1 + segments_number)) * sizeof(char *));
@@ -380,20 +486,21 @@ char	**split_quoted2(char *s)
 	return (ns_ar);
 }
 
-// cc ./utils/string/ft_split_set_of_char.c ./utils/string/basics.c ./utils/string/quotes.c -g -o test
+// cc ./utils/string/ft_split_set_of_char.c ./src/tokens/operador.c ./utils/string/basics.c ./utils/string/quotes.c -g -o test
 int main()
 {
 	char	**new_string;
 	int		i = 0;
+	t_data	data;
 
-	new_string = split_quoted2("hel>lo >> Y'o'");
-	// new_string = split_quoted("he'l'lo > \"le '  ' fcdf  \"    Yo", ' ');
+	new_string = split_quoted2("hel>lo >> \"cest\" o'  Y''e'", &data);
+	//new_string = split_quoted("he'l'lo > \"le '  ' fcdf  \"    Yo", ' ');
 	//new_string = split_quoted("he\"l\"lo > \"le '  ' fcdf  \"    Yo", ' ');
 	//new_string = split_quoted2(" h\"e\">>'l<'>o  !\" ces\"T\" > l>e 'nouv\"e a u\"    monde !'  | ce'st' s\"ur\"");
 	//new_string = split_quoted("hello > 'le fcdf monde'    | cest'   ' pas moi      moi", ' ');
 	while (new_string && new_string[i])
 	{
-		printf("segment [%i] : `%s`\n", i ,new_string[i]);
+		//printf("segment [%i] : `%s`\n", i ,new_string[i]);
 		free(new_string[i]);
 		i++;
 	}
