@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 11:18:50 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/03/28 19:19:48 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/03/28 19:34:55 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -487,6 +487,8 @@ char	**split_quoted2(char *s,t_data *data)
 }
 
 // cc ./utils/string/ft_split_set_of_char.c ./src/tokens/operador.c ./utils/string/basics.c ./utils/string/quotes.c -g -o test
+
+//cc ./utils/string/ft_split_set_of_char.c ./utils/string/basics.c ./utils/string/quotes.c -g -o test
 int main()
 {
 	char	**new_string;
