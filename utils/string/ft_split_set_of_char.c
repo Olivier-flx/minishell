@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 11:18:50 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/03/30 18:25:57 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/03/30 18:52:03 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,21 +66,6 @@ static int	ft_segment_len(int i, char *s, t_quote *quote, t_int_array *separator
 	return (len);
 }
 
-// // duplicate with char	**free_uncomplete_av(char **av, int i); in custom_frees.c
-static char	**freeall(char **ns_ar, int i)
-{
-	i--;
-	while (i >= 0)
-	{
-		free(ns_ar[i]);
-		i--;
-	}
-	free(ns_ar);
-	return (NULL);
-}
-
-
-//v2
 static char	**ft_new_string_arr(char *s, char **ns_ar, int nb_segment, t_int_array *separators)
 {
 	int		i;
@@ -136,6 +121,59 @@ static char	**ft_new_string_arr(char *s, char **ns_ar, int nb_segment, t_int_arr
 	return (ns_ar);
 }
 
+static void	init_var_ft_new_string_arr(int *i, int *segment_i, int *flag)
+{
+	*i = 0;
+	*segment_i = 0;
+	*flag = 0;
+}
+
+create_token(char *s, int *i, t_quote *quote)
+{
+	int flag;
+
+	flag = 0;
+}
+
+
+static char	**ft_new_string_arr2(char *s, char **ns_ar, int nb_segment, t_int_array *separators)
+{
+	int		i;
+	int		segment_i;
+	int		s_i;
+	t_quote	quote;
+	int		flag;
+
+	init_quotes(&quote);
+	init_var_ft_new_string_arr(&i, &segment_i, &flag);
+	while (s[i] && segment_i < nb_segment)
+	{
+		s_i = 0;
+		while (is_seperator(s, i, &quote) > 0 && s[i] == ' ') // if space not in quote, ignore
+			i++;
+		ns_ar[segment_i] = malloc(sizeof(char) * (ft_segment_len(i, s, &quote, separators) + 1));
+		if (NULL == ns_ar[segment_i])
+			return (free_uncomplete_av(ns_ar, segment_i), NULL);
+		while (s[i])
+		{
+			quote_increment(s, i, &quote);
+			flag = is_seperator(s, i, &quote);
+			if(flag > 0)
+			{
+				while (s_i < flag)
+					ns_ar[segment_i][s_i++] = s[i++];
+				break;
+			}
+			else
+				ns_ar[segment_i][s_i++] = s[i++];
+		}
+		ns_ar[segment_i][s_i] = '\0';
+		segment_i++;
+	}
+	ns_ar[segment_i] = 0;
+	return (ns_ar);
+}
+
 char	**split_quoted2(char *s,t_data *data)
 {
 	char	**ns_ar;
@@ -150,34 +188,34 @@ char	**split_quoted2(char *s,t_data *data)
 	ns_ar = malloc(((1 + segments_number)) * sizeof(char *));
 	if (!ns_ar)
 		return (0);
-	ns_ar = ft_new_string_arr(s, ns_ar, segments_number, &(data->token_separators_char_i));
+	ns_ar = ft_new_string_arr2(s, ns_ar, segments_number, &(data->token_separators_char_i));
 	return (ns_ar);
 }
 
 // cc ./utils/string/ft_split_set_of_char.c ./src/tokens/operador.c ./utils/string/basics.c ./utils/string/quotes.c -g -o test
 
 //cc -g -O0 -o test ./utils/string/ft_split_set_of_char.c ./utils/string/basics.c ./src/tokens/token_separators.c ./src/tokens/operator.c ./utils/string/quotes.c ./utils/arrays/methods.c ./utils/arrays/arr_frees.c
-// int main()
-// {
-// 	char	**new_string;
-// 	int		i = 0;
-// 	t_data	data;
+int main()
+{
+	char	**new_string;
+	int		i = 0;
+	t_data	data;
 
-// 	new_string = split_quoted2("hel>lo >> \"cest\" o'  Y''e'", &data);
-// 	//new_string = split_quoted("he'l'lo > \"le '  ' fcdf  \"    Yo", ' ');
-// 	//new_string = split_quoted("he\"l\"lo > \"le '  ' fcdf  \"    Yo", ' ');
-// 	//new_string = split_quoted2(" h\"e\">>'l<'>o  !\" ces\"T\" > l>e 'nouv\"e a u\"    monde !'  | ce'st' s\"ur\"");
-// 	//new_string = split_quoted("hello > 'le fcdf monde'    | cest'   ' pas moi      moi", ' ');
-// 	printf("----------array operators ------------ \n");
-// 	fflush(stdout); // @debug
-// 	print_int_arr(&(data.token_separators_char_i));
-// 	while (new_string && new_string[i])
-// 	{
-// 		//printf("segment [%i] : `%s`\n", i ,new_string[i]);
-// 		free(new_string[i]);
-// 		i++;
-// 	}
-// 	if (new_string)
-// 		free(new_string);
-// 	return (0);
-// }
+	new_string = split_quoted2("hel>lo >> \"cest\" o'  Y''e'", &data);
+	//new_string = split_quoted("he'l'lo > \"le '  ' fcdf  \"    Yo", ' ');
+	//new_string = split_quoted("he\"l\"lo > \"le '  ' fcdf  \"    Yo", ' ');
+	//new_string = split_quoted2(" h\"e\">>'l<'>o  !\" ces\"T\" > l>e 'nouv\"e a u\"    monde !'  | ce'st' s\"ur\"");
+	//new_string = split_quoted("hello > 'le fcdf monde'    | cest'   ' pas moi      moi", ' ');
+	printf("----------array operators ------------ \n");
+	fflush(stdout); // @debug
+	print_int_arr(&(data.token_separators_char_i));
+	while (new_string && new_string[i])
+	{
+		//printf("segment [%i] : `%s`\n", i ,new_string[i]);
+		free(new_string[i]);
+		i++;
+	}
+	if (new_string)
+		free(new_string);
+	return (0);
+}
