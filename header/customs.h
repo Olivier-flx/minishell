@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/03/28 16:17:41 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/03/30 18:21:51 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ typedef struct data
 {
 	char		**env;
 	t_dlist		*input;
-	t_int_array	ope_char_i; //index of operators characters in string input
+	t_int_array	ope_char_i; // @util ?//index of operators characters in string input
+	t_int_array	token_separators_char_i; //index of separators characters in string input
 	int			chunks; //number of commands and argv separated by operators
 	t_dlist		*local_var; // @Util ?
 }	t_data;
@@ -112,6 +113,8 @@ int	create_input_token_v3(char *line,  t_dlist **cmd_list, t_data *data);
 /////////////// SRC //////////////
 	///// Tokens /////
 t_chunk	*create_token(char ***str, int type, int i, t_quote quotes);
+void	set_separator_char_i_struc_arr(char *src, t_int_array *arr);
+int		is_seperator(char *src, int i, t_quote *quote);
 
 		// operators.c
 int		is_operator(char *src, int i, t_quote *quote);
@@ -136,7 +139,7 @@ int		create_input_to_commands(char *src, t_dlist **cmd_list, t_data *data);
 
 /////////////// UTILS ///////////////
 	/////  string //////
-void	increment_quotes(char *src, int i, t_quote *quote);
+void	quote_increment(char *src, int i, t_quote *quote);
 char	**split_quoted(char const *s, char c);
 char	**dup_pp_char(char **substring_arr, int start, int end);
 
@@ -164,8 +167,7 @@ bool	int_var_in_arr(int var, t_int_array *arr);
 int		pp_char_len(char **array);
 void	print_int_arr(t_int_array *arr);
 void	print_pp_char_arr(char **str);
-
-//custom_frees
+// arrays_free
 void	free_av(char **av);
 char	**free_uncomplete_av(char **av, int i);
 

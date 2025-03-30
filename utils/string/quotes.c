@@ -6,18 +6,18 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 21:54:28 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/19 16:05:00 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/03/30 17:55:37 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell.h"
 
-void	increment_quotes(char *src, int i, t_quote *quote)
+void	quote_increment(char *src, int i, t_quote *quote)
 {
-	if (src[i] == '"' && (quote->sgl) % 2 == 0)
-		(quote->dbl)++;
-	if (src[i] == '\'' && (quote->dbl) % 2 == 0)
-		(quote->sgl)++;
+	if (src[i] == '"' && quote->sgl % 2 == 0)
+		quote->dbl++;
+	if (src[i] == '\'' && quote->dbl % 2 == 0)
+		quote->sgl++;
 }
 
 void	init_quotes(t_quote *quote)

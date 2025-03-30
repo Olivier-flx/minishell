@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:37:48 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/03/23 17:31:17 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/03/30 17:58:13 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,7 +184,7 @@ void	set_ope_char_i_arr(char *src, t_int_array *arr)
 	init_operador_var(&quote, &op_count, &i);
 	while (src[i])
 	{
-		increment_quotes(src, i, &quote);
+		quote_increment(src, i, &quote);
 		op_count = is_operator(src, i, &quote);
 		if (op_count > 0)
 		{
@@ -213,7 +213,7 @@ void	set_ope_char_i_struc_arr(char *src, t_int_array *arr)
 	init_operador_var(&quote, &op_count, &i);
 	while (src[i])
 	{
-		increment_quotes(src, i, &quote);
+		quote_increment(src, i, &quote);
 		tmp = is_operator(src, i, &quote);
 		if (tmp > 0)
 		{

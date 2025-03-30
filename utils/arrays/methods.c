@@ -6,12 +6,16 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 20:59:43 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/03/23 15:19:09 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/03/30 17:08:56 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell.h"
 
+/// @brief Check if a variable is registred in the ARR
+/// @param var int
+/// @param arr array of int
+/// @return return true if var is in arr
 bool	int_var_in_arr(int var, t_int_array *arr)
 {
 	int	i;

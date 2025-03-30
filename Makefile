@@ -23,10 +23,12 @@ UTILS = ./utils/string/ft_split.c \
 		./utils/list/list_free.c \
 		./utils/list/list_to_msg.c \
 		./utils/arrays/methods.c \
+		./utils/arrays/arr_frees.c \
 		./utils/msg/error_msg.c \
 		./utils/custom_frees.c \
 		./src/tokens/create_input_token.c \
 		./src/tokens/operator.c \
+		./src/tokens/token_separators.c \
 		./src/tokens/user_input_validation.c\
 		./src/tokens/creat_tockens_v2.c
 
