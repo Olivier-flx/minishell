@@ -31,7 +31,7 @@ UTILS = ./utils/string/ft_split.c \
 		./src/tokens/operator.c \
 		./src/tokens/token_separators.c \
 		./src/tokens/validations/user_input_validation.c\
-		./src/tokens/validations/system_input_validation.c\
+		./src/tokens/validations/system_input_validation.c \
 		./src/tokens/creat_tockens_v2.c
 
 
