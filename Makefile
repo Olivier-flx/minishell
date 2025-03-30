@@ -19,6 +19,7 @@ UTILS = ./utils/string/ft_split.c \
 		./utils/string/select_from_substring_arr.c \
 		./utils/string/quotes.c \
 		./utils/string/trim.c \
+		./utils/string/ft_split_set_of_char.c \
 		./utils/list/list_utils.c \
 		./utils/list/list_free.c \
 		./utils/list/list_to_msg.c \
@@ -29,7 +30,8 @@ UTILS = ./utils/string/ft_split.c \
 		./src/tokens/create_input_token.c \
 		./src/tokens/operator.c \
 		./src/tokens/token_separators.c \
-		./src/tokens/user_input_validation.c\
+		./src/tokens/validations/user_input_validation.c\
+		./src/tokens/validations/system_input_validation.c\
 		./src/tokens/creat_tockens_v2.c
 
 

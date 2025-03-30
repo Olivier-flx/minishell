@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   user_input_validation.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 15:14:36 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/03/05 18:23:01 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/03/30 19:09:33 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../header/minishell.h"
+#include "../../../header/minishell.h"
 
 // check for >>> or <<< or << < or >> > or < << or > >>
 // or ><

@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:49:47 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/03/28 17:43:51 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/03/30 18:58:48 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static int	create_pipe_chunk(int i, t_dlist **cmd_list)
 	return (0);
 }
 
-int	create_main_chunks(char *src, t_dlist **cmd_list)
+int	create_main_chunks(char *src, t_dlist **cmd_list, t_data *data)
 {
 	char	**all_tokens;
 	char	**chunk;
@@ -57,7 +57,7 @@ int	create_main_chunks(char *src, t_dlist **cmd_list)
 
 	i = 0;
 	flag_last_pipe = 0;
-	all_tokens = split_quoted(src, ' '); // @TODO anadir luego el split por operador split_quoted2
+	all_tokens = split_quoted2(src, data); // @TODO anadir luego el split por operador split_quoted2
 	while (all_tokens && all_tokens[i] && all_tokens[i][0])
 	{
 		if (all_tokens[i][0] == '|') // @info : Si encuentra '|' crea el chunk de antes y el chunk de '|'
@@ -169,7 +169,7 @@ int	create_input_token_v3(char *line,  t_dlist **cmd_list, t_data *data)
 {
 	if (! data)
 		return(0);
-	if (create_main_chunks(line, cmd_list) > 0)
+	if (create_main_chunks(line, cmd_list, data) > 0)
 		return (printf("Error : create_main_chunks"));
 	create_argvs(cmd_list);
 	// printf("la list est ici ->\n");

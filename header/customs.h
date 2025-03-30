@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/03/30 18:21:51 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/03/30 18:58:22 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,8 @@ int		create_input_to_commands(char *src, t_dlist **cmd_list, t_data *data);
 /////////////// UTILS ///////////////
 	/////  string //////
 void	quote_increment(char *src, int i, t_quote *quote);
-char	**split_quoted(char const *s, char c);
+char	**split_quoted(char const *s, char c);// @legacy
+char	**split_quoted2(char *s,t_data *data);
 char	**dup_pp_char(char **substring_arr, int start, int end);
 
 char	*ft_trim(char *src, bool is_malloced);
@@ -177,6 +178,6 @@ void	simple_error_msg(char *msg);
 
 
 //Temporal for pruebas
-int	create_main_chunks(char *src, t_dlist **cmd_list);
+int	create_main_chunks(char *src, t_dlist **cmd_list, t_data *data);
 
 #endif

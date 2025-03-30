@@ -6,11 +6,11 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 15:19:05 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/26 16:57:17 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/03/30 19:09:34 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../header/minishell.h"
+#include "../../../header/minishell.h"
 
 void	check_system_input_error(t_data *data, t_dlist **cmd_list)
 {
