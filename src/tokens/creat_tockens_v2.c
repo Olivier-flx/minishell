@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:49:47 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/03/31 17:01:05 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/03/31 19:03:32 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,6 @@ int	create_main_chunks(char *src, t_dlist **cmd_list, t_data *data)
 	i = 0;
 	flag_last_pipe = 0;
 	all_tokens = split_quoted2(src, data);
-		printf("create_main_chunks all_tokens\n");
-		print_pp_char_arr(all_tokens);
 	while (all_tokens && all_tokens[i] && all_tokens[i][0])
 	{
 		if (all_tokens[i][0] == '|') // @info : Si encuentra '|' crea el chunk de antes y el chunk de '|'
@@ -79,9 +77,6 @@ int	create_main_chunks(char *src, t_dlist **cmd_list, t_data *data)
 		token = create_token(&chunk, CMD, i, (t_quote) {0}); // i correspond au numéro du chunk / index du chunk dans la string. à retirer
 		add_to_list(cmd_list, token);
 	}
-	printf("----------- print create_main_chunk -------------\n"); //@debug
-	print_dlist(cmd_list);
-	printf("------------------------------------------------\n");
 	free(all_tokens);
 	return (0);
 }
@@ -103,14 +98,19 @@ void	init_argv(t_chunk *chunk)
 {
 	int	len_argv;
 
+	if (!chunk)
+		return ;
+	printf("pp_char_len(chunk->content) = %i\n",pp_char_len(chunk->content));
 	len_argv = pp_char_len(chunk->content) - (chunk->redir_count * 2); //@info : x2 para redir y et nombre del file
+	printf("init_argv chunk->redir_count = %i\n",chunk->redir_count);
+	printf("init_argv len_argv = %i\n",len_argv);
 	chunk->argv = malloc (sizeof(char *) * (len_argv + 1));
 	if (NULL == chunk->argv)
 	{
 		printf("Malloc error : al asignar el argv\n");
 		return ;// @confirm
 	}
-	chunk->argv[len_argv] = 0;
+	chunk->argv[len_argv] = NULL;
 }
 
 void	separate_arg_and_operator(t_chunk *chunk)
@@ -176,7 +176,5 @@ int	create_input_token_v3(char *line,  t_dlist **cmd_list, t_data *data)
 	if (create_main_chunks(line, cmd_list, data) > 0)
 		return (printf("Error : create_main_chunks"));
 	create_argvs(cmd_list);
-	// printf("la list est ici ->\n");
-	// print_dlist(cmd_list);
 	return(0); // @confirm : what value to return if success ? is returning void couldn't be better ?
 }

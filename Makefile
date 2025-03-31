@@ -6,8 +6,8 @@ YELLOW=\033[1;33m
 
 
 NAME = mini
-CC = cc
-DEBUG = -g3 -O0 -gdwarf-4 -fno-omit-frame-pointer
+CC = cc -g
+DEBUG =  -O0 ##-gdwarf-4 -fno-omit-frame-pointer
 CFLAGS = -Werror -Wall -Wextra
 LDFLAGS = -lreadline
 

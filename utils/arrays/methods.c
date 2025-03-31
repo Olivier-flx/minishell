@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 20:59:43 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/03/30 17:08:56 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/03/31 18:35:20 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,9 @@ void	print_pp_char_arr(char **str)
 	int	i;
 
 	i = 0;
-	while (str && str[i])
+	if (!str)
+		return ;
+	while (str && str[i] && str[i][0])
 	{
 		printf("*str[%i] = `%s`\n", i, str[i]);
 		i++;

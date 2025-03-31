@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:37:48 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/03/30 17:58:13 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/03/31 19:07:18 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ int	is_operator(char *src, int i, t_quote *quote)
 			return(2);
 		else if (src[i] == '<' && src[i + 1] && src[i + 1] == '<')
 			return(2);
-		else if (src[i] == 124)
-			return(1);
+		//else if (src[i] == 124) // @debug pose probleme avec init_redir_arr_and_files
+		//	return(1);
 		else if (src[i] == '<')
 			return(1);
 		else if (src[i] == '>')

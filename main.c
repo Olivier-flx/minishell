@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:23:22 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/03/23 17:06:36 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/03/31 18:28:29 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ int	run_minishell(t_data	*data)
 			create_input_token_v3(line, &cmd_list, data);
 			// if(check_for_user_input_error(&cmd_list) > 0)
 			// {
+			// 	free_list(&cmd_list);
 			// 	free(line);
 			// 	continue ;
 			// }
