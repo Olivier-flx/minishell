@@ -16,10 +16,10 @@ RM	= rm -rf
 
 OBJECTS = $(SRCS:.c=.o)
 
-CFLAGS = -Wall -Werror -Wextra -fPIE
- 
+CFLAGS = -Wall -Werror -Wextra -g -fPIE
+
 %.o: %.c libft.h Makefile
-	$(CC) $(CFLAGS) -c $< -o $@ 
+	$(CC) $(CFLAGS) -c $< -o $@
 
 all: ${NAME}
 

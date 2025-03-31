@@ -7,7 +7,8 @@ YELLOW=\033[1;33m
 
 NAME = mini
 CC = cc
-CFLAGS =  -g -O0 -Werror -Wall -Wextra
+DEBUG = -g3 -O0 -gdwarf-4 -fno-omit-frame-pointer
+CFLAGS = -Werror -Wall -Wextra
 LDFLAGS = -lreadline
 
 INC = ./header/minishell.h
@@ -46,7 +47,7 @@ LIBFT_PATH = ./libs/libft/libft.a
 all : $(NAME)
 
 $(NAME) : $(OBJ) $(LIBFT_PATH)
-		@$(CC) $(CFLAGS) $(OBJ) $(LIBFT_PATH) -o $@ $(LDFLAGS)
+		@$(CC) $(CFLAGS) $(DEBUG) $(OBJ) $(LIBFT_PATH) -o $@ $(LDFLAGS)
 		@printf "$(GREEN)[minishell] Compiled successfully.$(NC)\n"
 
 $(LIBFT_PATH):
@@ -65,7 +66,7 @@ $(LIBFT_PATH):
 
 
 %.o : %.c $(INC) Makefile
-		@$(CC) $(CFLAGS) -c $< -o $@
+		@$(CC) $(CFLAGS) $(DEBUG) -c $< -o $@
 
 clean :
 		@make -s clean -C ./libs/libft

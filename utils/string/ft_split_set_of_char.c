@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 11:18:50 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/03/30 19:04:07 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/03/31 17:02:16 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,8 +131,7 @@ char	**split_quoted2(char *s,t_data *data)
 	//@debug -----------
 	while (ns_ar && ns_ar[i])
 	{
-		printf("segment [%i] : `%s`\n", i ,ns_ar[i]);
-		free(ns_ar[i]);
+		printf("Segment [%i] : `%s`\n", i ,ns_ar[i]);
 		i++;
 	}
 	//@debug -----------

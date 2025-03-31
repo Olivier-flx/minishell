@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/03/30 18:58:22 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/03/31 16:54:40 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,12 @@ typedef struct s_dlist
 	struct s_dlist	*prev;
 	struct s_dlist	*next;
 }	t_dlist;
+
+typedef struct s_variable
+{
+	char	*nombre_de_variable;
+	char	*valor;
+}	t_var;
 
 typedef struct data
 {

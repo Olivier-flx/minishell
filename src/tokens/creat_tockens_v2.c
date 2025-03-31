@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:49:47 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/03/30 18:58:48 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/03/31 17:01:05 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,13 @@ int	create_main_chunks(char *src, t_dlist **cmd_list, t_data *data)
 	int		i;
 	int		flag_last_pipe;
 
-	if (!cmd_list)
-		return( printf("cmd_list = NULL\n"));
-
+	if (!cmd_list) // @util ?
+		return(printf("cmd_list = NULL\n")); // @util ?
 	i = 0;
 	flag_last_pipe = 0;
-	all_tokens = split_quoted2(src, data); // @TODO anadir luego el split por operador split_quoted2
+	all_tokens = split_quoted2(src, data);
+		printf("create_main_chunks all_tokens\n");
+		print_pp_char_arr(all_tokens);
 	while (all_tokens && all_tokens[i] && all_tokens[i][0])
 	{
 		if (all_tokens[i][0] == '|') // @info : Si encuentra '|' crea el chunk de antes y el chunk de '|'
@@ -78,6 +79,9 @@ int	create_main_chunks(char *src, t_dlist **cmd_list, t_data *data)
 		token = create_token(&chunk, CMD, i, (t_quote) {0}); // i correspond au numéro du chunk / index du chunk dans la string. à retirer
 		add_to_list(cmd_list, token);
 	}
+	printf("----------- print create_main_chunk -------------\n"); //@debug
+	print_dlist(cmd_list);
+	printf("------------------------------------------------\n");
 	free(all_tokens);
 	return (0);
 }
