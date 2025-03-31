@@ -9,8 +9,7 @@ SRCS = ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_isprint.c \
 	   ft_strmapi.c ft_substr.c ft_strjoin.c ft_strtrim.c ft_itoa.c ft_split.c \
 	   get_next_line_bonus.c get_next_line_utils_bonus.c ft_printf.c \
 	   ft_printf_hexa.c ft_printf_hexamin.c ft_printf_numbers.c ft_printf_pointer.c \
-	   ft_printf_unsigned_numbers.c ft_printf_strings.c ft_realloc.c
-
+	   ft_printf_unsigned_numbers.c ft_printf_strings.c ft_realloc.c ft_strcmp.c
 
 RM	= rm -rf
 
