@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_set_of_char.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 11:18:50 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/03/31 17:02:16 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/04 15:55:14 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int	ft_segment_count(char *s)
 		else if (is_seperator(s, i, &quote) > 0 && s[i] != ' ') // si operateur mais pas espace
 		{
 			count++;
-			printf("segment incremented at s[%i] = %c\n", i, s[i]); // @debug
+			//printf("segment incremented at s[%i] = %c\n", i, s[i]); // @debug
 			i += is_seperator(s, i, &quote);
 			in_segment = false;
 			continue;
@@ -39,7 +39,7 @@ static int	ft_segment_count(char *s)
 		else if (is_seperator(s, i, &quote) == 0 && !in_segment) // si ce n'est pas un operateur
 		{
 			count++;
-			printf("segment incremented at s[%i] = %c\n", i, s[i]); // @debug
+			//printf("segment incremented at s[%i] = %c\n", i, s[i]); // @debug
 			in_segment = true;
 		}
 		i++;
@@ -114,26 +114,29 @@ static char	**ft_new_string_arr(char *s, char **ns_ar, int nb_segment, t_int_arr
 char	**split_quoted2(char *s,t_data *data)
 {
 	char	**ns_ar;
-	int		segments_number;
+	int		tokens_number;
 	int i = 0; //@debug
 
 	ns_ar = NULL;
 	if (s == NULL)
 		return (NULL);
 	set_separator_char_i_struc_arr(s, &(data->token_separators_char_i));
-	segments_number = ft_segment_count(s);
-	printf("segments_number = %i\n", segments_number); // @debug
-	ns_ar = malloc(((1 + segments_number)) * sizeof(char *));
+	tokens_number = ft_segment_count(s);
+	printf("tokens_number = %i\n", tokens_number); // @debug
+	ns_ar = malloc(((1 + tokens_number)) * sizeof(char *));
 	if (!ns_ar)
 		return (0);
-	ns_ar = ft_new_string_arr(s, ns_ar, segments_number, &(data->token_separators_char_i));
+	ns_ar = ft_new_string_arr(s, ns_ar, tokens_number, &(data->token_separators_char_i));
 
 	//@debug -----------
+	printf("Tockens : ");
+	fflush(stdout);
 	while (ns_ar && ns_ar[i])
 	{
-		printf("Segment [%i] : `%s`\n", i ,ns_ar[i]);
+		printf("[%i],`%s`;  ", i ,ns_ar[i]);
 		i++;
 	}
+	printf("\n\n");
 	//@debug -----------
 
 	return (ns_ar);

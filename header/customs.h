@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   customs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/03/31 16:54:40 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/04 17:33:41 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ int	create_input_token_v3(char *line,  t_dlist **cmd_list, t_data *data);
 t_chunk	*create_token(char ***str, int type, int i, t_quote quotes);
 void	set_separator_char_i_struc_arr(char *src, t_int_array *arr);
 int		is_seperator(char *src, int i, t_quote *quote);
+int		count_files_in_chunks(char **content);
 
 		// operators.c
 int		is_operator(char *src, int i, t_quote *quote);

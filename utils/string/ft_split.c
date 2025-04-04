@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 11:18:50 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/03/24 16:04:39 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/04 15:49:36 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,7 +168,7 @@ char	**split_quoted(char const *s, char c)
 // 	//new_string = split_quoted("hello > 'le fcdf monde'    | cest'   ' pas moi      moi", ' ');
 // 	while (new_string[i])
 // 	{
-// 		printf("segment [%i] : `%s`\n", i ,new_string[i]);
+// 		printf("%i] : `%s`\n", i ,new_string[i]);
 // 		free(new_string[i]);
 // 		i++;
 // 	}

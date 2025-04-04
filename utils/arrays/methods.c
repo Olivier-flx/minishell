@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   methods.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 20:59:43 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/03/31 18:35:20 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/04 16:56:50 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ void	print_int_arr(t_int_array *arr)
 	int	i;
 
 	i = 0;
+	if (!arr)
+		return ;
 	while (i < arr->size)
 	{
 		printf("print_arr[%i] = %i\n", i, arr->array[i]);
@@ -61,7 +63,7 @@ void	print_pp_char_arr(char **str)
 	int	i;
 
 	i = 0;
-	if (!str)
+	if (!str || !str[0])
 		return ;
 	while (str && str[i] && str[i][0])
 	{

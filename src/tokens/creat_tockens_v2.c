@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   creat_tockens_v2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:49:47 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/03/31 19:03:32 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/04 18:07:15 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,27 +81,56 @@ int	create_main_chunks(char *src, t_dlist **cmd_list, t_data *data)
 	return (0);
 }
 
+/**
+ * @brief Initializes redirection arrays and associated files for a chunk.
+ *
+ * This function counts the number of redirection operators in the chunk's content,
+ * allocates memory for the redirection arrays and associated files,
+ * and initializes the corresponding pointers.
+ *
+ * @param chunk Pointer to the t_chunk structure to be initialized.
+ *
+ * @details The function performs the following operations:
+ * 1. Counts the number of redirection operators in the chunk's content.
+ * 2. If redirection operators are present, allocates memory for the redirection array.
+ * 3. Allocates memory for the files associated with the redirections.
+ * 4. Initializes the end pointers of the arrays to NULL.
+ *
+ * @note If memory allocation fails, the function returns immediately.
+ *
+ * @see count_operador_from_pp_char, count_files_in_chunks
+ */
 void	init_redir_arr_and_files(t_chunk *chunk)
 {
 	chunk->redir_count = count_operador_from_pp_char(chunk->content);
+	if (chunk->redir_count > 0)
+		chunk->has_redir = true;
+	else
+	{
+		chunk->has_redir = false;
+		return ;
+	}
 	chunk->redir = malloc(sizeof(char *) * (chunk->redir_count + 1));
 	if (!chunk->redir)
 		return ; // @confirm
 	chunk->redir[chunk->redir_count] = 0;
-	chunk->redir_files = malloc(sizeof(char *) * (chunk->redir_count + 1));
+	printf("@debug    count_files_in_chunks(chunk->content) = %i\n", count_files_in_chunks(chunk->content));
+	chunk->redir_files = malloc(sizeof(char *) * (count_files_in_chunks(chunk->content) + 1));
 	if (!chunk->redir_files)
 		return ; // @confirm
-	chunk->redir_files[chunk->redir_count] = 0;
+	chunk->redir_files[count_files_in_chunks(chunk->content)] = 0;
 }
 
+// TODO : faille de robustesse quand dans un segment (chunk) il n'y a qu'une redirection sans nom de fichier
 void	init_argv(t_chunk *chunk)
 {
 	int	len_argv;
 
 	if (!chunk)
 		return ;
-	printf("pp_char_len(chunk->content) = %i\n",pp_char_len(chunk->content));
-	len_argv = pp_char_len(chunk->content) - (chunk->redir_count * 2); //@info : x2 para redir y et nombre del file
+	printf("\n---------------\n pp_char_len(chunk->content) = %i\n",pp_char_len(chunk->content));//@ Debug
+
+	len_argv = pp_char_len(chunk->content) - (chunk->redir_count + count_files_in_chunks(chunk->content)); //@info : x2 para redir y et nombre del file
 	printf("init_argv chunk->redir_count = %i\n",chunk->redir_count);
 	printf("init_argv len_argv = %i\n",len_argv);
 	chunk->argv = malloc (sizeof(char *) * (len_argv + 1));
@@ -110,7 +139,7 @@ void	init_argv(t_chunk *chunk)
 		printf("Malloc error : al asignar el argv\n");
 		return ;// @confirm
 	}
-	chunk->argv[len_argv] = NULL;
+	chunk->argv[len_argv] = 0;
 }
 
 void	separate_arg_and_operator(t_chunk *chunk)
@@ -135,7 +164,7 @@ void	separate_arg_and_operator(t_chunk *chunk)
 			if (chunk->content[i + 1])
 				chunk->redir_files[i_redir] = s_dup(chunk->content[++i]);
 			else
-				printf("Error --> No file name after a redir\n");
+				printf("Error --> No file name after a redir\n"); // @debug : error que gestionar despues en user validation function
 			chunk->has_redir = true; // @Util : 2025-03-23, no se si util?
 			i_redir++;
 		}
@@ -160,10 +189,13 @@ int	create_argvs(t_dlist **cmd_list)
 		printf("argv is :\n");// @debug
 		print_pp_char_arr(((t_chunk *)i_node->content)->argv); // @debug
 		printf("end argv\n\n");// @debug
-		printf("redir is :\n");// @debug
-		print_pp_char_arr(((t_chunk *)i_node->content)->redir); // @debug
-		print_pp_char_arr(((t_chunk *)i_node->content)->redir_files); //@debug
-		printf("end redir\n\n");// @debug
+		if (((t_chunk *)i_node->content)->redir_count > 0)// @debug
+		{// @debug
+			printf("redir is :\n");// @debug
+			print_pp_char_arr(((t_chunk *)i_node->content)->redir); // @debug
+			print_pp_char_arr(((t_chunk *)i_node->content)->redir_files); //@debug
+			printf("end redir\n\n");// @debug
+		}// @debug
 		i_node = i_node->next;
 	}
 	return (0); // @confirm : what value to return if success ? is returning void couldn't be better ?
