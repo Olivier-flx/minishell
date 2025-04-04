@@ -6,13 +6,26 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:13:36 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/03/19 17:45:37 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/04 18:24:55 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell.h"
 
-//join string with specific char and free the sources
+/**
+ * @brief Joins two strings with a specific character and frees the source strings.
+ *
+ * Concatenates `s1` and `s2` with `c` in between, allocates memory for the result,
+ * and frees the original strings.
+ *
+ * @param s1 The first string to join.
+ * @param s2 The second string to join.
+ * @param c The character to insert between the strings.
+ * @return (char *) The newly allocated concatenated string, or NULL if allocation fails.
+ *
+ * @note The caller must free the returned string.
+ * @see s_len
+ */
 char	*c_strjoin(char *s1, char *s2, char c)
 {
 	char	*ptr;

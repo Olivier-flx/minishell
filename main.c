@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:23:22 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/03/31 18:28:29 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/04 18:39:23 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int	run_minishell(t_data	*data)
 		if (!cmd_list)
 			return (printf("Error : Mallo cmd_list\n"),1);
 		cmd_list = NULL; //@info :initialize to avoir conditional jump or move depending on uninitialised value
+		data->cmd_list = cmd_list;
 		line = readline("minishell> ");
 		while (line && !all_quote_closed(line))
 			line = c_strjoin(line, readline("dquote> "), '\n');
@@ -65,12 +66,13 @@ int	run_minishell(t_data	*data)
 			process_line(&line);
 		//	add_history(line);
 		//	clear_history(); //--> donde ponerlo??
-			free(line);
+		free_cmdlist(cmd_list);
+		free(line);
 		}
 
 		// else
 		// 	continue ;
-		free(cmd_list);
+		free_cmdlist(cmd_list);
 		break ; // @debug : to remove when more advanced
 	}
 	return (0);
@@ -81,7 +83,7 @@ int	main(int ac, char **av, char **env)
 	t_data	data;
 
 	data.env = env;
-	data.input = NULL;
+	data.cmd_list = NULL;
 	data.ope_char_i = (t_int_array) {0};
 
 	if (ac == 1 && env && av) // modificcar para arrancar igual si no hay env

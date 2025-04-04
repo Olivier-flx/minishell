@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/04 17:33:41 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/04 18:40:09 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,14 +66,14 @@ typedef struct s_variable
 typedef struct data
 {
 	char		**env;
-	t_dlist		*input;
+	t_dlist		*cmd_list;
 	t_int_array	ope_char_i; // @util ?//index of operators characters in string input
 	t_int_array	token_separators_char_i; //index of separators characters in string input
 	int			chunks; //number of commands and argv separated by operators
 	t_dlist		*local_var; // @Util ?
 }	t_data;
 
-typedef struct s_input_tocken
+typedef struct s_chunk
 {
 	char		**content; // basic chunks that are taken from line splited by "|"
 	char		**argv;
@@ -182,6 +182,10 @@ char	**free_uncomplete_av(char **av, int i);
 // ERROR
 	//MSG
 void	simple_error_msg(char *msg);
+
+// FREES
+void	free_cmdlist(t_dlist *cmd_list);
+
 
 
 //Temporal for pruebas
