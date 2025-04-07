@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 11:31:40 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/07 18:09:58 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/07 18:57:34 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,11 @@ void	free_cmdlist(t_dlist *cmd_list)
 	i_node = cmd_list;
 	while (i_node)
 	{
-		free_av(((t_chunk *)(i_node->content))->content);
-		free_av(((t_chunk *)(i_node->content))->argv);
+		if((t_chunk *)(i_node->content))
+		{
+			free_av(((t_chunk *)(i_node->content))->content);
+			free_av(((t_chunk *)(i_node->content))->argv);
+		}
 		if(((t_chunk *)(i_node->content))->has_redir)
 		{
 			free_av(((t_chunk *)(i_node->content))->redir);

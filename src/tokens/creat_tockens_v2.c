@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:49:47 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/07 18:27:29 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/07 19:10:13 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,9 @@ int	create_main_chunks(char *src, t_dlist **cmd_list, t_data *data)
  */
 void	init_redir_arr_and_files(t_chunk *chunk)
 {
+	if (!chunk)
+		printf("NOT CHUNKS\n");
+	printf("chunk = %p   ;   chunk->redir_count= %i\n",chunk, chunk->redir_count ); // @debug
 	chunk->redir_count = count_operador_from_pp_char(chunk->content);
 	if (chunk->redir_count > 0)
 		chunk->has_redir = true;
@@ -177,6 +180,30 @@ void	separate_arg_and_operator(t_chunk *chunk)
 	printf("\n"); // @debug
 }
 
+int initialize_t_chunk(t_dlist *i_node)
+{
+	i_node->content = malloc(sizeof(t_chunk));
+	if (i_node->content)
+	{
+		i_node->content = NULL;
+		return (1);
+	}
+	((t_chunk *)(i_node->content))->content = NULL;
+	((t_chunk *)(i_node->content))->argv = NULL;
+	((t_chunk *)(i_node->content))->type = 0;
+	((t_chunk *)(i_node->content))->has_redir = false;
+	((t_chunk *)(i_node->content))->redir_count = 0;;
+	((t_chunk *)(i_node->content))->redir = NULL;// list of redir in a chunk ex: > >> >
+	((t_chunk *)(i_node->content))->redir_files = NULL;;// ex:test ; test1; test2
+	((t_chunk *)(i_node->content))->input_redir = NULL;;
+	((t_chunk *)(i_node->content))->input_redir_file = NULL;;
+	((t_chunk *)(i_node->content))->index = 0; // util ?
+	((t_chunk *)(i_node->content))->len = 0; // util ?
+	((t_chunk *)(i_node->content))->quotes = (t_quote) {0}; // util ?
+	return (0);
+}
+
+
 int	create_argvs(t_dlist **cmd_list)
 {
 	t_dlist	*i_node;
@@ -185,6 +212,10 @@ int	create_argvs(t_dlist **cmd_list)
 
 	while (i_node)
 	{
+		///// TEST DEBUG VALGRIND///
+		if(initialize_t_chunk(i_node) == 1)
+			return (1);
+///// TEST DEBUG VALGRIND///
 		separate_arg_and_operator((t_chunk *)i_node->content);
 		printf("argv is :\n");// @debug
 		print_pp_char_arr(((t_chunk *)i_node->content)->argv); // @debug
@@ -204,9 +235,10 @@ int	create_argvs(t_dlist **cmd_list)
 int	create_input_token_v3(char *line,  t_dlist **cmd_list, t_data *data)
 {
 	if (! data)
-		return(0);
+		return(1);
 	if (create_main_chunks(line, cmd_list, data) > 0)
 		return (printf("Error : create_main_chunks"));
-	create_argvs(cmd_list);
+	if (create_argvs(cmd_list) == 1) // if error retrun 1
+		return (1);
 	return(0); // @confirm : what value to return if success ? is returning void couldn't be better ?
 }
