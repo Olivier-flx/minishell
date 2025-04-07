@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:23:22 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/04 18:39:23 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/07 18:31:14 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,30 @@ int	process_line(char **line)
 	return (0);
 }
 
+int initialize_cmd_list(t_data *data)
+{
+	t_dlist		*cmd_list;
+
+	cmd_list = malloc(sizeof(t_dlist));
+	if (!cmd_list)
+		return (printf("Error : Mallo cmd_list\n"),1);
+	//cmd_list = NULL;
+	cmd_list->content = NULL; //@info :initialize to avoir conditional jump or move depending on uninitialised value
+	cmd_list->next = NULL;
+	cmd_list->prev = NULL;
+	data->cmd_list = cmd_list;
+	return (0);
+}
+
+
 int	run_minishell(t_data	*data)
 {
 	char		*line;
-	t_dlist		*cmd_list;
 
 	while (true && data->env)
 	{
 		line = NULL;
-		cmd_list = malloc(sizeof(t_dlist));
-		if (!cmd_list)
-			return (printf("Error : Mallo cmd_list\n"),1);
-		cmd_list = NULL; //@info :initialize to avoir conditional jump or move depending on uninitialised value
-		data->cmd_list = cmd_list;
+		initialize_cmd_list(data);
 		line = readline("minishell> ");
 		while (line && !all_quote_closed(line))
 			line = c_strjoin(line, readline("dquote> "), '\n');
@@ -49,13 +60,12 @@ int	run_minishell(t_data	*data)
 		// }
 		////////////////////////////////
 
-
 		if (line && all_quote_closed(line))
 		{
 			//////////// Anadir Validation del input /////////
 			// fonction de validacion de input
 			/////////////////////////////
-			create_input_token_v3(line, &cmd_list, data);
+			create_input_token_v3(line, &data->cmd_list, data);
 			// if(check_for_user_input_error(&cmd_list) > 0)
 			// {
 			// 	free_list(&cmd_list);
@@ -66,13 +76,16 @@ int	run_minishell(t_data	*data)
 			process_line(&line);
 		//	add_history(line);
 		//	clear_history(); //--> donde ponerlo??
-		free_cmdlist(cmd_list);
-		free(line);
+
+			//free (data->ope_char_i.array); // @TODO, protect free if not malloced
+			if (data->token_separators_char_i.size > 0)
+				free (data->token_separators_char_i.array);// @TODO, protect free if not malloced
+			free(line);
 		}
 
+		free_cmdlist(data->cmd_list);
 		// else
 		// 	continue ;
-		free_cmdlist(cmd_list);
 		break ; // @debug : to remove when more advanced
 	}
 	return (0);
@@ -84,7 +97,8 @@ int	main(int ac, char **av, char **env)
 
 	data.env = env;
 	data.cmd_list = NULL;
-	data.ope_char_i = (t_int_array) {0};
+	data.ope_char_i = (t_int_array) {0}; // @util ?
+	data.token_separators_char_i = (t_int_array) {0};
 
 	if (ac == 1 && env && av) // modificcar para arrancar igual si no hay env
 		return (run_minishell(&data));

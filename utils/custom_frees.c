@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   custom_frees.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 11:31:40 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/04 18:41:59 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/07 18:09:58 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	free_cmdlist(t_dlist *cmd_list)
 		// 	free_av(((t_chunk *)(i_node->content))->input_redir);
 		// 	free_av(((t_chunk *)(i_node->content))->input_redir_file);
 		// }
-		free(i_node->content);
+		free((t_chunk *)(i_node->content));
 		i_node = i_node->next;
 	}
 	free_list(&cmd_list);

@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 17:29:54 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/03/23 16:11:04 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/07 17:00:37 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,6 @@ char	**dup_pp_char(char **substring_arr, int start, int end)
 		i++;
 		j++;
 	}
-	chunk[j] = 0;
+	chunk[j] = NULL;
 	return (chunk);
 }

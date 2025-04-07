@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   creat_tockens_v2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:49:47 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/04 18:07:15 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/07 18:27:29 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	create_pipe_chunk(int i, t_dlist **cmd_list)
 {
 	char			*pipe;
 	char			**pipe_to_arr;
-	t_chunk	*token;
+	t_chunk			*token;
 
 	token = NULL;
 	pipe = s_dup("|");;
@@ -77,7 +77,7 @@ int	create_main_chunks(char *src, t_dlist **cmd_list, t_data *data)
 		token = create_token(&chunk, CMD, i, (t_quote) {0}); // i correspond au numéro du chunk / index du chunk dans la string. à retirer
 		add_to_list(cmd_list, token);
 	}
-	free(all_tokens);
+	free_av(all_tokens);
 	return (0);
 }
 
@@ -121,25 +121,25 @@ void	init_redir_arr_and_files(t_chunk *chunk)
 	chunk->redir_files[count_files_in_chunks(chunk->content)] = 0;
 }
 
-// TODO : faille de robustesse quand dans un segment (chunk) il n'y a qu'une redirection sans nom de fichier
+
 void	init_argv(t_chunk *chunk)
 {
 	int	len_argv;
 
 	if (!chunk)
 		return ;
-	printf("\n---------------\n pp_char_len(chunk->content) = %i\n",pp_char_len(chunk->content));//@ Debug
+	printf("\n---------------\n pp_char_len(chunk->content) = %i\n",pp_char_len(chunk->content));// @debug
 
-	len_argv = pp_char_len(chunk->content) - (chunk->redir_count + count_files_in_chunks(chunk->content)); //@info : x2 para redir y et nombre del file
-	printf("init_argv chunk->redir_count = %i\n",chunk->redir_count);
-	printf("init_argv len_argv = %i\n",len_argv);
+	len_argv = pp_char_len(chunk->content) - (chunk->redir_count + count_files_in_chunks(chunk->content));
+	printf("init_argv chunk->redir_count = %i\n",chunk->redir_count);// @debug
+	printf("init_argv len_argv = %i\n",len_argv);// @debug
 	chunk->argv = malloc (sizeof(char *) * (len_argv + 1));
 	if (NULL == chunk->argv)
 	{
 		printf("Malloc error : al asignar el argv\n");
 		return ;// @confirm
 	}
-	chunk->argv[len_argv] = 0;
+	chunk->argv[len_argv] = NULL;
 }
 
 void	separate_arg_and_operator(t_chunk *chunk)
