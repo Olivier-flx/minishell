@@ -3,25 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   creat_tockens_v2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:49:47 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/07 19:10:13 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/09 19:50:56 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell.h"
-
-// char	*pipe_sdup(char *src, int i)
-// {
-// 	char	*operador;
-
-// 	operador = NULL;
-// 	if (src[i] == 124)
-// 		operador = s_dup("|");
-// 	return (operador);
-// }
-
 
 static int	create_pipe_chunk(int i, t_dlist **cmd_list)
 {
@@ -44,6 +33,7 @@ static int	create_pipe_chunk(int i, t_dlist **cmd_list)
 	return (0);
 }
 
+
 int	create_main_chunks(char *src, t_dlist **cmd_list, t_data *data)
 {
 	char	**all_tokens;
@@ -59,6 +49,7 @@ int	create_main_chunks(char *src, t_dlist **cmd_list, t_data *data)
 	all_tokens = split_quoted2(src, data);
 	while (all_tokens && all_tokens[i] && all_tokens[i][0])
 	{
+		printf("all_tokens[%i] = `%s`\n", i, all_tokens[i]); // @debug
 		if (all_tokens[i][0] == '|') // @info : Si encuentra '|' crea el chunk de antes y el chunk de '|'
 		{
 			chunk = dup_pp_char(all_tokens, flag_last_pipe, i - 1 );
@@ -73,9 +64,12 @@ int	create_main_chunks(char *src, t_dlist **cmd_list, t_data *data)
 		i--;
 	if (all_tokens && all_tokens[i] && all_tokens[i][0])// @info : crea el ultimo chunK
 	{
+		printf("last_tokens[%i] = `%s`\n", i, all_tokens[i]); // @debug
 		chunk = dup_pp_char(all_tokens, flag_last_pipe, i);
 		token = create_token(&chunk, CMD, i, (t_quote) {0}); // i correspond au numéro du chunk / index du chunk dans la string. à retirer
 		add_to_list(cmd_list, token);
+		debug_print_cmd_list(cmd_list); //@debug
+		printf("\n"); // @debug
 	}
 	free_av(all_tokens);
 	return (0);
@@ -182,21 +176,23 @@ void	separate_arg_and_operator(t_chunk *chunk)
 
 int initialize_t_chunk(t_dlist *i_node)
 {
+	if (!i_node)
+		return (1);
 	i_node->content = malloc(sizeof(t_chunk));
-	if (i_node->content)
+	if (!i_node->content)
 	{
-		i_node->content = NULL;
+	//	i_node->content = NULL;
 		return (1);
 	}
 	((t_chunk *)(i_node->content))->content = NULL;
 	((t_chunk *)(i_node->content))->argv = NULL;
-	((t_chunk *)(i_node->content))->type = 0;
+	((t_chunk *)(i_node->content))->type = CMD;
 	((t_chunk *)(i_node->content))->has_redir = false;
 	((t_chunk *)(i_node->content))->redir_count = 0;;
 	((t_chunk *)(i_node->content))->redir = NULL;// list of redir in a chunk ex: > >> >
-	((t_chunk *)(i_node->content))->redir_files = NULL;;// ex:test ; test1; test2
-	((t_chunk *)(i_node->content))->input_redir = NULL;;
-	((t_chunk *)(i_node->content))->input_redir_file = NULL;;
+	((t_chunk *)(i_node->content))->redir_files = NULL;// ex:test ; test1; test2
+	((t_chunk *)(i_node->content))->input_redir = NULL;
+	((t_chunk *)(i_node->content))->input_redir_file = NULL;
 	((t_chunk *)(i_node->content))->index = 0; // util ?
 	((t_chunk *)(i_node->content))->len = 0; // util ?
 	((t_chunk *)(i_node->content))->quotes = (t_quote) {0}; // util ?
@@ -209,14 +205,10 @@ int	create_argvs(t_dlist **cmd_list)
 	t_dlist	*i_node;
 
 	i_node = *cmd_list;
-
 	while (i_node)
 	{
-		///// TEST DEBUG VALGRIND///
-		if(initialize_t_chunk(i_node) == 1)
-			return (1);
-///// TEST DEBUG VALGRIND///
 		separate_arg_and_operator((t_chunk *)i_node->content);
+	//////debug
 		printf("argv is :\n");// @debug
 		print_pp_char_arr(((t_chunk *)i_node->content)->argv); // @debug
 		printf("end argv\n\n");// @debug
@@ -227,10 +219,13 @@ int	create_argvs(t_dlist **cmd_list)
 			print_pp_char_arr(((t_chunk *)i_node->content)->redir_files); //@debug
 			printf("end redir\n\n");// @debug
 		}// @debug
+	/////////
 		i_node = i_node->next;
 	}
 	return (0); // @confirm : what value to return if success ? is returning void couldn't be better ?
 }
+
+
 
 int	create_input_token_v3(char *line,  t_dlist **cmd_list, t_data *data)
 {
@@ -240,5 +235,6 @@ int	create_input_token_v3(char *line,  t_dlist **cmd_list, t_data *data)
 		return (printf("Error : create_main_chunks"));
 	if (create_argvs(cmd_list) == 1) // if error retrun 1
 		return (1);
+	debug_print_cmd_list(cmd_list); //@debug
 	return(0); // @confirm : what value to return if success ? is returning void couldn't be better ?
 }

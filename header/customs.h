@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   customs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/07 18:02:28 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/09 19:40:47 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,8 @@ char	*c_strjoin(char *s1, char *s2, char c);
 char	*c_ft_substr(char const *s, unsigned int start, size_t len);
 
 // List Utils
-void	free_list(t_dlist **stack_to_free);
+void	free_list(t_dlist *stack_to_free);
+void	free_list1(t_dlist **stack_to_free);
 int		add_to_list(t_dlist **line, void *content);
 void	print_dlist(t_dlist **list);
 t_dlist	*find_last_node(t_dlist **lst);
@@ -182,6 +183,7 @@ char	**free_uncomplete_av(char **av, int i);
 // ERROR
 	//MSG
 void	simple_error_msg(char *msg);
+void debug_print_cmd_list(t_dlist **cmd_list_ptr); //@debug
 
 // FREES
 void	free_cmdlist(t_dlist *cmd_list);

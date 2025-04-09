@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:23:22 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/07 18:31:14 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/09 19:44:36 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,8 @@ int initialize_cmd_list(t_data *data)
 {
 	t_dlist		*cmd_list;
 
-	cmd_list = malloc(sizeof(t_dlist));
-	if (!cmd_list)
-		return (printf("Error : Mallo cmd_list\n"),1);
-	//cmd_list = NULL;
-	cmd_list->content = NULL; //@info :initialize to avoir conditional jump or move depending on uninitialised value
-	cmd_list->next = NULL;
-	cmd_list->prev = NULL;
+
+	cmd_list = NULL;
 	data->cmd_list = cmd_list;
 	return (0);
 }
@@ -79,11 +74,11 @@ int	run_minishell(t_data	*data)
 
 			//free (data->ope_char_i.array); // @TODO, protect free if not malloced
 			if (data->token_separators_char_i.size > 0)
-				free (data->token_separators_char_i.array);// @TODO, protect free if not malloced
+				free (data->token_separators_char_i.array);
 			free(line);
 		}
-
-		free_cmdlist(data->cmd_list);
+		if (data->cmd_list)
+			free_cmdlist(data->cmd_list);
 		// else
 		// 	continue ;
 		break ; // @debug : to remove when more advanced

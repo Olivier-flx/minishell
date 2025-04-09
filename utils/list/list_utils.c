@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 11:26:31 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/03/23 17:06:25 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/09 19:46:13 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,11 @@ int	add_to_list(t_dlist **list, void *content)
 	t_dlist	*new_node;
 	t_dlist	*i_node;
 
+	if (!content)
+		return (1);
 	new_node = ft_lst_new_node(content);
 	if (!new_node)
-		return (free_list(list), 1); // A verificar luego si est necesario o relevente
+		return (free_list1(list), 1); // A verificar luego si est necesario o relevente
 									// hacer el free de toda la lista
 									// si hay un error con el nuevo nodo
 	if (*list == NULL)
