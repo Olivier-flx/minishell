@@ -35,5 +35,13 @@ int	ft_unset(char **args);
 int	ft_env(char **args);
 int	ft_exit(char **args);
 
+//enviroment
+
+t_env *ft_new_env_node(char *key, char *value);
+void ft_env_add_back(t_env **head, t_env *new_node);
+t_env *ft_init_env(char **env);
+char *ft_getenv(t_env *env, char *key);
+int ft_env_exists(t_env *env, char *key);
+void ft_free_env(t_env *env);
 #endif
 
