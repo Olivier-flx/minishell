@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   creat_tockens_v2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:49:47 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/09 19:50:56 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/11 17:00:56 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ static int	create_pipe_chunk(int i, t_dlist **cmd_list)
 	{
 		pipe_to_arr = malloc (2 * sizeof (char *));
 		if (!pipe_to_arr)
-			return (free(pipe), 0);
+			return (free(pipe), ERROR);
 		pipe_to_arr[0] = pipe;
 		pipe_to_arr[1] = NULL;
 		token = create_token(&pipe_to_arr, PIPE, i, (t_quote) {0});
 		return (add_to_list(cmd_list, token), s_len(pipe));
 	}
-	return (0);
+	return (SUCCESS);
 }
 
 
@@ -43,7 +43,7 @@ int	create_main_chunks(char *src, t_dlist **cmd_list, t_data *data)
 	int		flag_last_pipe;
 
 	if (!cmd_list) // @util ?
-		return(printf("cmd_list = NULL\n")); // @util ?
+		return(printf("cmd_list = NULL\n"), ERROR); // @util ?
 	i = 0;
 	flag_last_pipe = 0;
 	all_tokens = split_quoted2(src, data);
@@ -72,7 +72,7 @@ int	create_main_chunks(char *src, t_dlist **cmd_list, t_data *data)
 		printf("\n"); // @debug
 	}
 	free_av(all_tokens);
-	return (0);
+	return (SUCCESS);
 }
 
 /**
@@ -99,7 +99,7 @@ void	init_redir_arr_and_files(t_chunk *chunk)
 	if (!chunk)
 		printf("NOT CHUNKS\n");
 	printf("chunk = %p   ;   chunk->redir_count= %i\n",chunk, chunk->redir_count ); // @debug
-	chunk->redir_count = count_operador_from_pp_char(chunk->content);
+	chunk->redir_count = count_operador_from_pp_char(chunk->tokens);
 	if (chunk->redir_count > 0)
 		chunk->has_redir = true;
 	else
@@ -111,11 +111,11 @@ void	init_redir_arr_and_files(t_chunk *chunk)
 	if (!chunk->redir)
 		return ; // @confirm
 	chunk->redir[chunk->redir_count] = 0;
-	printf("@debug    count_files_in_chunks(chunk->content) = %i\n", count_files_in_chunks(chunk->content));
-	chunk->redir_files = malloc(sizeof(char *) * (count_files_in_chunks(chunk->content) + 1));
+	printf("@debug    count_files_in_chunks(chunk->content) = %i\n", count_files_in_chunks(chunk->tokens));
+	chunk->redir_files = malloc(sizeof(char *) * (count_files_in_chunks(chunk->tokens) + 1));
 	if (!chunk->redir_files)
 		return ; // @confirm
-	chunk->redir_files[count_files_in_chunks(chunk->content)] = 0;
+	chunk->redir_files[count_files_in_chunks(chunk->tokens)] = 0;
 }
 
 
@@ -125,9 +125,9 @@ void	init_argv(t_chunk *chunk)
 
 	if (!chunk)
 		return ;
-	printf("\n---------------\n pp_char_len(chunk->content) = %i\n",pp_char_len(chunk->content));// @debug
+	printf("\n---------------\n pp_char_len(chunk->content) = %i\n",pp_char_len(chunk->tokens));// @debug
 
-	len_argv = pp_char_len(chunk->content) - (chunk->redir_count + count_files_in_chunks(chunk->content));
+	len_argv = pp_char_len(chunk->tokens) - (chunk->redir_count + count_files_in_chunks(chunk->tokens));
 	printf("init_argv chunk->redir_count = %i\n",chunk->redir_count);// @debug
 	printf("init_argv len_argv = %i\n",len_argv);// @debug
 	chunk->argv = malloc (sizeof(char *) * (len_argv + 1));
@@ -153,21 +153,21 @@ void	separate_arg_and_operator(t_chunk *chunk)
 	init_argv(chunk);
 	printf("token != operator = "); // @debug
 	fflush(stdout);  // @debug
-	while (chunk->content[i])
+	while (chunk->tokens[i])
 	{
-		if (is_redirection(chunk->content[i], 0, &quote) > 0) // @info: fil the t_chunk redir file with the corresponding redirections
+		if (is_redirection(chunk->tokens[i], 0, &quote) > 0) // @info: fil the t_chunk redir file with the corresponding redirections
 		{
-			chunk->redir[i_redir] = s_dup(chunk->content[i]);
-			if (chunk->content[i + 1])
-				chunk->redir_files[i_redir] = s_dup(chunk->content[++i]);
+			chunk->redir[i_redir] = s_dup(chunk->tokens[i]);
+			if (chunk->tokens[i + 1])
+				chunk->redir_files[i_redir] = s_dup(chunk->tokens[++i]);
 			else
 				printf("Error --> No file name after a redir\n"); // @debug : error que gestionar despues en user validation function
 			chunk->has_redir = true; // @Util : 2025-03-23, no se si util?
 			i_redir++;
 		}
 		else
-			chunk->argv[i_argv++] = s_dup(chunk->content[i]);
-		printf("`%s`;", chunk->content[i]); // @debug
+			chunk->argv[i_argv++] = s_dup(chunk->tokens[i]);
+		printf("`%s`;", chunk->tokens[i]); // @debug
 		fflush(stdout);  // @debug
 		i++;
 	}
@@ -177,14 +177,14 @@ void	separate_arg_and_operator(t_chunk *chunk)
 int initialize_t_chunk(t_dlist *i_node)
 {
 	if (!i_node)
-		return (1);
+		return (ERROR);
 	i_node->content = malloc(sizeof(t_chunk));
 	if (!i_node->content)
 	{
 	//	i_node->content = NULL;
-		return (1);
+		return (ERROR);
 	}
-	((t_chunk *)(i_node->content))->content = NULL;
+	((t_chunk *)(i_node->content))->tokens = NULL;
 	((t_chunk *)(i_node->content))->argv = NULL;
 	((t_chunk *)(i_node->content))->type = CMD;
 	((t_chunk *)(i_node->content))->has_redir = false;
@@ -196,7 +196,7 @@ int initialize_t_chunk(t_dlist *i_node)
 	((t_chunk *)(i_node->content))->index = 0; // util ?
 	((t_chunk *)(i_node->content))->len = 0; // util ?
 	((t_chunk *)(i_node->content))->quotes = (t_quote) {0}; // util ?
-	return (0);
+	return (SUCCESS);
 }
 
 
@@ -222,7 +222,7 @@ int	create_argvs(t_dlist **cmd_list)
 	/////////
 		i_node = i_node->next;
 	}
-	return (0); // @confirm : what value to return if success ? is returning void couldn't be better ?
+	return (SUCCESS); // @confirm : what value to return if success ? is returning void couldn't be better ?
 }
 
 
@@ -234,7 +234,9 @@ int	create_input_token_v3(char *line,  t_dlist **cmd_list, t_data *data)
 	if (create_main_chunks(line, cmd_list, data) > 0)
 		return (printf("Error : create_main_chunks"));
 	if (create_argvs(cmd_list) == 1) // if error retrun 1
-		return (1);
+		return (2);
+	if (check_for_user_input_error(cmd_list) == 1)
+		return (3);
 	debug_print_cmd_list(cmd_list); //@debug
-	return(0); // @confirm : what value to return if success ? is returning void couldn't be better ?
+	return(SUCCESS); // @confirm : what value to return if success ? is returning void couldn't be better ?
 }

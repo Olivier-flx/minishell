@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_input_token.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 17:57:45 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/09 18:31:12 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/11 17:00:39 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_chunk	*initialize_t_chunk1(void)
 	tok = malloc(sizeof(t_chunk));
 	if (!tok)
 		return (NULL);
-	tok->content = NULL;
+	tok->tokens = NULL;
 	tok->argv = NULL;
 	tok->type = CMD;
 	tok->has_redir = false;
@@ -44,7 +44,7 @@ t_chunk	*create_token(char ***str, int type, int i, t_quote quotes)
 	token = initialize_t_chunk1();
 	if (!token)
 		return (NULL);
-	token->content = *str;
+	token->tokens = *str;
 	token->type = type;
 	token->index = i;
 	if (type == OPERATOR)

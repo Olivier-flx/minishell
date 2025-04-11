@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   customs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/09 19:40:47 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/11 16:59:41 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,11 @@
 	// @legacy	--> not used anymore, to delete later, kept for logic implementation trace
 */
 ///////
+
+typedef enum {
+	SUCCESS,
+	ERROR
+} fonction_return_type;
 
 
 typedef enum {
@@ -75,7 +80,7 @@ typedef struct data
 
 typedef struct s_chunk
 {
-	char		**content; // basic chunks that are taken from line splited by "|"
+	char		**tokens; // basic chunks that are taken from line splited by "|"
 	char		**argv;
 	string_type	type;
 	bool		has_redir;

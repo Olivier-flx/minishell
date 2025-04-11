@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:23:22 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/09 19:44:36 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/11 16:31:31 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,9 @@ int initialize_cmd_list(t_data *data)
 int	run_minishell(t_data	*data)
 {
 	char		*line;
+	int			control;
 
+	control = 0;
 	while (true && data->env)
 	{
 		line = NULL;
@@ -60,7 +62,12 @@ int	run_minishell(t_data	*data)
 			//////////// Anadir Validation del input /////////
 			// fonction de validacion de input
 			/////////////////////////////
-			create_input_token_v3(line, &data->cmd_list, data);
+			control = create_input_token_v3(line, &data->cmd_list, data);
+			if (control == 3)
+			{
+				free_cmdlist(data->cmd_list);
+				continue;
+			}
 			// if(check_for_user_input_error(&cmd_list) > 0)
 			// {
 			// 	free_list(&cmd_list);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_to_msg.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 16:51:49 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/09 19:47:39 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/11 17:00:36 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ void	print_dlist(t_dlist **list)
 			j++;
 			fflush(stdout);
 			i = 0;
-			while (((t_chunk *)i_node->content)->content[i])
+			while (((t_chunk *)i_node->content)->tokens[i])
 			{
-				printf("`%s`;", ((t_chunk *)i_node->content)->content[i++]);
+				printf("`%s`;", ((t_chunk *)i_node->content)->tokens[i++]);
 				fflush(stdout);
 			}
 			printf("\n");
@@ -73,18 +73,18 @@ void debug_print_cmd_list(t_dlist **cmd_list_ptr)
             {
                 t_chunk *chunk = (t_chunk *)current->content;
                 printf("  content (t_chunk):\n");
-                if (chunk->content == NULL)
+                if (chunk->tokens == NULL)
                 {
-                    printf("    chunk->content: NULL\n");
+                    printf("    chunk->tokens: NULL\n");
                 }
                 else
                 {
-                    printf("    chunk->content:\n");
-                    for (int i = 0; chunk->content[i] != NULL; i++)
+                    printf("    chunk->tokens:\n");
+                    for (int i = 0; chunk->tokens[i] != NULL; i++)
                     {
-                        printf("      [%d]: \"%s\"\n", i, chunk->content[i]);
+                        printf("      [%d]: \"%s\"\n", i, chunk->tokens[i]);
                     }
-                    printf("      [%d]: NULL (fin du tableau)\n", pp_char_len(chunk->content));
+                    printf("      [%d]: NULL (fin du tableau)\n", pp_char_len(chunk->tokens));
                 }
                 printf("    chunk->type: %d\n", chunk->type);
                 printf("    chunk->has_redir: %s\n", chunk->has_redir ? "true" : "false");
