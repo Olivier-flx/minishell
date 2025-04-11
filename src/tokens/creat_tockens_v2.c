@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:49:47 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/11 18:35:04 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/11 18:48:05 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,9 @@ void	init_redir_arr_and_files(t_chunk *chunk)
 	if (!chunk->redir)
 		return ; // @confirm
 	chunk->redir[chunk->redir_count] = 0;
+	chunk->redir_file_count = count_files_in_chunks(chunk->tokens);
+	if ( chunk->redir_file_count == 0)
+		return ;
 	chunk->redir_files = malloc(sizeof(char *) * (count_files_in_chunks(chunk->tokens) + 1));
 	if (!chunk->redir_files)
 		return ; // @confirm

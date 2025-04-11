@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 17:57:45 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/11 17:00:39 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/11 18:49:55 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ t_chunk	*initialize_t_chunk1(void)
 	tok->argv = NULL;
 	tok->type = CMD;
 	tok->has_redir = false;
-	tok->redir_count = 0;;
+	tok->redir_count = 0;
+	tok->redir_file_count = 0;
 	tok->redir = NULL;// list of redir in a chunk ex: > >> >
 	tok->redir_files = NULL;// ex:test ; test1; test2
 	tok->input_redir = NULL;
