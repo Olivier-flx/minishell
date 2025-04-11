@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:37:48 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/03/31 19:07:18 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/11 17:56:19 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 //return 0 if not operator, if operator return lenght
 int	is_operator(char *src, int i, t_quote *quote)
 {
+	if (!quote)
+		init_quotes(quote);
 	if (quote->sgl % 2 == 0  && quote->dbl % 2 == 0)
 	{
 		if (src[i] == '>' && src[i + 1] && src[i + 1] == '>')

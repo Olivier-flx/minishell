@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   custom_frees.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 11:31:40 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/09 17:03:28 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/11 17:44:22 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,14 @@
 void	free_cmdlist(t_dlist *cmd_list)
 {
 	t_dlist	*i_node;
-	int i = 0; // @debug
 
 	i_node = cmd_list;
-	printf("entra\n");
 	while (i_node)
 	{
-		printf("frre num %i ; inode_pointer :  %p\n", i++, i_node);
 		if((t_chunk *)(i_node->content))
 		{
 
-			free_av(((t_chunk *)(i_node->content))->content);
+			free_av(((t_chunk *)(i_node->content))->tokens);
 			free_av(((t_chunk *)(i_node->content))->argv);
 			if(((t_chunk *)(i_node->content))->has_redir)
 			{

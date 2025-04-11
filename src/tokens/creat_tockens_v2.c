@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:49:47 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/11 17:00:56 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/11 17:46:35 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ int	create_main_chunks(char *src, t_dlist **cmd_list, t_data *data)
 	all_tokens = split_quoted2(src, data);
 	while (all_tokens && all_tokens[i] && all_tokens[i][0])
 	{
-		printf("all_tokens[%i] = `%s`\n", i, all_tokens[i]); // @debug
 		if (all_tokens[i][0] == '|') // @info : Si encuentra '|' crea el chunk de antes y el chunk de '|'
 		{
 			chunk = dup_pp_char(all_tokens, flag_last_pipe, i - 1 );
@@ -64,12 +63,9 @@ int	create_main_chunks(char *src, t_dlist **cmd_list, t_data *data)
 		i--;
 	if (all_tokens && all_tokens[i] && all_tokens[i][0])// @info : crea el ultimo chunK
 	{
-		printf("last_tokens[%i] = `%s`\n", i, all_tokens[i]); // @debug
 		chunk = dup_pp_char(all_tokens, flag_last_pipe, i);
 		token = create_token(&chunk, CMD, i, (t_quote) {0}); // i correspond au numéro du chunk / index du chunk dans la string. à retirer
 		add_to_list(cmd_list, token);
-		debug_print_cmd_list(cmd_list); //@debug
-		printf("\n"); // @debug
 	}
 	free_av(all_tokens);
 	return (SUCCESS);
@@ -97,8 +93,7 @@ int	create_main_chunks(char *src, t_dlist **cmd_list, t_data *data)
 void	init_redir_arr_and_files(t_chunk *chunk)
 {
 	if (!chunk)
-		printf("NOT CHUNKS\n");
-	printf("chunk = %p   ;   chunk->redir_count= %i\n",chunk, chunk->redir_count ); // @debug
+		printf("NOT CHUNKS\n"); // @debug
 	chunk->redir_count = count_operador_from_pp_char(chunk->tokens);
 	if (chunk->redir_count > 0)
 		chunk->has_redir = true;
@@ -111,7 +106,6 @@ void	init_redir_arr_and_files(t_chunk *chunk)
 	if (!chunk->redir)
 		return ; // @confirm
 	chunk->redir[chunk->redir_count] = 0;
-	printf("@debug    count_files_in_chunks(chunk->content) = %i\n", count_files_in_chunks(chunk->tokens));
 	chunk->redir_files = malloc(sizeof(char *) * (count_files_in_chunks(chunk->tokens) + 1));
 	if (!chunk->redir_files)
 		return ; // @confirm
@@ -173,32 +167,6 @@ void	separate_arg_and_operator(t_chunk *chunk)
 	}
 	printf("\n"); // @debug
 }
-
-int initialize_t_chunk(t_dlist *i_node)
-{
-	if (!i_node)
-		return (ERROR);
-	i_node->content = malloc(sizeof(t_chunk));
-	if (!i_node->content)
-	{
-	//	i_node->content = NULL;
-		return (ERROR);
-	}
-	((t_chunk *)(i_node->content))->tokens = NULL;
-	((t_chunk *)(i_node->content))->argv = NULL;
-	((t_chunk *)(i_node->content))->type = CMD;
-	((t_chunk *)(i_node->content))->has_redir = false;
-	((t_chunk *)(i_node->content))->redir_count = 0;;
-	((t_chunk *)(i_node->content))->redir = NULL;// list of redir in a chunk ex: > >> >
-	((t_chunk *)(i_node->content))->redir_files = NULL;// ex:test ; test1; test2
-	((t_chunk *)(i_node->content))->input_redir = NULL;
-	((t_chunk *)(i_node->content))->input_redir_file = NULL;
-	((t_chunk *)(i_node->content))->index = 0; // util ?
-	((t_chunk *)(i_node->content))->len = 0; // util ?
-	((t_chunk *)(i_node->content))->quotes = (t_quote) {0}; // util ?
-	return (SUCCESS);
-}
-
 
 int	create_argvs(t_dlist **cmd_list)
 {
