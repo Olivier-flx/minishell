@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/11 16:59:41 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/11 18:45:54 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ typedef struct s_chunk
 	bool		has_redir;
 	int			redir_count;
 	char		**redir;// list of redir in a chunk ex: > >> >
+	int			redir_file_count;
 	char		**redir_files;// ex:test ; test1; test2
 	char		**input_redir;
 	char		**input_redir_file;

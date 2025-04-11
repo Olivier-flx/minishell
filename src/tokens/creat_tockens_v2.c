@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:49:47 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/11 17:46:35 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/11 18:35:04 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ void	init_argv(t_chunk *chunk)
 	len_argv = pp_char_len(chunk->tokens) - (chunk->redir_count + count_files_in_chunks(chunk->tokens));
 	printf("init_argv chunk->redir_count = %i\n",chunk->redir_count);// @debug
 	printf("init_argv len_argv = %i\n",len_argv);// @debug
-	chunk->argv = malloc (sizeof(char *) * (len_argv + 1));
+	chunk->argv = malloc(sizeof(char *) * (len_argv + 1));
 	if (NULL == chunk->argv)
 	{
 		printf("Malloc error : al asignar el argv\n");
@@ -177,16 +177,16 @@ int	create_argvs(t_dlist **cmd_list)
 	{
 		separate_arg_and_operator((t_chunk *)i_node->content);
 	//////debug
-		printf("argv is :\n");// @debug
-		print_pp_char_arr(((t_chunk *)i_node->content)->argv); // @debug
-		printf("end argv\n\n");// @debug
-		if (((t_chunk *)i_node->content)->redir_count > 0)// @debug
-		{// @debug
-			printf("redir is :\n");// @debug
-			print_pp_char_arr(((t_chunk *)i_node->content)->redir); // @debug
-			print_pp_char_arr(((t_chunk *)i_node->content)->redir_files); //@debug
-			printf("end redir\n\n");// @debug
-		}// @debug
+		// printf("argv is :\n");// @debug
+		// print_pp_char_arr(((t_chunk *)i_node->content)->argv); // @debug
+		// printf("end argv\n\n");// @debug
+		// if (((t_chunk *)i_node->content)->redir_count > 0)// @debug
+		// {// @debug
+		// 	printf("redir is :\n");// @debug
+		// 	print_pp_char_arr(((t_chunk *)i_node->content)->redir); // @debug
+		// 	print_pp_char_arr(((t_chunk *)i_node->content)->redir_files); //@debug
+		// 	printf("end redir\n\n");// @debug
+		// }// @debug
 	/////////
 		i_node = i_node->next;
 	}

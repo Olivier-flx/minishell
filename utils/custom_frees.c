@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 11:31:40 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/11 17:44:22 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/11 18:46:38 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,14 @@ void	free_cmdlist(t_dlist *cmd_list)
 	{
 		if((t_chunk *)(i_node->content))
 		{
-
-			free_av(((t_chunk *)(i_node->content))->tokens);
-			free_av(((t_chunk *)(i_node->content))->argv);
+			if (((t_chunk *)(i_node->content))->tokens)
+				free_av(((t_chunk *)(i_node->content))->tokens);
+			if (((t_chunk *)(i_node->content))->argv)
+				free_av(((t_chunk *)(i_node->content))->argv);
 			if(((t_chunk *)(i_node->content))->has_redir)
-			{
 				free_av(((t_chunk *)(i_node->content))->redir);
+			if(((t_chunk *)(i_node->content))->redir_file_count > 0)
 				free_av(((t_chunk *)(i_node->content))->redir_files);
-			}
 			free((t_chunk *)(i_node->content));
 		}
 		// FOR later when inputg redir are implemented
