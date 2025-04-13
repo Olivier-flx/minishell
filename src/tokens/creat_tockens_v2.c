@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   creat_tockens_v2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:49:47 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/11 18:48:05 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/13 16:55:07 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,14 +105,14 @@ void	init_redir_arr_and_files(t_chunk *chunk)
 	chunk->redir = malloc(sizeof(char *) * (chunk->redir_count + 1));
 	if (!chunk->redir)
 		return ; // @confirm
-	chunk->redir[chunk->redir_count] = 0;
+	chunk->redir[chunk->redir_count] = NULL;
 	chunk->redir_file_count = count_files_in_chunks(chunk->tokens);
 	if ( chunk->redir_file_count == 0)
 		return ;
 	chunk->redir_files = malloc(sizeof(char *) * (count_files_in_chunks(chunk->tokens) + 1));
 	if (!chunk->redir_files)
 		return ; // @confirm
-	chunk->redir_files[count_files_in_chunks(chunk->tokens)] = 0;
+	chunk->redir_files[count_files_in_chunks(chunk->tokens)] = NULL;
 }
 
 
@@ -123,10 +123,14 @@ void	init_argv(t_chunk *chunk)
 	if (!chunk)
 		return ;
 	printf("\n---------------\n pp_char_len(chunk->content) = %i\n",pp_char_len(chunk->tokens));// @debug
-
 	len_argv = pp_char_len(chunk->tokens) - (chunk->redir_count + count_files_in_chunks(chunk->tokens));
 	printf("init_argv chunk->redir_count = %i\n",chunk->redir_count);// @debug
 	printf("init_argv len_argv = %i\n",len_argv);// @debug
+	if (len_argv <= 0)
+	{
+		chunk->argv = NULL;
+		return ;
+	}
 	chunk->argv = malloc(sizeof(char *) * (len_argv + 1));
 	if (NULL == chunk->argv)
 	{
@@ -155,7 +159,7 @@ void	separate_arg_and_operator(t_chunk *chunk)
 		if (is_redirection(chunk->tokens[i], 0, &quote) > 0) // @info: fil the t_chunk redir file with the corresponding redirections
 		{
 			chunk->redir[i_redir] = s_dup(chunk->tokens[i]);
-			if (chunk->tokens[i + 1])
+			if (chunk->tokens[i + 1] && chunk->redir_files)
 				chunk->redir_files[i_redir] = s_dup(chunk->tokens[++i]);
 			else
 				printf("Error --> No file name after a redir\n"); // @debug : error que gestionar despues en user validation function
@@ -206,8 +210,8 @@ int	create_input_token_v3(char *line,  t_dlist **cmd_list, t_data *data)
 		return (printf("Error : create_main_chunks"));
 	if (create_argvs(cmd_list) == 1) // if error retrun 1
 		return (2);
+	debug_print_cmd_list(cmd_list); //@debug
 	if (check_for_user_input_error(cmd_list) == 1)
 		return (3);
-	debug_print_cmd_list(cmd_list); //@debug
 	return(SUCCESS); // @confirm : what value to return if success ? is returning void couldn't be better ?
 }

@@ -10,3 +10,9 @@
     ...
     fun:add_history
 }
+{
+    leak debug_print_cmd_list
+    Memcheck : leak
+    ...
+    fun:debug_print_cmd_list
+}

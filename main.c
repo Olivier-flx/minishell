@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:23:22 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/11 16:31:31 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/13 16:31:16 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,9 @@ int	run_minishell(t_data	*data)
 			if (control == 3)
 			{
 				free_cmdlist(data->cmd_list);
+				if (data->token_separators_char_i.size > 0)
+					free (data->token_separators_char_i.array);
+				free(line);
 				continue;
 			}
 			// if(check_for_user_input_error(&cmd_list) > 0)

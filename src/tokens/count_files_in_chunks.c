@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 17:28:17 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/04 17:31:48 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/13 16:13:31 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	count_files_in_chunks(char **content)
 	{
 		if (is_operator(content[i], 0, &quote) > 0)
 		{
-			if(content[i + 1])
+			if(content[i + 1] && !is_operator(content[i + 1], 0, &quote))
 				k++;
 		}
 		i++;
