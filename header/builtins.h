@@ -27,13 +27,13 @@ typedef struct	s_env
 	
 
 // Prototipos de built-ins
-int	ft_echo(char **args);
-int	ft_cd(char **args);
+int	ft_echo(t_env *env, char **args);
+//int	ft_cd(char **args);
 int	ft_pwd(void);
-int	ft_export(char **args);
-int	ft_unset(char **args);
-int	ft_env(char **args);
-int	ft_exit(char **args);
+//int	ft_export(char **args);
+//int	ft_unset(char **args);
+int ft_env(t_env *env);
+//int	ft_exit(char **args);
 
 //enviroment
 

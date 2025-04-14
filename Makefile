@@ -5,12 +5,22 @@ NC = \033[0m
 YELLOW=\033[1;33m
 
 
-NAME = mini
+NAME = minishell
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g -O0 -I./header
 LDFLAGS = -lreadline
 
 #INC = -I./header
+
+BUILTINS = ./src/builtins/ft_echo.c \
+           ./src/builtins/ft_pwd.c \
+           ./src/builtins/ft_env.c \
+           #./src/builtins/ft_exit.c
+
+ENV = ./src/environment/env_search.c \
+      ./src/environment/env_utils.c \
+	  ./src/environment/enviro.c \
+
 
 UTILS = ./utils/string/ft_split.c \
 		./utils/string/basics.c \
@@ -22,10 +32,12 @@ UTILS = ./utils/string/ft_split.c \
 		./utils/msg/error_msg.c \
 		./utils/custom_frees.c \
 		./src/tokens/create_input_token.c \
-		./src/tokens/operator.c
+		./src/tokens/operator.c 
 
 SRC = main.c \
-		$(UTILS)
+      $(UTILS) \
+      $(BUILTINS) \
+      $(ENV)
 
 OBJ = $(SRC:.c=.o)
 
