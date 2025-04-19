@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 15:14:36 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/13 16:37:53 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/19 17:52:49 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,9 @@ int	check_for_user_input_error(t_dlist **cmd_list)
 	//check for redir puis pipe
 	if(check_redir_pipe(cmd_list) > 0)
 		return (1);
+
+	// check for only pipe or pipe first
+
 	// check for empty file name
 
 
