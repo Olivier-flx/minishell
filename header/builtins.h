@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: laufarin <laufarin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 18:13:34 by laufarin          #+#    #+#             */
-/*   Updated: 2025/02/14 18:15:28 by laufarin         ###   ########.fr       */
+/*   Updated: 2025/04/19 10:43:46 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@
 
 typedef struct	s_env
 {
-    char	*key;
-    char	*value;
-    struct	s_env *next;
+	char	*key;
+	char	*value;
+	struct	s_env *next;
 }	t_env;
-	
+
 
 // Prototipos de built-ins
 int	ft_echo(t_env *env, char **args);

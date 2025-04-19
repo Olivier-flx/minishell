@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: laufarin <laufarin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 15:40:44 by laufarin          #+#    #+#             */
-/*   Updated: 2025/03/27 17:52:23 by laufarin         ###   ########.fr       */
+/*   Updated: 2025/04/19 11:06:23 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	ft_pwd(void)
 {
 	char	*buff;
 
-	buff = malloc(1024); //tamaño arbitrario 
+	buff = malloc(1024); //tamaño arbitrario
 	if(!buff)
 	{
 		perror("malloc");
@@ -36,10 +36,10 @@ int	ft_pwd(void)
 	free(buff);
 	return(0);
 }
-/*
-int	main()
-{
-	ft_pwd();
-	return(0);
-}
-*/
+
+// int	main()
+// {
+// 	ft_pwd();
+// 	return(0);
+// }
+
