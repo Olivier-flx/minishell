@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: laufarin <laufarin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 15:40:12 by laufarin          #+#    #+#             */
-/*   Updated: 2025/03/27 17:19:32 by laufarin         ###   ########.fr       */
+/*   Updated: 2025/04/19 16:54:18 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include <stdio.h> 
+//#include <stdio.h>
 //#include <unistd.h>
 //#include <string.h>
 //#include <stdlib.h>
-#include "minishell.h"
+#include "../../header/minishell.h"
 
 int	ft_echo(t_env *env, char **args)
 {
-	write(STDOUT_FILENO, "DEBUG_ECHO\n", 11);  // Mensaje imposible de ignorar
-	return (0);  // Retorno simple para pruebas
+	// write(STDOUT_FILENO, "DEBUG_ECHO\n", 11);  // Mensaje imposible de ignorar
+	// return (0);  // Retorno simple para pruebas
 	int	i = 1;
 	int	new_line = 1;
 	// Verifica múltiples "-n"
@@ -70,5 +70,15 @@ int	ft_echo(t_env *env, char **args)
 	{
 		write(STDOUT_FILENO, " ¡ESPACIO! ", 11);  // Texto visible
 	}
+	return (0);
+}
+
+//cc -Wall -Wextra -Wall ./src/builtins/ft_echo.c ./src/enviroment/env.c ./src/enviroment/env_utils.c ./src/enviroment/env_search.c ./libs/libft/libft.a -lreadline -o testEcho
+int main(int ac, char **argv, char **env)
+{
+	t_env	*env1;
+	if (ac > 0 && env)
+		env1 = ft_init_env(env);
+	ft_echo(env1, argv);
 	return (0);
 }

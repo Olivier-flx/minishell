@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   env_search.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 21:20:00 by marvin            #+#    #+#             */
-/*   Updated: 2025/04/10 21:20:00 by marvin           ###   ########.fr       */
+/*   Updated: 2025/04/19 16:41:58 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"builtins.h"
-
-#include "minishell.h"
+#include "../../header/builtins.h"
+#include "../../header/minishell.h"
 
 char *ft_getenv(t_env *env, char *key)
 {
