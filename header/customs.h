@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/22 12:26:02 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/22 20:05:45 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ typedef struct s_variable
 	char	*valor;
 }	t_var;
 
-typedef struct data
+typedef struct data //aqui iremos agregando todo lo que este alocado.A partir de esta poder acceder a toda la info.
 {
 	char		**env;
 	t_dlist		*cmd_list;

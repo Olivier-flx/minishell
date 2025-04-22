@@ -5,13 +5,31 @@ NC = \033[0m
 YELLOW=\033[1;33m
 
 
-NAME = mini
-CC = cc -g
-DEBUG =  -O0 ##-gdwarf-4 -fno-omit-frame-pointer
-CFLAGS = -Werror -Wall -Wextra
+NAME = minishell
+CC = cc
+CFLAGS = -Wall -Wextra -Werror -g -O0 -I./header
 LDFLAGS = -lreadline
 
-INC = ./header/minishell.h
+#INC = -I./header
+
+BUILTINS = ./src/builtins/ft_echo.c \
+           ./src/builtins/ft_pwd.c \
+           ./src/builtins/ft_env.c \
+           #./src/builtins/ft_exit.c
+
+ENV = ./src/environment/env_search.c \
+      ./src/environment/env_utils.c \
+	  ./src/environment/enviro.c \
+
+TOKENS = ./src/tokens/user_input_validations/user_input_validation.c\
+	./src/tokens/user_input_validations/unique_token_operator.c\
+	./src/tokens/user_input_validations/double_operators.c \
+	./src/tokens/create_input_token.c \
+	./src/tokens/operator.c \
+	./src/tokens/count_files_in_chunks.c \
+	./src/tokens/token_separators.c \
+	./src/tokens/creat_tockens_v2.c \
+	./src/tokens/operator.c
 
 
 UTILS = ./utils/string/ft_split.c \
@@ -28,17 +46,13 @@ UTILS = ./utils/string/ft_split.c \
 		./utils/arrays/arr_frees.c \
 		./utils/msg/error_msg.c \
 		./utils/custom_frees.c \
-		./src/tokens/create_input_token.c \
-		./src/tokens/operator.c \
-		./src/tokens/count_files_in_chunks.c \
-		./src/tokens/token_separators.c \
-		./src/tokens/creat_tockens_v2.c
+
 
 SRC = main.c \
-	./src/tokens/user_input_validations/user_input_validation.c\
-	./src/tokens/user_input_validations/unique_token_operator.c\
-	./src/tokens/user_input_validations/double_operators.c\
-	$(UTILS)
+      $(UTILS) \
+      $(BUILTINS) \
+	  $(TOKENS) \
+      $(ENV)
 
 OBJ = $(SRC:.c=.o)
 
@@ -53,7 +67,7 @@ $(NAME) : $(OBJ) $(LIBFT_PATH)
 
 $(LIBFT_PATH):
 		@$(MAKE) -C ./libs/libft > /dev/null 2>&1
-		@printf "$(GREEN)[minishell] libft compiled successfully.$(NC)\n"
+		@printf "$(GREEN)[minishell] libft compiled successfully.$(NC)\n" > /dev/null
 ##
 # ┌────────────────────────────────────────────┬─────────────────────┬─────────────────┬─────────────────┐
 # │ Comando                                    │ ¿Oculta el comando? │ ¿Oculta stdout? │ ¿Oculta stderr? │
@@ -71,12 +85,12 @@ $(LIBFT_PATH):
 
 clean :
 		@make -s clean -C ./libs/libft
-		rm -f $(OBJ)
+		@rm -f $(OBJ)
 		@printf "$(RED)[minishell] Object files cleaned.$(NC)\n"
 
 fclean : clean
 		@make -s fclean -C ./libs/libft
-		rm -f $(NAME)
+		@rm -f $(NAME)
 		@printf "$(RED)[minishell] Cleaned successfully.$(NC)\n"
 
 re: fclean all
