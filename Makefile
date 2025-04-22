@@ -32,13 +32,13 @@ UTILS = ./utils/string/ft_split.c \
 		./src/tokens/operator.c \
 		./src/tokens/count_files_in_chunks.c \
 		./src/tokens/token_separators.c \
-		./src/tokens/validations/user_input_validation.c\
-		./src/tokens/validations/system_input_validation.c \
 		./src/tokens/creat_tockens_v2.c
 
-
 SRC = main.c \
-		$(UTILS)
+	./src/tokens/user_input_validations/user_input_validation.c\
+	./src/tokens/user_input_validations/unique_token_operator.c\
+	./src/tokens/user_input_validations/double_operators.c\
+	$(UTILS)
 
 OBJ = $(SRC:.c=.o)
 

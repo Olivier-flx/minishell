@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   customs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/11 18:45:54 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/22 12:26:02 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,9 @@ void	init_operador_var(t_quote *quote, int *op_count, int *i);
 		// verifications //
 			//user_input_validation
 int	check_for_user_input_error(t_dlist **cmd_list);
+int	check_for_triple(t_dlist **cmd_list);
+int	check_for_simple(t_dlist **cmd_list);
+
 			//system_input_validation
 void	check_system_input_error(t_data *data, t_dlist **cmd_list);
 		//cleaning.c
