@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:49:47 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/19 17:38:05 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/22 19:14:23 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	create_main_chunks(char *src, t_dlist **cmd_list, t_data *data)
 	all_tokens = split_quoted2(src, data);
 	while (all_tokens && all_tokens[i] && all_tokens[i][0])
 	{
-		if (all_tokens[i][0] == '|') // @info : Si encuentra '|' crea el chunk de antes y el chunk de '|'
+		if (i > 0 && all_tokens[i][0] == '|') // @info : Si encuentra '|' crea el chunk de antes y el chunk de '|'
 		{
 			chunk = dup_pp_char(all_tokens, flag_last_pipe, i - 1 );
 			token = create_token(&chunk, CMD, i, (t_quote) {0}); // i correspond au numéro du chunk / index du chunk dans la string. à retirer
@@ -57,11 +57,17 @@ int	create_main_chunks(char *src, t_dlist **cmd_list, t_data *data)
 			create_pipe_chunk(i, cmd_list);
 			flag_last_pipe = i + 1;
 		}
+		else if (i == 0 && all_tokens[i][0] == '|')
+		{
+			create_pipe_chunk(i, cmd_list);
+			flag_last_pipe = i + 1;
+		}
+
 		i++;
 	}
 	if (i > 0)
 		i--;
-	if (all_tokens && all_tokens[i] && all_tokens[i][0])// @info : crea el ultimo chunK
+	if (all_tokens && all_tokens[i] && all_tokens[i][0] && all_tokens[i][0] != '|')// @info : crea el ultimo chunK
 	{
 		chunk = dup_pp_char(all_tokens, flag_last_pipe, i);
 		token = create_token(&chunk, CMD, i, (t_quote) {0}); // i correspond au numéro du chunk / index du chunk dans la string. à retirer
