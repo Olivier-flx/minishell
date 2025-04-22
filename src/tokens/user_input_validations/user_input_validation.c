@@ -6,12 +6,13 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 15:14:36 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/22 11:36:53 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/22 18:53:43 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../header/minishell.h"
 
+//verifica que un Pipe no sea directamente despues de una redireccion
 int	check_redir_pipe(t_dlist **cmd_list)
 {
 	t_dlist	*i_node;
@@ -38,6 +39,18 @@ int	check_redir_pipe(t_dlist **cmd_list)
 	return(SUCCESS);
 }
 
+int check_pipe_last (t_dlist **cmd_list)
+{
+	t_dlist	*last_node;
+
+	last_node = find_last_node(cmd_list);
+	last_node = last_node->prev;
+	if (last_node && ((t_chunk *)(last_node->content))->tokens[0] \
+			&& ((t_chunk *)(last_node->content))->tokens[0][0] == '|')
+		return(printf("bash: syntax error near unexpected token `newline'\n"), ERROR);
+	return (0);
+}
+
 // <> funccionna
 
 // check from the last tocken to the first one
@@ -50,7 +63,8 @@ int	check_for_user_input_error(t_dlist **cmd_list)
 	//check for redir puis pipe
 	if(check_redir_pipe(cmd_list) > 0)
 		return (1);
-
+	if(check_pipe_last(cmd_list) > 0)
+		return (1);
 	// check for only pipe or pipe first
 
 	// check for empty file name
