@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 15:40:12 by laufarin          #+#    #+#             */
-/*   Updated: 2025/04/19 16:54:18 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/22 20:14:51 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,11 +74,11 @@ int	ft_echo(t_env *env, char **args)
 }
 
 //cc -Wall -Wextra -Wall ./src/builtins/ft_echo.c ./src/enviroment/env.c ./src/enviroment/env_utils.c ./src/enviroment/env_search.c ./libs/libft/libft.a -lreadline -o testEcho
-int main(int ac, char **argv, char **env)
-{
-	t_env	*env1;
-	if (ac > 0 && env)
-		env1 = ft_init_env(env);
-	ft_echo(env1, argv);
-	return (0);
-}
+// int main(int ac, char **argv, char **env)
+// {
+// 	t_env	*env1;
+// 	if (ac > 0 && env)
+// 		env1 = ft_init_env(env);
+// 	ft_echo(env1, argv);
+// 	return (0);
+// }

@@ -14,12 +14,12 @@ LDFLAGS = -lreadline
 
 BUILTINS = ./src/builtins/ft_echo.c \
            ./src/builtins/ft_pwd.c \
-           ./src/builtins/ft_env.c \
+           ./src/builtins/ft_env.c
            #./src/builtins/ft_exit.c
 
 ENV = ./src/environment/env_search.c \
       ./src/environment/env_utils.c \
-	  ./src/environment/enviro.c \
+	  ./src/environment/enviro.c
 
 TOKENS = ./src/tokens/user_input_validations/user_input_validation.c\
 	./src/tokens/user_input_validations/unique_token_operator.c\
@@ -28,8 +28,7 @@ TOKENS = ./src/tokens/user_input_validations/user_input_validation.c\
 	./src/tokens/operator.c \
 	./src/tokens/count_files_in_chunks.c \
 	./src/tokens/token_separators.c \
-	./src/tokens/creat_tockens_v2.c \
-	./src/tokens/operator.c
+	./src/tokens/creat_tockens_v2.c
 
 
 UTILS = ./utils/string/ft_split.c \
@@ -45,7 +44,7 @@ UTILS = ./utils/string/ft_split.c \
 		./utils/arrays/methods.c \
 		./utils/arrays/arr_frees.c \
 		./utils/msg/error_msg.c \
-		./utils/custom_frees.c \
+		./utils/custom_frees.c
 
 
 SRC = main.c \
