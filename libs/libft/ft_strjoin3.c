@@ -1,27 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_utils.c                                        :+:      :+:    :+:   */
+/*   ft_strjoin3.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/10 20:56:46 by marvin            #+#    #+#             */
-/*   Updated: 2025/04/19 16:42:19 by ofilloux         ###   ########.fr       */
+/*   Created: 2025/04/21 19:06:10 by marvin            #+#    #+#             */
+/*   Updated: 2025/04/21 19:06:10 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../header/builtins.h"
+#include "libft.h"
 
-void ft_free_env(t_env *env)
+char    *ft_strjoin3(char const*s1, char const*s2, char const*s3)
 {
-    while (env)
-    {
-        t_env *tmp;
+    char    *tmp;
+    char    *result;
 
-        tmp = env;
-        env = env->next;
-        free(tmp->key);
-        free(tmp->value);
-        free(tmp);
-    }
+    tmp = ft_strjoin(s1, s2);
+    result = ft_strjoin(tmp, s3);
+    free(tmp);
+    return(result);
+
 }

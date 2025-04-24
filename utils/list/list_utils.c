@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../header/minishell.h"
+/*#include "../../header/minishell.h"
 
 //Crea un nuevo nodo
 t_dlist	*ft_lst_new_node(void *content)
@@ -103,3 +103,4 @@ void	ft_d_lstadd_back(t_dlist **list, t_dlist *new)
 		new->prev = temp;
 	}
 }
+*/

@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtins.h"
+//#include "builtins.h"
 
-#include "minishell.h"
+#include "../../header/minishell.h"
 
 char *ft_getenv(t_env *env, char *key)
 {

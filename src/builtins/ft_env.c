@@ -10,8 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtins.h"
-#include "minishell.h"
+#include "../../header/minishell.h"
 
 int ft_env(t_env *env)
 {

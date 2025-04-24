@@ -22,10 +22,10 @@ ENV = ./src/environment/env_search.c \
 	  ./src/environment/enviro.c \
 
 
-UTILS = ./utils/string/ft_split.c \
+UTILS = ./utils/string/ft_split_s.c \
 		./utils/string/basics.c \
 		./utils/string/quotes.c \
-		./utils/list/list_utils.c \
+		#./utils/list/list_utils.c \
 		./utils/list/list_free.c \
 		./utils/list/list_to_msg.c \
 		./utils/arrays/methods.c \

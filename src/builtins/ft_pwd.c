@@ -10,11 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include "builtins.h"
-#include <unistd.h> //BORRAR
-#include <stdlib.h> //BORRAR
-#include<stdio.h> //BORRAR
-
+#include "../../header/minishell.h"
+//#include <unistd.h> //BORRAR
+//#include <stdlib.h> //BORRAR
+//#include<stdio.h> //BORRAR
 
 int	ft_pwd(void)
 {

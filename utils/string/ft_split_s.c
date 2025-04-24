@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../header/minishell.h"
+#include "../header/minishell.h"
 
 static int	ft_segment_count(const char *s, char c)
 {
