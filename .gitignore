@@ -3,5 +3,6 @@
 *.a
 *.out
 mini
+minishell
 utils/string/ft_split_single.c
 test
