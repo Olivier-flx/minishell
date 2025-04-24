@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:23:22 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/22 19:59:57 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/24 10:52:59 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,8 @@ int	main(int ac, char **av, char **env)
 {
 	t_data	data;
 
+	if (!env)
+		return(printf("No environment defined\n"), 1);
 	data.env = env;
 	data.cmd_list = NULL;
 	data.ope_char_i = (t_int_array) {0}; // @util ?
