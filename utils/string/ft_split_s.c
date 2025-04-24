@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 11:18:50 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/12 17:46:27 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/04 15:49:36 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,24 +17,31 @@ static int	ft_segment_count(const char *s, char c)
 	int		i;
 	int		count;
 	bool	in_word;
-	bool	in_quotes;
+	t_quote	quote;
 
 	i = 0;
 	count = 0;
 	in_word = false;
-	in_quotes = false;
+	init_quotes(&quote);
 	while (s[i] != '\0')
 	{
-		if (s[i] == '\'' && in_quotes)
-			in_quotes = false;
-		else if (s[i] == '\'' && !in_quotes)
+		if (s[i] == '\''&& quote.sgl % 2 == 1 && quote.dbl % 2 == 0)
+			quote.sgl++;
+		else if (s[i] == '\'' && quote.sgl % 2 == 0 && quote.dbl % 2 == 0 && !in_word)
 		{
-			in_quotes = true;
+			quote.sgl++;
+			count++;
+		}
+		else if (s[i] == '"' && quote.sgl % 2 == 0 && quote.dbl  % 2 == 1)
+			quote.dbl++;
+		else if (s[i] == '"' && quote.sgl % 2 == 0 && quote.dbl  % 2 == 0 && !in_word)
+		{
+			quote.dbl++;
 			count++;
 		}
 		else if (s[i] == c)
 			in_word = false;
-		else if (s[i] != c && !in_quotes && !in_word)
+		else if (s[i] != c && quote.sgl % 2 == 0 && quote.dbl % 2 == 0 && !in_word)
 		{
 			count++;
 			in_word = true;
@@ -46,33 +53,44 @@ static int	ft_segment_count(const char *s, char c)
 
 static int	ft_segment_len(int i, const char *s, char c)
 {
-	int	len;
-	bool	in_quote;
+	int		len;
+	t_quote	quote;
 
+	init_quotes(&quote);
 	len = 0;
-	in_quote = false;
 	while (s[i])
 	{
-		if (s[i] == '\'' && !in_quote)
+		if (s[i] == '\'' && quote.sgl % 2 == 0 && quote.dbl % 2 == 0)
 		{
-			in_quote = true;
+			quote.sgl++;
 			i++;
-			continue;
+			continue ;
 		}
-		if (s[i] == '\'' && in_quote)
-			break;
+		if (s[i] == '\'' && quote.sgl % 2 == 1 && quote.dbl % 2 == 0)
+			break ;
+		if (s[i] == '"' && quote.sgl % 2 == 0 && quote.dbl % 2 == 0)
+		{
+			quote.dbl++;
+			i++;
+			continue ;
+		}
+		if (s[i] == '"' && quote.sgl % 2 == 0 && quote.dbl % 2 == 0)
+			break ;
 
-		if (!in_quote && s[i] != c)
+		if (quote.sgl % 2 == 0 && quote.dbl % 2 == 0 && s[i] != c)
 			len++;
-		else if (in_quote && s[i] != '\'')
+		else if (quote.sgl % 2 == 1 && quote.dbl % 2 == 0 && s[i] != '\'')
 			len++;
-		else if (!in_quote && s[i] == c)
-			break;
+		else if (quote.sgl % 2 == 0 && quote.dbl % 2 == 1 && s[i] != '"')
+			len++;
+		else if (quote.sgl % 2 == 0 && quote.dbl % 2 == 0 && s[i] == c)
+			break ;
 		i++;
 	}
 	return (len + 1);
 }
 
+// // duplicate with char	**free_uncomplete_av(char **av, int i); in custom_frees.c
 static char	**freeall(char **ns_ar, int i)
 {
 	i--;
@@ -87,18 +105,18 @@ static char	**freeall(char **ns_ar, int i)
 
 static char	**ft_new_string_arr(char const *s, char c, char **ns_ar, int nb_segment)
 {
-	int	i;
-	int	segment_i;
-	int	s_i;
-	bool in_quote;
+	int		i;
+	int		segment_i;
+	int		s_i;
+	t_quote	quote;
 
+	init_quotes(&quote);
 	i = 0;
 	segment_i = 0;
-	in_quote = false;
 	while (s[i] && segment_i < nb_segment)
 	{
 		s_i = 0;
-		while (s[i] == c && !in_quote)
+		while (s[i] == c && quote.sgl % 2 == 0 && quote.dbl % 2 == 0)
 			i++;
 		ns_ar[segment_i] = malloc(ft_segment_len(i, s, c) * sizeof(char));
 		if (ns_ar[segment_i] == NULL)
@@ -106,12 +124,12 @@ static char	**ft_new_string_arr(char const *s, char c, char **ns_ar, int nb_segm
 			freeall(ns_ar, segment_i);
 			return (NULL);
 		}
-		while (s[i] && (in_quote || s[i] != c))
+		while (s[i] && (quote.sgl % 2 == 1 || quote.dbl % 2 == 1 || s[i] != c))
 		{
-			if (s[i] == '\'' && !in_quote)
-				in_quote = true;
-			else if (s[i] == '\'' && in_quote)
-				in_quote = false;
+			if (s[i] == '\'' && quote.dbl % 2 == 0)
+				quote.sgl++;
+			else if (s[i] == '"' && quote.sgl % 2 == 0)
+				quote.dbl++;
 			else
 				ns_ar[segment_i][s_i++] = s[i];
 			i++;
@@ -123,7 +141,7 @@ static char	**ft_new_string_arr(char const *s, char c, char **ns_ar, int nb_segm
 	return (ns_ar);
 }
 
-char	**split_sglquote(char const *s, char c)
+char	**split_quoted(char const *s, char c)
 {
 	char	**ns_ar;
 	int		segments_number;
@@ -137,3 +155,23 @@ char	**split_sglquote(char const *s, char c)
 	ns_ar = ft_new_string_arr(s, c, ns_ar, segments_number);
 	return (ns_ar);
 }
+
+// cc ./utils/string/ft_split.c ./utils/string/basics.c -g -o test
+// int main()
+// {
+// 	char	**new_string;
+// 	int		i = 0;
+
+// 	// new_string = split_quoted("he'l'lo > \"le '  ' fcdf  \"    Yo", ' ');
+// 	//new_string = split_quoted("he\"l\"lo > \"le '  ' fcdf  \"    Yo", ' ');
+// 	new_string = split_quoted(" h\"e'l'o  !\" ces\"T\" > le 'nouv\"e a u\"    monde !'  | ce'st' s\"ur\"", ' ');
+// 	//new_string = split_quoted("hello > 'le fcdf monde'    | cest'   ' pas moi      moi", ' ');
+// 	while (new_string[i])
+// 	{
+// 		printf("%i] : `%s`\n", i ,new_string[i]);
+// 		free(new_string[i]);
+// 		i++;
+// 	}
+// 	free(new_string);
+// 	return (0);
+// }

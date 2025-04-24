@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   operator.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:37:48 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/12 19:22:00 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/11 17:56:19 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,33 @@
 //return 0 if not operator, if operator return lenght
 int	is_operator(char *src, int i, t_quote *quote)
 {
+	if (!quote)
+		init_quotes(quote);
 	if (quote->sgl % 2 == 0  && quote->dbl % 2 == 0)
 	{
 		if (src[i] == '>' && src[i + 1] && src[i + 1] == '>')
 			return(2);
 		else if (src[i] == '<' && src[i + 1] && src[i + 1] == '<')
 			return(2);
-		else if (src[i] == 124)
+		//else if (src[i] == 124) // @debug pose probleme avec init_redir_arr_and_files
+		//	return(1);
+		else if (src[i] == '<')
 			return(1);
+		else if (src[i] == '>')
+			return(1);
+	}
+	return (0);
+}
+
+
+int	is_redirection(char *src, int i, t_quote *quote)
+{
+	if (quote->sgl % 2 == 0  && quote->dbl % 2 == 0)
+	{
+		if (src[i] == '>' && src[i + 1] && src[i + 1] == '>')
+			return(2);
+		else if (src[i] == '<' && src[i + 1] && src[i + 1] == '<')
+			return(2);
 		else if (src[i] == '<')
 			return(1);
 		else if (src[i] == '>')
@@ -58,13 +77,32 @@ void	init_operador_var(t_quote *quote, int *op_count, int *i)
 		quote->sgl = 0;
 		quote->dbl = 0;
 	}
-	if (op_count)
-	{
+	//if (op_count)
+	//{
 		*op_count = 0;
-	}
-	if (i)
+	//}
+	//if (i)
 		*i = 0;
 }
+
+// return the number of operator present in src
+int	count_operador_from_pp_char(char **content)
+{
+	int		i;
+	int		k;
+	t_quote	quote = {0,0};
+
+	i = 0;
+	k = 0;
+	while (content[i])
+	{
+		if (is_operator(content[i], 0, &quote) > 0) //Modifier apres
+			k++;
+		i++;
+	}
+	return (k);
+}
+
 
 // return the number of operator present in src
 int	count_operador(char *src)
@@ -88,7 +126,7 @@ int	count_operador(char *src)
 		{
 			i += tmp;
 			op_count++;
-			continue;
+			continue ;
 		}
 		i++;
 	}
@@ -132,7 +170,7 @@ int	count_operador(char *src)
 // }
 
 //fill the array on indexes of char that are operators in src
-void set_ope_char_i_arr(char *src, t_int_array *arr)
+void	set_ope_char_i_arr(char *src, t_int_array *arr)
 {
 	int			op_count;
 	int			i;
@@ -140,43 +178,44 @@ void set_ope_char_i_arr(char *src, t_int_array *arr)
 	t_quote		quote;
 
 	j = 0;
-	op_count = 0;
-	if(arr->size == 0)
+	if (arr->size == 0)
 		return ;
 	arr->array = malloc (arr->size * sizeof(int));
-	if (arr->array)
-		return;
+	if (!(arr->array))
+		return ;
 	init_operador_var(&quote, &op_count, &i);
 	while (src[i])
 	{
-		increment_quotes(src, i, &quote);
+		quote_increment(src, i, &quote);
 		op_count = is_operator(src, i, &quote);
 		if (op_count > 0)
 		{
-			arr->array[j] = i;
+			arr->array[j++] = i;
 			if (op_count == 2)
-				arr->array[++j] = i + 1;
+				arr->array[j++] = i + 1;
 			i += op_count;
 			continue ;
 		}
 		i++;
 	}
+	i = 0;
 }
 
+
+
 //calculate the lenght of the array on indexes of char that are operators in src
-void set_ope_char_i_struc_arr(char *src, t_int_array *arr)
+void	set_ope_char_i_struc_arr(char *src, t_int_array *arr)
 {
 	int			op_count;
 	int			i;
 	t_quote		quote;
-	int 		tmp;
+	int			tmp;
 
 	tmp = 0;
 	init_operador_var(&quote, &op_count, &i);
-	printf("opcount = %i\n", op_count);
 	while (src[i])
 	{
-		increment_quotes(src, i, &quote);
+		quote_increment(src, i, &quote);
 		tmp = is_operator(src, i, &quote);
 		if (tmp > 0)
 		{

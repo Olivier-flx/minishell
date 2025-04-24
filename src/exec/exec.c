@@ -1,24 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env.c                                           :+:      :+:    :+:   */
+/*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/14 18:10:37 by marvin            #+#    #+#             */
-/*   Updated: 2025/04/24 14:05:38 by ofilloux         ###   ########.fr       */
+/*   Created: 2025/04/24 10:30:25 by ofilloux          #+#    #+#             */
+/*   Updated: 2025/04/24 14:40:30 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell.h"
 
-int ft_env(t_env *env)
+int main_exec(t_data *data)
 {
-    while (env)
-    {
-        if (env->value)  // Solo imprime variables con valor
-            printf("%s=%s\n", env->key, env->value);
-        env = env->next;
-    }
-    return (0);
+	t_dlist *i_node;
+
+	create_files(data);
+	i_node = data->cmd_list;
+	while (i_node)
+	{
+		ft_echo(data->env_list, ((t_chunk *)(i_node->content))->argv);
+		i_node = i_node->next;
+	}
+	return(SUCCESS);
 }
