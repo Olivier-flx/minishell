@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:23:22 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/24 11:31:45 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/24 14:16:53 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ int	run_minishell(t_data	*data)
 				free(line);
 				continue;
 			}
+			main_exec(data);
 			// if(check_for_user_input_error(&cmd_list) > 0)
 			// {
 			// 	free_list(&cmd_list);
@@ -91,8 +92,10 @@ int	run_minishell(t_data	*data)
 			free_cmdlist(data->cmd_list);
 		// else
 		// 	continue ;
+		ft_free_env(data->env_list);// @debug
 		break ; // @debug : to remove when more advanced
 	}
+	// ft_free_env(data->env_list);// @debug
 	return (0);
 }
 
@@ -103,13 +106,14 @@ int	main(int ac, char **av, char **env)
 	if (!env)
 		return(printf("No environment defined\n"), 1);
 	data.env = env;
+	data.env_list = ft_init_env(env);
 	data.cmd_list = NULL;
 	data.ope_char_i = (t_int_array) {0}; // @util ?
 	data.token_separators_char_i = (t_int_array) {0};
 
 	if (ac == 1 && env && av) // modificcar para arrancar igual si no hay env
-		return (run_minishell(&data));
+		return(run_minishell(&data));
 	else
-		return (1);
+		return (/* ft_free_env(data.env_list), */ ERROR);
 	return (0);
 }

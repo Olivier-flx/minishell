@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 18:13:34 by laufarin          #+#    #+#             */
-/*   Updated: 2025/04/19 10:43:46 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/24 14:07:14 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@
 # include "minishell.h"  // Para reutilizar structs y funciones comunes
 
 
-typedef struct	s_env
-{
-	char	*key;
-	char	*value;
-	struct	s_env *next;
-}	t_env;
+// typedef struct	s_env
+// {
+// 	char	*key;
+// 	char	*value;
+// 	struct	s_env *next;
+// }	t_env;
 
 
 // Prototipos de built-ins

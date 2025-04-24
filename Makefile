@@ -30,6 +30,8 @@ TOKENS = ./src/tokens/user_input_validations/user_input_validation.c\
 	./src/tokens/token_separators.c \
 	./src/tokens/creat_tockens_v2.c
 
+EXEC = ./src/exec/exec.c \
+	./src/exec/create_files.c
 
 UTILS = ./utils/string/ft_split.c \
 		./utils/string/basics.c \
@@ -51,6 +53,7 @@ SRC = main.c \
       $(UTILS) \
       $(BUILTINS) \
 	  $(TOKENS) \
+	  $(EXEC) \
       $(ENV)
 
 OBJ = $(SRC:.c=.o)

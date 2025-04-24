@@ -6,10 +6,9 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/22 20:05:45 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/24 14:11:43 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef CUSTOMS_H
 # define CUSTOMS_H
@@ -28,6 +27,7 @@
 	// @legacy	--> not used anymore, to delete later, kept for logic implementation trace
 */
 ///////
+
 
 typedef enum {
 	SUCCESS,
@@ -68,9 +68,17 @@ typedef struct s_variable
 	char	*valor;
 }	t_var;
 
+typedef struct	s_env
+{
+	char	*key;
+	char	*value;
+	struct	s_env *next;
+}	t_env;
+
 typedef struct data //aqui iremos agregando todo lo que este alocado.A partir de esta poder acceder a toda la info.
 {
 	char		**env;
+	t_env		*env_list;
 	t_dlist		*cmd_list;
 	t_int_array	ope_char_i; // @util ?//index of operators characters in string input
 	t_int_array	token_separators_char_i; //index of separators characters in string input
@@ -123,6 +131,11 @@ int	create_input_token_v3(char *line,  t_dlist **cmd_list, t_data *data);
 
 
 /////////////// SRC //////////////
+	///////// EXEC/////////
+int	main_exec(t_data *data);
+int	create_files(t_data *data);
+
+
 	///// Tokens /////
 t_chunk	*create_token(char ***str, int type, int i, t_quote quotes);
 void	set_separator_char_i_struc_arr(char *src, t_int_array *arr);
