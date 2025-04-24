@@ -1,21 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: laufarin <laufarin@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/12 20:37:08 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/01/12 20:40:26 by ofilloux         ###   ########.fr       */
+/*   Created: 2023/09/18 12:26:09 by laufarin          #+#    #+#             */
+/*   Updated: 2023/09/25 02:06:06 by laufarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header/minishell.h"
+#include "libft.h"
 
-//return 0 if success
-int b_exit(int ret_val, t_data data)
+void	ft_putnbr_fd(int nb, int fd)
 {
-	// free all mallocs through data before exiting;
-	// dont forget to free "line"
-	exit(ret_val);
+	long int	n;
+
+	n = nb;
+	if (n < 0)
+	{
+		write (fd, "-", 1);
+		n = -n;
+	}
+	if (n >= 10)
+		ft_putnbr_fd(n / 10, fd);
+	write(fd, &"0123456789"[n % 10], 1);
 }

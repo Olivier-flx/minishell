@@ -1,27 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/12 20:20:17 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/01/12 20:40:30 by ofilloux         ###   ########.fr       */
+/*   Created: 2025/03/27 15:40:44 by laufarin          #+#    #+#             */
+/*   Updated: 2025/04/19 11:06:23 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header/minishell.h"
+//#include "builtins.h"
+#include <unistd.h> //BORRAR
+#include <stdlib.h> //BORRAR
+#include<stdio.h> //BORRAR
 
-//return 0 if succès
-int	env(char **env)
+
+int	ft_pwd(void)
 {
-	int	i;
+	char	*buff;
 
-	i = 0;
-	while (env[i])
+	buff = malloc(1024); //tamaño arbitrario
+	if(!buff)
 	{
-		printf("%s\n", env[i]);
-		i++;
+		perror("malloc");
+		return(1);
 	}
-	return (0);
+	if(getcwd(buff, 1024) == NULL)
+	{
+		perror("getcwd");
+		free(buff);
+		return(1);
+	}
+	printf("%s,\n", buff);
+	free(buff);
+	return(0);
 }
+
+// int	main()
+// {
+// 	ft_pwd();
+// 	return(0);
+// }
+

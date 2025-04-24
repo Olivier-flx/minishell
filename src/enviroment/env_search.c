@@ -1,22 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   env_search.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/12 20:12:49 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/01/12 20:36:49 by ofilloux         ###   ########.fr       */
+/*   Created: 2025/04/10 21:20:00 by marvin            #+#    #+#             */
+/*   Updated: 2025/04/19 16:41:58 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header/minishell.h"
+#include "../../header/builtins.h"
+#include "../../header/minishell.h"
 
-
-// echo return 0 if success
-int	echo(char string)
+char *ft_getenv(t_env *env, char *key)
 {
-	printf("%s", string);
-	return (0);
+    while (env)
+    {
+        if (ft_strcmp(env->key, key) == 0)
+            return (env->value);
+        env = env->next;
+    }
+    return (NULL);
 }
 
+// Función extra opcional
+int ft_env_exists(t_env *env, char *key)
+{
+    return (ft_getenv(env, key) != NULL);
+}
