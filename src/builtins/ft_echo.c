@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 15:40:12 by laufarin          #+#    #+#             */
-/*   Updated: 2025/04/22 20:14:51 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/24 14:51:55 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,12 @@ int	ft_echo(t_env *env, char **args)
 	// write(STDOUT_FILENO, "DEBUG_ECHO\n", 11);  // Mensaje imposible de ignorar
 	// return (0);  // Retorno simple para pruebas
 	int	i = 1;
-	int	new_line = 1;
+	bool	new_line = true;
 	// Verifica múltiples "-n"
 
-	write(1, "ECHO FUNCIONA!\n", 15);
 	if (args[1] && ft_strcmp(args[1], "-n") == 0)
 	{
-		new_line = 0;
+		new_line = false;
 		i = 2;
 		if (args[i] && ft_strcmp(args[i], "-n") == 0)
 		{
@@ -39,7 +38,7 @@ int	ft_echo(t_env *env, char **args)
 // Imprime argumentos
 	while (args[i])
 	{
-		write(1, "y aqui!\n", 7);
+		//write(1, "y aqui!\n", 7);
 		if (args[i][0] == '$')
 		{
 			char *value = ft_getenv(env, args[i] + 1);
@@ -55,21 +54,8 @@ int	ft_echo(t_env *env, char **args)
 		}
 		if (args[++i]) write(STDOUT_FILENO, " ", 1);
 	}
-	/*if (!new_line)
-        write(STDOUT_FILENO, "\n", 1);
-	else
-	{
-		write(STDOUT_FILENO, " ", 1);   // Espacio final si es -n (para no pegarse al prompt)
-	}*/
-	if (!new_line)
-	{
-		write(1, "PERO AQUI?!\n", 11);
-		write(STDOUT_FILENO, "\n¡NUEVO SALTO!\n", 15);  // Texto visible
-	}
-	else
-	{
-		write(STDOUT_FILENO, " ¡ESPACIO! ", 11);  // Texto visible
-	}
+	if (new_line)
+		write(STDOUT_FILENO, "\n", 1);
 	return (0);
 }
 
