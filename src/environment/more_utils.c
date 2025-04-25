@@ -19,6 +19,8 @@ char **env_to_sorted_array(t_env *env)
     char    **array;
     int     i = 0;
 
+    if (!env) 
+        return NULL; 
     // 1. Contar el número de variables
     while (tmp && ++count)
         tmp = tmp->next;
@@ -53,12 +55,14 @@ char **env_to_sorted_array(t_env *env)
     return (array);
 }
 
-
 int print_sorted_env(t_env *env)
 {
     char **env_array = env_to_sorted_array(env); // Convierte a array y ordena
     int i = 0;
 
+    if (!env) 
+        return 0; // No hay variables que mostrar
+    if (!env_array) return 1;
     while (env_array[i])
     {
         printf("declare -x %s\n", env_array[i]); // Formato "declare -x VAR=valor"
