@@ -28,7 +28,7 @@ char	**dup_pp_char(char **substring_arr, int start, int end)
 		return (NULL);
 	while (i <= end)
 	{
-		chunk[j] = s_dup(substring_arr[i]);
+		chunk[j] = ft_strdup(substring_arr[i]);
 		if (NULL == chunk[j])
 			return (free_uncomplete_av(chunk, j));
 		i++;

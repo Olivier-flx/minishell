@@ -179,8 +179,8 @@ void	init_quotes(t_quote *quote);
 bool	all_quote_closed(char *s);
 
 // basics
-int		s_len(const char *s);
-char	*s_dup(char *s);
+//int		ft_strlen(const char *s);
+char	*ft_strdup(char *s);
 
 // custom basics
 char	*c_strjoin(char *s1, char *s2, char c);

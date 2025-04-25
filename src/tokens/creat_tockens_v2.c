@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../header/minishell.h"
+/*#include "../../header/minishell.h"
 
 static int	create_pipe_chunk(int i, t_dlist **cmd_list)
 {
@@ -19,7 +19,7 @@ static int	create_pipe_chunk(int i, t_dlist **cmd_list)
 	t_chunk			*token;
 
 	token = NULL;
-	pipe = s_dup("|");;
+	pipe = ft_strdup("|");;
 	if (pipe != NULL)
 	{
 		pipe_to_arr = malloc (2 * sizeof (char *));
@@ -28,7 +28,7 @@ static int	create_pipe_chunk(int i, t_dlist **cmd_list)
 		pipe_to_arr[0] = pipe;
 		pipe_to_arr[1] = NULL;
 		token = create_token(&pipe_to_arr, PIPE, i, (t_quote) {0});
-		return (add_to_list(cmd_list, token), s_len(pipe));
+		return (add_to_list(cmd_list, token), ft_strlen(pipe));
 	}
 	return (SUCCESS);
 }
@@ -75,9 +75,9 @@ int	create_main_chunks(char *src, t_dlist **cmd_list, t_data *data)
 	}
 	free_av(all_tokens);
 	return (SUCCESS);
-}
+}*/
 
-/**
+/*
  * @brief Initializes redirection arrays and associated files for a chunk.
  *
  * This function counts the number of redirection operators in the chunk's content,
@@ -96,7 +96,7 @@ int	create_main_chunks(char *src, t_dlist **cmd_list, t_data *data)
  *
  * @see count_operador_from_pp_char, count_files_in_chunks
  */
-void	init_redir_arr_and_files(t_chunk *chunk)
+/*void	init_redir_arr_and_files(t_chunk *chunk)
 {
 	if (!chunk)
 		printf("NOT CHUNKS\n"); // @debug
@@ -119,10 +119,10 @@ void	init_redir_arr_and_files(t_chunk *chunk)
 	if (!chunk->redir_files)
 		return ; // @confirm
 	chunk->redir_files[count_files_in_chunks(chunk->tokens)] = NULL;
-}
+}*/
 
 
-void	init_argv(t_chunk *chunk)
+/*void	init_argv(t_chunk *chunk)
 {
 	int	len_argv;
 
@@ -144,9 +144,9 @@ void	init_argv(t_chunk *chunk)
 		return ;// @confirm
 	}
 	chunk->argv[len_argv] = NULL;
-}
+}*/
 
-void	separate_arg_and_operator(t_chunk *chunk)
+/*void	separate_arg_and_operator(t_chunk *chunk)
 {
 	int	i;
 	int	i_redir;
@@ -164,24 +164,24 @@ void	separate_arg_and_operator(t_chunk *chunk)
 	{
 		if (is_redirection(chunk->tokens[i], 0, &quote) > 0) // @info: fil the t_chunk redir file with the corresponding redirections
 		{
-			chunk->redir[i_redir] = s_dup(chunk->tokens[i]);
+			chunk->redir[i_redir] = ft_strdup(chunk->tokens[i]);
 			if (chunk->tokens[i + 1] && chunk->redir_files)
-				chunk->redir_files[i_redir] = s_dup(chunk->tokens[++i]);
+				chunk->redir_files[i_redir] = ft_strdup(chunk->tokens[++i]);
 			else
 				printf("Error --> No file name after a redir\n"); // @debug : error que gestionar despues en user validation function
 			chunk->has_redir = true; // @Util : 2025-03-23, no se si util?
 			i_redir++;
 		}
 		else
-			chunk->argv[i_argv++] = s_dup(chunk->tokens[i]);
+			chunk->argv[i_argv++] = ft_strdup(chunk->tokens[i]);
 		printf("`%s`;", chunk->tokens[i]); // @debug
 		fflush(stdout);  // @debug
 		i++;
 	}
 	printf("\n"); // @debug
-}
+}*/
 
-int	create_argvs(t_dlist **cmd_list)
+/*int	create_argvs(t_dlist **cmd_list)
 {
 	t_dlist	*i_node;
 
@@ -204,11 +204,11 @@ int	create_argvs(t_dlist **cmd_list)
 		i_node = i_node->next;
 	}
 	return (SUCCESS); // @confirm : what value to return if success ? is returning void couldn't be better ?
-}
+}*/
 
 
 
-int	create_input_token_v3(char *line,  t_dlist **cmd_list, t_data *data)
+/*int	create_input_token_v3(char *line,  t_dlist **cmd_list, t_data *data)
 {
 	if (! data)
 		return(1);
@@ -220,4 +220,4 @@ int	create_input_token_v3(char *line,  t_dlist **cmd_list, t_data *data)
 	if (check_for_user_input_error(cmd_list) == 1)
 		return (3);
 	return(SUCCESS); // @confirm : what value to return if success ? is returning void couldn't be better ?
-}
+}*/

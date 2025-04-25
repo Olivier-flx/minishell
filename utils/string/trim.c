@@ -56,7 +56,7 @@ int	count_useless_spaces(char *src)
 	return (k);
 }
 
-void	generate_trimed_str(char **new_string, char *src, int ns_len)
+void	generate_trimed_str(char **new_string, char *src, int nft_strlen)
 {
 	int	i;
 	int	j;
@@ -67,7 +67,7 @@ void	generate_trimed_str(char **new_string, char *src, int ns_len)
 	spc_flg = 0;
 	while (src && src[i] && (src[i] == ' ' || src[i] == '\t' || src[i] == '\n'))
 		i++;
-	while (src && src[i] && j < ns_len)
+	while (src && src[i] && j < nft_strlen)
 	{
 		if (spc_flg == 0 && (src[i] == ' ' || src[i] == '\t' || src[i] == '\n'))
 		{
@@ -83,7 +83,7 @@ void	generate_trimed_str(char **new_string, char *src, int ns_len)
 			(*new_string)[j++] = src[i++];
 		}
 	}
-	(*new_string)[ns_len] = '\0';
+	(*new_string)[nft_strlen] = '\0';
 }
 
 char	*ft_trim(char *src, bool is_malloced)
@@ -93,7 +93,7 @@ char	*ft_trim(char *src, bool is_malloced)
 	int		src_len;
 
 	dbl_spaces = count_useless_spaces(src);
-	src_len = s_len(src);
+	src_len = ft_strlen(src);
 	new_string = malloc ((src_len - dbl_spaces + 1) * sizeof(char));
 	if (!new_string)
 		return (NULL);

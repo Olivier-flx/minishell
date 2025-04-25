@@ -14,6 +14,6 @@
 
 void	simple_error_msg(char *msg)
 {
-	write(STDERR_FILENO, msg, s_len(msg));
+	write(STDERR_FILENO, msg, ft_strlen(msg));
 	write(STDERR_FILENO, "\n", 1);
 }

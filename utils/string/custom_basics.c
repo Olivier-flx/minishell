@@ -24,7 +24,7 @@
  * @return (char *) The newly allocated concatenated string, or NULL if allocation fails.
  *
  * @note The caller must free the returned string.
- * @see s_len
+ * @see ft_strlen
  */
 char	*c_strjoin(char *s1, char *s2, char c)
 {
@@ -34,7 +34,7 @@ char	*c_strjoin(char *s1, char *s2, char c)
 
 	i = 0;
 	j = 0;
-	ptr = malloc(sizeof(char) * (s_len(s1) + (s_len(s2) + 2)));
+	ptr = malloc(sizeof(char) * (ft_strlen(s1) + (ft_strlen(s2) + 2)));
 	if (ptr == NULL)
 		return (NULL);
 	while (s1[i])
@@ -70,7 +70,7 @@ char	*c_ft_substr(char const *s, unsigned int start, size_t len)
 	unsigned int	j;
 	char			*ptr;
 
-	if(len <= 0 || start >= (unsigned int) s_len(s))
+	if(len <= 0 || start >= (unsigned int) ft_strlen(s))
 		return (NULL);
 	i = 0;
 	j = 0;

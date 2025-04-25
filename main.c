@@ -36,9 +36,9 @@ int initialize_cmd_list(t_data *data)
 int	run_minishell(t_data	*data)
 {
 	char		*line;
-	int			control;
+	//int			control;
 
-	control = 0;
+	//control = 0;
 	while (true && data->env)
 	{
 		line = NULL;
@@ -62,7 +62,7 @@ int	run_minishell(t_data	*data)
 			//////////// Anadir Validation del input /////////
 			// fonction de validacion de input
 			/////////////////////////////
-			control = create_input_token_v3(line, &data->cmd_list, data);
+			/*control = create_input_token_v3(line, &data->cmd_list, data);
 			if (control == 3)
 			{
 				free_cmdlist(data->cmd_list);
@@ -70,7 +70,7 @@ int	run_minishell(t_data	*data)
 					free (data->token_separators_char_i.array);
 				free(line);
 				continue;
-			}
+			}*/
 			main_exec(data);
 			// if(check_for_user_input_error(&cmd_list) > 0)
 			// {
@@ -103,7 +103,7 @@ int	run_minishell(t_data	*data)
 void print_environment(t_env *env);  // Cambiado para recibir t_env*
 void test_builtins(t_env *env);      // Añadido parámetro t_env*
 
-int main(int argc, char **argv, char **environ)
+int main(int ac, char **av, char **env)
 {
 	t_data	data;
 

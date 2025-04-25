@@ -68,7 +68,7 @@ $(NAME) : $(OBJ) $(LIBFT_PATH)
 		@printf "$(GREEN)[minishell] Compiled successfully.$(NC)\n"
 
 $(LIBFT_PATH):
-		@$(MAKE) -C ./libs/libft > /dev/null 2>&1
+		@$(MAKE) -C ./libs/libft >/dev/null 2>&1
 		@printf "$(GREEN)[minishell] libft compiled successfully.$(NC)\n" > /dev/null
 ##
 # ┌────────────────────────────────────────────┬─────────────────────┬─────────────────┬─────────────────┐

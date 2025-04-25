@@ -65,7 +65,7 @@ int	is_redirection(char *src, int i, t_quote *quote)
 // 		*operador_data->operator = ft_strdup("<");
 // 	else if (src[i] == '>')
 // 		*operador_data->operator = ft_strdup(">");
-// 	*operador_data->len = s_len(operador_data->operator);
+// 	*operador_data->len = ft_strlen(operador_data->operator);
 // 	*op_count++;
 // }
 
