@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/24 14:11:43 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/26 18:35:43 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ typedef enum {
 	SUCCESS,
 	ERROR
 } fonction_return_type;
-
 
 typedef enum {
 	CMD,
@@ -93,9 +92,15 @@ typedef struct s_chunk
 	string_type	type;
 	bool		has_redir;
 	int			redir_count;
+	////// REDIR FILES //////
 	char		**redir;// list of redir in a chunk ex: > >> >
 	int			redir_file_count;
 	char		**redir_files;// ex:test ; test1; test2
+	int			*file_fd;
+	bool		file_fd_malloced;
+	bool		*file_open;
+	bool		file_open_malloced;
+	////
 	char		**input_redir;
 	char		**input_redir_file;
 	int			index; // util ?
@@ -133,7 +138,7 @@ int	create_input_token_v3(char *line,  t_dlist **cmd_list, t_data *data);
 /////////////// SRC //////////////
 	///////// EXEC/////////
 int	main_exec(t_data *data);
-int	create_files(t_data *data);
+int	init_files(t_data *data);
 
 
 	///// Tokens /////
