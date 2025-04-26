@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 15:14:36 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/22 19:12:50 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/26 19:45:44 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,15 +65,11 @@ int	check_for_user_input_error(t_dlist **cmd_list)
 		return (1);
 	if(check_pipe_last(cmd_list) > 0)
 		return (1);
-	// check for only pipe or pipe first
+	// check si accolade not closed
+	if(accolade_not_closed(cmd_list) > 0)
+		return (1);
 
-	// check for empty file name
+	// check for incorrect variable name
 
-
-	// | sin comando despues		pipe> {waiting for cmd}
-
-	// >\n or <\n		bash: syntax error near unexpected token `newline'
-
-	// >>\n	or <<\n 	sh: parse error near `\n'
 	return (0);
 }
