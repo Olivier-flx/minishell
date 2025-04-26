@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   custom_frees.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 11:31:40 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/11 18:46:38 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/26 19:06:06 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,10 @@ void	free_cmdlist(t_dlist *cmd_list)
 				free_av(((t_chunk *)(i_node->content))->redir);
 			if(((t_chunk *)(i_node->content))->redir_file_count > 0)
 				free_av(((t_chunk *)(i_node->content))->redir_files);
+			if (((t_chunk *)(i_node->content))->file_fd_malloced)
+				free(((t_chunk *)(i_node->content))->file_fd);
+			if (((t_chunk *)(i_node->content))->file_open_malloced)
+				free(((t_chunk *)(i_node->content))->file_open);
 			free((t_chunk *)(i_node->content));
 		}
 		// FOR later when inputg redir are implemented

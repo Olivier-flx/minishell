@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 17:38:16 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/26 18:08:10 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/26 18:55:40 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int get_var_name_len(char *str, int i)
 		escaped = false;
 		if (str[i] = '\\')
 			escaped = true;
-		if(!escaped && !((str[i] >= 'A' && str[i] <= 'Z') || (str[i] >= 'a' && str[i] <= 'z') || str[i] == '_'))
+		if(!escaped && 0 == ft_isalnum(str[i])  && str[i] != '_')
 			return (k);
 		k++;
 		i++;
