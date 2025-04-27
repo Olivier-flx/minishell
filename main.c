@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:23:22 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/26 16:25:26 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/27 09:04:53 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	run_minishell(t_data	*data)
 		line = NULL;
 		initialize_cmd_list(data);
 		line = readline("minishell> ");
-		while (line && !all_quote_closed(line))
+		while (line && !tocken_quote_closed(line))
 			line = c_strjoin(line, readline("dquote> "), '\n');
 
 		//////////////// To include in process line /////////
@@ -57,7 +57,7 @@ int	run_minishell(t_data	*data)
 		// }
 		////////////////////////////////
 
-		if (line && all_quote_closed(line))
+		if (line && tocken_quote_closed(line))
 		{
 			//////////// Anadir Validation del input /////////
 			// fonction de validacion de input

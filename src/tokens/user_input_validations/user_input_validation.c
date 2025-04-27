@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 15:14:36 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/26 19:45:44 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/27 09:16:23 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,54 @@ int check_pipe_last (t_dlist **cmd_list)
 }
 
 // <> funccionna
+
+int	check_tocken_accolade(char *token)
+{
+	int		i;
+	t_quote	quotes;
+	int		flag_acc;
+	int		flag_var;
+
+	i = 0;
+	flag_acc = 0;
+	flag_var = 0;
+	while (token[i])
+	{
+		quote_increment(token, i, &quotes);
+		if(token[i] = '$' && quote_are_closed(token, i, &quotes))
+			flag_var = 1;
+		if (1 == flag_var && token[i] == '{')
+			flag_acc == 1;
+
+
+	}
+
+}
+
+int	accolade_not_closed(t_dlist **cmd_list)
+{
+	t_dlist	*i_node;
+	int		i;
+	int		j;
+	int flag;
+	t_quote	quotes;
+
+	init_quotes(&quotes);
+	i_node = *cmd_list;
+	flag = 0;
+	while(i_node)
+	{
+		i = 0;
+		while (((t_chunk *)i_node->content)->tokens[i] && flag > 1)
+			flag = check_tocken_accolade(((t_chunk *)i_node->content)->tokens[i++])
+
+		quote_increment()
+		if (flag == 1 && ((t_chunk *)i_node->content)->tokens[0][0] == '{}')
+			return(printf("bash: syntax error near unexpected token `|'\n"), ERROR);
+		i_node = i_node->next;
+	}
+	return (SUCCESS)
+}
 
 // check from the last tocken to the first one
 int	check_for_user_input_error(t_dlist **cmd_list)

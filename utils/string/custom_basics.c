@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:13:36 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/04 18:24:55 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/27 09:04:53 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ char	*c_ft_substr(char const *s, unsigned int start, size_t len)
 // 	while (true )
 // 	{
 // 		line = readline("minishell> ");
-// 		while (line && !all_quote_closed(line))
+// 		while (line && !tocken_quote_closed(line))
 // 		{
 
 // 			line = c_strjoin(line, readline("dquote> "), '\n');

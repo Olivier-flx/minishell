@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/26 18:35:43 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/27 09:14:36 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,7 +181,8 @@ char	**dup_pp_char(char **substring_arr, int start, int end);
 char	*ft_trim(char *src, bool is_malloced);
 	//quotes
 void	init_quotes(t_quote *quote);
-bool	all_quote_closed(char *s);
+bool	tocken_quote_closed(char *s);
+bool	quote_are_closed(t_quote *quote)
 
 // basics
 int		s_len(const char *s);
