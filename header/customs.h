@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/28 22:03:53 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/28 22:19:47 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,9 @@ typedef struct	s_env
 {
 	char	*key;
 	char	*value;
+	bool	is_exported; //1 = in ENV, if 0 --> global variable
 	struct	s_env *next;
 }	t_env;
-
-typedef struct	s_env t_global_var; // giving a second alias for s_env because structure working well for global variables.
 
 typedef struct data //aqui iremos agregando todo lo que este alocado.A partir de esta poder acceder a toda la info.
 {
