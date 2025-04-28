@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 15:14:36 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/28 19:37:52 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/28 21:50:42 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,10 +146,10 @@ int	check_for_user_input_error(t_dlist **cmd_list)
 	if(check_pipe_last(cmd_list) > 0)
 		return (1);
 	// check si accolade not closed
-	if(accolade_not_closed(cmd_list) > 0) // @Util ?
+	if(accolade_not_closed(cmd_list) > 0) // @Util ? devrait déjà être géré par run_minishell
 		return (1); // @Util ?
 
-	// check for incorrect variable name
+	// check for incorrect variable name --> à gérer au niveau de l'expension
 
 	return (0);
 }

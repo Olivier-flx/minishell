@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/28 19:31:29 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/28 22:03:53 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ typedef struct	s_env
 	struct	s_env *next;
 }	t_env;
 
+typedef struct	s_env t_global_var; // giving a second alias for s_env because structure working well for global variables.
+
 typedef struct data //aqui iremos agregando todo lo que este alocado.A partir de esta poder acceder a toda la info.
 {
 	char		**env;
@@ -84,6 +86,8 @@ typedef struct data //aqui iremos agregando todo lo que este alocado.A partir de
 	t_int_array	token_separators_char_i; //index of separators characters in string input
 	int			chunks; //number of commands and argv separated by operators
 	t_dlist		*local_var; // @Util ?
+	int			last_status_code; // para luego poder recuperar el ultimo status code cuando se hace echo $?
+	t_var		global_var
 }	t_data;
 
 typedef struct s_chunk

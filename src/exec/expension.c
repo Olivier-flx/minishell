@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 17:38:16 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/28 18:55:17 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/28 22:06:05 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int get_var_name_len(char *str, int i)
 	return (k);
 }
 
-char	*expend(char *str)
+char	*expend(t_data *data, char *str)
 {
 	char	*ret_val;
 	int		i;
@@ -53,6 +53,7 @@ char	*expend(char *str)
 		quote_increment(str, i, &quotes);
 		if(quotes.dbl_quote % 2 == 1 && str[i] == '$')
 			i += get_var_name(str, i);
+		if (quote_are_closed(&quotes) && && str[i] == '$')
 	}
 
 

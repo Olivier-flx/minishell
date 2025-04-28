@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 21:20:00 by marvin            #+#    #+#             */
-/*   Updated: 2025/04/19 10:43:47 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/28 22:10:13 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char *ft_getenv(t_env *env, char *key)
 {
 	while (env)
 	{
-		if (ft_strcmp(env->key, key) == 0)
+		if (ft_strcmp(env->key, key) == 0 && env->is_exported == true)
 			return (env->value);
 		env = env->next;
 	}

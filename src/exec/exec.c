@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:30:25 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/26 18:51:31 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/28 22:09:24 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ int main_exec(t_data *data)
 {
 	t_dlist *i_node;
 
-	init_files(data);
+	exend(data);
+	init_files(data); // OK for now
 	i_node = data->cmd_list;
 	while (i_node)
 	{
