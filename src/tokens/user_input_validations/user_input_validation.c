@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 15:14:36 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/27 09:16:23 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/28 18:02:36 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,37 @@ int check_pipe_last (t_dlist **cmd_list)
 	return (0);
 }
 
-// <> funccionna
 
+int	line_accolade_closed(char *line)
+{
+	int		i;
+	t_quote	quotes;
+	int		flag_acc;
+	int		flag_var;
+
+	i = -1;
+	init_quotes(&quotes);
+	flag_acc = 0;
+	flag_var = 0;
+	while (line[++i])
+	{
+		quote_increment(line, i, &quotes);
+		if (line[i] == '$' && quote_are_closed(&quotes))
+			flag_var = 1;
+		if (1 == flag_var && line[i] == '{')
+			flag_acc = 1;
+		// if (flag_acc == 1 && line[i] != '{' && line[i] != '}')
+		// 	k++;
+		if (flag_acc == 1 && line[i] == '}')
+		{
+			flag_var = 0;
+			flag_acc = 0;
+		}
+	}
+	return (flag_acc == 0);
+}
+
+// <> funccionna
 int	check_tocken_accolade(char *token)
 {
 	int		i;
@@ -60,45 +89,47 @@ int	check_tocken_accolade(char *token)
 	int		flag_acc;
 	int		flag_var;
 
-	i = 0;
+	i = -1;
 	flag_acc = 0;
 	flag_var = 0;
-	while (token[i])
+	while (token[++i])
 	{
 		quote_increment(token, i, &quotes);
-		if(token[i] = '$' && quote_are_closed(token, i, &quotes))
+		if(token[i] == '$' && quote_are_closed(&quotes))
 			flag_var = 1;
 		if (1 == flag_var && token[i] == '{')
-			flag_acc == 1;
-
-
+			flag_acc = 1;
+		// if (flag_acc == 1 && token[i] != '{' && token[i] != '}')
+		// 	k++;
+		if (flag_acc == 1 && token[i] == '}')
+		{
+			flag_var = 0;
+			flag_acc = 0;
+		}
 	}
-
+	return (!(flag_acc == 0));
 }
 
 int	accolade_not_closed(t_dlist **cmd_list)
 {
 	t_dlist	*i_node;
 	int		i;
-	int		j;
 	int flag;
-	t_quote	quotes;
 
-	init_quotes(&quotes);
 	i_node = *cmd_list;
 	flag = 0;
 	while(i_node)
 	{
 		i = 0;
 		while (((t_chunk *)i_node->content)->tokens[i] && flag > 1)
-			flag = check_tocken_accolade(((t_chunk *)i_node->content)->tokens[i++])
-
-		quote_increment()
-		if (flag == 1 && ((t_chunk *)i_node->content)->tokens[0][0] == '{}')
-			return(printf("bash: syntax error near unexpected token `|'\n"), ERROR);
+		{
+			flag = check_tocken_accolade(((t_chunk *)i_node->content)->tokens[i++]);
+			if(flag > 0)
+				return (ERROR);
+		}
 		i_node = i_node->next;
 	}
-	return (SUCCESS)
+	return (SUCCESS);
 }
 
 // check from the last tocken to the first one

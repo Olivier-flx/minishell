@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/27 09:14:36 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/28 17:31:52 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,6 +160,7 @@ void	init_operador_var(t_quote *quote, int *op_count, int *i);
 int	check_for_user_input_error(t_dlist **cmd_list);
 int	check_for_triple(t_dlist **cmd_list);
 int	check_for_simple(t_dlist **cmd_list);
+int	line_accolade_closed(char *line);
 
 			//system_input_validation
 void	check_system_input_error(t_data *data, t_dlist **cmd_list);
@@ -182,7 +183,7 @@ char	*ft_trim(char *src, bool is_malloced);
 	//quotes
 void	init_quotes(t_quote *quote);
 bool	tocken_quote_closed(char *s);
-bool	quote_are_closed(t_quote *quote)
+bool	quote_are_closed(t_quote *quote);
 
 // basics
 int		s_len(const char *s);

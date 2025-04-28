@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 11:26:59 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/26 18:38:28 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/28 18:08:27 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ int	malloc_fd_arr(t_chunk *chunk)
 
 	i = 0;
 	chunk->file_fd_malloced = false;
+	if (!chunk->redir)
+		return(0);
 	chunk->file_fd = malloc(sizeof(int) * chunk->redir_count);
 	if (!chunk->file_fd)
 		return (1);
@@ -76,6 +78,8 @@ int	malloc_file_open(t_chunk *chunk)
 
 	i = 0;
 	chunk->file_open_malloced = false;
+	if (!chunk->redir)
+		return(0);
 	chunk->file_open = malloc(sizeof(int) * chunk->redir_count);
 	if (!chunk->file_open)
 		return (1);
@@ -86,26 +90,27 @@ int	malloc_file_open(t_chunk *chunk)
 }
 
 
-int create_files(char *pwd, t_chunk *chunk)
+static int create_files(t_chunk *chunk)
 {
 	int	i;
 
 	i = 0;
-
+	if (!chunk->redir || chunk->redir_files)
+		return (0);
 	while (chunk->redir[i] && chunk->redir_files[i])
 	{
 		if(ft_strcmp(chunk->redir[i], ">>") == 0)
-		fd[i] = open(chunk->redir_files[i], O_WRONLY | O_CREAT | O_APPEND, \
-				S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-		else
-			fd[i] = open(chunk->redir_files[i], O_WRONLY | O_CREAT | O_TRUNC, \
+		chunk->file_fd[i] = open(chunk->redir_files[i], O_WRONLY | O_CREAT | O_APPEND, \
 					S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-		if (fd[i] < 0)
+		else
+			chunk->file_fd[i] = open(chunk->redir_files[i], O_WRONLY | O_CREAT | O_TRUNC, \
+					S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+		if (chunk->file_fd[i] < 0)
 		{
-			file_open[i] = false;
-			return (close_files(chunk), perror("Error : file couldn't open"))
+			chunk->file_open[i] = false;
+			return (close_files(chunk), perror("Error : file couldn't open"), ERROR);
 		}
-		file_open[i] = true;
+		chunk->file_open[i] = true;
 		i++;
 	}
 	close_files(chunk);
@@ -120,9 +125,9 @@ int init_files(t_data *data)
 	i_node = data->cmd_list;
 	while(i_node)
 	{
-		if (malloc_file_fd_arr((t_chunk *)i_node->content) == 1)
+		if (malloc_fd_arr((t_chunk *)i_node->content) == 1)
 			return (printf("Malloc Error : init_files malloc_fd_arr\n"));
-		if (malloc_file_open(((t_chunk *)i_node->content)->file_open) == 1)
+		if (malloc_file_open((t_chunk *)i_node->content) == 1)
 			return (printf("Malloc Error : init_files malloc_file_open\n"));
 		create_files((t_chunk *)i_node->content);
 		i_node = i_node->next;

@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:23:22 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/27 09:04:53 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/28 17:32:54 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ int	run_minishell(t_data	*data)
 		line = readline("minishell> ");
 		while (line && !tocken_quote_closed(line))
 			line = c_strjoin(line, readline("dquote> "), '\n');
-
+		while (line && !line_accolade_closed(line))
+			line = c_strjoin(line, readline("> "), '\n');
 		//////////////// To include in process line /////////
 		// while (line && contains_heredoc(line))// structure for the heredoc @ TODO
 		// {
