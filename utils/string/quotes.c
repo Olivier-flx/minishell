@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 21:54:28 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/28 19:51:28 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/28 21:30:31 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,14 @@
 
 void	quote_increment(char *src, int i, t_quote *quote)
 {
-	if (src[i] == '"' && quote->sgl_quote % 2 == 0)
+	if (src[i] == '"' && quote->sgl_quote % 2 == 0 && quote->acc % 2 == 0)
 		quote->dbl_quote++;
-	if (src[i] == '\'' && quote->dbl_quote % 2 == 0)
+	if (src[i] == '\'' && quote->dbl_quote % 2 == 0 && quote->acc % 2 == 0)
 		quote->sgl_quote++;
+	if (src[i] == '{' && quote->dbl_quote % 2 == 0 && quote->sgl_quote % 2 == 0)
+		quote->acc++;
+	if (src[i] == '}' && quote->dbl_quote % 2 == 0 && quote->sgl_quote % 2 == 0)
+		quote->acc++;
 }
 
 void	init_quotes(t_quote *parsing_context)
@@ -45,25 +49,16 @@ void	init_quotes(t_quote *parsing_context)
 bool	tocken_quote_closed(char *s)
 {
 	int		i;
-	bool	in_word;
 	t_quote	quote;
 
 	i = 0;
-	in_word = false;
 	init_quotes(&quote);
 	while (s[i] != '\0')
 	{
-		if (s[i] == '\''&& quote.dbl_quote % 2 == 1 && quote.dbl_quote % 2 == 0)
-			quote.dbl_quote++;
-		else if (s[i] == '\'' && quote.dbl_quote % 2 == 0 && quote.dbl_quote % 2 == 0 && !in_word)
-			quote.dbl_quote++;
-		else if (s[i] == '"' && quote.dbl_quote % 2 == 0 && quote.dbl_quote  % 2 == 1)
-			quote.dbl_quote++;
-		else if (s[i] == '"' && quote.dbl_quote % 2 == 0 && quote.dbl_quote  % 2 == 0 && !in_word)
-			quote.dbl_quote++;
+		quote_increment(s, i, &quote);
 		i++;
 	}
-	return (quote.dbl_quote % 2 == 0 && quote.dbl_quote % 2 == 0);
+	return (quote_are_closed(&quote));
 }
 
 /**

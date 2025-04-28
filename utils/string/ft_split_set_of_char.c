@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 11:18:50 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/28 19:25:58 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/28 21:14:08 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ static char	**ft_new_string_arr(char *s, char **ns_ar, int nb_segment, t_int_arr
 	while (s[i] && segment_i < nb_segment)
 	{
 		s_i = 0;
-		while (is_seperator(s, i, &quote) > 0 && s[i] == ' ') // if space not in quote, ignore
+		while (is_seperator(s, i, &quote) > 0 && s[i] == ' ') // if space not in quote ==> ignore
 			i++;
 		ns_ar[segment_i] = malloc(sizeof(char) * (ft_segment_len(i, s, &quote, separators) + 1));
 		if (NULL == ns_ar[segment_i])

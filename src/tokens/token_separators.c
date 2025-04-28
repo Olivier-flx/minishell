@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:37:48 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/28 19:16:06 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/28 21:17:23 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,5 +89,6 @@ void	set_separator_char_i_struc_arr(char *src, t_int_array *arr)
 		i++;
 	}
 	arr->size = op_count;
+	printf("op_count = %i\n", op_count);
 	set_separator_char_i_arr(src, arr);
 }
