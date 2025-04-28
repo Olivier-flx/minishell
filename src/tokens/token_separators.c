@@ -3,19 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   token_separators.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:37:48 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/07 17:35:30 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/28 19:16:06 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell.h"
 
 // @info : return the len of the delimiter OR 0 if not a delimiter
+// takes in account all redirections or pipes
 int	is_seperator(char *src, int i, t_quote *quote)
 {
-	if (quote->sgl % 2 == 0  && quote->dbl % 2 == 0)
+	if (quote_are_closed(quote))
 	{
 		if (src[i] == '>' && src[i + 1] && src[i + 1] == '>')
 			return(2);

@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 11:18:50 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/04 15:49:36 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/28 18:55:30 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,23 +25,23 @@ static int	ft_segment_count(const char *s, char c)
 	init_quotes(&quote);
 	while (s[i] != '\0')
 	{
-		if (s[i] == '\''&& quote.sgl % 2 == 1 && quote.dbl % 2 == 0)
-			quote.sgl++;
-		else if (s[i] == '\'' && quote.sgl % 2 == 0 && quote.dbl % 2 == 0 && !in_word)
+		if (s[i] == '\''&& quote.dbl_quote % 2 == 1 && quote.dbl_quote % 2 == 0)
+			quote.dbl_quote++;
+		else if (s[i] == '\'' && quote.dbl_quote % 2 == 0 && quote.dbl_quote % 2 == 0 && !in_word)
 		{
-			quote.sgl++;
+			quote.dbl_quote++;
 			count++;
 		}
-		else if (s[i] == '"' && quote.sgl % 2 == 0 && quote.dbl  % 2 == 1)
-			quote.dbl++;
-		else if (s[i] == '"' && quote.sgl % 2 == 0 && quote.dbl  % 2 == 0 && !in_word)
+		else if (s[i] == '"' && quote.dbl_quote % 2 == 0 && quote.dbl_quote  % 2 == 1)
+			quote.dbl_quote++;
+		else if (s[i] == '"' && quote.dbl_quote % 2 == 0 && quote.dbl_quote  % 2 == 0 && !in_word)
 		{
-			quote.dbl++;
+			quote.dbl_quote++;
 			count++;
 		}
 		else if (s[i] == c)
 			in_word = false;
-		else if (s[i] != c && quote.sgl % 2 == 0 && quote.dbl % 2 == 0 && !in_word)
+		else if (s[i] != c && quote.dbl_quote % 2 == 0 && quote.dbl_quote % 2 == 0 && !in_word)
 		{
 			count++;
 			in_word = true;
@@ -60,30 +60,30 @@ static int	ft_segment_len(int i, const char *s, char c)
 	len = 0;
 	while (s[i])
 	{
-		if (s[i] == '\'' && quote.sgl % 2 == 0 && quote.dbl % 2 == 0)
+		if (s[i] == '\'' && quote.dbl_quote % 2 == 0 && quote.dbl_quote % 2 == 0)
 		{
-			quote.sgl++;
+			quote.dbl_quote++;
 			i++;
 			continue ;
 		}
-		if (s[i] == '\'' && quote.sgl % 2 == 1 && quote.dbl % 2 == 0)
+		if (s[i] == '\'' && quote.dbl_quote % 2 == 1 && quote.dbl_quote % 2 == 0)
 			break ;
-		if (s[i] == '"' && quote.sgl % 2 == 0 && quote.dbl % 2 == 0)
+		if (s[i] == '"' && quote.dbl_quote % 2 == 0 && quote.dbl_quote % 2 == 0)
 		{
-			quote.dbl++;
+			quote.dbl_quote++;
 			i++;
 			continue ;
 		}
-		if (s[i] == '"' && quote.sgl % 2 == 0 && quote.dbl % 2 == 0)
+		if (s[i] == '"' && quote.dbl_quote % 2 == 0 && quote.dbl_quote % 2 == 0)
 			break ;
 
-		if (quote.sgl % 2 == 0 && quote.dbl % 2 == 0 && s[i] != c)
+		if (quote.dbl_quote % 2 == 0 && quote.dbl_quote % 2 == 0 && s[i] != c)
 			len++;
-		else if (quote.sgl % 2 == 1 && quote.dbl % 2 == 0 && s[i] != '\'')
+		else if (quote.dbl_quote % 2 == 1 && quote.dbl_quote % 2 == 0 && s[i] != '\'')
 			len++;
-		else if (quote.sgl % 2 == 0 && quote.dbl % 2 == 1 && s[i] != '"')
+		else if (quote.dbl_quote % 2 == 0 && quote.dbl_quote % 2 == 1 && s[i] != '"')
 			len++;
-		else if (quote.sgl % 2 == 0 && quote.dbl % 2 == 0 && s[i] == c)
+		else if (quote.dbl_quote % 2 == 0 && quote.dbl_quote % 2 == 0 && s[i] == c)
 			break ;
 		i++;
 	}
@@ -116,7 +116,7 @@ static char	**ft_new_string_arr(char const *s, char c, char **ns_ar, int nb_segm
 	while (s[i] && segment_i < nb_segment)
 	{
 		s_i = 0;
-		while (s[i] == c && quote.sgl % 2 == 0 && quote.dbl % 2 == 0)
+		while (s[i] == c && quote.dbl_quote % 2 == 0 && quote.dbl_quote % 2 == 0)
 			i++;
 		ns_ar[segment_i] = malloc(ft_segment_len(i, s, c) * sizeof(char));
 		if (ns_ar[segment_i] == NULL)
@@ -124,12 +124,12 @@ static char	**ft_new_string_arr(char const *s, char c, char **ns_ar, int nb_segm
 			freeall(ns_ar, segment_i);
 			return (NULL);
 		}
-		while (s[i] && (quote.sgl % 2 == 1 || quote.dbl % 2 == 1 || s[i] != c))
+		while (s[i] && (quote.dbl_quote % 2 == 1 || quote.dbl_quote % 2 == 1 || s[i] != c))
 		{
-			if (s[i] == '\'' && quote.dbl % 2 == 0)
-				quote.sgl++;
-			else if (s[i] == '"' && quote.sgl % 2 == 0)
-				quote.dbl++;
+			if (s[i] == '\'' && quote.dbl_quote % 2 == 0)
+				quote.dbl_quote++;
+			else if (s[i] == '"' && quote.dbl_quote % 2 == 0)
+				quote.dbl_quote++;
 			else
 				ns_ar[segment_i][s_i++] = s[i];
 			i++;

@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 15:14:36 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/28 18:02:36 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/28 19:37:52 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ int	check_tocken_accolade(char *token)
 	int		flag_acc;
 	int		flag_var;
 
+	init_quotes(&quotes);
 	i = -1;
 	flag_acc = 0;
 	flag_var = 0;
@@ -145,8 +146,8 @@ int	check_for_user_input_error(t_dlist **cmd_list)
 	if(check_pipe_last(cmd_list) > 0)
 		return (1);
 	// check si accolade not closed
-	if(accolade_not_closed(cmd_list) > 0)
-		return (1);
+	if(accolade_not_closed(cmd_list) > 0) // @Util ?
+		return (1); // @Util ?
 
 	// check for incorrect variable name
 

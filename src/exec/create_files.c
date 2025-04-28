@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 11:26:59 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/28 18:08:27 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/28 19:32:34 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	close_files(t_chunk *chunk)
  *   0 on success,
  *   1 if memory allocation fails.
  */
-int	malloc_fd_arr(t_chunk *chunk)
+static int	malloc_fd_arr(t_chunk *chunk)
 {
 	int	i;
 
@@ -72,7 +72,7 @@ int	malloc_fd_arr(t_chunk *chunk)
  *   0 on success,
  *   1 if memory allocation fails.
  */
-int	malloc_file_open(t_chunk *chunk)
+static int	malloc_file_open(t_chunk *chunk)
 {
 	int	i;
 
@@ -88,7 +88,6 @@ int	malloc_file_open(t_chunk *chunk)
 		chunk->file_open[i++] = false;
 	return (0);
 }
-
 
 static int create_files(t_chunk *chunk)
 {
@@ -117,7 +116,6 @@ static int create_files(t_chunk *chunk)
 	return (0);
 }
 
-
 int init_files(t_data *data)
 {
 	t_dlist	*i_node;
@@ -132,8 +130,5 @@ int init_files(t_data *data)
 		create_files((t_chunk *)i_node->content);
 		i_node = i_node->next;
 	}
-
-	//get pwd
-	// loop over i_node to get the files
 	return(SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 11:30:14 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/22 11:36:44 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/28 20:02:08 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@ static int check_tokens(t_chunk *chunk)
 	init_quotes(&quotes);
 	flag = 0;
 	tmp = NULL;
-	i = 0;
-	while (chunk && chunk->tokens && chunk->tokens[i])
+	i = -1;
+	while (chunk && chunk->tokens && chunk->tokens[++i])
 	{
 		if (0 == flag && (is_operator(chunk->tokens[i], 0, &quotes) || chunk->tokens[i][0] == '|'))
 		{
-			tmp = chunk->tokens[i++];
+			tmp = chunk->tokens[i];
 			flag = 1;
 			continue ;
 		}
@@ -40,7 +40,6 @@ static int check_tokens(t_chunk *chunk)
 		if (1 == flag && chunk->tokens[i][0] =='<')
 			return(printf("bash: syntax error near unexpected token `<'\n"));
 		flag = 0;
-		i++;
 	}
 	return (SUCCESS);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   operator.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:37:48 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/11 17:56:19 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/28 19:39:28 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	is_operator(char *src, int i, t_quote *quote)
 {
 	if (!quote)
 		init_quotes(quote);
-	if (quote->sgl % 2 == 0  && quote->dbl % 2 == 0)
+	if (quote->dbl_quote % 2 == 0  && quote->dbl_quote % 2 == 0)
 	{
 		if (src[i] == '>' && src[i + 1] && src[i + 1] == '>')
 			return(2);
@@ -36,7 +36,7 @@ int	is_operator(char *src, int i, t_quote *quote)
 
 int	is_redirection(char *src, int i, t_quote *quote)
 {
-	if (quote->sgl % 2 == 0  && quote->dbl % 2 == 0)
+	if (quote->dbl_quote % 2 == 0  && quote->dbl_quote % 2 == 0)
 	{
 		if (src[i] == '>' && src[i + 1] && src[i + 1] == '>')
 			return(2);
@@ -72,11 +72,7 @@ int	is_redirection(char *src, int i, t_quote *quote)
 
 void	init_operador_var(t_quote *quote, int *op_count, int *i)
 {
-	if(quote)
-	{
-		quote->sgl = 0;
-		quote->dbl = 0;
-	}
+	init_quotes(quote);
 	//if (op_count)
 	//{
 		*op_count = 0;
@@ -90,10 +86,11 @@ int	count_operador_from_pp_char(char **content)
 {
 	int		i;
 	int		k;
-	t_quote	quote = {0,0};
+	t_quote	quote;
 
 	i = 0;
 	k = 0;
+	init_quotes(&quote);
 	while (content[i])
 	{
 		if (is_operator(content[i], 0, &quote) > 0) //Modifier apres
@@ -117,10 +114,10 @@ int	count_operador(char *src)
 		return (1);
 	while (src[i])
 	{
-		if (src[i] == '"' && quote.sgl % 2 == 0)
-			quote.dbl++;
-		if (src[i] == '\'' && quote.dbl % 2 == 0)
-			quote.sgl++;
+		if (src[i] == '"' && quote.dbl_quote % 2 == 0)
+			quote.dbl_quote++;
+		if (src[i] == '\'' && quote.dbl_quote % 2 == 0)
+			quote.dbl_quote++;
 		tmp = is_operator(src, i, &quote);
 		if (tmp > 0)
 		{
@@ -152,10 +149,10 @@ int	count_operador(char *src)
 
 // 	while (src[i])
 // 	{
-// 		if (src[i] == '"' && quote.sgl % 2 == 0)
-// 			quote.dbl++;
-// 		if (src[i] == '\'' && quote.dbl % 2 == 0)
-// 			quote.sgl++;
+// 		if (src[i] == '"' && quote.dbl_quote % 2 == 0)
+// 			quote.dbl_quote++;
+// 		if (src[i] == '\'' && quote.dbl_quote % 2 == 0)
+// 			quote.dbl_quote++;
 // 		tmp = is_operator(src, i, &quote);
 // 		if(tmp > 0);
 // 		{

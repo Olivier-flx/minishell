@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 21:54:28 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/27 09:15:00 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/28 19:51:28 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,17 @@
 
 void	quote_increment(char *src, int i, t_quote *quote)
 {
-	if (src[i] == '"' && quote->sgl % 2 == 0)
-		quote->dbl++;
-	if (src[i] == '\'' && quote->dbl % 2 == 0)
-		quote->sgl++;
+	if (src[i] == '"' && quote->sgl_quote % 2 == 0)
+		quote->dbl_quote++;
+	if (src[i] == '\'' && quote->dbl_quote % 2 == 0)
+		quote->sgl_quote++;
 }
 
-void	init_quotes(t_quote *quote)
+void	init_quotes(t_quote *parsing_context)
 {
-	quote->sgl = 0;
-	quote->dbl = 0;
+	parsing_context->dbl_quote = 0;
+	parsing_context->sgl_quote = 0;
+	parsing_context->acc = 0;
 }
 
 /**
@@ -52,17 +53,17 @@ bool	tocken_quote_closed(char *s)
 	init_quotes(&quote);
 	while (s[i] != '\0')
 	{
-		if (s[i] == '\''&& quote.sgl % 2 == 1 && quote.dbl % 2 == 0)
-			quote.sgl++;
-		else if (s[i] == '\'' && quote.sgl % 2 == 0 && quote.dbl % 2 == 0 && !in_word)
-			quote.sgl++;
-		else if (s[i] == '"' && quote.sgl % 2 == 0 && quote.dbl  % 2 == 1)
-			quote.dbl++;
-		else if (s[i] == '"' && quote.sgl % 2 == 0 && quote.dbl  % 2 == 0 && !in_word)
-			quote.dbl++;
+		if (s[i] == '\''&& quote.dbl_quote % 2 == 1 && quote.dbl_quote % 2 == 0)
+			quote.dbl_quote++;
+		else if (s[i] == '\'' && quote.dbl_quote % 2 == 0 && quote.dbl_quote % 2 == 0 && !in_word)
+			quote.dbl_quote++;
+		else if (s[i] == '"' && quote.dbl_quote % 2 == 0 && quote.dbl_quote  % 2 == 1)
+			quote.dbl_quote++;
+		else if (s[i] == '"' && quote.dbl_quote % 2 == 0 && quote.dbl_quote  % 2 == 0 && !in_word)
+			quote.dbl_quote++;
 		i++;
 	}
-	return (quote.sgl % 2 == 0 && quote.dbl % 2 == 0);
+	return (quote.dbl_quote % 2 == 0 && quote.dbl_quote % 2 == 0);
 }
 
 /**
@@ -78,7 +79,9 @@ bool	tocken_quote_closed(char *s)
  */
 bool	quote_are_closed(t_quote *quote)
 {
-	return (quote->sgl % 2 == 0 && quote->dbl % 2 == 0);
+	return (quote->dbl_quote % 2 == 0 \
+		&& quote->sgl_quote % 2 == 0 \
+		&& quote->acc % 2 == 0);
 }
 
 // cc ./utils/string/quotes.c ./utils/string/basics.c -g -o test

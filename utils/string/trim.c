@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 18:48:17 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/17 15:52:04 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/28 18:55:17 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,15 +89,15 @@ void	generate_trimed_str(char **new_string, char *src, int ns_len)
 char	*ft_trim(char *src, bool is_malloced)
 {
 	char	*new_string;
-	int		dbl_spaces;
+	int		dbl_quote_spaces;
 	int		src_len;
 
-	dbl_spaces = count_useless_spaces(src);
+	dbl_quote_spaces = count_useless_spaces(src);
 	src_len = s_len(src);
-	new_string = malloc ((src_len - dbl_spaces + 1) * sizeof(char));
+	new_string = malloc ((src_len - dbl_quote_spaces + 1) * sizeof(char));
 	if (!new_string)
 		return (NULL);
-	generate_trimed_str(&new_string, src, src_len - dbl_spaces);
+	generate_trimed_str(&new_string, src, src_len - dbl_quote_spaces);
 	if (is_malloced)
 		free(src);
 	return (new_string);

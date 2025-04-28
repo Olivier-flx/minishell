@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 11:28:48 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/22 12:26:00 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/28 19:55:28 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	check_for_simple(t_dlist **cmd_list)
 		if(chunk->tokens && chunk->tokens[0])
 		{
 			if (is_operator(chunk->tokens[0], 0, &quotes) && !chunk->tokens[1])
-				return( printf("bash: syntax error near unexpected token `%s'\n",\
+				return (printf("bash: syntax error near unexpected token `%s'\n",\
 					unexpected_token(i_node)), ERROR);
 		}
 		i_node = i_node->next;

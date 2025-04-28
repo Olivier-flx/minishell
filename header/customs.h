@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/28 17:31:52 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/28 19:31:29 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,9 @@ typedef enum {
 
 typedef struct s_quote
 {
-	int		sgl;
-	int		dbl;
+	int		dbl_quote;
+	int		sgl_quote;
+	int		acc;
 }	t_quote;
 
 typedef struct s_int_array
