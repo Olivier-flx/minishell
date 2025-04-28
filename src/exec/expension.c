@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 17:38:16 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/28 22:06:05 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/28 22:27:35 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ char	*expend(t_data *data, char *str)
 		quote_increment(str, i, &quotes);
 		if(quotes.dbl_quote % 2 == 1 && str[i] == '$')
 			i += get_var_name(str, i);
-		if (quote_are_closed(&quotes) && && str[i] == '$')
+		if (quote_are_closed(&quotes) && str[i] == '$')
+			ft_getenv(data->env_list, get_var_name(str, i))
 	}
 
 
