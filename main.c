@@ -16,7 +16,7 @@
 // HOW TO RUN //
 // valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=readline.supp -s ./mini
 
-int	process_line(char **line)
+/*int	process_line(char **line)
 {
 	printf("process line --> %s\n", *line);
 	return (0);
@@ -62,7 +62,7 @@ int	run_minishell(t_data	*data)
 			//////////// Anadir Validation del input /////////
 			// fonction de validacion de input
 			/////////////////////////////
-			/*control = create_input_token_v3(line, &data->cmd_list, data);
+			control = create_input_token_v3(line, &data->cmd_list, data);
 			if (control == 3)
 			{
 				free_cmdlist(data->cmd_list);
@@ -71,7 +71,7 @@ int	run_minishell(t_data	*data)
 				free(line);
 				continue;
 			}*/
-			main_exec(data);
+			/*main_exec(data);
 			// if(check_for_user_input_error(&cmd_list) > 0)
 			// {
 			// 	free_list(&cmd_list);
@@ -98,9 +98,9 @@ int	run_minishell(t_data	*data)
 	// ft_free_env(data->env_list);// @debug
 	return (0);
 }
-
+*/
 // Prototipos de funciones
-void print_environment(t_env *env);  // Cambiado para recibir t_env*
+/*void print_environment(t_env *env);  // Cambiado para recibir t_env*
 void test_builtins(t_env *env);      // Añadido parámetro t_env*
 
 int main(int ac, char **av, char **env)
@@ -118,11 +118,11 @@ int main(int ac, char **av, char **env)
 	if (ac == 1 && env && av) // modificcar para arrancar igual si no hay env
 		return(run_minishell(&data));
 	else
-		return (/* ft_free_env(data.env_list), */ ERROR);
-	return (0);
-}
+		//return ( ft_free_env(data.env_list),  ERROR);
+	//return (0);
+//}
 
-void print_environment(t_env *env)      // Ahora recibe t_env*
+void print_environment(t_env *env)       Ahora recibe t_env*
 {
     while (env != NULL)
     {
@@ -151,4 +151,4 @@ void test_builtins(t_env *env)          // Recibe t_env* como parámetro
     printf("\n4. Probando 'echo -n hello world':\n");
     char *echo_n_args[] = {"echo", "-n", "hello", "world", NULL};
     ft_echo(env, echo_n_args);
-}
+}*/

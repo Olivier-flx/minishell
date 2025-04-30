@@ -18,13 +18,13 @@
 # include "minishell.h"  // Para reutilizar structs y funciones comunes
 
 
- /*typedef struct	s_env
+/* typedef struct	s_env
  {
  	char	*key;
     char	*value;
  	struct	s_env *next;
- }	t_env;
-*/
+ }	t_env;*/
+
 
 // Prototipos de built-ins
 int	ft_echo(t_env *env, char **args);
@@ -33,7 +33,7 @@ int	ft_pwd(void);
 int ft_export(t_env **env, char **args);
 //int	ft_unset(char **args);
 int ft_env(t_env *env);
-//int	ft_exit(char **args);
+int	ft_exit(char **args);
 
 //int main(int ac, char **av, char **env);
 
