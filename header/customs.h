@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/28 22:19:47 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/30 21:45:53 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ typedef struct data //aqui iremos agregando todo lo que este alocado.A partir de
 	int			chunks; //number of commands and argv separated by operators
 	t_dlist		*local_var; // @Util ?
 	int			last_status_code; // para luego poder recuperar el ultimo status code cuando se hace echo $?
-	t_var		global_var
 }	t_data;
 
 typedef struct s_chunk

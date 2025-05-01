@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:49:47 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/22 19:14:23 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/04/30 21:47:31 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,9 @@ void	separate_arg_and_operator(t_chunk *chunk)
 	int	i;
 	int	i_redir;
 	int	i_argv;
-	t_quote	quote = {0,0};
+	t_quote	quote;
+
+	init_quotes(&quote);
 
 	i = 0;
 	i_redir = 0;
