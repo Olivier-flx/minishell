@@ -8,3 +8,4 @@ utils/string/ft_split_single.c
 test*
 .git
 *.exe
+.gitattributes
