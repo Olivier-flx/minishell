@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 17:38:16 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/01 09:34:23 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/01 09:39:33 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,10 @@ char	*expend_token(t_data *data, char *str)
 				j += ft_strlcpy(expd_token + j, var_value, ft_strlen(var_value) + 1); // +1 pour '\0'
 				free(var_value);
 			}
-			i += ft_strlen(var_name) + 1; // +1 pour le $
+			if (str[i + 1] && str[i + 1] == '{')
+				i += ft_strlen(var_name) + 3; // +1 pour le $ et les {}
+			else
+				i += ft_strlen(var_name) + 1; // +1 pour le $
 			free(var_name);
 		}
 		else
