@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/30 21:45:53 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/01 11:06:49 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,8 @@ int	create_input_token_v3(char *line,  t_dlist **cmd_list, t_data *data);
 int	main_exec(t_data *data);
 int	init_files(t_data *data);
 
+	/////// EXPENSION /////
+int	expend_all(t_data *data);
 
 	///// Tokens /////
 t_chunk	*create_token(char ***str, int type, int i, t_quote quotes);
