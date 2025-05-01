@@ -3,42 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   basics.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/26 10:05:22 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/06 16:52:05 by ofilloux         ###   ########.fr       */
+/*   Created: 2025/04/25 12:33:41 by marvin            #+#    #+#             */
+/*   Updated: 2025/05/01 15:22:02 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell.h"
 
-int	s_len(const char *s)
+char    *ft_strjoin3(char *s1, char *s2, char *s3)
 {
-	int	i;
+	char	*tmp;
+	char	*result;
 
-	if (s == NULL)
-		return (0);
-	i = 0;
-	while (s[i] != '\0')
-		i++;
-	return (i);
-}
-
-char	*s_dup(char *s)
-{
-	char	*cpy;
-	int	 i = 0;
-
-	if(!s)
-			return (NULL);
-	cpy = malloc((s_len(s) + 1) * sizeof(char));
-	if (!cpy)
-			return (NULL);
-	while(s[i])
-	{
-			cpy[i] = s[i];
-			i++;
-	}
-	cpy[i] = '\0';
-	return (cpy);
+	tmp = ft_strjoin(s1, s2);
+	result = ft_strjoin(tmp, s3);
+	free(tmp);
+	return(result);
 }

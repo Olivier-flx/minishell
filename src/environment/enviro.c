@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 
-#include "builtins.h"
+#include "../../header/minishell.h"
 
 t_env *ft_new_env_node(char *key, char *value)
 {

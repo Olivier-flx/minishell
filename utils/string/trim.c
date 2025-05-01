@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 18:48:17 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/28 18:55:17 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/01 15:15:11 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ char	*ft_trim(char *src, bool is_malloced)
 	int		src_len;
 
 	dbl_quote_spaces = count_useless_spaces(src);
-	src_len = s_len(src);
+	src_len = ft_strlen(src);
 	new_string = malloc ((src_len - dbl_quote_spaces + 1) * sizeof(char));
 	if (!new_string)
 		return (NULL);

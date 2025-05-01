@@ -35,7 +35,7 @@ EXEC = ./src/exec/exec.c \
 
 EXPEND = ./src/exec/Expension/expension.c
 
-UTILS = ./utils/string/ft_split.c \
+UTILS = ./utils/string/ft_split_s.c \
 		./utils/string/basics.c \
 		./utils/string/custom_basics.c \
 		./utils/string/select_from_substring_arr.c \

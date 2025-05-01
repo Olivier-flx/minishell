@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:37:48 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/28 19:39:28 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/01 15:08:12 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	is_redirection(char *src, int i, t_quote *quote)
 // 		*operador_data->operator = ft_strdup("<");
 // 	else if (src[i] == '>')
 // 		*operador_data->operator = ft_strdup(">");
-// 	*operador_data->len = s_len(operador_data->operator);
+// 	*operador_data->len = ft_strlen(operador_data->operator);
 // 	*op_count++;
 // }
 

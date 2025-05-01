@@ -49,7 +49,7 @@ t_chunk	*create_token(char ***str, int type, int i, t_quote quotes)
 	token->type = type;
 	token->index = i;
 	if (type == OPERATOR)
-		token->len = s_len(*str[0]);
+		token->len = ft_strlen(*str[0]);
 	else
 		token->len = 0; //TODO
 	token->quotes = quotes;

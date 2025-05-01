@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:23:22 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/28 17:32:54 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/01 15:02:33 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,12 @@ int	run_minishell(t_data	*data)
 	return (0);
 }
 
+
+/////////////////// LAURA //////////////////////
+// Prototipos de funciones
+/*void print_environment(t_env *env);  // Cambiado para recibir t_env*
+void test_builtins(t_env *env);      // Añadido parámetro t_env*
+
 int	main(int ac, char **av, char **env)
 {
 	t_data	data;
@@ -115,6 +121,37 @@ int	main(int ac, char **av, char **env)
 	if (ac == 1 && env && av) // modificcar para arrancar igual si no hay env
 		return(run_minishell(&data));
 	else
-		return (/* ft_free_env(data.env_list), */ ERROR);
-	return (0);
+		//return ( ft_free_env(data.env_list),  ERROR);
+	//return (0);
+//}
+
+void print_environment(t_env *env)       Ahora recibe t_env*
+{
+    while (env != NULL)
+    {
+        printf("%s=%s\n", env->key, env->value);  // Imprime clave=valor
+        env = env->next;
+    }
 }
+
+void test_builtins(t_env *env)          // Recibe t_env* como parámetro
+{
+    // Probando pwd
+    printf("\n1. Probando 'pwd':\n");
+    ft_pwd();
+
+    // Probando echo
+    printf("\n2. Probando 'echo hello world':\n");
+    char *echo_args[] = {"echo", "hello", "world", NULL};
+    ft_echo(env, echo_args);
+
+    // Probando echo sin argumentos
+    printf("\n3. Probando 'echo' sin argumentos:\n");
+    char *echo_no_args[] = {"echo", NULL};
+    ft_echo(env, echo_no_args);
+
+    // Probando echo con opción -n
+    printf("\n4. Probando 'echo -n hello world':\n");
+    char *echo_n_args[] = {"echo", "-n", "hello", "world", NULL};
+    ft_echo(env, echo_n_args);
+}*/
