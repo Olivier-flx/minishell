@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 18:33:21 by marvin            #+#    #+#             */
-/*   Updated: 2025/05/04 17:16:11 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/04 19:38:19 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ t_env *ft_init_env(char **env)
 	char *key;
 	char *value;
 
+	head = NULL;
 	init_eq_key_val(&equal, &key, &value);
 	i = -1;
 	while (env[++i])
