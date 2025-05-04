@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 18:10:37 by marvin            #+#    #+#             */
-/*   Updated: 2025/05/04 17:58:19 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/04 18:00:34 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int ft_env(t_env *env)
 {
 	while (env)
 	{
-		if (env->value)  // Solo imprime variables con valor
+		if (env->value && env->is_exported)  // Solo imprime variables con valor
 			printf("%s=%s\n", env->key, env->value);
 		env = env->next;
 	}

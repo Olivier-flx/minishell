@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 20:56:46 by marvin            #+#    #+#             */
-/*   Updated: 2025/05/01 15:25:10 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/04 18:05:02 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 
 void ft_free_env(t_env *env)
 {
+	t_env *tmp;
+
+	tmp = NULL;
 	while (env)
 	{
-		t_env *tmp;
-
 		tmp = env;
 		env = env->next;
 		free(tmp->key);
@@ -28,8 +29,9 @@ void ft_free_env(t_env *env)
 
 void ft_setenv(t_env **env, char *key, char *value)
 {
-	t_env   *current = *env;
+	t_env   *current;
 
+	current = *env;
 	while(current)
 	{
 		if(ft_strcmp(current->key, key) == 0)
@@ -40,7 +42,7 @@ void ft_setenv(t_env **env, char *key, char *value)
 		}
 		current = current->next;
 	}
-	ft_env_add_back(env, ft_new_env_node(ft_strdup(key), ft_strdup(value)));
+	ft_env_add_back(env, ft_new_env_node(ft_strdup(key), ft_strdup(value), true));
 }
 
 void ft_unsetenv(t_env **env, char *key)
