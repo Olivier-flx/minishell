@@ -19,7 +19,6 @@ BUILTINS = ./src/builtins/ft_echo.c \
 
 ENV = ./src/environment/env_search.c \
 	./src/environment/env_utils.c \
-	./src/environment/print_env.c \
 	./src/environment/enviro.c
 
 TOKENS = ./src/tokens/user_input_validations/user_input_validation.c\
@@ -53,12 +52,12 @@ UTILS = ./utils/string/ft_split_s.c \
 
 
 SRC = main.c \
-      $(UTILS) \
-      $(BUILTINS) \
-	  $(TOKENS) \
-	  $(EXEC) \
-	  $(EXPEND) \
-      $(ENV)
+	$(UTILS) \
+	$(BUILTINS) \
+	$(TOKENS) \
+	$(EXEC) \
+	$(EXPEND) \
+	$(ENV)
 
 OBJ = $(SRC:.c=.o)
 

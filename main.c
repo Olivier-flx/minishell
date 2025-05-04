@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:23:22 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/04 17:24:22 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/04 17:59:04 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,10 +108,6 @@ int	main(int ac, char **av, char **env)
 		return(printf("No environment defined\n"), 1);
 	data.env = env;
 	data.env_list = ft_init_env(env);
-	printf("======print env =====\n");
-	print_pp_char_arr(env);
-	printf("======print env_list =====\n");
-	print_dlist((t_dlist *) data.env_list);
 
 	data.cmd_list = NULL;
 	data.ope_char_i = (t_int_array) {0}; // @util ?
