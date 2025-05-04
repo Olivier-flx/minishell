@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:23:22 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/01 15:02:33 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/04 17:24:22 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,12 +100,6 @@ int	run_minishell(t_data	*data)
 	return (0);
 }
 
-
-/////////////////// LAURA //////////////////////
-// Prototipos de funciones
-/*void print_environment(t_env *env);  // Cambiado para recibir t_env*
-void test_builtins(t_env *env);      // Añadido parámetro t_env*
-
 int	main(int ac, char **av, char **env)
 {
 	t_data	data;
@@ -114,21 +108,32 @@ int	main(int ac, char **av, char **env)
 		return(printf("No environment defined\n"), 1);
 	data.env = env;
 	data.env_list = ft_init_env(env);
+	printf("======print env =====\n");
+	print_pp_char_arr(env);
+	printf("======print env_list =====\n");
+	print_dlist((t_dlist *) data.env_list);
+
 	data.cmd_list = NULL;
 	data.ope_char_i = (t_int_array) {0}; // @util ?
 	data.token_separators_char_i = (t_int_array) {0};
 
 	if (ac == 1 && env && av) // modificcar para arrancar igual si no hay env
-		return(run_minishell(&data));
+	return (run_minishell(&data));
 	else
-		//return ( ft_free_env(data.env_list),  ERROR);
-	//return (0);
-//}
+	return ( ft_free_env(data.env_list),  ERROR);
+	return (0);
+}
+
+/*
+/////////////////// LAURA //////////////////////
+// Prototipos de funciones
+void print_environment(t_env *env);  // Cambiado para recibir t_env*
+void test_builtins(t_env *env);      // Añadido parámetro t_env*
 
 void print_environment(t_env *env)       Ahora recibe t_env*
-{
-    while (env != NULL)
-    {
+	{
+		while (env != NULL)
+		{
         printf("%s=%s\n", env->key, env->value);  // Imprime clave=valor
         env = env->next;
     }

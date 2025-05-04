@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 18:13:34 by laufarin          #+#    #+#             */
-/*   Updated: 2025/04/24 14:07:14 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/04 17:13:30 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	ft_exit(char **args);
 
 //enviroment
 
-t_env *ft_new_env_node(char *key, char *value);
+t_env *ft_new_env_node(char *key, char *value, bool exported);
 void ft_env_add_back(t_env **head, t_env *new_node);
 t_env *ft_init_env(char **env);
 char *ft_getenv(t_env *env, char *key);

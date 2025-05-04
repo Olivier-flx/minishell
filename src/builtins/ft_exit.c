@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 17:48:14 by marvin            #+#    #+#             */
-/*   Updated: 2025/04/28 17:48:14 by marvin           ###   ########.fr       */
+/*   Updated: 2025/05/01 15:48:36 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,10 @@ int ft_exit(char **args)
     exit(0);
 }
 
-int main(int argc, char **argv, char **envp) 
+/* int main(int argc, char **argv, char **envp)
 {
     (void)argc;
     (void)envp;
-    
+
     return ft_exit(argv);
-}
+} */

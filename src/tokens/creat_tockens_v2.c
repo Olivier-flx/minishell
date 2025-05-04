@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:49:47 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/01 15:07:28 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/01 15:46:06 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	create_pipe_chunk(int i, t_dlist **cmd_list)
 	t_chunk			*token;
 
 	token = NULL;
-	pipe = s_dup("|");;
+	pipe = ft_strdup("|");;
 	if (pipe != NULL)
 	{
 		pipe_to_arr = malloc (2 * sizeof (char *));
@@ -28,7 +28,7 @@ static int	create_pipe_chunk(int i, t_dlist **cmd_list)
 		pipe_to_arr[0] = pipe;
 		pipe_to_arr[1] = NULL;
 		token = create_token(&pipe_to_arr, PIPE, i, (t_quote) {0});
-		return (add_to_list(cmd_list, token), s_len(pipe));
+		return (add_to_list(cmd_list, token),ft_strlen(pipe));
 	}
 	return (SUCCESS);
 }
@@ -166,16 +166,16 @@ void	separate_arg_and_operator(t_chunk *chunk)
 	{
 		if (is_redirection(chunk->tokens[i], 0, &quote) > 0) // @info: fil the t_chunk redir file with the corresponding redirections
 		{
-			chunk->redir[i_redir] = s_dup(chunk->tokens[i]);
+			chunk->redir[i_redir] = ft_strdup(chunk->tokens[i]);
 			if (chunk->tokens[i + 1] && chunk->redir_files)
-				chunk->redir_files[i_redir] = s_dup(chunk->tokens[++i]);
+				chunk->redir_files[i_redir] = ft_strdup(chunk->tokens[++i]);
 			else
 				printf("Error --> No file name after a redir\n"); // @debug : error que gestionar despues en user validation function
 			chunk->has_redir = true; // @Util : 2025-03-23, no se si util?
 			i_redir++;
 		}
 		else
-			chunk->argv[i_argv++] = s_dup(chunk->tokens[i]);
+			chunk->argv[i_argv++] = ft_strdup(chunk->tokens[i]);
 		printf("`%s`;", chunk->tokens[i]); // @debug
 		fflush(stdout);  // @debug
 		i++;

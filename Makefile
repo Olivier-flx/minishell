@@ -13,13 +13,14 @@ LDFLAGS = -lreadline
 #INC = -I./header
 
 BUILTINS = ./src/builtins/ft_echo.c \
-           ./src/builtins/ft_pwd.c \
-           ./src/builtins/ft_env.c
-           #./src/builtins/ft_exit.c
+		./src/builtins/ft_pwd.c \
+		./src/builtins/ft_env.c
+		#./src/builtins/ft_exit.c
 
 ENV = ./src/environment/env_search.c \
-      ./src/environment/env_utils.c \
-	  ./src/environment/enviro.c
+	./src/environment/env_utils.c \
+	./src/environment/print_env.c \
+	./src/environment/enviro.c
 
 TOKENS = ./src/tokens/user_input_validations/user_input_validation.c\
 	./src/tokens/user_input_validations/unique_token_operator.c\
