@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 17:38:16 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/04 19:04:33 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/04 20:08:07 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ char	*get_var_name_in_accolade(char *str, int i)
 	if (!var_name)
 		return (NULL);
 	var_name[var_name_len] = '\0';
-	ft_strlcpy(var_name, str + i - var_name_len, var_name_len);
+	ft_strlcpy(var_name, str + i - var_name_len, var_name_len + 1);
 	return (var_name);
 }
 
@@ -84,7 +84,7 @@ char	*get_classic_var_name(char *str, int i)
 	if (!var_name)
 		return (NULL);
 	var_name[var_name_len] = '\0';
-	ft_strlcpy(var_name, str + i - var_name_len, var_name_len);
+	ft_strlcpy(var_name, str + i - var_name_len, var_name_len + 1); // man : Note that a byte for the NUL should be included in size.
 	return (var_name);
 }
 
@@ -140,7 +140,7 @@ int get_expended_tocken_len(t_data *data, char *str)
 char	*expend_token(t_data *data, char *str)
 {
 	int		i;
-	int		j = 0;
+	int		j;
 	int		expd_token_len;
 	char	*expd_token;
 	char	*var_name;
@@ -148,6 +148,7 @@ char	*expend_token(t_data *data, char *str)
 	t_quote	quotes;
 
 	i = 0;
+	j = 0;
 	expd_token_len = get_expended_tocken_len(data, str);
 	expd_token = malloc(sizeof(char) * (1 + (expd_token_len)));
 	if (!expd_token)
@@ -189,6 +190,7 @@ int	expend_chunk(t_data *data, t_chunk *chunk)
 	{
 		ret_val = expend_token(data, chunk->tokens[i]);
 		printf("chunk->tokens[%i] = `%s` --> extended = `%s`\n",i, chunk->tokens[i], ret_val); // @debug
+		free(ret_val); // @debug
 		if (!ret_val)
 			return (1); // @confirm : à voir s'il y a un bug d'expension, s'il faut arrêter l'expension du rest ou non
 		i++;

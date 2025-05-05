@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 18:11:48 by laufarin          #+#    #+#             */
-/*   Updated: 2025/05/04 19:26:42 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/04 19:46:03 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 		l_src++;
 	if (dstsize == 0)
 		return (l_src);
-	while ((i < dstsize) && src[i])
+	while ((i < dstsize - 1) && src[i])
 	{
 		dst[i] = src[i];
 		i++;
