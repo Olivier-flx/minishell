@@ -41,6 +41,30 @@ void ft_env_add_back(t_env **head, t_env *new_node)
     last->next = new_node;
 }
 
+#include <unistd.h> // Para 'environ'
+
+/*t_env *ft_init_env()
+{
+    extern char **environ; // Accede al entorno actual dinámico
+    t_env *head = NULL;
+    char *equal;
+    int i = 0;
+
+    while (environ[i])
+    {
+        equal = ft_strchr(environ[i], '=');
+        if (equal)
+        {
+            char *key = ft_substr(environ[i], 0, equal - environ[i]);
+            char *value = ft_strdup(equal + 1);
+            
+            ft_env_add_back(&head, ft_new_env_node(key, value));
+            free(key); // Liberar el key temporal
+        }
+        i++;
+    }
+    return head;
+}*/
 t_env *ft_init_env(char **env)
 {
     t_env *head = NULL;
@@ -57,4 +81,13 @@ t_env *ft_init_env(char **env)
         i++;
     }
     return (head);
+}
+
+void ft_print_env(t_env *env)
+{
+    while (env)
+    {
+        printf("%s=%s\n", env->key, env->value);
+        env = env->next;
+    }
 }

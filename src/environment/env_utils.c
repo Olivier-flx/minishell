@@ -42,8 +42,32 @@ void ft_setenv(t_env **env, char *key, char *value)
     }
     ft_env_add_back(env, ft_new_env_node(ft_strdup(key), ft_strdup(value)));
 }
+void ft_unsetenv(t_env **env, char *key) {
+    printf("\n[DEBUG] Buscando eliminar: %s\n", key); // <-- Añade esto
+    
+    t_env *prev = NULL;
+    t_env *current = *env;
 
-void ft_unsetenv(t_env **env, char *key)
+    while (current) {
+        printf("Comparando con: %s\n", current->key); // <-- Añade esto
+        
+        if (ft_strcmp(current->key, key) == 0) {
+            printf("¡ENCONTRADO! Eliminando...\n"); // <-- Añade esto
+            
+            if (prev) prev->next = current->next;
+            else *env = current->next;
+            
+            free(current->key);
+            free(current->value);
+            free(current);
+            return;
+        }
+        prev = current;
+        current = current->next;
+    }
+    printf("Variable '%s' NO encontrada en la lista\n", key); // <-- Añade esto
+}
+/*void ft_unsetenv(t_env **env, char *key)
 {
     t_env   *prev = NULL;
     t_env   *current = *env;
@@ -64,7 +88,7 @@ void ft_unsetenv(t_env **env, char *key)
         prev = current;
         current = current->next;
     }
-}
+}*/
 
 int ft_env_size(t_env *env)
 {

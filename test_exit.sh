@@ -1,7 +1,8 @@
 #!/bin/bash
 
 # Función para ejecutar una prueba
-run_test() {
+run_test() 
+{
     echo -e "\n\033[1;36m$1\033[0m"
     ./test_exit $2
     echo "Exit code: $?"
