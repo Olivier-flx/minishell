@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   user_input_validation.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 15:14:36 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/01 15:22:50 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/06 10:03:40 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,7 @@ int	check_for_user_input_error(t_dlist **cmd_list)
 	if(check_pipe_last(cmd_list) > 0)
 		//return (1);
 	// check si accolade not closed
-	if(accolade_not_closed(cmd_list) > 0) // @Util ? devrait déjà être géré par run_minishell
+	if(accolade_not_closed(cmd_list) > 0) // @Util ? devrait déjà être géré par run_minishell here with line_accolade_closed()
 		return (1); // @Util ?
 
 	// check for incorrect variable name --> à gérer au niveau de l'expension

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   creat_tockens_v2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:49:47 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/01 15:46:06 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/06 10:10:23 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	create_main_chunks(char *src, t_dlist **cmd_list, t_data *data)
 	{
 		if (i > 0 && all_tokens[i][0] == '|') // @info : Si encuentra '|' crea el chunk de antes y el chunk de '|'
 		{
-			chunk = dup_pp_char(all_tokens, flag_last_pipe, i - 1 );
+			chunk = dup_pp_char(data, all_tokens, flag_last_pipe, i - 1);
 			token = create_token(&chunk, CMD, i, (t_quote) {0}); // i correspond au numéro du chunk / index du chunk dans la string. à retirer
 			add_to_list(cmd_list, token);
 			create_pipe_chunk(i, cmd_list);
@@ -69,7 +69,7 @@ int	create_main_chunks(char *src, t_dlist **cmd_list, t_data *data)
 		i--;
 	if (all_tokens && all_tokens[i] && all_tokens[i][0] && all_tokens[i][0] != '|')// @info : crea el ultimo chunK
 	{
-		chunk = dup_pp_char(all_tokens, flag_last_pipe, i);
+		chunk = dup_pp_char(data, all_tokens, flag_last_pipe, i);
 		token = create_token(&chunk, CMD, i, (t_quote) {0}); // i correspond au numéro du chunk / index du chunk dans la string. à retirer
 		add_to_list(cmd_list, token);
 	}

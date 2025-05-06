@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 17:29:54 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/07 17:00:37 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/06 10:16:41 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 // @info : duplicate a segmented substring, in a char **;
 // from a start point included to a end point included.
-char	**dup_pp_char(char **substring_arr, int start, int end)
+char	**dup_pp_char(t_data *data, char **substring_arr, int start, int end)
 {
 	char	**chunk;
 	int		i;
@@ -28,7 +28,7 @@ char	**dup_pp_char(char **substring_arr, int start, int end)
 		return (NULL);
 	while (i <= end)
 	{
-		chunk[j] = ft_strdup(substring_arr[i]);
+		chunk[j] = expend_token(data, substring_arr[i]);
 		if (NULL == chunk[j])
 			return (free_uncomplete_av(chunk, j));
 		i++;

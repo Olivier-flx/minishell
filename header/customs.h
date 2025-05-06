@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   customs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/01 15:04:50 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/06 10:13:16 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,7 @@ int	init_files(t_data *data);
 
 	/////// EXPENSION /////
 int	expend_all(t_data *data);
+char	*expend_token(t_data *data, char *str);
 
 	///// Tokens /////
 t_chunk	*create_token(char ***str, int type, int i, t_quote quotes);
@@ -182,7 +183,7 @@ int		create_input_to_commands(char *src, t_dlist **cmd_list, t_data *data);
 void	quote_increment(char *src, int i, t_quote *quote);
 char	**split_quoted(char const *s, char c);// @legacy
 char	**split_quoted2(char *s,t_data *data);
-char	**dup_pp_char(char **substring_arr, int start, int end);
+char	**dup_pp_char(t_data *data, char **substring_arr, int start, int end);
 
 char	*ft_trim(char *src, bool is_malloced);
 	//quotes
