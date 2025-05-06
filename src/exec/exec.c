@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:30:25 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/30 22:22:31 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/06 10:23:14 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int main_exec(t_data *data)
 {
 	t_dlist *i_node;
 
-	expend_all(data);
+	//expend_all(data);
 	init_files(data); // OK for now
 	i_node = data->cmd_list;
 	while (i_node)

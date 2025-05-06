@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 17:38:16 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/06 09:59:32 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/06 10:22:46 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,8 +192,7 @@ int	expend_chunk(t_data *data, t_chunk *chunk)
 	while (chunk->tokens && chunk->tokens[i])
 	{
 		ret_val = expend_token(data, chunk->tokens[i]);
-		printf("chunk->tokens[%i] = `%s` --> extended = `%s`\n",i, chunk->tokens[i], ret_val); // @debug
-		free(ret_val); // @debug
+		free(ret_val);
 		if (!ret_val)
 			return (1); // @confirm : à voir s'il y a un bug d'expension, s'il faut arrêter l'expension du rest ou non
 		i++;

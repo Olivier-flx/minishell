@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_files.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 11:26:59 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/01 15:06:06 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/06 10:28:08 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ static int create_files(t_chunk *chunk)
 	int	i;
 
 	i = 0;
-	if (!chunk->redir || chunk->redir_files)
+	if (!chunk->redir || !chunk->redir_files)
 		return (0);
 	while (chunk->redir[i] && chunk->redir_files[i])
 	{
