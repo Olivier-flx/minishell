@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expension.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 17:38:16 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/04 20:08:07 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/06 09:59:32 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ int get_expended_tocken_len(t_data *data, char *str)
 		{
 			var_name = get_var_name(str, i);
 			var_value = ft_getenv(data->env_list, var_name);
-			k += ft_strlen(var_value) - 1; // -1 pour ne pas compter '$'
+			k += ft_strlen(var_value);
 			if (str[i + 1] && str[i + 1] == '{')
 				i += ft_strlen(var_name) + 3; // +1 pour le $ et les {}
 			else
@@ -155,6 +155,8 @@ char	*expend_token(t_data *data, char *str)
 		return (printf("Error : malloc expension\n"), NULL);
 	expd_token[expd_token_len] = '\0';
 	init_quotes(&quotes);
+	var_value = NULL;
+	var_name = NULL;
 	while (str[i])
 	{
 		quote_increment(str, i, &quotes);
@@ -162,10 +164,11 @@ char	*expend_token(t_data *data, char *str)
 		{
 			var_name = get_var_name(str, i);
 			var_value = ft_getenv(data->env_list, var_name);
+
 			if (var_value)
 			{
-				j += ft_strlcpy(expd_token + j, var_value, ft_strlen(var_value) + 1); // +1 pour '\0'
-				free(var_value);
+				j += ft_strlcpy(expd_token + j, var_value, (size_t) ft_strlen(var_value) + 1); // +1 pour '\0'
+				//free(var_value); // not necesary because free later in ft_free_env (env_utils.c:25)
 			}
 			if (str[i + 1] && str[i + 1] == '{')
 				i += ft_strlen(var_name) + 3; // +1 pour le $ et les {}
