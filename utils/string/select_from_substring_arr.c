@@ -6,17 +6,31 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 17:29:54 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/06 10:16:41 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/06 11:43:59 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell.h"
+
+/* char	**retokenize_after_exp(char	***chunk)
+{
+	int	i;
+
+	i = 0;
+	while (*chunk[i])
+	{
+
+		i++;
+	}
+} */
+
 
 // @info : duplicate a segmented substring, in a char **;
 // from a start point included to a end point included.
 char	**dup_pp_char(t_data *data, char **substring_arr, int start, int end)
 {
 	char	**chunk;
+	// char	**tmp;
 	int		i;
 	int		j;
 
@@ -35,5 +49,8 @@ char	**dup_pp_char(t_data *data, char **substring_arr, int start, int end)
 		j++;
 	}
 	chunk[j] = NULL;
+	//tmp = chunk;
+	//chunk = retokenize_after_exp(chunk);
+	//free_av(tmp);
 	return (chunk);
 }
