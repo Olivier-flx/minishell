@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:49:47 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/06 10:10:23 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/07 15:26:28 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,13 +94,13 @@ int	create_main_chunks(char *src, t_dlist **cmd_list, t_data *data)
  *
  * @note If memory allocation fails, the function returns immediately.
  *
- * @see count_operador_from_pp_char, count_files_in_chunks
+ * @see count_operador_from_pp_char, count_redir_files_in_chunks
  */
 void	init_redir_arr_and_files(t_chunk *chunk)
 {
 	if (!chunk)
-		printf("NOT CHUNKS\n"); // @debug
-	chunk->redir_count = count_operador_from_pp_char(chunk->tokens);
+		printf("Error: init_redir_arr_and_files - No chunk\n"); // @debug
+	chunk->redir_count = count_redir_from_pp_char(chunk->tokens);
 	if (chunk->redir_count > 0)
 		chunk->has_redir = true;
 	else
@@ -112,15 +112,50 @@ void	init_redir_arr_and_files(t_chunk *chunk)
 	if (!chunk->redir)
 		return ; // @confirm
 	chunk->redir[chunk->redir_count] = NULL;
-	chunk->redir_file_count = count_files_in_chunks(chunk->tokens);
+	chunk->redir_file_count = count_redir_files_in_chunks(chunk->tokens);
 	if ( chunk->redir_file_count == 0)
 		return ;
-	chunk->redir_files = malloc(sizeof(char *) * (count_files_in_chunks(chunk->tokens) + 1));
+	chunk->redir_files = malloc(sizeof(char *) * (count_redir_files_in_chunks(chunk->tokens) + 1));
 	if (!chunk->redir_files)
 		return ; // @confirm
-	chunk->redir_files[count_files_in_chunks(chunk->tokens)] = NULL;
+	chunk->redir_files[count_redir_files_in_chunks(chunk->tokens)] = NULL;
 }
 
+void	init_input_redir_arr_and_files(t_chunk *chunk)
+{
+	if (!chunk)
+		printf("Error: init_input_redir_arr_and_files - No chunk\n"); // @debug
+	chunk->input_redir_count = count_input_redir_from_pp_char(chunk->tokens);
+	if (chunk->input_redir_count > 0)
+		chunk->has_input_redir = true;
+	else
+	{
+		chunk->has_input_redir = false;
+		return ;
+	}
+	chunk->input_redir = malloc(sizeof(char *) * (chunk->input_redir_count + 1));
+	if (!chunk->input_redir)
+		return ; // @confirm
+	chunk->input_redir[chunk->input_redir_count] = NULL;
+	chunk->input_redir_file_count = count_input_files_in_chunks(chunk->tokens);
+	if ( chunk->input_redir_file_count == 0)
+		return ;
+	chunk->input_redir_file = malloc(sizeof(char *) * (count_input_files_in_chunks(chunk->tokens) + 1));
+	if (!chunk->input_redir_file)
+		return ; // @confirm
+	chunk->input_redir_file[count_input_files_in_chunks(chunk->tokens)] = NULL;
+}
+
+static int	calculate_len_argv (t_chunk *chunk)
+{
+	int	len_argv;
+
+	len_argv = 0;
+	len_argv = pp_char_len(chunk->tokens) \
+				- (chunk->redir_count + count_redir_files_in_chunks(chunk->tokens))
+				- (chunk->input_redir_count + count_input_files_in_chunks(chunk->tokens));
+	return (len_argv);
+}
 
 void	init_argv(t_chunk *chunk)
 {
@@ -129,9 +164,10 @@ void	init_argv(t_chunk *chunk)
 	if (!chunk)
 		return ;
 	printf("\n---------------\n pp_char_len(chunk->content) = %i\n",pp_char_len(chunk->tokens));// @debug
-	len_argv = pp_char_len(chunk->tokens) - (chunk->redir_count + count_files_in_chunks(chunk->tokens));
+	len_argv = calculate_len_argv(chunk);
 	printf("init_argv chunk->redir_count = %i\n",chunk->redir_count);// @debug
 	printf("init_argv len_argv = %i\n",len_argv);// @debug
+
 	if (len_argv <= 0)
 	{
 		chunk->argv = NULL;
@@ -150,6 +186,7 @@ void	separate_arg_and_operator(t_chunk *chunk)
 {
 	int	i;
 	int	i_redir;
+	int i_in_redir;
 	int	i_argv;
 	t_quote	quote;
 
@@ -157,8 +194,10 @@ void	separate_arg_and_operator(t_chunk *chunk)
 
 	i = 0;
 	i_redir = 0;
+	i_in_redir = 0;
 	i_argv = 0;
 	init_redir_arr_and_files(chunk);
+	init_input_redir_arr_and_files(chunk);
 	init_argv(chunk);
 	printf("token != operator = "); // @debug
 	fflush(stdout);  // @debug
@@ -170,9 +209,19 @@ void	separate_arg_and_operator(t_chunk *chunk)
 			if (chunk->tokens[i + 1] && chunk->redir_files)
 				chunk->redir_files[i_redir] = ft_strdup(chunk->tokens[++i]);
 			else
-				printf("Error --> No file name after a redir\n"); // @debug : error que gestionar despues en user validation function
+				printf("Error: No file name after a redir\n"); // @debug : error que gestionar despues en user validation function
 			chunk->has_redir = true; // @Util : 2025-03-23, no se si util?
 			i_redir++;
+		}
+		else if (is_input_redir(chunk->tokens[i], 0, &quote) > 0)
+		{
+			chunk->input_redir[i_in_redir] = ft_strdup(chunk->tokens[i]);
+			if (chunk->tokens[i + 1] && chunk->input_redir_file)
+				chunk->input_redir_file[i_in_redir] = ft_strdup(chunk->tokens[++i]);
+			else
+				printf("Error: No file name after a input redir or no EOL\n"); // @debug : error que gestionar despues en user validation function
+			chunk->has_input_redir = true; // @Util : 2025-03-23, no se si util?
+			i_in_redir++;
 		}
 		else
 			chunk->argv[i_argv++] = ft_strdup(chunk->tokens[i]);

@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/07 14:40:39 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/07 15:34:26 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,15 +160,21 @@ char	*expend_token(t_data *data, char *str);
 t_chunk	*create_token(char ***str, int type, int i, t_quote quotes);
 void	set_separator_char_i_struc_arr(char *src, t_int_array *arr);
 int		is_seperator(char *src, int i, t_quote *quote);
-int		count_files_in_chunks(char **content);
+int		count_redir_files_in_chunks(char **content);
 
 		// operators.c
 int		is_operator(char *src, int i, t_quote *quote);
-int		is_redirection(char *src, int i, t_quote *quote);
 int		count_operador_from_pp_char(char **content);
 int		count_operador(char *src);
 int		get_operador_index(char *src, t_dlist **cmd_list);
 void	init_operador_var(t_quote *quote, int *op_count, int *i);
+		// redir and input
+int		is_redirection(char *src, int i, t_quote *quote);
+int		is_input_redir(char *src, int i, t_quote *quote);
+int		count_redir_files_in_chunks(char **content);
+int		count_input_files_in_chunks(char **content);
+int		count_redir_from_pp_char(char **content);
+int		count_input_redir_from_pp_char(char **content);
 
 		// verifications //
 			//user_input_validation
