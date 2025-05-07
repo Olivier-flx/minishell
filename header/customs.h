@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/07 18:33:10 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/07 19:04:29 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ typedef struct s_exec_data
 	bool	*pipes_malloced;
 	char	*cmd_err_msg;
 	int		valid_cmd_count;
+	int		command_err_count;
+	int		total_cmd_count;
 	int		last_status_code; // para luego poder recuperar el ultimo status code cuando se hace echo $?
 }	t_exe;
 
