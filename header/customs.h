@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/07 15:34:26 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/07 18:33:10 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,6 @@ typedef struct s_dlist
 	struct s_dlist	*next;
 }	t_dlist;
 
-typedef struct s_variable
-{
-	char	*nombre_de_variable;
-	char	*valor;
-}	t_var;
-
 typedef struct	s_env
 {
 	char	*key;
@@ -76,16 +70,33 @@ typedef struct	s_env
 	struct	s_env *next;
 }	t_env;
 
+// struc to store the good path for commands.
+typedef struct s_exec_data
+{
+	char	*env_path;
+	bool	env_path_found;
+	bool	*cmd_is_valid_arr; // check ether each argv in each chunk is valid or not
+	int		*pid_arr; // USED ??
+	bool	pid_arr_malloced;
+	int		**pipe_arr;
+	bool	pipe_arr_malloced;
+	bool	*pipes_malloced;
+	char	*cmd_err_msg;
+	int		valid_cmd_count;
+	int		last_status_code; // para luego poder recuperar el ultimo status code cuando se hace echo $?
+}	t_exe;
+
 typedef struct data //aqui iremos agregando todo lo que este alocado.A partir de esta poder acceder a toda la info.
 {
 	char		**env;
 	t_env		*env_list;
 	t_dlist		*cmd_list;
+	t_exe		exec_info;
+
 	t_int_array	ope_char_i; // @util ?//index of operators characters in string input
 	t_int_array	token_separators_char_i; //index of separators characters in string input
-	int			chunks; //number of commands and argv separated by operators
-	t_dlist		*local_var; // @Util ?
-	int			last_status_code; // para luego poder recuperar el ultimo status code cuando se hace echo $?
+
+	int			nb_chunks; //number of commands and argv separated by operators
 }	t_data;
 
 typedef struct s_chunk
@@ -93,7 +104,6 @@ typedef struct s_chunk
 	char		**tokens; // basic chunks that are taken from line splited by "|"
 	char		**argv;
 	string_type	type;
-
 	////// REDIR FILES //////
 	bool		has_redir;
 	int			redir_count;
@@ -115,6 +125,10 @@ typedef struct s_chunk
 	bool		*input_file_open;
 	bool		input_file_open_malloced;
 	///////
+	bool		has_here_doc;
+	//////
+	int		chunk_exec_return_status_code; // Not used yet
+
 	int			index; // util ?
 	int			len; // util ?
 	t_quote		quotes; // util ?
@@ -152,6 +166,12 @@ int	create_input_token_v3(char *line,  t_dlist **cmd_list, t_data *data);
 int	main_exec(t_data *data);
 int	init_files(t_data *data);
 
+	////// commands init ///
+void	init_cmd(t_data *data);
+
+	////// path exec ////
+void	get_path(char *usr_cmd_input, t_exe *exec_info, t_env *env);
+
 	/////// EXPENSION /////
 int	expend_all(t_data *data);
 char	*expend_token(t_data *data, char *str);
@@ -175,6 +195,7 @@ int		count_redir_files_in_chunks(char **content);
 int		count_input_files_in_chunks(char **content);
 int		count_redir_from_pp_char(char **content);
 int		count_input_redir_from_pp_char(char **content);
+bool	has_heredoc_from_pp_char(char **content);
 
 		// verifications //
 			//user_input_validation

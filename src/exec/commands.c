@@ -1,0 +1,146 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   commands.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/07 18:10:10 by ofilloux          #+#    #+#             */
+/*   Updated: 2025/05/07 18:50:00 by ofilloux         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../../header/minishell.h"
+
+int	usr_input_got_slash(char *str)
+{
+	int	i;
+	int	flag;
+
+	if (!str)
+		return (-1);
+	i = 0;
+	flag = 0;
+	while (str[i])
+	{
+		if (str[i] == '/')
+		{
+			flag = 1;
+			break ;
+		}
+		i++;
+	}
+	return (flag);
+}
+
+void	check_wrong_commands(int ac, t_data *data)
+{
+	int		i;
+	int		flag;
+	char	*tmp_msg;
+	char	*msg;
+	t_chunk	*chunk;
+	t_dlist	*i_node;
+
+	flag = 0;
+	tmp_msg = NULL;
+	msg = NULL;
+	i = 0;
+	chunk = NULL;
+	i_node = data->cmd_list;
+	while (i < data->nb_chunks && i_node) // à modifier en cas de heredoc
+	{
+		chunk = (t_chunk *)i_node->content;
+		if (!chunk->argv)
+			continue ;
+		if (access(chunk->argv[0], X_OK) != 0)
+		{
+			data->exec_info.command_err_count ++;
+			data->exec_info.cmd_is_valid_arr[i] = false;
+			data->exec_info.last_status_code = 0;
+			if (i == data->nb_chunks)
+				data->exec_info.last_status_code = 127;
+			flag = usr_input_got_slash(chunk->argv[0]);
+			msg = get_msg(flag, chunk->argv[0]);
+			if (data->exec_info.cmd_err_msg == NULL)
+				data->exec_info.cmd_err_msg = msg;
+			else
+			{
+				tmp_msg = ft_strjoin(data->exec_info.cmd_err_msg, msg);
+				free(data->exec_info.cmd_err_msg);
+				free(msg);
+				data->exec_info.cmd_err_msg = tmp_msg;
+			}
+		}
+		else
+			data->exec_info.cmd_is_valid_arr[i] = true;
+		i++;
+	}
+	cmd->valid_cmd_count = cmd->cmd_count - cmd->command_err_count;
+	if (cmd->cmd_err_msg != NULL && cmd->command_err_count == cmd->cmd_count)
+		clean_cmds_exit(cmd, cmd->cmd_err_retval, cmd->cmd_err_msg);
+}
+
+void	init_cmd_vect(t_data *data, t_dlist **cmd_list, t_exe *exec_info)
+{
+	t_dlist	*i_node;
+	t_chunk	*chunk;
+	int		i;
+	char	*tmp_cmd;
+
+	i_node = *cmd_list;
+	chunk = NULL;
+	while (i_node)
+	{
+		chunk = (t_chunk *) i_node->content;
+		exec_info->cmd_is_valid_arr[data->nb_chunks] = false;
+		if (usr_input_got_slash(chunk->argv[0]) == 0)
+		{
+			if (exec_info->env_path_found == false)
+				get_path(chunk->argv[0], exec_info, data->env_list);
+			if (exec_info->env_path_found == true)
+			{
+				tmp_cmd = ft_strdup(chunk->argv[0]);
+				free (chunk->argv[0]);
+				chunk->argv[0] = ft_strjoin(exec_info->env_path, tmp_cmd);
+				free (tmp_cmd);
+			}
+		}
+		i_node->next;
+		data->nb_chunks++;
+	}
+}
+/* dans piper 	char	***cmd_vect;
+cmd_vect = cmd_list et cmd_vect[0] = cmd_list->content->argv */
+
+void	init_cmd(t_data *data)
+{
+	data->exec_info.env_path = NULL;
+	data->exec_info.env_path_found = false;
+	data->exec_info.cmd_is_valid_arr = NULL;
+	data->exec_info.pid_arr = NULL;
+	data->exec_info.pid_arr_malloced = false;
+	data->exec_info.pipe_arr = false;
+	data->exec_info.pipe_arr_malloced = false;
+	data->exec_info.pipes_malloced = false;
+	data->exec_info.cmd_err_msg = NULL;
+	data->exec_info.valid_cmd_count = 0;
+	data->exec_info.command_err_count = 0;
+	data->exec_info.last_status_code = 0;
+	init_cmd_vect(data, data->cmd_list, &data->exec_info);
+	check_wrong_commands(data);
+	init_bool_pipes_malloced(cmd);
+
+//////////DEBUG ///////////
+	int j = 0;
+	for (int i = 0; i < cmd->cmd_count; i++)
+	{
+		j = 0;
+		printf("commande %i = %s : arg de la commande : ",i, cmd->cmd_vect[i][j++]);
+		while (cmd->cmd_vect[i][j])
+			printf("%s\t", cmd->cmd_vect[i][j++]);
+		printf("\n");
+	}
+//////////DEBUG ///////////
+	return ;
+}

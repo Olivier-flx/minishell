@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:49:47 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/07 15:26:28 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/07 16:06:29 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,7 @@ void	init_input_redir_arr_and_files(t_chunk *chunk)
 	if (!chunk->input_redir_file)
 		return ; // @confirm
 	chunk->input_redir_file[count_input_files_in_chunks(chunk->tokens)] = NULL;
+	chunk->has_here_doc = has_heredoc_from_pp_char(chunk->tokens);
 }
 
 static int	calculate_len_argv (t_chunk *chunk)

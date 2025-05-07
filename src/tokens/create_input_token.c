@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 17:57:45 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/07 14:49:11 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/07 16:00:23 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	initialize_input_redir(t_chunk **tok)
 	(*tok)->input_file_fd_malloced = NULL;
 	(*tok)->input_file_open = NULL;
 	(*tok)->input_file_open_malloced = NULL;
+	(*tok)->has_here_doc = false;
 }
 
 void	inititalize_redir(t_chunk **tok)

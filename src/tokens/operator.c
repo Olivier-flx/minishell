@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:37:48 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/07 15:15:11 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/07 16:06:00 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,21 @@ int	count_input_redir_from_pp_char(char **content)
 	return (k);
 }
 
+bool	has_heredoc_from_pp_char(char **content)
+{
+	int		i;
+	t_quote	quote;
 
+	i = 0;
+	init_quotes(&quote);
+	while (content[i])
+	{
+		if (is_input_redir(content[i], 0, &quote) == 2)
+			return (true);
+		i++;
+	}
+	return (false);
+}
 
 
 

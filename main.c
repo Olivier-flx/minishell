@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:23:22 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/04 19:01:46 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/07 17:40:53 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,19 @@ int	run_minishell(t_data	*data)
 	return (0);
 }
 
+int initialize_data(t_data *data, char **env)
+{
+	data->env = env;
+	data->env_list = ft_init_env(env);
+	data->cmd_list = NULL;
+	data->ope_char_i = (t_int_array) {0}; // @util ?
+	data->token_separators_char_i = (t_int_array) {0};
+	data->nb_chunks = 0;
+	data->exec_info.env_path = NULL;
+	data->exec_info.env_path_found = false;
+	data->exec_info.cmd_is_valid_arr = NULL;
+}
+
 int	main(int ac, char **av, char **env)
 {
 	t_data	data;
@@ -108,17 +121,13 @@ int	main(int ac, char **av, char **env)
 		return (1);
 	if (!env)
 		return(printf("No environment defined\n"), 1);
-	data.env = env;
-	data.env_list = ft_init_env(env);
+	initialize_data(&data, env);
 
-	data.cmd_list = NULL;
-	data.ope_char_i = (t_int_array) {0}; // @util ?
-	data.token_separators_char_i = (t_int_array) {0};
 
 	if (ac == 1 && env && av) // modificcar para arrancar igual si no hay env
-	return (run_minishell(&data));
+		return (run_minishell(&data));
 	else
-	return ( ft_free_env(data.env_list),  ERROR);
+		return (ft_free_env(data.env_list),  ERROR);
 	return (0);
 }
 
