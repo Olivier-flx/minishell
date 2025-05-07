@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/07 14:26:03 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/07 14:39:44 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ typedef struct s_chunk
 	char		**tokens; // basic chunks that are taken from line splited by "|"
 	char		**argv;
 	string_type	type;
+	// redir
 	bool		has_redir;
 	int			redir_count;
 	////// REDIR FILES //////
@@ -104,12 +105,14 @@ typedef struct s_chunk
 	bool		*file_open;
 	bool		file_open_malloced;
 	////// Input redir /////
+	bool		has_input_redir;
+	int			input_redir_count;
 	char		**input_redir;
 	int			input_redir_file_count;
 	char		**input_redir_file;
 	int			*input_file_fd;
 	bool		input_file_fd_malloced;
-	bool			*input_file_open;
+	bool		*input_file_open;
 	bool		input_file_open_malloced;
 	///////
 	int			index; // util ?
