@@ -6,11 +6,31 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 18:10:10 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/07 18:50:00 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/07 19:03:55 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell.h"
+
+char	*get_msg(int flag, char *arg)
+{
+	char	*msg;
+	char	*tmp;
+
+	msg = NULL;
+	tmp = NULL;
+	if (flag == 1)
+		msg = ft_strjoin("zsh: no such file or directory: ", arg);
+	else
+		msg = ft_strjoin("zsh: command not found: ", arg);
+	if (msg && msg[0])
+	{
+		tmp = msg;
+		msg = ft_strjoin(tmp, "\n");
+		free (tmp);
+	}
+	return (msg);
+}
 
 int	usr_input_got_slash(char *str)
 {
@@ -33,7 +53,13 @@ int	usr_input_got_slash(char *str)
 	return (flag);
 }
 
-void	check_wrong_commands(int ac, t_data *data)
+void	command_is_valid(t_data *data, int i)
+{
+	data->exec_info.cmd_is_valid_arr[i] = true;
+	data->exec_info.valid_cmd_count++;
+}
+
+void	check_wrong_commands(t_data *data)
 {
 	int		i;
 	int		flag;
@@ -73,11 +99,11 @@ void	check_wrong_commands(int ac, t_data *data)
 			}
 		}
 		else
-			data->exec_info.cmd_is_valid_arr[i] = true;
+			command_is_valid(data, i);
 		i++;
+		data->exec_info.total_cmd_count = i;
 	}
-	cmd->valid_cmd_count = cmd->cmd_count - cmd->command_err_count;
-	if (cmd->cmd_err_msg != NULL && cmd->command_err_count == cmd->cmd_count)
+	if (data->exec_info.cmd_err_msg != NULL && data->exec_info.command_err_count == data->exec_info.total_cmd_count)
 		clean_cmds_exit(cmd, cmd->cmd_err_retval, cmd->cmd_err_msg);
 }
 
