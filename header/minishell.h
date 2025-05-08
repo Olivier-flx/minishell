@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:46:36 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/13 19:42:22 by laufarin         ###   ########.fr       */
+/*   Updated: 2025/05/08 19:33:42 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 # include <termios.h>    // tcsetattr, tcgetattr
 # include <termcap.h>    // tgetent, tgetflag, tgetnum, tgetstr, tgoto, tputs
 # include <string.h>     // strerror
+#include <errno.h>		 // set errno
 # include <stdio.h>      // perror
 
 # include <stdbool.h>

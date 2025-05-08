@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 17:38:16 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/06 10:22:46 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/08 19:25:21 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,7 +176,7 @@ char	*expend_token(t_data *data, char *str)
 				i += ft_strlen(var_name) + 1; // +1 pour le $
 			free(var_name);
 		}
-		else
+		else //@optimize // expendre avec history dans le cas de "!!" ou de "!20"
 			expd_token[j++] = str[i++];
 	}
 	return (expd_token);

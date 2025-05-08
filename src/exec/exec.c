@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:30:25 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/08 18:42:58 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/08 20:11:23 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,23 @@ void redirect_input_file(t_data *data, t_exe *exe, t_chunk *chunk)
 {
 	if (chunk->has_here_doc)
 		listen_heredocs(chunk);
-	else
+	if(ft_strcmp(chunk->tokens[0], "<") == 0)
 	{
-		files[0].fd = open(files[0].name, O_RDONLY);
-			if (files[0].fd < 0)
-				clean_cmds_exit(cmd, EXIT_FAILURE/* , "Err opening input file\n" */);
-			files[0].file_open = true;
+		chunk->input_file_fd[0] = open(chunk->input_redir_file[0], O_RDONLY);
+		if (chunk->input_file_fd[0] < 0)
+		{
+			strerror(errno);
+			clean_cmds_exit(data, EXIT_FAILURE/* , "Err opening input file\n" */);// @confirm
+		}
+		chunk->input_file_open[0] = true;
 
-
-		if (dup2(files[0].fd, STDIN_FILENO) == -1)
-			clean_cmds_exit(cmd, EXIT_FAILURE/* , "Err dup2 : input file\n" */);
-		close(files[0].fd);
-		files[0].file_open = false;
+		if (dup2(chunk->input_file_fd[0], STDIN_FILENO) == -1)
+		{
+			strerror(errno);
+			clean_cmds_exit(data, EXIT_FAILURE/* , "Err dup2 : input file\n" */);// @confirm
+		}
+		close(chunk->input_file_fd[0]);
+		chunk->input_file_open[0] = false;
 	}
 	// if (dup2(files[0].fd, STDIN_FILENO) == -1)
 	// 	clean_cmds_exit(cmd, EXIT_FAILURE, "Err dup2 : input file\n");
@@ -35,15 +40,21 @@ void redirect_input_file(t_data *data, t_exe *exe, t_chunk *chunk)
 	//files[0].file_open = false;
 }
 
-void redirect_to_output_file(t_cmd *cmd, t_file *files)
+void redirect_to_output_file(t_data *data, t_exe *exe, t_chunk *chunk)
 {
 	// files[1].fd = open(files[1].name, O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR
 	// 	| S_IWUSR | S_IRGRP | S_IROTH);
 	// if (files[1].fd < 0)
 	// 	clean_cmds_exit(cmd, EXIT_FAILURE, "Err opening output file\n");
-	if (dup2(files[1].fd, STDOUT_FILENO) == -1)
-		clean_cmds_exit(cmd, EXIT_FAILURE/* , "Error dup2 : last cmd\n" */);
-	close(files[1].fd);
+	if (chunk->redir_file_count > 0)
+	{
+		if (dup2(chunk->file_fd[chunk->redir_file_count - 1], STDOUT_FILENO) == -1)
+		{
+			strerror(errno);
+			clean_cmds_exit(data, EXIT_FAILURE/* , "Error dup2 : last cmd\n" */);
+		}
+		close(chunk->file_fd[chunk->redir_file_count - 1]); //@optimize : peut etre rendu plus robust avec strerror et errno
+	}
 }
 
 void close_unecessary_pipes(t_exe *exe, int i)
@@ -69,34 +80,29 @@ void close_unecessary_pipes(t_exe *exe, int i)
 void	run_cmd(t_data *data, t_exe *exe, t_chunk *chunk, int i)
 {
 	close_unecessary_pipes(exe, i - 1);
-	if (i == 0)
-		redirect_input_file(data, exe, chunk);
-	if (i == exe->total_cmd_count - 1)
-		redirect_to_output_file(cmd, files);
-
+	redirect_input_file(data, exe, chunk);
+	redirect_to_output_file(data, exe, chunk);
 	if (i > 0 && dup2(exe->pipe_arr[i - 1][0], STDIN_FILENO) == -1)
 		clean_cmds_exit(data, EXIT_FAILURE/* , "Err dup2 : i > 0 ; fd[0]\n" */);
 	if (i >= 0 && i < exe->total_cmd_count - 1)
 		close(exe->pipe_arr[i][0]);
-
 	if (i < exe->total_cmd_count - 1 && dup2(exe->pipe_arr[i][1], STDOUT_FILENO) == -1)
 		clean_cmds_exit(data, EXIT_FAILURE/* , "Err dup2 : i > cmd-1 ; fd[1]\n" */);
 	if (i < exe->total_cmd_count - 1)
 		close(exe->pipe_arr[i][1]);
-
-	if (execve(cmd->cmd_vect[i][0], cmd->cmd_vect[i], cmd->env) == -1)
+	if (execve(chunk->argv[0], chunk->argv, data->env) == -1)
 	{
 		clean_cmds_exit(data, EXIT_FAILURE/* , "Error executing first cmd\n" */);
 		exit(EXIT_FAILURE);// quitte juste le sous process
 	}
 }
 
-static void	waiting_childs(t_cmd *cmd, int *pid_arr)
+static void	waiting_childs(t_exe *exe, int *pid_arr)
 {
 	int i;
 
 	i = 0;
-	while (i < cmd->valid_cmd_count)
+	while (i < exe->valid_cmd_count)
 	 {
 		//if (cmd->cmd_is_valid_arr[i] == true)
 		waitpid(pid_arr[i], NULL, 0);
@@ -104,12 +110,12 @@ static void	waiting_childs(t_cmd *cmd, int *pid_arr)
 	 }
 }
 
-static void close_all_pipes(t_cmd *cmd, int ***pipe_arr)
+static void close_all_pipes(t_exe *exe, int ***pipe_arr)
 {
 	int	j;
 
 	j = 0;
-	while (j < cmd->cmd_count - 1)
+	while (j < exe->total_cmd_count - 1)
 	{
 		if (close((*pipe_arr)[j][0]) == -1)
 			perror("Err close_all_pipes [j][0]");
@@ -185,8 +191,8 @@ void	run_pipex(t_data *data)
 		}
 		i++;
 	}
-	close_all_pipes(cmd, &data->exec_info.pipe_arr);
-	waiting_childs(cmd, data->exec_info.pid_arr);
+	close_all_pipes(&data->exec_info, &data->exec_info.pipe_arr);
+	waiting_childs(&data->exec_info, data->exec_info.pid_arr);
 }
 
 
