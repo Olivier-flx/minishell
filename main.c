@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:23:22 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/07 17:40:53 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/08 11:21:15 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ int	run_minishell(t_data	*data)
 	return (0);
 }
 
-int initialize_data(t_data *data, char **env)
+void initialize_data(t_data *data, char **env)
 {
 	data->env = env;
 	data->env_list = ft_init_env(env);

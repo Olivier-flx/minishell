@@ -31,7 +31,10 @@ TOKENS = ./src/tokens/user_input_validations/user_input_validation.c\
 	./src/tokens/creat_tockens_v2.c
 
 EXEC = ./src/exec/exec.c \
-	./src/exec/create_files.c
+	./src/exec/create_files.c \
+	./src/exec/commands.c \
+	./src/exec/path.c \
+	./src/exec/free_cmd_exit.c
 
 EXPEND = ./src/exec/Expension/expension.c
 
