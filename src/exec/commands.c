@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 18:10:10 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/08 10:51:56 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/08 12:10:25 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,6 @@ void	init_cmd_vect(t_data *data, t_dlist **cmd_list, t_exe *exec_info)
 {
 	t_dlist	*i_node;
 	t_chunk	*chunk;
-	int		i;
 	char	*tmp_cmd;
 
 	i_node = *cmd_list;
@@ -132,7 +131,7 @@ void	init_cmd_vect(t_data *data, t_dlist **cmd_list, t_exe *exec_info)
 				free (tmp_cmd);
 			}
 		}
-		i_node->next;
+		i_node = i_node->next;
 		data->nb_chunks++;
 	}
 }
@@ -169,7 +168,7 @@ void	init_cmd(t_data *data)
 	data->exec_info.valid_cmd_count = 0;
 	data->exec_info.command_err_count = 0;
 	data->exec_info.last_status_code = 0;
-	init_cmd_vect(data, data->cmd_list, &data->exec_info);
+	init_cmd_vect(data, &data->cmd_list, &data->exec_info);
 	check_wrong_commands(data);
 	init_bool_pipes_malloced(data, &data->exec_info);
 	return ;
