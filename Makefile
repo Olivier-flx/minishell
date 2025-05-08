@@ -28,7 +28,7 @@ TOKENS = ./src/tokens/user_input_validations/user_input_validation.c\
 	./src/tokens/operator.c \
 	./src/tokens/count_files_in_chunks.c \
 	./src/tokens/token_separators.c \
-	./src/tokens/creat_tockens_v2.c
+	./src/tokens/create_chunks.c
 
 EXEC = ./src/exec/exec.c \
 	./src/exec/create_files.c \

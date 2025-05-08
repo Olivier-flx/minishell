@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 17:57:45 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/07 16:00:23 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/08 14:52:00 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ t_chunk	*initialize_t_chunk1(void)
 
 	t_chunk	*tok;
 
+	tok = NULL;
 	tok = malloc(sizeof(t_chunk));
 	if (!tok)
 		return (NULL);
@@ -69,10 +70,10 @@ t_chunk	*create_token(char ***str, int type, int i, t_quote quotes)
 	token->tokens = *str;
 	token->type = type;
 	token->index = i;
-	if (type == OPERATOR)
-		token->len = ft_strlen(*str[0]);
-	else
-		token->len = 0; //TODO
+	// if (type == OPERATOR)
+	// 	token->len = ft_strlen(*str[0]);
+	// else
+	// 	token->len = 0; //TODO
 	token->quotes = quotes;
 	return (token);
 }

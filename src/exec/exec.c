@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:30:25 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/08 11:53:53 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/08 14:42:41 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int main_exec(t_data *data)
 	init_files(data); // OK for now
 	init_cmd(data);
 
-	clean_cmds_exit(data, EXIT_SUCCESS, data->exec_info.cmd_err_msg);
+	clean_cmds_exit(data, EXIT_SUCCESS);
 
 	/* i_node = data->cmd_list;
 	while (i_node)

@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/08 10:48:29 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/08 15:10:11 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,8 @@ typedef enum {
 typedef enum {
 	CMD,
 	PIPE,
-	OPERATOR,
-	ARG,
 	VAR
-} string_type;
+} chunk_type;
 
 typedef struct s_quote
 {
@@ -76,6 +74,7 @@ typedef struct s_exec_data
 	char	*env_path;
 	bool	env_path_found;
 	bool	*cmd_is_valid_arr; // check ether each argv in each chunk is valid or not
+	bool	cmd_is_valid_arr_malloced;
 	int		*pid_arr; // USED ??
 	bool	pid_arr_malloced;
 	int		**pipe_arr;
@@ -105,7 +104,7 @@ typedef struct s_chunk
 {
 	char		**tokens; // basic chunks that are taken from line splited by "|"
 	char		**argv;
-	string_type	type;
+	chunk_type	type;
 	////// REDIR FILES //////
 	bool		has_redir;
 	int			redir_count;
@@ -160,7 +159,7 @@ int		b_exit(int ret_val, t_data data);
 //int		create_input_token(char *src, t_dlist **line);
 
 ///// core functions
-int	create_input_token_v3(char *line,  t_dlist **cmd_list, t_data *data);
+int	create_chunks(char *line,  t_dlist **cmd_list, t_data *data);
 
 
 /////////////// SRC //////////////
@@ -170,7 +169,7 @@ int	init_files(t_data *data);
 
 	////// commands init ///
 void	init_cmd(t_data *data);
-void	clean_cmds_exit(t_data *data, int exit_val, char *msg);
+void	clean_cmds_exit(t_data *data, int exit_val);
 void	cmd_error_msg(t_data *data, int failure);
 
 	////// path exec ////
@@ -245,6 +244,7 @@ void	free_list1(t_dlist **stack_to_free);
 int		add_to_list(t_dlist **line, void *content);
 void	print_dlist(t_dlist **list);
 t_dlist	*find_last_node(t_dlist **lst);
+long	stack_lenght(t_dlist **list);
 
 // arrays
 bool	int_var_in_arr(int var, t_int_array *arr);

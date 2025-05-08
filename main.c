@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:23:22 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/08 11:21:15 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/08 15:10:11 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,9 @@ int	run_minishell(t_data	*data)
 		// 	// manage cat<test.txt << EOF
 		// }
 		////////////////////////////////
-
 		if (line && tocken_quote_closed(line))
 		{
-			//////////// Anadir Validation del input /////////
-			// fonction de validacion de input
-			/////////////////////////////
-			control = create_input_token_v3(line, &data->cmd_list, data);
+			control = create_chunks(line, &data->cmd_list, data);
 			if (control == 3)
 			{
 				free_cmdlist(data->cmd_list);

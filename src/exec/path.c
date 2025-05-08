@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 17:57:53 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/07 18:09:07 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/08 13:04:37 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,5 @@ void	get_path(char *usr_cmd_input, t_exe *exec_info, t_env *env)
 		free(test_cmd);
 		exec_info->env_path = NULL;
 	}
-	free_char_arr(path_v);
+	free_av(path_v);
 }

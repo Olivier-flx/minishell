@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 19:00:27 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/08 10:51:59 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/08 14:42:53 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,13 @@ void	cmd_error_msg(t_data *data, int failure)
 		free(msg);
 }
 
-void	clean_cmds_exit(t_data *data, int exit_val, char *msg)
+void	clean_cmds_exit(t_data *data, int exit_val)
 {
-	int	i;
-	t_dlist	*i_node;
-
-	i = 0;
-	i_node = data->cmd_list;
 	if (data && data->cmd_list)
 	{
 		if (data->exec_info.env_path && data->exec_info.env_path[0])
 			free(data->exec_info.env_path);
-		if (data->exec_info.cmd_is_valid_arr);
+		if (data->exec_info.cmd_is_valid_arr)
 			free(data->exec_info.cmd_is_valid_arr);
 		if (data->exec_info.pid_arr_malloced == true)
 			free(data->exec_info.pid_arr);
@@ -43,7 +38,7 @@ void	clean_cmds_exit(t_data *data, int exit_val, char *msg)
 			free_pipes_arr(data->exec_info.pipe_arr, &data->exec_info);
 		if (data->exec_info.pipes_malloced)
 			free(data->exec_info.pipes_malloced);
-		free_cmdlist(data->cmd_list);
+		//free_cmdlist(data->cmd_list);
 	}
 	cmd_error_msg(data, exit_val);
 }

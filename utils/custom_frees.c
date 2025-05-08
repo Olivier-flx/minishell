@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 11:31:40 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/08 10:34:08 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/08 14:50:48 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,16 @@ void free_pipes_arr(int **pipe_arr, t_exe *exec_info)
 	pipe_arr = NULL;
 }
 
-void	close_files_if_opened(int *fd_arr, bool *file_open)
+void	close_files_if_opened(int **fd_arr, bool **file_open)
 {
 	int	i;
 
 	i = 0;
-	while (fd_arr && fd_arr[i] && file_open)
+	while (*fd_arr && *fd_arr[i] && *file_open)
 	{
-		if (file_open[i])
+		if (*file_open[i])
 		{
-			if (close (fd_arr[i]) == -1)
+			if (close (*fd_arr[i]) == -1)
 				perror("Error at closing files: ");
 		}
 		i++;
@@ -46,7 +46,7 @@ static void free_input_redir(t_chunk *chunk)
 {
 	if(chunk->has_input_redir)
 		free_av(chunk->input_redir);
-	close_files_if_opened(chunk->input_file_fd,chunk->input_file_open);
+	close_files_if_opened(&chunk->input_file_fd, &chunk->input_file_open);
 	if(chunk->input_redir_file_count > 0)
 		free_av(chunk->input_redir_file);
 	if (chunk->input_file_fd_malloced)
@@ -59,7 +59,7 @@ static void	free_redir(t_chunk *chunk)
 {
 	if(chunk->has_redir)
 		free_av(chunk->redir);
-	close_files_if_opened(chunk->file_fd,chunk->file_open);
+	close_files_if_opened(&chunk->file_fd, &chunk->file_open);
 	if(chunk->redir_file_count > 0)
 		free_av(chunk->redir_files);
 	if (chunk->file_fd_malloced)

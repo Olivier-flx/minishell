@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 18:10:10 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/08 12:10:25 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/08 14:42:26 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,10 +101,9 @@ void	check_wrong_commands(t_data *data)
 		else
 			command_is_valid(data, i);
 		i++;
-		data->exec_info.total_cmd_count = i;
 	}
 	if (data->exec_info.cmd_err_msg != NULL && data->exec_info.command_err_count == data->exec_info.total_cmd_count)
-		clean_cmds_exit(data, data->exec_info.last_status_code, data->exec_info.cmd_err_msg);
+		clean_cmds_exit(data, data->exec_info.last_status_code);
 }
 
 void	init_cmd_vect(t_data *data, t_dlist **cmd_list, t_exe *exec_info)
@@ -112,27 +111,32 @@ void	init_cmd_vect(t_data *data, t_dlist **cmd_list, t_exe *exec_info)
 	t_dlist	*i_node;
 	t_chunk	*chunk;
 	char	*tmp_cmd;
+	int		i;
 
 	i_node = *cmd_list;
 	chunk = NULL;
+	i = 0;
 	while (i_node)
 	{
 		chunk = (t_chunk *) i_node->content;
-		exec_info->cmd_is_valid_arr[data->nb_chunks] = false;
-		if (usr_input_got_slash(chunk->argv[0]) == 0)
+		if (i_node == CMD)
 		{
-			if (exec_info->env_path_found == false)
-				get_path(chunk->argv[0], exec_info, data->env_list);
-			if (exec_info->env_path_found == true)
+			exec_info->cmd_is_valid_arr[i] = false;
+			if (usr_input_got_slash(chunk->argv[0]) == 0)
 			{
-				tmp_cmd = ft_strdup(chunk->argv[0]);
-				free (chunk->argv[0]);
-				chunk->argv[0] = ft_strjoin(exec_info->env_path, tmp_cmd);
-				free (tmp_cmd);
+				if (exec_info->env_path_found == false)
+					get_path(chunk->argv[0], exec_info, data->env_list);
+				if (exec_info->env_path_found == true)
+				{
+					tmp_cmd = ft_strdup(chunk->argv[0]);
+					free (chunk->argv[0]);
+					chunk->argv[0] = ft_strjoin(exec_info->env_path, tmp_cmd);
+					free (tmp_cmd);
+				}
 			}
+		i++;
 		}
 		i_node = i_node->next;
-		data->nb_chunks++;
 	}
 }
 /* dans piper 	char	***cmd_vect;
@@ -145,7 +149,7 @@ static void	init_bool_pipes_malloced(t_data * data, t_exe *exe_info)
 	i = 0;
 	exe_info->pipes_malloced = malloc(sizeof(bool) * (exe_info->total_cmd_count - 1));
 	if (!exe_info->pipes_malloced)
-		clean_cmds_exit(data, EXIT_FAILURE, "Malloc err : pipes bool");
+		clean_cmds_exit(data, EXIT_FAILURE);
 	while (i < exe_info->total_cmd_count - 1)
 	{
 		exe_info->pipes_malloced[i] = false;
@@ -153,12 +157,40 @@ static void	init_bool_pipes_malloced(t_data * data, t_exe *exe_info)
 	}
 }
 
+int	count_cmd(t_dlist **cmd_list)
+{
+	t_dlist *i_node;
+	int	k;
+
+	i_node = *cmd_list;
+	k = 0;
+	while (i_node)
+	{
+
+		if (((t_chunk *) i_node->content)->type == CMD)
+			k++;
+		i_node = i_node->next;
+	}
+	return (k);
+}
+
+void	init_cmd_is_valid_arr(t_exe *exe_info, int nb_cmd)
+{
+	exe_info->cmd_is_valid_arr = NULL;
+	exe_info->cmd_is_valid_arr_malloced = false;
+	exe_info->cmd_is_valid_arr = malloc(sizeof(bool) * (nb_cmd + 1));
+	if (!exe_info->cmd_is_valid_arr)
+		return ;
+	exe_info->cmd_is_valid_arr_malloced = true;
+	return ;
+}
 
 void	init_cmd(t_data *data)
 {
+	data->exec_info.total_cmd_count = count_cmd(&data->cmd_list);
+	init_cmd_is_valid_arr(&data->exec_info, data->exec_info.total_cmd_count);
 	data->exec_info.env_path = NULL;
 	data->exec_info.env_path_found = false;
-	data->exec_info.cmd_is_valid_arr = NULL;
 	data->exec_info.pid_arr = NULL;
 	data->exec_info.pid_arr_malloced = false;
 	data->exec_info.pipe_arr = false;

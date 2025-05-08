@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:49:47 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/07 16:06:29 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/08 15:10:11 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ static int	create_pipe_chunk(int i, t_dlist **cmd_list)
 int	create_main_chunks(char *src, t_dlist **cmd_list, t_data *data)
 {
 	char	**all_tokens;
-	char	**chunk;
-	t_chunk	*token;
+	char	**tokens;
+	t_chunk	*chunk;
 	int		i;
 	int		flag_last_pipe;
 
@@ -51,9 +51,9 @@ int	create_main_chunks(char *src, t_dlist **cmd_list, t_data *data)
 	{
 		if (i > 0 && all_tokens[i][0] == '|') // @info : Si encuentra '|' crea el chunk de antes y el chunk de '|'
 		{
-			chunk = dup_pp_char(data, all_tokens, flag_last_pipe, i - 1);
-			token = create_token(&chunk, CMD, i, (t_quote) {0}); // i correspond au numéro du chunk / index du chunk dans la string. à retirer
-			add_to_list(cmd_list, token);
+			tokens = dup_pp_char(data, all_tokens, flag_last_pipe, i - 1);
+			chunk = create_token(&tokens, CMD, i, (t_quote) {0}); // i correspond au numéro du chunk / index du chunk dans la string. à retirer
+			add_to_list(cmd_list, chunk);
 			create_pipe_chunk(i, cmd_list);
 			flag_last_pipe = i + 1;
 		}
@@ -69,9 +69,9 @@ int	create_main_chunks(char *src, t_dlist **cmd_list, t_data *data)
 		i--;
 	if (all_tokens && all_tokens[i] && all_tokens[i][0] && all_tokens[i][0] != '|')// @info : crea el ultimo chunK
 	{
-		chunk = dup_pp_char(data, all_tokens, flag_last_pipe, i);
-		token = create_token(&chunk, CMD, i, (t_quote) {0}); // i correspond au numéro du chunk / index du chunk dans la string. à retirer
-		add_to_list(cmd_list, token);
+		tokens = dup_pp_char(data, all_tokens, flag_last_pipe, i);
+		chunk = create_token(&tokens, CMD, i, (t_quote) {0}); // i correspond au numéro du chunk / index du chunk dans la string. à retirer
+		add_to_list(cmd_list, chunk);
 	}
 	free_av(all_tokens);
 	return (SUCCESS);
@@ -258,9 +258,7 @@ int	create_argvs(t_dlist **cmd_list)
 	return (SUCCESS); // @confirm : what value to return if success ? is returning void couldn't be better ?
 }
 
-
-
-int	create_input_token_v3(char *line,  t_dlist **cmd_list, t_data *data)
+int	create_chunks(char *line,  t_dlist **cmd_list, t_data *data)
 {
 	if (! data)
 		return(1);
@@ -271,5 +269,6 @@ int	create_input_token_v3(char *line,  t_dlist **cmd_list, t_data *data)
 	debug_print_cmd_list(cmd_list); //@debug
 	if (check_for_user_input_error(cmd_list) == 1)
 		return (3);
+	data->nb_chunks = (int) stack_lenght(cmd_list);
 	return(SUCCESS); // @confirm : what value to return if success ? is returning void couldn't be better ?
 }
