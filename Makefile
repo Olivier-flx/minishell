@@ -34,7 +34,8 @@ EXEC = ./src/exec/exec.c \
 	./src/exec/create_files.c \
 	./src/exec/commands.c \
 	./src/exec/path.c \
-	./src/exec/free_cmd_exit.c
+	./src/exec/free_cmd_exit.c \
+	./src/exec/listen_heredocs.c
 
 EXPEND = ./src/exec/Expension/expension.c
 

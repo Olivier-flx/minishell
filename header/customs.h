@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/08 15:10:11 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/08 18:40:52 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,6 +166,7 @@ int	create_chunks(char *line,  t_dlist **cmd_list, t_data *data);
 	///////// EXEC/////////
 int	main_exec(t_data *data);
 int	init_files(t_data *data);
+int	listen_heredocs(t_chunk *chunk);
 
 	////// commands init ///
 void	init_cmd(t_data *data);

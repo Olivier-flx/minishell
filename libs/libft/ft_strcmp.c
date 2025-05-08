@@ -3,15 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: laufarin <laufarin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:09:29 by laufarin          #+#    #+#             */
-/*   Updated: 2025/03/31 14:20:20 by laufarin         ###   ########.fr       */
+/*   Updated: 2025/05/08 18:36:55 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+
+/// @brief The  strcmp()  function compares the two strings s1 and s2.
+//    strcmp() returns an integer indicating the result of the comparison, as
+//    follows:
+/// @return     • 0, if the s1 and s2 are equal;
+/// @return     • a negative value if s1 is less than s2;
+/// @return     • a positive value if s1 is greater than s2.
 int	ft_strcmp(const char *s1, const char *s2)
 {
 	unsigned char	*ptr1;
