@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 18:10:10 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/07 19:03:55 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/08 10:51:56 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ void	check_wrong_commands(t_data *data)
 		data->exec_info.total_cmd_count = i;
 	}
 	if (data->exec_info.cmd_err_msg != NULL && data->exec_info.command_err_count == data->exec_info.total_cmd_count)
-		clean_cmds_exit(cmd, cmd->cmd_err_retval, cmd->cmd_err_msg);
+		clean_cmds_exit(data, data->exec_info.last_status_code, data->exec_info.cmd_err_msg);
 }
 
 void	init_cmd_vect(t_data *data, t_dlist **cmd_list, t_exe *exec_info)
@@ -139,6 +139,22 @@ void	init_cmd_vect(t_data *data, t_dlist **cmd_list, t_exe *exec_info)
 /* dans piper 	char	***cmd_vect;
 cmd_vect = cmd_list et cmd_vect[0] = cmd_list->content->argv */
 
+static void	init_bool_pipes_malloced(t_data * data, t_exe *exe_info)
+{
+	int	i;
+
+	i = 0;
+	exe_info->pipes_malloced = malloc(sizeof(bool) * (exe_info->total_cmd_count - 1));
+	if (!exe_info->pipes_malloced)
+		clean_cmds_exit(data, EXIT_FAILURE, "Malloc err : pipes bool");
+	while (i < exe_info->total_cmd_count - 1)
+	{
+		exe_info->pipes_malloced[i] = false;
+		i++;
+	}
+}
+
+
 void	init_cmd(t_data *data)
 {
 	data->exec_info.env_path = NULL;
@@ -155,18 +171,6 @@ void	init_cmd(t_data *data)
 	data->exec_info.last_status_code = 0;
 	init_cmd_vect(data, data->cmd_list, &data->exec_info);
 	check_wrong_commands(data);
-	init_bool_pipes_malloced(cmd);
-
-//////////DEBUG ///////////
-	int j = 0;
-	for (int i = 0; i < cmd->cmd_count; i++)
-	{
-		j = 0;
-		printf("commande %i = %s : arg de la commande : ",i, cmd->cmd_vect[i][j++]);
-		while (cmd->cmd_vect[i][j])
-			printf("%s\t", cmd->cmd_vect[i][j++]);
-		printf("\n");
-	}
-//////////DEBUG ///////////
+	init_bool_pipes_malloced(data, &data->exec_info);
 	return ;
 }

@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/07 19:04:29 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/08 10:48:29 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,6 +170,8 @@ int	init_files(t_data *data);
 
 	////// commands init ///
 void	init_cmd(t_data *data);
+void	clean_cmds_exit(t_data *data, int exit_val, char *msg);
+void	cmd_error_msg(t_data *data, int failure);
 
 	////// path exec ////
 void	get_path(char *usr_cmd_input, t_exe *exec_info, t_env *env);
@@ -260,6 +262,7 @@ void debug_print_cmd_list(t_dlist **cmd_list_ptr); //@debug
 
 // FREES
 void	free_cmdlist(t_dlist *cmd_list);
+void	free_pipes_arr(int **pipe_arr, t_exe *exec_info);
 
 
 
