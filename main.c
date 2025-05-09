@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:23:22 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/09 19:21:33 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/09 19:51:05 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,10 @@ int	run_minishell(t_data	*data)
 
 			//free (data->ope_char_i.array); // @TODO, protect free if not malloced
 			if (data->token_separators_char_i.size > 0)
+			{
+				data->token_separators_char_i.size = 0;
 				free (data->token_separators_char_i.array);
+			}
 			free(line);
 		}
 		if (data->cmd_list)
@@ -116,6 +119,7 @@ int	main(int ac, char **av, char **env)
 {
 	t_data	data;
 
+	data = (t_data) {0};
 	if (ac > 1)
 		return (1);
 	if (!env)

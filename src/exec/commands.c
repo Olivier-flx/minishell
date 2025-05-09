@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 18:10:10 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/09 19:27:22 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/09 19:46:06 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,10 @@ void	check_wrong_commands(t_data *data)
 			flag = usr_input_got_slash(chunk->argv[0]);
 			msg = get_msg(flag, chunk->argv[0]);
 			if (data->exec_info.cmd_err_msg == NULL)
+			{
 				data->exec_info.cmd_err_msg = msg;
+				data->exec_info.has_msg = true;
+			}
 			else
 			{
 				tmp_msg = ft_strjoin(data->exec_info.cmd_err_msg, msg);
@@ -110,7 +113,8 @@ void	check_wrong_commands(t_data *data)
 		i_node = i_node->next;
 	}
 	if (data->exec_info.cmd_err_msg != NULL && data->exec_info.command_err_count == data->exec_info.total_cmd_count)
-		clean_cmds_exit(data, data->exec_info.last_status_code);
+		printf("%s\n", data->exec_info.cmd_err_msg);
+		//clean_cmds_exit(data, data->exec_info.last_status_code);
 }
 
 void	init_cmd_vect(t_data *data, t_dlist **cmd_list, t_exe *exec_info)
@@ -204,6 +208,7 @@ void	init_cmd(t_data *data)
 	data->exec_info.pipe_arr_malloced = false;
 	data->exec_info.pipes_malloced = false;
 	data->exec_info.cmd_err_msg = NULL;
+	data->exec_info.has_msg = false;
 	data->exec_info.valid_cmd_count = 0;
 	data->exec_info.command_err_count = 0;
 	data->exec_info.last_status_code = 0;

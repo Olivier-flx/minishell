@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 19:00:27 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/08 14:42:53 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/09 19:46:22 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	cmd_error_msg(t_data *data, int failure)
 	data->exec_info.last_status_code = failure;
 	if (msg)
 		write(STDERR_FILENO, msg, ft_strlen(msg));
-	if (data->cmd_list && msg)
+	if (data->cmd_list && data->exec_info.has_msg && msg)
 		free(msg);
 }
 
