@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   creat_tockens_v2.c                                 :+:      :+:    :+:   */
+/*   create_chunks.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:49:47 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/08 15:10:11 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/09 18:32:04 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ static int	create_pipe_chunk(int i, t_dlist **cmd_list)
 	{
 		pipe_to_arr = malloc (2 * sizeof (char *));
 		if (!pipe_to_arr)
-			return (free(pipe), ERROR);
+			return (free(pipe), EXIT_FAILURE);
 		pipe_to_arr[0] = pipe;
 		pipe_to_arr[1] = NULL;
 		token = create_token(&pipe_to_arr, PIPE, i, (t_quote) {0});
 		return (add_to_list(cmd_list, token),ft_strlen(pipe));
 	}
-	return (SUCCESS);
+	return (EXIT_SUCCESS);
 }
 
 
@@ -43,7 +43,7 @@ int	create_main_chunks(char *src, t_dlist **cmd_list, t_data *data)
 	int		flag_last_pipe;
 
 	if (!cmd_list) // @util ?
-		return(printf("cmd_list = NULL\n"), ERROR); // @util ?
+		return(printf("cmd_list = NULL\n"), EXIT_FAILURE); // @util ?
 	i = 0;
 	flag_last_pipe = 0;
 	all_tokens = split_quoted2(src, data);
@@ -74,7 +74,7 @@ int	create_main_chunks(char *src, t_dlist **cmd_list, t_data *data)
 		add_to_list(cmd_list, chunk);
 	}
 	free_av(all_tokens);
-	return (SUCCESS);
+	return (EXIT_SUCCESS);
 }
 
 /**
@@ -164,10 +164,10 @@ void	init_argv(t_chunk *chunk)
 
 	if (!chunk)
 		return ;
-	printf("\n---------------\n pp_char_len(chunk->content) = %i\n",pp_char_len(chunk->tokens));// @debug
+	//printf("\n---------------\n pp_char_len(chunk->content) = %i\n",pp_char_len(chunk->tokens));// @debug
 	len_argv = calculate_len_argv(chunk);
-	printf("init_argv chunk->redir_count = %i\n",chunk->redir_count);// @debug
-	printf("init_argv len_argv = %i\n",len_argv);// @debug
+	//printf("init_argv chunk->redir_count = %i\n",chunk->redir_count);// @debug
+	//printf("init_argv len_argv = %i\n",len_argv);// @debug
 
 	if (len_argv <= 0)
 	{
@@ -200,8 +200,8 @@ void	separate_arg_and_operator(t_chunk *chunk)
 	init_redir_arr_and_files(chunk);
 	init_input_redir_arr_and_files(chunk);
 	init_argv(chunk);
-	printf("token != operator = "); // @debug
-	fflush(stdout);  // @debug
+	//printf("token != operator = "); // @debug
+	//fflush(stdout);  // @debug
 	while (chunk->tokens[i])
 	{
 		if (is_redirection(chunk->tokens[i], 0, &quote) > 0) // @info: fil the t_chunk redir file with the corresponding redirections
@@ -226,11 +226,11 @@ void	separate_arg_and_operator(t_chunk *chunk)
 		}
 		else
 			chunk->argv[i_argv++] = ft_strdup(chunk->tokens[i]);
-		printf("`%s`;", chunk->tokens[i]); // @debug
-		fflush(stdout);  // @debug
+		//printf("`%s`;", chunk->tokens[i]); // @debug
+		//fflush(stdout);  // @debug
 		i++;
 	}
-	printf("\n"); // @debug
+	//printf("\n"); // @debug
 }
 
 int	create_argvs(t_dlist **cmd_list)
@@ -255,7 +255,7 @@ int	create_argvs(t_dlist **cmd_list)
 	/////////
 		i_node = i_node->next;
 	}
-	return (SUCCESS); // @confirm : what value to return if success ? is returning void couldn't be better ?
+	return (EXIT_SUCCESS); // @confirm : what value to return if success ? is returning void couldn't be better ?
 }
 
 int	create_chunks(char *line,  t_dlist **cmd_list, t_data *data)
@@ -266,9 +266,9 @@ int	create_chunks(char *line,  t_dlist **cmd_list, t_data *data)
 		return (printf("Error : create_main_chunks"));
 	if (create_argvs(cmd_list) == 1) // if error retrun 1
 		return (2);
-	debug_print_cmd_list(cmd_list); //@debug
+	//debug_print_cmd_list(cmd_list); //@debug
 	if (check_for_user_input_error(cmd_list) == 1)
 		return (3);
 	data->nb_chunks = (int) stack_lenght(cmd_list);
-	return(SUCCESS); // @confirm : what value to return if success ? is returning void couldn't be better ?
+	return(EXIT_SUCCESS); // @confirm : what value to return if success ? is returning void couldn't be better ?
 }

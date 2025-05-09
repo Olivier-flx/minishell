@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 17:57:45 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/08 14:52:00 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/09 18:19:17 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,17 +50,18 @@ t_chunk	*initialize_t_chunk1(void)
 		return (NULL);
 	tok->tokens = NULL;
 	tok->argv = NULL;
+	tok->argv_0_path = NULL;
 	tok->type = CMD;
 	inititalize_redir(&tok);
 	initialize_input_redir(&tok);
-	tok->index = 0; // util ?
+	// tok->index = 0; // util ?
 	tok->len = 0; // util ?
 	tok->quotes = (t_quote) {0}; // util ?
 	return (tok);
 }
 
 
-t_chunk	*create_token(char ***str, int type, int i, t_quote quotes)
+t_chunk	*create_token(char ***str, chunk_type type, int i, t_quote quotes)
 {
 	t_chunk	*token;
 

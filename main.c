@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:23:22 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/08 15:10:11 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/09 18:32:04 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 
 // HOW TO RUN //
-// valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=readline.supp -s ./mini
+// valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=readline.supp -s ./minishell
 
 int	process_line(char **line)
 {
@@ -123,7 +123,7 @@ int	main(int ac, char **av, char **env)
 	if (ac == 1 && env && av) // modificcar para arrancar igual si no hay env
 		return (run_minishell(&data));
 	else
-		return (ft_free_env(data.env_list),  ERROR);
+		return (ft_free_env(data.env_list),  EXIT_FAILURE);
 	return (0);
 }
 

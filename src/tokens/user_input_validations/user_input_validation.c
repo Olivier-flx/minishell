@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 15:14:36 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/06 10:03:40 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/09 18:32:04 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	check_redir_pipe(t_dlist **cmd_list)
 	while(i_node)
 	{
 		if (flag == 1 && ((t_chunk *)i_node->content)->tokens[0][0] == '|')
-			return(printf("bash: syntax error near unexpected token `|'\n"), ERROR);
+			return(printf("bash: syntax error near unexpected token `|'\n"), EXIT_FAILURE);
 		flag = 0;
 		i = 0;
 		while (((t_chunk *)i_node->content)->tokens[i])
@@ -36,7 +36,7 @@ int	check_redir_pipe(t_dlist **cmd_list)
 			flag = 1;
 		i_node = i_node->next;
 	}
-	return(SUCCESS);
+	return(EXIT_SUCCESS);
 }
 
 int check_pipe_last (t_dlist **cmd_list)
@@ -47,7 +47,7 @@ int check_pipe_last (t_dlist **cmd_list)
 	// last_node = last_node->prev; // @debug : jai l impression qu il y a un probleme avec un noeud supplementaire vide qui s ajoute a la fin de la liste. Si cela ne cause pas de probleme en soit, cela implique que apres avoir utilise la fonction find_last_node, il fasse faire un cmd_list->prev pour avoir le dernier noeud effectif de la liste
 	if (last_node && ((t_chunk *)(last_node->content))->tokens[0] \
 			&& ((t_chunk *)(last_node->content))->tokens[0][0] == '|')
-		return(printf("bash: syntax error near unexpected token `newline'\n"), ERROR);
+		return(printf("bash: syntax error near unexpected token `newline'\n"), EXIT_FAILURE);
 	return (0);
 }
 
@@ -126,11 +126,11 @@ int	accolade_not_closed(t_dlist **cmd_list)
 		{
 			flag = check_tocken_accolade(((t_chunk *)i_node->content)->tokens[i++]);
 			if(flag > 0)
-				return (ERROR);
+				return (EXIT_FAILURE);
 		}
 		i_node = i_node->next;
 	}
-	return (SUCCESS);
+	return (EXIT_SUCCESS);
 }
 
 // check from the last tocken to the first one

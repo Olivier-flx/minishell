@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unique_token_operator.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 11:28:48 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/28 19:55:28 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/09 18:32:04 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	check_for_simple(t_dlist **cmd_list)
 		{
 			if (is_operator(chunk->tokens[0], 0, &quotes) && !chunk->tokens[1])
 				return (printf("bash: syntax error near unexpected token `%s'\n",\
-					unexpected_token(i_node)), ERROR);
+					unexpected_token(i_node)), EXIT_FAILURE);
 		}
 		i_node = i_node->next;
 	}

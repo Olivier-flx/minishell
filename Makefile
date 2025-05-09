@@ -7,7 +7,9 @@ YELLOW=\033[1;33m
 
 NAME = minishell
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g -O0 -I./header
+#CFLAGS = -Wall -Wextra -Werror -g -O0 -I./header
+CFLAGS = -Wall  -Werror -g -O0 -I./header
+
 LDFLAGS = -lreadline
 
 #INC = -I./header

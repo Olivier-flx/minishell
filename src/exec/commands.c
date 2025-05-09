@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 18:10:10 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/08 14:42:26 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/09 18:56:58 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,17 +74,23 @@ void	check_wrong_commands(t_data *data)
 	i = 0;
 	chunk = NULL;
 	i_node = data->cmd_list;
+	//debug_print_cmd_list(&data->cmd_list); //@debug
 	while (i < data->nb_chunks && i_node) // à modifier en cas de heredoc
 	{
 		chunk = (t_chunk *)i_node->content;
-		if (!chunk->argv)
+		//printf ("chunk[%i]->argv[0] = `%s` ; type = `%d`\n", chunk->index ,chunk->argv[0], chunk->type);// @debug
+		if (!chunk->argv || chunk->type != CMD)
+		{
+			i_node = i_node->next;
 			continue ;
+		}
 		if (access(chunk->argv[0], X_OK) != 0)
 		{
 			data->exec_info.command_err_count ++;
+
 			data->exec_info.cmd_is_valid_arr[i] = false;
 			data->exec_info.last_status_code = 0;
-			if (i == data->nb_chunks)
+			if (i == data->exec_info.total_cmd_count)
 				data->exec_info.last_status_code = 127;
 			flag = usr_input_got_slash(chunk->argv[0]);
 			msg = get_msg(flag, chunk->argv[0]);
@@ -101,6 +107,7 @@ void	check_wrong_commands(t_data *data)
 		else
 			command_is_valid(data, i);
 		i++;
+		i_node = i_node->next;
 	}
 	if (data->exec_info.cmd_err_msg != NULL && data->exec_info.command_err_count == data->exec_info.total_cmd_count)
 		clean_cmds_exit(data, data->exec_info.last_status_code);
@@ -110,7 +117,6 @@ void	init_cmd_vect(t_data *data, t_dlist **cmd_list, t_exe *exec_info)
 {
 	t_dlist	*i_node;
 	t_chunk	*chunk;
-	char	*tmp_cmd;
 	int		i;
 
 	i_node = *cmd_list;
@@ -119,7 +125,7 @@ void	init_cmd_vect(t_data *data, t_dlist **cmd_list, t_exe *exec_info)
 	while (i_node)
 	{
 		chunk = (t_chunk *) i_node->content;
-		if (i_node == CMD)
+		if (chunk->type == CMD)
 		{
 			exec_info->cmd_is_valid_arr[i] = false;
 			if (usr_input_got_slash(chunk->argv[0]) == 0)
@@ -128,10 +134,9 @@ void	init_cmd_vect(t_data *data, t_dlist **cmd_list, t_exe *exec_info)
 					get_path(chunk->argv[0], exec_info, data->env_list);
 				if (exec_info->env_path_found == true)
 				{
-					tmp_cmd = ft_strdup(chunk->argv[0]);
+					chunk->argv_0_nopath = ft_strdup(chunk->argv[0]); // @ test id 1
 					free (chunk->argv[0]);
-					chunk->argv[0] = ft_strjoin(exec_info->env_path, tmp_cmd);
-					free (tmp_cmd);
+					chunk->argv[0] = ft_strjoin(exec_info->env_path, chunk->argv_0_nopath);
 				}
 			}
 		i++;
@@ -147,6 +152,8 @@ static void	init_bool_pipes_malloced(t_data * data, t_exe *exe_info)
 	int	i;
 
 	i = 0;
+	if (exe_info->total_cmd_count < 2)
+		return ;
 	exe_info->pipes_malloced = malloc(sizeof(bool) * (exe_info->total_cmd_count - 1));
 	if (!exe_info->pipes_malloced)
 		clean_cmds_exit(data, EXIT_FAILURE);

@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/08 20:11:25 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/09 18:54:49 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,6 @@
 	// @legacy	--> not used anymore, to delete later, kept for logic implementation trace
 */
 ///////
-
-
-typedef enum {
-	SUCCESS,
-	ERROR
-} fonction_return_type;
 
 typedef enum {
 	CMD,
@@ -104,6 +98,7 @@ typedef struct s_chunk
 {
 	char		**tokens; // basic chunks that are taken from line splited by "|"
 	char		**argv;
+	char		*argv_0_nopath;
 	chunk_type	type;
 	////// REDIR FILES //////
 	bool		has_redir;
@@ -181,7 +176,7 @@ int	expend_all(t_data *data);
 char	*expend_token(t_data *data, char *str);
 
 	///// Tokens /////
-t_chunk	*create_token(char ***str, int type, int i, t_quote quotes);
+t_chunk	*create_token(char ***str, chunk_type type, int i, t_quote quotes);
 void	set_separator_char_i_struc_arr(char *src, t_int_array *arr);
 int		is_seperator(char *src, int i, t_quote *quote);
 int		count_redir_files_in_chunks(char **content);

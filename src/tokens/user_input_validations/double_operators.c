@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   double_operators.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 11:30:14 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/28 20:02:08 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/09 18:32:04 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static int check_tokens(t_chunk *chunk)
 			return(printf("bash: syntax error near unexpected token `<'\n"));
 		flag = 0;
 	}
-	return (SUCCESS);
+	return (EXIT_SUCCESS);
 }
 
 // check for >>> or <<< or << < or >> > or < << or > >>
@@ -55,8 +55,8 @@ int	check_for_triple(t_dlist **cmd_list)
 	while(i_node)
 	{
 		if (check_tokens((t_chunk *)i_node->content) > 0)
-			return (ERROR);
+			return (EXIT_FAILURE);
 		i_node = i_node->next;
 	}
-	return(SUCCESS);
+	return(EXIT_SUCCESS);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_to_msg.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 16:51:49 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/24 14:21:35 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/09 17:05:18 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,7 @@ void	print_dlist(t_dlist **list)
 // @debug : Funccion que imprime la lista de comandos entera y imprime el contenido de cada nodo
 void debug_print_cmd_list(t_dlist **cmd_list_ptr)
 {
-	t_dlist *cmd_list = *cmd_list_ptr;
-	t_dlist *current = cmd_list;
+	t_dlist *current = *cmd_list_ptr;
 	int index = 0;
 
 	printf("\n--- Comienzo de la impresión del cmd_list ---\n");
@@ -115,6 +114,7 @@ void debug_print_cmd_list(t_dlist **cmd_list_ptr)
 					}
 					printf("      [%d]: NULL (fin de la tabla)\n", pp_char_len(chunk->redir_files));
 				}
+				//printf("    chunk->index: %d\n", chunk->index);
 				printf("    chunk->type: %d\n", chunk->type);
 				printf("    chunk->has_redir: %s\n", chunk->has_redir ? "true" : "false");
 				printf("    chunk->redir_count: %d\n", chunk->redir_count);

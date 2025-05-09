@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 17:41:15 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/08 18:41:04 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/09 15:08:45 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,7 @@ int	ft_get_line(int fd, char **line)
 
 int	listen_terminal(char *limiter)
 {
-	int		pipes[2];
+	int		pipes[2]; // @confirm Need to try i y need to extract pipe[2] de listen_terminaal pour le mettre  directement dans listen heredoc. J'ai peur qu'en le fermant a la fin de listen terminal je n'arrive pas a ecouter plusieurs heredoc
 	char	*line;
 	int		limiter_len;
 	int		n_index;
@@ -200,7 +200,7 @@ int	listen_heredocs(t_chunk *chunk)
 	while (chunk->input_redir && chunk->input_redir[i])
 	{
 		if (ft_strcmp("<<", chunk->input_redir[i]) == 0)
-			listen_terminal(chunk->input_redir_file);
+			listen_terminal(chunk->input_redir_file[i]);
 		i++;
 	}
 	return (0);
