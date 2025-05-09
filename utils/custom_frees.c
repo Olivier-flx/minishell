@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 11:31:40 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/09 18:21:54 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/09 19:16:07 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,8 @@ void	free_cmdlist(t_dlist *cmd_list)
 				free_av(((t_chunk *)(i_node->content))->tokens);
 			if (((t_chunk *)(i_node->content))->argv)
 				free_av(((t_chunk *)(i_node->content))->argv);
-			if (((t_chunk *)(i_node->content))->argv_0_path)
-				free(((t_chunk *)(i_node->content))->argv_0_path);
+			if (((t_chunk *)(i_node->content))->argv_0_nopath)
+				free(((t_chunk *)(i_node->content))->argv_0_nopath);
 			free_redir((t_chunk *)(i_node->content));
 			free_input_redir((t_chunk *)(i_node->content));
 			free((t_chunk *)(i_node->content));

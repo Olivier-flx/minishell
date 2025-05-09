@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:23:22 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/09 18:32:04 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/09 19:21:33 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,11 +86,14 @@ int	run_minishell(t_data	*data)
 			free(line);
 		}
 		if (data->cmd_list)
+		{
 			free_cmdlist(data->cmd_list);
+			clean_cmds_exit(data, EXIT_SUCCESS);
+		}
 		// else
 		// 	continue ;
-		ft_free_env(data->env_list);// @debug
-		break ; // @debug : to remove when more advanced
+		//ft_free_env(data->env_list);// @debug
+		//break ; // @debug : to remove when more advanced
 	}
 	// ft_free_env(data->env_list);// @debug
 	return (0);

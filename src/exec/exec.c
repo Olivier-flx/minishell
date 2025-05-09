@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:30:25 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/09 18:49:49 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/09 19:22:59 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,12 +93,10 @@ void	run_cmd(t_data *data, t_exe *exe, t_chunk *chunk, int i)
 	//	clean_cmds_exit(data, EXIT_FAILURE/* , "Err dup2 : i > cmd-1 ; fd[1]\n" */);
 	if (i < exe->total_cmd_count - 1)
 		close(exe->pipe_arr[i][1]);
-	if (execve(chunk->argv[0], chunk->argv, data->env) == -1)
-	{
-			strerror(errno);
+	execve(chunk->argv[0], chunk->argv, data->env);
+	exit(127);
 		//clean_cmds_exit(data, EXIT_FAILURE/* , "Error executing first cmd\n" */);
 		//exit(EXIT_FAILURE);// quitte juste le sous process
-	}
 }
 
 static void	waiting_childs(t_exe *exe, int *pid_arr)
@@ -147,6 +145,8 @@ void	init_pipes_2arr(t_data *data, t_exe *exe)
 {
 	int i;
 
+	if (exe->total_cmd_count < 2)
+		return ;
 	exe->pipe_arr = malloc(sizeof(int *) * (exe->total_cmd_count - 1));
 	if (!exe->pipe_arr)
 		strerror(errno);
@@ -199,6 +199,7 @@ void	run_pipex(t_data *data)
 				run_cmd (data, &data->exec_info, ((t_chunk *)i_node->content), i);
 		}
 		i++;
+		i_node = i_node->next;
 	}
 	close_all_pipes(&data->exec_info, &data->exec_info.pipe_arr);
 	waiting_childs(&data->exec_info, data->exec_info.pid_arr);
@@ -213,7 +214,7 @@ int main_exec(t_data *data)
 	init_files(data); // OK for now
 	init_cmd(data);
 	run_pipex(data);
-	clean_cmds_exit(data, EXIT_SUCCESS);
+	//clean_cmds_exit(data, EXIT_SUCCESS);
 
 	/* i_node = data->cmd_list;
 	while (i_node)
