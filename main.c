@@ -152,3 +152,58 @@ void test_builtins(t_env *env)          // Recibe t_env* como parámetro
     char *echo_n_args[] = {"echo", "-n", "hello", "world", NULL};
     ft_echo(env, echo_n_args);
 }*/
+
+extern volatile sig_atomic_t g_signal_received;
+
+int	run_minishell(t_data *data)
+{
+	char	*input;
+
+	setup_signals();
+	while (1)
+	{
+		input = readline("minishell$ ");
+		if (!input)
+		{
+			write(1, "exit\n", 5);
+			break;
+		}
+		if (g_signal_received == 130)
+		{
+			data->exit_status = 130;
+			g_signal_received = 0;
+		}
+		if (*input)
+		{
+			add_history(input);
+			if (strcmp(input, "env") == 0)
+				print_environment(data->env_list);
+			else if (strcmp(input, "test") == 0)
+				test_builtins(data->env_list);
+		}
+		free(input);
+	}
+	return (0);
+}
+
+int	main(int ac, char **av, char **env)
+{
+	t_data	data;
+
+	if (!env)
+		return (printf("No environment defined\n"), 1);
+	data.env = env;
+	data.env_list = ft_init_env(env);
+	data.cmd_list = NULL;
+	data.ope_char_i = (t_int_array){0};
+	data.token_separators_char_i = (t_int_array){0};
+	data.exit_status = 0;
+	if (ac == 1 && av)
+	{
+		int result = run_minishell(&data);
+		ft_free_env(data.env_list);
+		return (result);
+	}
+	ft_free_env(data.env_list);
+	return (0);
+}

@@ -39,6 +39,18 @@
 # include "builtins.h"
 # include "../libs/libft/libft.h"
 
+* ==========================
+ *  SIGNAL HANDLING FUNCTIONS
+ * ==========================
+// Variable global PARA SEÑALES (única permitida)
+
+extern volatile sig_atomic_t g_signal_received;
+
+// Prototipos de funciones de señales
+void	handle_signal(int sig);
+void	setup_signals(void);
+
+
 #endif
 
 /*
@@ -122,21 +134,6 @@
 	// pid_t wait3(int *status, int options, struct rusage *rusage);
 // wait4              : Like wait3 but provides additional details.
 	// pid_t wait4(pid_t pid, int *status, int options, struct rusage *rusage);
-
-
- * ==========================
- *  SIGNAL HANDLING FUNCTIONS
- * ==========================
-// signal             : Sets a handler for a signal.
-	// void (*signal(int signum, void (*handler)(int)))(int);
-// sigaction          : Configures actions for a specific signal.
-	// int sigaction(int signum, const struct sigaction *act, struct sigaction *oldact);
-// sigemptyset        : Initializes an empty signal set.
-	// int sigemptyset(sigset_t *set);
-// sigaddset          : Adds a signal to a set.
-	// int sigaddset(sigset_t *set, int signum);
-// kill               : Sends a signal to a process.
-	// int kill(pid_t pid, int sig);
 
 
  * ==========================
