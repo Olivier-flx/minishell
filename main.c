@@ -153,57 +153,76 @@ void test_builtins(t_env *env)          // Recibe t_env* como parámetro
     ft_echo(env, echo_n_args);
 }*/
 
-extern volatile sig_atomic_t g_signal_received;
+#include "../includes/minishell.h"
 
-int	run_minishell(t_data *data)
+volatile sig_atomic_t g_signal_received = 0;
+
+void free_resources(t_data *data)
 {
-	char	*input;
-
-	setup_signals();
-	while (1)
-	{
-		input = readline("minishell$ ");
-		if (!input)
-		{
-			write(1, "exit\n", 5);
-			break;
-		}
-		if (g_signal_received == 130)
-		{
-			data->exit_status = 130;
-			g_signal_received = 0;
-		}
-		if (*input)
-		{
-			add_history(input);
-			if (strcmp(input, "env") == 0)
-				print_environment(data->env_list);
-			else if (strcmp(input, "test") == 0)
-				test_builtins(data->env_list);
-		}
-		free(input);
-	}
-	return (0);
+    if (data->env_list)
+        ft_free_env(data->env_list);
+    if (data->cmd_list)
+        free_cmdlist(data->cmd_list);
+    // Liberar cualquier otro recurso si es necesario
 }
 
-int	main(int ac, char **av, char **env)
+void handle_ctrl_d(t_data *data)
 {
-	t_data	data;
+    write(STDOUT_FILENO, "exit\n", 5);
+    free_resources(data);
+    exit(data->exit_status);
+}
 
-	if (!env)
-		return (printf("No environment defined\n"), 1);
-	data.env = env;
-	data.env_list = ft_init_env(env);
-	data.cmd_list = NULL;
-	data.ope_char_i = (t_int_array){0};
-	data.token_separators_char_i = (t_int_array){0};
-	data.exit_status = 0;
-	if (ac == 1 && av)
-	{
-		int result = run_minishell(&data);
-		ft_free_env(data.env_list);
-		return (result);
-	}
-	ft_free_env(data.env_list);
-	return (0);
+void process_input(t_data *data, char *input)
+{
+    if (!input)  // Caso Ctrl+D
+        handle_ctrl_d(data);
+
+    if (g_signal_received)
+    {
+        data->exit_status = g_signal_received;
+        g_signal_received = 0;
+    }
+
+    if (*input)
+    {
+        add_history(input);
+        // Aquí iría lógica de parseo
+        if (parse_input(input, data) == SUCCESS)  // Función de parseo existente
+            main_exec(data);  // Ejecución de comandos
+    }
+}
+
+int run_minishell(t_data *data)
+{
+    char *input;
+
+    setup_signals();
+    while (1)
+    {
+        input = readline("minishell$ ");
+        process_input(data, input);
+        free(input);
+        reset_data(data);  // Limpieza para el siguiente comando
+    }
+    return (0);
+}
+
+int main(int ac, char **av, char **env)
+{
+    t_data data;
+
+    if (!env)
+        return (printf("No environment defined\n"), 1);
+
+    // Inicialización de la estructura data
+    ft_memset(&data, 0, sizeof(t_data));
+    data.env_list = ft_init_env(env);
+    data.exit_status = 0;
+
+    if (ac == 1)  // Modo interactivo
+        run_minishell(&data);
+
+    free_resources(&data);
+    return (data.exit_status);
 }

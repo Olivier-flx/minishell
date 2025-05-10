@@ -46,6 +46,8 @@
 
 extern volatile sig_atomic_t g_signal_received;
 
+
+
 // Prototipos de funciones de señales
 void	handle_signal(int sig);
 void	setup_signals(void);
