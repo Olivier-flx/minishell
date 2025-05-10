@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 17:57:45 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/10 16:09:45 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/10 21:23:47 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,10 @@ t_chunk	*initialize_t_chunk1(void)
 	tok->argv = NULL;
 	tok->argv_0_nopath = NULL;
 	tok->type = CMD;
+	tok->nb_heredocs = 0;
+	tok->heredoc_pipe_arr_malloced = false;
+	tok->heredoc_pipe_arr = NULL;
+	tok->pipes_malloced = NULL;
 	inititalize_redir(&tok);
 	initialize_input_redir(&tok);
 	// tok->index = 0; // util ?

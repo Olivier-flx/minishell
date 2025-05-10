@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 17:41:15 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/10 21:10:47 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/10 21:32:05 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,6 +202,7 @@ int	listen_terminal2(t_chunk * chunk, char *limiter, int i_to_herdoc_index)
 	limiter_len = (int) ft_strlen(limiter);
 	// if (pipe(pipes) < 0)
 	// 	return (perror("pipe"), 1);
+	printf("i_to_herdoc_index = %i\n", i_to_herdoc_index);
 	dup2(chunk->heredoc_pipe_arr[i_to_herdoc_index][0], STDIN_FILENO);
 	close(chunk->heredoc_pipe_arr[i_to_herdoc_index][0]);
 	while (1)
@@ -217,12 +218,11 @@ int	listen_terminal2(t_chunk * chunk, char *limiter, int i_to_herdoc_index)
 		else
 		{
 			write (chunk->heredoc_pipe_arr[i_to_herdoc_index][1], line, ft_strlen(line));
-			if (line)
-				ft_free ((void **) &line);
+			write(chunk->heredoc_pipe_arr[i_to_herdoc_index][1], "\n", 1); // @confirm
+			ft_free ((void **) &line);
 		}
 	}
-	if (line)
-		ft_free ((void **) &line);
+	ft_free ((void **) &line);
 	//close(pipes[1]);
 	return (0);
 }
@@ -236,9 +236,9 @@ int	listen_heredocs(t_chunk *chunk, int i)
 		return (EXIT_FAILURE);
 	if (ft_strcmp("<<", chunk->input_redir[i]) == 0)
 	{
-		i_to_herdoc_index = chunk->nb_heredocs - (chunk->nb_heredocs - i) - 1;
+		i_to_herdoc_index = chunk->nb_heredocs - (chunk->nb_heredocs - i);
 		listen_terminal2(chunk, chunk->input_redir_file[i], i_to_herdoc_index);
-		close(chunk->heredoc_pipe_arr[i_to_herdoc_index][0]);
+		close(chunk->heredoc_pipe_arr[i_to_herdoc_index][1]);
 		ft_free((void ** )& chunk->heredoc_pipe_arr[i_to_herdoc_index]);
 	}
 	return (0);

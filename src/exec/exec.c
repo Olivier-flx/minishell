@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:30:25 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/10 21:17:42 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/10 21:35:57 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ void	run_cmd(t_data *data, t_exe *exe, t_chunk *chunk, int i)
 	close_unecessary_pipes(exe, i - 1);
 	redirect_input_file(data, chunk);
 	redirect_to_output_file(data, chunk);
-	if (i > 0 && !chunk->has_input_redir && dup2(exe->pipe_arr[i - 1][0], STDIN_FILENO) == -1)
-		strerror(errno); // @optimize
+	//if (i > 0 && !chunk->has_input_redir && dup2(exe->pipe_arr[i - 1][0], STDIN_FILENO) == -1)
+	//	strerror(errno); // @optimize
 	if (i >= 0 && i < exe->total_cmd_count - 1)
 		close(exe->pipe_arr[i][0]);
 	if (i < exe->total_cmd_count - 1 && !chunk->has_redir && dup2(exe->pipe_arr[i][1], STDOUT_FILENO) == -1)
