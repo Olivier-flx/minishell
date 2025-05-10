@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 18:10:10 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/10 16:48:11 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/10 17:16:22 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,11 +74,9 @@ void	check_wrong_commands(t_data *data)
 	i = 0;
 	chunk = NULL;
 	i_node = data->cmd_list;
-	//debug_print_cmd_list(&data->cmd_list); //@debug
 	while (i < data->nb_chunks && i_node) // à modifier en cas de heredoc
 	{
 		chunk = (t_chunk *)i_node->content;
-		//printf ("chunk[%i]->argv[0] = `%s` ; type = `%d`\n", chunk->index ,chunk->argv[0], chunk->type);// @debug
 		if (!chunk->argv || chunk->type != CMD)
 		{
 			i_node = i_node->next;

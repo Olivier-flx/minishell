@@ -33,10 +33,12 @@ TOKENS = ./src/tokens/user_input_validations/user_input_validation.c\
 
 EXEC = ./src/exec/exec.c \
 	./src/exec/create_files.c \
+	./src/exec/init_input_files.c \
 	./src/exec/commands.c \
 	./src/exec/path.c \
 	./src/exec/free_cmd_exit.c \
-	./src/exec/listen_heredocs.c
+	./src/exec/listen_heredocs.c \
+	./src/exec/pipes.c
 
 EXPEND = ./src/exec/Expension/expension.c
 

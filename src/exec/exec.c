@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:30:25 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/10 17:08:36 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/10 19:00:01 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,27 @@
 
 void redirect_input_file(t_data *data, t_chunk *chunk)
 {
+	int	i;
+
+	i = 0;
 	if (!data)
 		return;
-	if (chunk->has_here_doc)
-		listen_heredocs(chunk);
-	if(ft_strcmp(chunk->tokens[0], "<") == 0)
+	while (chunk->input_redir && chunk->input_redir[i])
 	{
-		chunk->input_file_fd[0] = open(chunk->input_redir_file[0], O_RDONLY);
-		if (chunk->input_file_fd[0] < 0)
+		if (chunk->has_here_doc)
+			listen_heredocs(chunk, i);
+		if(ft_strcmp(chunk->input_redir[i], "<") == 0)
 		{
-			strerror(errno);
-			//clean_cmds_exit(data, EXIT_FAILURE/* , "Err opening input file\n" */);// @confirm
+			chunk->input_file_fd[i] = open(chunk->input_redir_file[i], O_RDONLY);
+			if (chunk->input_file_fd[0] < 0)
+				strerror(errno); // @optimize
+			chunk->input_file_open[0] = true;
+			if (dup2(chunk->input_file_fd[i], STDIN_FILENO) == -1)
+				strerror(errno); // @optimize
+			close(chunk->input_file_fd[i]);
+			chunk->input_file_open[i] = false;
 		}
-		chunk->input_file_open[0] = true;
-
-		if (dup2(chunk->input_file_fd[0], STDIN_FILENO) == -1)
-		{
-			strerror(errno);
-			//clean_cmds_exit(data, EXIT_FAILURE/* , "Err dup2 : input file\n" */);// @confirm
-		}
-		close(chunk->input_file_fd[0]);
-		chunk->input_file_open[0] = false;
+		i++;
 	}
 	// if (dup2(files[0].fd, STDIN_FILENO) == -1)
 	// 	clean_cmds_exit(cmd, EXIT_FAILURE, "Err dup2 : input file\n");
@@ -44,57 +44,33 @@ void redirect_input_file(t_data *data, t_chunk *chunk)
 
 void redirect_to_output_file(t_data *data, t_chunk *chunk)
 {
-	// files[1].fd = open(files[1].name, O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR
-	// 	| S_IWUSR | S_IRGRP | S_IROTH);
-	// if (files[1].fd < 0)
-	// 	clean_cmds_exit(cmd, EXIT_FAILURE, "Err opening output file\n");
-	if (!data)
-		return;
 	if (chunk->redir_file_count > 0)
 	{
+		chunk->file_fd[chunk->redir_file_count - 1] = open(chunk->redir_files[chunk->redir_file_count - 1], O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR
+			| S_IWUSR | S_IRGRP | S_IROTH);
+		if (chunk->file_fd[chunk->redir_file_count - 1] < 0)
+			strerror(errno); // @optimize
+		if (!data)
+			return;
+		printf(" output file : %s, file fd = %i\n", chunk->redir_files[chunk->redir_file_count - 1], chunk->file_fd[chunk->redir_file_count - 1]);// @debug
 		if (dup2(chunk->file_fd[chunk->redir_file_count - 1], STDOUT_FILENO) == -1)
-		{
-			strerror(errno);
-			//clean_cmds_exit(data, EXIT_FAILURE/* , "Error dup2 : last cmd\n" */);
-		}
+			strerror(errno); // @optimize
 		close(chunk->file_fd[chunk->redir_file_count - 1]); //@optimize : peut etre rendu plus robust avec strerror et errno
 		chunk->file_open[chunk->redir_file_count - 1] = false;
 	}
 }
-
-void close_unecessary_pipes(t_exe *exe, int i)
-{
-	int j;
-
-	j = 0;
-	while (j < exe->total_cmd_count - 1)
-	{
-		if (j != i && close(exe->pipe_arr[j][0]) == -1){
-			printf("(*pipe_arr)[j][0] --> j == %d\n", j); // @confirm : dois-je gerer ainsi ?
-			//perror("Error closing pipe_arr[j][0]");
-			}
-		if (j != i + 1 && close(exe->pipe_arr[j][1])){
-			printf("(*pipe_arr)[j][1] --> j == %d\n", j);// @confirm : dois-je gerer ainsi ?
-			//perror("Error closing pipe_arr[j][1]");
-			}
-		j++;
-	}
-}
-
 
 void	run_cmd(t_data *data, t_exe *exe, t_chunk *chunk, int i)
 {
 	close_unecessary_pipes(exe, i - 1);
 	redirect_input_file(data, chunk);
 	redirect_to_output_file(data, chunk);
-	if (i > 0 && dup2(exe->pipe_arr[i - 1][0], STDIN_FILENO) == -1)
-		strerror(errno);
-	//	clean_cmds_exit(data, EXIT_FAILURE/* , "Err dup2 : i > 0 ; fd[0]\n" */);
+	if (i > 0 && !chunk->has_input_redir && dup2(exe->pipe_arr[i - 1][0], STDIN_FILENO) == -1)
+		strerror(errno); // @optimize
 	if (i >= 0 && i < exe->total_cmd_count - 1)
 		close(exe->pipe_arr[i][0]);
-	if (i < exe->total_cmd_count - 1 && dup2(exe->pipe_arr[i][1], STDOUT_FILENO) == -1)
-		strerror(errno);
-	//	clean_cmds_exit(data, EXIT_FAILURE/* , "Err dup2 : i > cmd-1 ; fd[1]\n" */);
+	if (i < exe->total_cmd_count - 1 && !chunk->has_redir && dup2(exe->pipe_arr[i][1], STDOUT_FILENO) == -1)
+		strerror(errno); // @optimize
 	if (i < exe->total_cmd_count - 1)
 		close(exe->pipe_arr[i][1]);
 	execve(chunk->argv[0], chunk->argv, data->env);
@@ -116,21 +92,6 @@ static void	waiting_childs(t_exe *exe, int *pid_arr)
 	 }
 }
 
-static void close_all_pipes(t_exe *exe, int ***pipe_arr)
-{
-	int	j;
-
-	j = 0;
-	while (j < exe->total_cmd_count - 1)
-	{
-		if (close((*pipe_arr)[j][0]) == -1)
-			perror("Err close_all_pipes [j][0]");
-		if (close((*pipe_arr)[j][1]) == -1)
-			perror("Err close_all_pipes [j][1]");
-		j++;
-	}
-}
-
 void	init_pid_arr(t_data *data, t_exe *exe)
 {
 	int i;
@@ -145,34 +106,6 @@ void	init_pid_arr(t_data *data, t_exe *exe)
 	exe->pid_arr_malloced = true;
 	while (i < exe->valid_cmd_count)
 		exe->pid_arr[i++] = -2;
-}
-
-void	init_pipes_2arr(t_data *data, t_exe *exe)
-{
-	int i;
-
-	if (!data)
-		return;
-	if (exe->total_cmd_count < 2)
-		return ;
-	exe->pipe_arr = malloc(sizeof(int *) * (exe->total_cmd_count - 1));
-	if (!exe->pipe_arr)
-		strerror(errno);
-		//clean_cmds_exit(data, EXIT_FAILURE/* , "Malloc err pipes" */);
-	exe->pipe_arr_malloced = true;
-	i = 0;
-	while (i < exe->total_cmd_count - 1)
-	{
-		exe->pipe_arr[i] = malloc(sizeof(int) * 2);
-		if (!exe->pipe_arr[i])
-			strerror(errno);
-			// clean_cmds_exit(data, EXIT_FAILURE/* , "Malloc err pipe_arr[i]" */); //@optimize, same as before and // pourrait rendre plus robuste si erreur de malloc
-		exe->pipes_malloced[i] = true;
-		if (pipe(exe->pipe_arr[i]) == -1)
-			strerror(errno);
-			// clean_cmds_exit(data, EXIT_FAILURE/* , "Error in pipe : run_pipex" */); //@optimize, same as before
-		i++;
-	}
 }
 
 void	run_pipex(t_data *data)
@@ -216,22 +149,12 @@ void	run_pipex(t_data *data)
 
 int main_exec(t_data *data)
 {
-	//t_dlist *i_node;
-
-	//expend_all(data);
 	if (data)
 	{
 		init_files(data); // OK for now
+		init_input_files(data);
 		init_cmd(data);
 		run_pipex(data);
 	}
-	//clean_cmds_exit(data, EXIT_SUCCESS);
-
-	/* i_node = data->cmd_list;
-	while (i_node)
-	{
-		ft_echo(data->env_list, ((t_chunk *)(i_node->content))->argv);
-		i_node = i_node->next;
-	} */
 	return(EXIT_SUCCESS);
 }

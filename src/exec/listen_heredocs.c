@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 17:41:15 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/09 15:08:45 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/10 18:09:52 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,28 +180,24 @@ int	listen_terminal(char *limiter)
 		{
 			write (pipes[1], line, ft_strlen(line));
 			if (line)
-				free (line);
+				ft_free ((void **) &line);
 			line = NULL;
 		}
 	}
 	if (line)
-		free(line);
+		ft_free ((void **) &line);
 	close(pipes[1]);
 	if (n_index < 0)
 		return(1);
 	return (0);
 }
 
-int	listen_heredocs(t_chunk *chunk)
+int	listen_heredocs(t_chunk *chunk, int i)
 {
-	int	i;
-
-	i = 0;
 	while (chunk->input_redir && chunk->input_redir[i])
 	{
 		if (ft_strcmp("<<", chunk->input_redir[i]) == 0)
 			listen_terminal(chunk->input_redir_file[i]);
-		i++;
 	}
 	return (0);
 }

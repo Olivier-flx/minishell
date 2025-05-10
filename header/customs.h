@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/10 17:06:45 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/10 18:29:55 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,15 +162,22 @@ int	create_chunks(char *line,  t_dlist **cmd_list, t_data *data);
 	///////// EXEC/////////
 int	main_exec(t_data *data);
 int	init_files(t_data *data);
-int	listen_heredocs(t_chunk *chunk);
+int	listen_heredocs(t_chunk *chunk, int i);
 
 	////// commands init ///
 void	init_cmd(t_data *data);
+int		init_input_files(t_data *data);
 void	clean_cmds_exit(t_data *data, int exit_val);
 void	cmd_error_msg(t_data *data, int failure);
 
 	////// path exec ////
 void	get_path(char *usr_cmd_input, t_exe *exec_info, t_env *env);
+
+	////// PIPES ///////
+void	close_unecessary_pipes(t_exe *exe, int i);
+void	close_all_pipes(t_exe *exe, int ***pipe_arr);
+void	init_pipes_2arr(t_data *data, t_exe *exe);
+
 
 	/////// EXPENSION /////
 int	expend_all(t_data *data);
