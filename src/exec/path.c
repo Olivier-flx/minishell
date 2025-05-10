@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 17:57:53 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/08 13:04:37 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/10 16:32:38 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,12 @@ void	get_path(char *usr_cmd_input, t_exe *exec_info, t_env *env)
 		if (access(test_cmd, X_OK) == 0)
 		{
 			exec_info->env_path_found = true;
-			free(test_cmd);
+			ft_free((void **) &test_cmd);
 			exec_info->env_path = test_path;
 			break ;
 		}
-		free(test_path);
-		free(test_cmd);
+		ft_free((void **) &test_path);
+		ft_free((void **) &test_cmd);
 		exec_info->env_path = NULL;
 	}
 	free_av(path_v);

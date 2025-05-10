@@ -6,11 +6,20 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 11:31:40 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/09 19:16:07 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/10 16:35:34 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
+
+void	ft_free(void ** ptr)
+{
+	if (ptr && *ptr)
+	{
+		free(*ptr);
+		*ptr = NULL;
+	}
+}
 
 void free_pipes_arr(int **pipe_arr, t_exe *exec_info)
 {
@@ -19,10 +28,10 @@ void free_pipes_arr(int **pipe_arr, t_exe *exec_info)
 	i = 0;
 	while (i < exec_info->total_cmd_count - 1 && exec_info->pipes_malloced[i])
 	{
-		free(pipe_arr[i]);
+		ft_free((void **) &pipe_arr[i]);
 		i++;
 	}
-	free(pipe_arr);
+	ft_free((void **) &pipe_arr);
 	pipe_arr = NULL;
 }
 
@@ -51,9 +60,9 @@ static void free_input_redir(t_chunk *chunk)
 	if(chunk->input_redir_file_count > 0)
 		free_av(chunk->input_redir_file);
 	if (chunk->input_file_fd_malloced)
-		free(chunk->input_file_fd);
+		ft_free((void **) &chunk->input_file_fd);
 	if (chunk->input_file_open_malloced)
-		free(chunk->input_file_open);
+		ft_free((void **) &chunk->input_file_open);
 }
 
 static void	free_redir(t_chunk *chunk)
@@ -66,9 +75,9 @@ static void	free_redir(t_chunk *chunk)
 		free_av(chunk->redir_files);
 	}
 	if (chunk->file_fd_malloced)
-		free(chunk->file_fd);
+		ft_free((void **) &chunk->file_fd);
 	if (chunk->file_open_malloced)
-		free(chunk->file_open);
+		ft_free((void **) &chunk->file_open);
 }
 
 void	free_cmdlist(t_dlist *cmd_list)

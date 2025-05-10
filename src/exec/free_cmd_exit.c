@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 19:00:27 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/09 19:46:22 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/10 16:32:35 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	cmd_error_msg(t_data *data, int failure)
 	if (msg)
 		write(STDERR_FILENO, msg, ft_strlen(msg));
 	if (data->cmd_list && data->exec_info.has_msg && msg)
-		free(msg);
+		ft_free((void **) &msg);
 }
 
 void	clean_cmds_exit(t_data *data, int exit_val)
@@ -29,15 +29,15 @@ void	clean_cmds_exit(t_data *data, int exit_val)
 	if (data && data->cmd_list)
 	{
 		if (data->exec_info.env_path && data->exec_info.env_path[0])
-			free(data->exec_info.env_path);
+			ft_free((void **) &data->exec_info.env_path);
 		if (data->exec_info.cmd_is_valid_arr)
-			free(data->exec_info.cmd_is_valid_arr);
+			ft_free((void **) &data->exec_info.cmd_is_valid_arr);
 		if (data->exec_info.pid_arr_malloced == true)
-			free(data->exec_info.pid_arr);
+			ft_free((void **) &data->exec_info.pid_arr);
 		if (data->exec_info.pipe_arr_malloced == true)
 			free_pipes_arr(data->exec_info.pipe_arr, &data->exec_info);
 		if (data->exec_info.pipes_malloced)
-			free(data->exec_info.pipes_malloced);
+			ft_free((void **) &data->exec_info.pipes_malloced);
 		//free_cmdlist(data->cmd_list);
 	}
 	cmd_error_msg(data, exit_val);

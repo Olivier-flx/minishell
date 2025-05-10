@@ -10,7 +10,7 @@ void	free_list(t_dlist *stack_to_free)
 	while (stack_to_free != NULL)
 	{
 		next_node = (stack_to_free)->next;
-		free(stack_to_free);
+		ft_free((void **) &stack_to_free);
 		stack_to_free = next_node;
 	}
 	stack_to_free = NULL;
@@ -25,7 +25,7 @@ void	free_list1(t_dlist **stack_to_free)
 	while (*stack_to_free != NULL)
 	{
 		next_node = (*stack_to_free)->next;
-		free(*stack_to_free);
+		ft_free((void **)stack_to_free);
 		*stack_to_free = next_node;
 	}
 	*stack_to_free = NULL;

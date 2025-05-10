@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 18:10:10 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/09 19:46:06 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/10 16:29:20 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*get_msg(int flag, char *arg)
 	{
 		tmp = msg;
 		msg = ft_strjoin(tmp, "\n");
-		free (tmp);
+		ft_free ((void **)&tmp);
 	}
 	return (msg);
 }
@@ -102,8 +102,8 @@ void	check_wrong_commands(t_data *data)
 			else
 			{
 				tmp_msg = ft_strjoin(data->exec_info.cmd_err_msg, msg);
-				free(data->exec_info.cmd_err_msg);
-				free(msg);
+				ft_free((void **) &data->exec_info.cmd_err_msg);
+				ft_free((void **) &msg);
 				data->exec_info.cmd_err_msg = tmp_msg;
 			}
 		}
@@ -139,7 +139,7 @@ void	init_cmd_vect(t_data *data, t_dlist **cmd_list, t_exe *exec_info)
 				if (exec_info->env_path_found == true)
 				{
 					chunk->argv_0_nopath = ft_strdup(chunk->argv[0]); // @ test id 1
-					free (chunk->argv[0]);
+					ft_free((void **) &chunk->argv[0]);
 					chunk->argv[0] = ft_strjoin(exec_info->env_path, chunk->argv_0_nopath);
 				}
 			}

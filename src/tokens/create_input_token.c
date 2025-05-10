@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 17:57:45 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/09 18:19:17 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/10 16:09:45 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ t_chunk	*initialize_t_chunk1(void)
 		return (NULL);
 	tok->tokens = NULL;
 	tok->argv = NULL;
-	tok->argv_0_path = NULL;
+	tok->argv_0_nopath = NULL;
 	tok->type = CMD;
 	inititalize_redir(&tok);
 	initialize_input_redir(&tok);

@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 17:38:16 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/08 19:25:21 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/10 16:35:38 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ int get_expended_tocken_len(t_data *data, char *str)
 				i += ft_strlen(var_name) + 3; // +1 pour le $ et les {}
 			else
 				i += ft_strlen(var_name) + 1; // +1 pour le $
-			free(var_name);
+			ft_free((void **) &var_name);
 		}
 		else
 		{
@@ -174,7 +174,7 @@ char	*expend_token(t_data *data, char *str)
 				i += ft_strlen(var_name) + 3; // +1 pour le $ et les {}
 			else
 				i += ft_strlen(var_name) + 1; // +1 pour le $
-			free(var_name);
+			ft_free((void **) &var_name);
 		}
 		else //@optimize // expendre avec history dans le cas de "!!" ou de "!20"
 			expd_token[j++] = str[i++];
@@ -192,7 +192,7 @@ int	expend_chunk(t_data *data, t_chunk *chunk)
 	while (chunk->tokens && chunk->tokens[i])
 	{
 		ret_val = expend_token(data, chunk->tokens[i]);
-		free(ret_val);
+		ft_free((void **) &ret_val);
 		if (!ret_val)
 			return (1); // @confirm : à voir s'il y a un bug d'expension, s'il faut arrêter l'expension du rest ou non
 		i++;

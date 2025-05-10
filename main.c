@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:23:22 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/09 19:51:05 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/10 16:25:30 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ int initialize_cmd_list(t_data *data)
 	data->cmd_list = cmd_list;
 	return (0);
 }
-
 
 int	run_minishell(t_data	*data)
 {
@@ -64,8 +63,8 @@ int	run_minishell(t_data	*data)
 			{
 				free_cmdlist(data->cmd_list);
 				if (data->token_separators_char_i.size > 0)
-					free (data->token_separators_char_i.array);
-				free(line);
+					ft_free((void **)&data->token_separators_char_i.array);
+				ft_free((void **)&line);
 				continue;
 			}
 			main_exec(data);
@@ -79,14 +78,13 @@ int	run_minishell(t_data	*data)
 			process_line(&line);
 		//	add_history(line);
 		//	clear_history(); //--> donde ponerlo??
-
-			//free (data->ope_char_i.array); // @TODO, protect free if not malloced
 			if (data->token_separators_char_i.size > 0)
 			{
 				data->token_separators_char_i.size = 0;
-				free (data->token_separators_char_i.array);
+				if (data->token_separators_char_i.array)
+					ft_free((void **)&data->token_separators_char_i.array);;
 			}
-			free(line);
+			ft_free((void **)&line);
 		}
 		if (data->cmd_list)
 		{
@@ -108,7 +106,9 @@ void initialize_data(t_data *data, char **env)
 	data->env_list = ft_init_env(env);
 	data->cmd_list = NULL;
 	data->ope_char_i = (t_int_array) {0}; // @util ?
-	data->token_separators_char_i = (t_int_array) {0};
+	//data->token_separators_char_i = (t_int_array) {0};
+	data->token_separators_char_i.array = NULL;
+	data->token_separators_char_i.size = 0;
 	data->nb_chunks = 0;
 	data->exec_info.env_path = NULL;
 	data->exec_info.env_path_found = false;
