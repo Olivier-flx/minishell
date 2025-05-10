@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 18:10:10 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/10 17:16:22 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/10 20:36:38 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,22 +149,7 @@ void	init_cmd_vect(t_data *data, t_dlist **cmd_list, t_exe *exec_info)
 /* dans piper 	char	***cmd_vect;
 cmd_vect = cmd_list et cmd_vect[0] = cmd_list->content->argv */
 
-static void	init_bool_pipes_malloced(t_data * data, t_exe *exe_info)
-{
-	int	i;
 
-	i = 0;
-	if (exe_info->total_cmd_count < 2)
-		return ;
-	exe_info->pipes_malloced = malloc(sizeof(bool) * (exe_info->total_cmd_count - 1));
-	if (!exe_info->pipes_malloced)
-		clean_cmds_exit(data, EXIT_FAILURE);
-	while (i < exe_info->total_cmd_count - 1)
-	{
-		exe_info->pipes_malloced[i] = false;
-		i++;
-	}
-}
 
 int	count_cmd(t_dlist **cmd_list)
 {

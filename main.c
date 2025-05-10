@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:23:22 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/10 16:25:30 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/10 19:47:04 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,8 @@ int	run_minishell(t_data	*data)
 			// 	continue ;
 			// }
 			// process herdocs
+			add_history(line);
 			process_line(&line);
-		//	add_history(line);
 		//	clear_history(); //--> donde ponerlo??
 			if (data->token_separators_char_i.size > 0)
 			{
@@ -96,6 +96,7 @@ int	run_minishell(t_data	*data)
 		//ft_free_env(data->env_list);// @debug
 		//break ; // @debug : to remove when more advanced
 	}
+	rl_clear_history();
 	// ft_free_env(data->env_list);// @debug
 	return (0);
 }

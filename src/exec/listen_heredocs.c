@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 17:41:15 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/10 18:09:52 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/10 21:10:47 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,12 +192,54 @@ int	listen_terminal(char *limiter)
 	return (0);
 }
 
+int	listen_terminal2(t_chunk * chunk, char *limiter, int i_to_herdoc_index)
+{
+//	int		pipes[2]; // @confirm Need to try i y need to extract pipe[2] de listen_terminaal pour le mettre  directement dans listen heredoc. J'ai peur qu'en le fermant a la fin de listen terminal je n'arrive pas a ecouter plusieurs heredoc
+	char	*line;
+	int		limiter_len;
+
+	line = NULL;
+	limiter_len = (int) ft_strlen(limiter);
+	// if (pipe(pipes) < 0)
+	// 	return (perror("pipe"), 1);
+	dup2(chunk->heredoc_pipe_arr[i_to_herdoc_index][0], STDIN_FILENO);
+	close(chunk->heredoc_pipe_arr[i_to_herdoc_index][0]);
+	while (1)
+	{
+		line = readline("> ");
+		if (!line && write(STDERR_FILENO, "Error reading from terminal\n", 29))
+			break ;
+		if (ft_strncmp(line, limiter, limiter_len) == 0 && (int) ft_strlen(line) - 1 == limiter_len)
+		{//LIMITER trouvé et unique sur sa ligne
+			close(chunk->heredoc_pipe_arr[i_to_herdoc_index][1]);
+			break ;
+		}
+		else
+		{
+			write (chunk->heredoc_pipe_arr[i_to_herdoc_index][1], line, ft_strlen(line));
+			if (line)
+				ft_free ((void **) &line);
+		}
+	}
+	if (line)
+		ft_free ((void **) &line);
+	//close(pipes[1]);
+	return (0);
+}
+
+
 int	listen_heredocs(t_chunk *chunk, int i)
 {
-	while (chunk->input_redir && chunk->input_redir[i])
+	int	i_to_herdoc_index;
+
+	if (!chunk->has_here_doc)
+		return (EXIT_FAILURE);
+	if (ft_strcmp("<<", chunk->input_redir[i]) == 0)
 	{
-		if (ft_strcmp("<<", chunk->input_redir[i]) == 0)
-			listen_terminal(chunk->input_redir_file[i]);
+		i_to_herdoc_index = chunk->nb_heredocs - (chunk->nb_heredocs - i) - 1;
+		listen_terminal2(chunk, chunk->input_redir_file[i], i_to_herdoc_index);
+		close(chunk->heredoc_pipe_arr[i_to_herdoc_index][0]);
+		ft_free((void ** )& chunk->heredoc_pipe_arr[i_to_herdoc_index]);
 	}
 	return (0);
 }

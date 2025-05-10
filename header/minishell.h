@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:46:36 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/08 19:33:42 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/10 19:28:01 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,6 @@
 	// ssize_t write(int fd, const void *buf, size_t count);
 // read               : Reads directly from a file descriptor.
 	// ssize_t read(int fd, void *buf, size_t count);
-// close              : Closes an open file descriptor.
-	// int close(int fd);
-
 
  * ==========================
  *  MEMORY MANAGEMENT FUNCTIONS
@@ -90,6 +87,8 @@
 	// int access(const char *pathname, int mode);
 // open               : Opens a file or creates a file descriptor.
 	// int open(const char *pathname, int flags, ...);
+// close              : Closes an open file descriptor.
+	// int close(int fd);
 // stat               : Retrieves file information.
 	// int stat(const char *pathname, struct stat *statbuf);
 // lstat              : Like stat, but does not follow symbolic links.

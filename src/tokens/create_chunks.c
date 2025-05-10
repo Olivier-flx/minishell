@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:49:47 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/10 16:52:08 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/10 20:28:10 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,7 @@ void	init_input_redir_arr_and_files(t_chunk *chunk)
 		return ; // @confirm
 	chunk->input_redir[chunk->input_redir_count] = NULL;
 	chunk->input_redir_file_count = count_input_files_in_chunks(chunk->tokens);
+	chunk->nb_heredocs = count_heredocs_in_chunks(chunk->tokens);
 	if ( chunk->input_redir_file_count == 0)
 		return ;
 	chunk->input_redir_file = malloc(sizeof(char *) * (count_input_files_in_chunks(chunk->tokens) + 1));

@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/10 18:29:55 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/10 21:12:01 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,10 @@ typedef struct s_chunk
 	bool		input_file_open_malloced;
 	///////
 	bool		has_here_doc;
+	int			**heredoc_pipe_arr;
+	bool		heredoc_pipe_arr_malloced;
+	bool		*pipes_malloced;
+	int			nb_heredocs;
 	//////
 	int		chunk_exec_return_status_code; // Not used yet
 
@@ -177,6 +181,9 @@ void	get_path(char *usr_cmd_input, t_exe *exec_info, t_env *env);
 void	close_unecessary_pipes(t_exe *exe, int i);
 void	close_all_pipes(t_exe *exe, int ***pipe_arr);
 void	init_pipes_2arr(t_data *data, t_exe *exe);
+void	init_bool_pipes_malloced(t_data * data, t_exe *exe_info);
+void	init_pipes_2arr_for_heredoc(t_data *data, t_chunk *chunk);
+void	close_heredocs_pipes(t_chunk * chunk);
 
 
 	/////// EXPENSION /////
@@ -202,6 +209,7 @@ int		count_redir_files_in_chunks(char **content);
 int		count_input_files_in_chunks(char **content);
 int		count_redir_from_pp_char(char **content);
 int		count_input_redir_from_pp_char(char **content);
+int		count_heredocs_in_chunks(char **content);
 bool	has_heredoc_from_pp_char(char **content);
 
 		// verifications //
