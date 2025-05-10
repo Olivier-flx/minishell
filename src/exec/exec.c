@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:30:25 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/09 19:22:59 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/10 17:08:36 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void redirect_input_file(t_data *data, t_chunk *chunk)
 {
+	if (!data)
+		return;
 	if (chunk->has_here_doc)
 		listen_heredocs(chunk);
 	if(ft_strcmp(chunk->tokens[0], "<") == 0)
@@ -46,6 +48,8 @@ void redirect_to_output_file(t_data *data, t_chunk *chunk)
 	// 	| S_IWUSR | S_IRGRP | S_IROTH);
 	// if (files[1].fd < 0)
 	// 	clean_cmds_exit(cmd, EXIT_FAILURE, "Err opening output file\n");
+	if (!data)
+		return;
 	if (chunk->redir_file_count > 0)
 	{
 		if (dup2(chunk->file_fd[chunk->redir_file_count - 1], STDOUT_FILENO) == -1)
@@ -131,6 +135,8 @@ void	init_pid_arr(t_data *data, t_exe *exe)
 {
 	int i;
 
+	if (!data)
+		return;
 	i = 0;
 	exe->pid_arr = malloc(exe->valid_cmd_count * sizeof(int));
 	if (!exe->pid_arr)
@@ -145,6 +151,8 @@ void	init_pipes_2arr(t_data *data, t_exe *exe)
 {
 	int i;
 
+	if (!data)
+		return;
 	if (exe->total_cmd_count < 2)
 		return ;
 	exe->pipe_arr = malloc(sizeof(int *) * (exe->total_cmd_count - 1));
@@ -211,9 +219,12 @@ int main_exec(t_data *data)
 	//t_dlist *i_node;
 
 	//expend_all(data);
-	init_files(data); // OK for now
-	init_cmd(data);
-	run_pipex(data);
+	if (data)
+	{
+		init_files(data); // OK for now
+		init_cmd(data);
+		run_pipex(data);
+	}
 	//clean_cmds_exit(data, EXIT_SUCCESS);
 
 	/* i_node = data->cmd_list;

@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 18:10:10 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/10 16:29:20 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/10 16:48:11 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ void	init_cmd_vect(t_data *data, t_dlist **cmd_list, t_exe *exec_info)
 	while (i_node)
 	{
 		chunk = (t_chunk *) i_node->content;
-		if (chunk->type == CMD)
+		if (chunk->type == CMD && chunk->argv && chunk->argv[0])
 		{
 			exec_info->cmd_is_valid_arr[i] = false;
 			if (usr_input_got_slash(chunk->argv[0]) == 0)
