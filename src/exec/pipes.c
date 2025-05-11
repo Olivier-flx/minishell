@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 17:37:47 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/11 16:40:33 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/11 20:01:57 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,15 @@ void	init_bool_pipes_malloced(t_data * data, t_exe *exe_info)
 {
 	int	i;
 
+	if (!data)
+		return;
 	i = 0;
 	if (exe_info->total_cmd_count < 2)
 		return ;
 	exe_info->pipes_malloced = malloc(sizeof(bool) * (exe_info->total_cmd_count - 1));
 	if (!exe_info->pipes_malloced)
-		clean_cmds_exit(data, EXIT_FAILURE);
+		strerror(errno);
+		//clean_cmds_exit(data, EXIT_FAILURE);
 	while (i < exe_info->total_cmd_count - 1)
 	{
 		exe_info->pipes_malloced[i] = false;

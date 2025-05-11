@@ -1,56 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   custom_frees.c                                     :+:      :+:    :+:   */
+/*   free_resources.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/25 11:31:40 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/11 18:59:57 by ofilloux         ###   ########.fr       */
+/*   Created: 2025/05/11 19:22:36 by ofilloux          #+#    #+#             */
+/*   Updated: 2025/05/11 20:01:07 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header/minishell.h"
-
-void	ft_free(void ** ptr)
-{
-	if (ptr && *ptr)
-	{
-		free(*ptr);
-		*ptr = NULL;
-	}
-}
-
-void free_pipes_arr(int **pipe_arr, t_exe *exec_info)
-{
-	int i;
-
-	i = 0;
-	while (i < exec_info->total_cmd_count - 1 && exec_info->pipes_malloced[i])
-	{
-		ft_free((void **) &pipe_arr[i]);
-		i++;
-	}
-	ft_free((void **) &pipe_arr);
-	pipe_arr = NULL;
-}
-
-void	close_files_if_opened(int *fd_arr, bool *file_open)
-{
-	int	i;
-
-	i = 0;
-	while (fd_arr && fd_arr[i] && *file_open)
-	{
-		if (file_open[i])
-		{
-			if (close (fd_arr[i]) == -1)
-				perror("Error at closing files: ");
-			file_open[i] = false;
-		}
-		i++;
-	}
-}
+#include "../../header/minishell.h"
 
 static void free_input_redir(t_chunk *chunk)
 {
@@ -102,5 +62,22 @@ void	free_cmdlist(t_dlist *cmd_list)
 		i_node = i_node->next;
 	}
 	free_list(cmd_list);
-	g_signal_received = 0;
+}
+
+void	free_resources(t_data *data, bool clear_env, bool free_line)
+{
+	if (data)
+	{
+		ft_free((void **)&data->token_separators_char_i.array);
+		data->token_separators_char_i.size = 0;
+		if (free_line)
+			ft_free((void **)&data->line);
+	}
+	if (data->cmd_list)
+	{
+		free_cmdlist(data->cmd_list);
+		clean_cmds_exit(data, EXIT_SUCCESS); // @util ?
+	}
+	if (clear_env)
+		ft_free_env(data->env_list);
 }

@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/11 18:52:19 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/11 20:03:34 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ typedef struct data //aqui iremos agregando todo lo que este alocado.A partir de
 {
 	char		**env;
 	t_env		*env_list;
+	char		*line;
 	t_dlist		*cmd_list;
 	t_exe		exec_info;
 	t_int_array	ope_char_i; // @util ?//index of operators characters in string input
@@ -166,9 +167,13 @@ void	init_bool_pipes_malloced(t_data * data, t_exe *exe_info);
 void	init_pipes_2arr_for_heredoc(t_data *data, t_chunk *chunk);
 void	close_heredocs_pipes(t_chunk * chunk);
 
+/// FILES
 	// files redirects //
-void		redirect_input_file(t_data *data, t_chunk *chunk);
-void		redirect_to_output_file(t_data *data, t_chunk *chunk);
+void	redirect_input_file(t_data *data, t_chunk *chunk);
+void	redirect_to_output_file(t_data *data, t_chunk *chunk);
+	// files management
+void	close_files(t_chunk *chunk);
+void	close_files_if_opened(int *fd_arr, bool *file_open);
 
 	/////// EXPENSION /////
 int		expend_all(t_data *data);
@@ -285,6 +290,7 @@ void debug_print_cmd_list(t_dlist **cmd_list_ptr); //@debug
  * ==========================
  */
 // FREES
+void	free_resources(t_data *data, bool clear_env, bool free_line);
 void	free_cmdlist(t_dlist *cmd_list);
 void	free_pipes_arr(int **pipe_arr, t_exe *exec_info);
 

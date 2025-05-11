@@ -36,14 +36,16 @@ TOKENS = ./src/tokens/user_input_validations/user_input_validation.c\
 	./src/tokens/create_chunks.c
 
 EXEC = ./src/exec/exec.c \
-	./src/exec/create_files.c \
-	./src/exec/init_input_files.c \
 	./src/exec/commands.c \
 	./src/exec/path.c \
 	./src/exec/free_cmd_exit.c \
 	./src/exec/listen_heredocs.c \
 	./src/exec/pipes.c \
 	./src/exec/execute_builtins.c
+
+FILES = ./src/exec/files/init_input_files.c \
+		./src/exec/files/create_files.c \
+		./src/exec/files/close_files.c \
 
 EXPEND = ./src/exec/Expension/expension.c
 
@@ -60,7 +62,8 @@ UTILS = ./utils/string/ft_split_s.c \
 		./utils/arrays/methods.c \
 		./utils/arrays/arr_frees.c \
 		./utils/msg/error_msg.c \
-		./utils/custom_frees.c
+		./utils/frees/custom_frees.c \
+		./utils/frees/free_resources.c
 
 
 SRC = main.c \
@@ -69,6 +72,7 @@ SRC = main.c \
 	$(BUILTINS) \
 	$(TOKENS) \
 	$(EXEC) \
+	$(FILES) \
 	$(EXPEND) \
 	$(ENV)
 

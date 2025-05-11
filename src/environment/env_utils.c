@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 20:56:46 by marvin            #+#    #+#             */
-/*   Updated: 2025/05/11 17:57:17 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/11 19:36:05 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ void ft_free_env(t_env *env)
 	{
 		tmp = env;
 		env = env->next;
-		free(tmp->key);
-		free(tmp->value);
-		free(tmp);
+		ft_free((void **)&tmp->key);
+		ft_free((void **)&tmp->value);
+		ft_free((void **)&tmp);
 	}
 }
 

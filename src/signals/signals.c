@@ -6,13 +6,14 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 14:28:21 by marvin            #+#    #+#             */
-/*   Updated: 2025/05/11 19:08:53 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/11 20:15:57 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell.h"
+//#include <signal.h>
 // Solo esta global está permitida (fuera de estructuras)
-volatile sig_atomic_t g_signal_received = 0; // @confirm
+//volatile sig_atomic_t g_signal_received = 0; // @confirm
 
 void	handle_signal(int sig)
 {
@@ -43,6 +44,6 @@ void	setup_signals(void)
 void handle_ctrl_d(t_data *data)
 {
 	write(STDOUT_FILENO, "exit\n", 5);
-	free_resources(data);
+	free_resources(data, true, true);
 	exit(data->exit_status);
 }

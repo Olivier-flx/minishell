@@ -6,11 +6,11 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 18:15:17 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/10 18:30:30 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/11 20:05:27 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../header/minishell.h"
+#include "../../../header/minishell.h"
 
 /**
  * malloc_fd_arr - Allocates and initializes an array of file descriptors.

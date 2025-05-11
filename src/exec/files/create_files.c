@@ -6,28 +6,11 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 11:26:59 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/09 18:32:04 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/11 20:04:27 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../header/minishell.h"
-
-void	close_files(t_chunk *chunk)
-{
-	int	i;
-
-	i = 0;
-	while (i < chunk->redir_file_count)
-	{
-		if (chunk->file_open[i])
-		{
-			close(chunk->file_fd[i]);
-			chunk->file_open[i] = false;
-		}
-		i++;
-	}
-	return ;
-}
+#include "../../../header/minishell.h"
 
 /**
  * malloc_fd_arr - Allocates and initializes an array of file descriptors.

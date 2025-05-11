@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:23:22 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/11 19:08:33 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/11 20:08:44 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,14 @@ int initialize_cmd_list(t_data *data)
 
 int	run_minishell(t_data	*data)
 {
-	char		*line;
 	int			control;
 
 	control = 0;
 	while (true && data->env)
 	{
-		line = NULL;
 		initialize_cmd_list(data);
-		line = readline("\033[1;32mminishell> \033[0m");
-
-		if (!line)  // Caso Ctrl+D
+		data->line = readline("\033[1;32mminishell> \033[0m");
+		if (!data->line)  // Caso Ctrl+D
 			handle_ctrl_d(data);
 		if (g_signal_received)
 		{
@@ -46,37 +43,19 @@ int	run_minishell(t_data	*data)
 			g_signal_received = 0;
 		}
 
-
-		while (line && !tocken_quote_closed(line))
-			line = c_strjoin(line, readline("\033[1mdquote> \033[0m"), '\n');
-		while (line && !line_accolade_closed(line))
-			line = c_strjoin(line, readline("> "), '\n');
-		if (line && tocken_quote_closed(line))
+		while (data->line && !tocken_quote_closed(data->line))
+			data->line = c_strjoin(data->line, readline("\033[1mdquote> \033[0m"), '\n');
+		while (data->line && !line_accolade_closed(data->line))
+			data->line = c_strjoin(data->line, readline("> "), '\n');
+		if (data->line && tocken_quote_closed(data->line))
 		{
-			control = create_chunks(line, &data->cmd_list, data);
-			if (control == 3)
-			{
-				free_cmdlist(data->cmd_list);
-				if (data->token_separators_char_i.size > 0)
-					ft_free((void **)&data->token_separators_char_i.array);
-				ft_free((void **)&line);
-				continue;
-			}
-			main_exec(data);
-			add_history(line);
-			if (data->token_separators_char_i.size > 0)
-			{
-				data->token_separators_char_i.size = 0;
-				if (data->token_separators_char_i.array)
-					ft_free((void **)&data->token_separators_char_i.array);;
-			}
-			ft_free((void **)&line);
+			control = create_chunks(data->line, &data->cmd_list, data);
+			if (control != 3 )
+				main_exec(data);
+			add_history(data->line);
 		}
-		if (data->cmd_list)
-		{
-			free_cmdlist(data->cmd_list);
-			clean_cmds_exit(data, EXIT_SUCCESS);
-		}
+		free_resources(data, false, true);
+		g_signal_received = 0;
 	}
 	rl_clear_history();
 	return (0);
@@ -86,6 +65,7 @@ void initialize_data(t_data *data, char **env)
 {
 	data->env = env;
 	data->env_list = ft_init_env(env);
+	data->line = NULL;
 	data->cmd_list = NULL;
 	data->ope_char_i = (t_int_array) {0}; // @util ?
 	//data->token_separators_char_i = (t_int_array) {0};
