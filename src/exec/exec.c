@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:30:25 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/11 13:43:08 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/11 13:56:36 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,8 +193,11 @@ int main_exec(t_data *data)
 		init_input_files(data);
 		while (i_node)
 		{
-			init_pipes_2arr_for_heredoc(data, (t_chunk *)i_node->content);
-			listen_heredocs((t_chunk *)i_node->content);
+			if (((t_chunk *)(i_node->content))->type = CMD)
+			{
+				init_pipes_2arr_for_heredoc(data, (t_chunk *)i_node->content);
+				listen_heredocs((t_chunk *)i_node->content);
+			}
 			i_node = i_node->next;
 		}
 		init_cmd(data);
