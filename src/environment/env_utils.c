@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 20:56:46 by marvin            #+#    #+#             */
-/*   Updated: 2025/05/07 14:17:45 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/11 17:57:17 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ void ft_setenv(t_env **env, char *key, char *value)
 
 void ft_unsetenv(t_env **env, char *key)
 {
-	t_env   *prev = NULL;
-	t_env   *current = *env;
+	t_env	*prev = NULL;
+	t_env	*current = *env;
 
 	while(current)
 	{

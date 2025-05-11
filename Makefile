@@ -12,6 +12,7 @@ CFLAGS = -Wall -Wextra -Werror -g -O0 -I./header
 LDFLAGS = -lreadline
 
 #INC = -I./header
+SIGNALS = ./src/signals/signals.c
 
 BUILTINS = ./src/builtins/is_builtin.c \
 		./src/builtins/ft_echo.c \
@@ -63,6 +64,7 @@ UTILS = ./utils/string/ft_split_s.c \
 
 
 SRC = main.c \
+	$(SIGNALS) \
 	$(UTILS) \
 	$(BUILTINS) \
 	$(TOKENS) \

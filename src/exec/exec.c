@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:30:25 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/11 16:40:11 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/11 17:38:09 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,6 @@ void	run_cmd(t_data *data, t_exe *exe, t_chunk *chunk, int i)
 	if (exe->total_cmd_count > 1)
 		exit(127);
 }
-
 
 static void	waiting_childs(t_data *data, t_exe *exe, int *pid_arr)
 {

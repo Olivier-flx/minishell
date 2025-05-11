@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 11:31:40 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/10 16:35:34 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/11 18:59:57 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,4 +102,5 @@ void	free_cmdlist(t_dlist *cmd_list)
 		i_node = i_node->next;
 	}
 	free_list(cmd_list);
+	g_signal_received = 0;
 }

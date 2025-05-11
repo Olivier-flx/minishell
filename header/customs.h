@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/11 17:19:07 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/11 18:52:19 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ typedef struct data //aqui iremos agregando todo lo que este alocado.A partir de
 	t_exe		exec_info;
 	t_int_array	ope_char_i; // @util ?//index of operators characters in string input
 	t_int_array	token_separators_char_i; //index of separators characters in string input
+	int			exit_status;
 
 	int			nb_chunks; //number of commands and argv separated by operators
 }	t_data;
@@ -127,44 +128,20 @@ typedef struct s_chunk
 	bool		*pipes_malloced;
 	int			nb_heredocs;
 	//////
-	int		chunk_exec_return_status_code; // Not used yet
+	int			chunk_exec_return_status_code; // Not used yet
 
 	int			index; // util ?
 	int			len; // util ?
 	t_quote		quotes; // util ?
 }	t_chunk;
 
-typedef struct s_local_var
-{
-	char	*content;
-	char	*var_name;
-} t_loc_var;
-
-
-//NOT USED
-typedef struct s_operator
-{
-	char	*tocken;
-	int		index;
-	int		len;
-}	t_operator;
-
-
-
-// buildins
-// int		ft_echo(t_env *env, char **args);
-// int		ft_env(t_env *env);
-// int		ft_exit(char **args); // @optimize  Es importante limpiar todo antes que el exit, entonces tiene que tomar "data"
-// // int ft_exit(t_data data, char **args);
-// int		ft_export(t_env **env, char **args);
-// //int		create_input_token(char *src, t_dlist **line);
-
-///// core functions
-int	create_chunks(char *line,  t_dlist **cmd_list, t_data *data);
-
 
 /////////////// SRC //////////////
-	///////// EXEC/////////
+/*
+ * ==========================
+ * 			EXEC
+ * ==========================
+ */
 int		main_exec(t_data *data);
 int		init_files(t_data *data);
 int		listen_heredocs(t_data *data, t_chunk *chunk);
@@ -197,7 +174,14 @@ void		redirect_to_output_file(t_data *data, t_chunk *chunk);
 int		expend_all(t_data *data);
 char	*expend_token(t_data *data, char *str);
 
-	///// Tokens /////
+	/////  /////
+/*
+ * ==========================
+ * 		  Tokeninzation
+ * ==========================
+ */
+int		create_chunks(char *line,  t_dlist **cmd_list, t_data *data);
+int		create_main_chunks(char *src, t_dlist **cmd_list, t_data *data);
 t_chunk	*create_token(char ***str, chunk_type type, int i, t_quote quotes);
 void	set_separator_char_i_struc_arr(char *src, t_int_array *arr);
 int		is_seperator(char *src, int i, t_quote *quote);
@@ -227,7 +211,7 @@ int	check_for_simple(t_dlist **cmd_list);
 int	line_accolade_closed(char *line);
 
 			//system_input_validation
-void	check_system_input_error(t_data *data, t_dlist **cmd_list);
+void	check_system_input_error(t_data *data, t_dlist **cmd_list); // Unused.
 		//cleaning.c
 
 void	set_ope_char_i_struc_arr(char *src, t_int_array *arr);
@@ -236,37 +220,47 @@ void	set_ope_char_i_arr(char *src, t_int_array *arr);
 
 int		create_input_to_commands(char *src, t_dlist **cmd_list, t_data *data);
 
+
 /////////////// UTILS ///////////////
-	/////  string //////
+/*
+ * ==========================
+ * 			STRINGS
+ * ==========================
+ */
 void	quote_increment(char *src, int i, t_quote *quote);
 char	**split_quoted(char const *s, char c);// @legacy
 char	**split_quoted2(char *s,t_data *data);
 char	**dup_pp_char(t_data *data, char **substring_arr, int start, int end);
-
 char	*ft_trim(char *src, bool is_malloced);
 	//quotes
 void	init_quotes(t_quote *quote);
 bool	tocken_quote_closed(char *s);
 bool	quote_are_closed(t_quote *quote);
-
-// basics
-//int		ft_strlen(const char *s);
-char	*ft_strdup(char *s);
-
-// custom basics
+	// custom basics
 char	*c_strjoin(char *s1, char *s2, char c);
 char	*c_ft_substr(char const *s, unsigned int start, size_t len);
 
-// List Utils
+
+/*
+ * ==========================
+ * 	   dbl List Utils
+ * ==========================
+ */
 void	free_list(t_dlist *stack_to_free);
 void	free_list1(t_dlist **stack_to_free);
 int		add_to_list(t_dlist **line, void *content);
 void	print_dlist(t_dlist **list);
-t_dlist	*find_last_node(t_dlist **lst);
+t_dlist	*find_last_d_node(t_dlist **lst);
 long	stack_lenght(t_dlist **list);
 void	print_int_arr(t_int_array *arr);
 void	print_pp_char_arr(char **str);
 
+
+/*
+ * ==========================
+ * 	   ARRAYS
+ * ==========================
+ */
 // arrays
 bool	int_var_in_arr(int var, t_int_array *arr);
 int		pp_char_len(char **array);
@@ -275,18 +269,23 @@ void	ft_free(void ** ptr);
 void	free_av(char **av);
 char	**free_uncomplete_av(char **av, int i);
 
+/*
+ * ==========================
+ * 	   ERRORS & MSG
+ * ==========================
+ */
 // ERROR
 	//MSG
 void	simple_error_msg(char *msg);
 void debug_print_cmd_list(t_dlist **cmd_list_ptr); //@debug
 
+/*
+ * ==========================
+ * 	   FREE & EXITS
+ * ==========================
+ */
 // FREES
 void	free_cmdlist(t_dlist *cmd_list);
 void	free_pipes_arr(int **pipe_arr, t_exe *exec_info);
-
-
-
-//Temporal for pruebas
-int	create_main_chunks(char *src, t_dlist **cmd_list, t_data *data);
 
 #endif

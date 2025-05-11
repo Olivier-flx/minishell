@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:46:36 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/11 17:19:20 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/11 19:08:03 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,19 @@
 # include "customs.h"
 # include "builtins.h"
 # include "../libs/libft/libft.h"
+
+/*
+ * ==========================
+ *  SIGNAL HANDLING FUNCTIONS
+ * ==========================
+ */
+// Variable global PARA SEÑALES (única permitida)
+extern volatile sig_atomic_t g_signal_received;
+
+// Prototipos de funciones de señales
+void	handle_signal(int sig);
+void	setup_signals(void);
+void 	handle_ctrl_d(t_data *data);
 
 #endif
 
