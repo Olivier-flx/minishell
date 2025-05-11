@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 17:41:15 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/11 12:44:13 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/11 15:14:08 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,13 +216,14 @@ int	listen_terminal2(t_chunk * chunk, char *limiter, int i_to_herdoc_index)
 }
 
 
-int	listen_heredocs(t_chunk *chunk)
+int	listen_heredocs(t_data *data, t_chunk *chunk)
 {
 	int	i_to_herdoc_index;
 	int	i;
 
-	if (!chunk->has_here_doc || !chunk->input_redir)
+	if (!data || !chunk->has_here_doc || !chunk->input_redir)
 		return (EXIT_FAILURE);
+	init_pipes_2arr_for_heredoc(data, chunk);
 	i = 0;
 	i_to_herdoc_index = 0;
 	while (chunk->input_redir[i])

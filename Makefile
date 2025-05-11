@@ -13,10 +13,12 @@ LDFLAGS = -lreadline
 
 #INC = -I./header
 
-BUILTINS = ./src/builtins/ft_echo.c \
+BUILTINS = ./src/builtins/is_builtin.c \
+		./src/builtins/ft_echo.c \
+		./src/builtins/ft_export.c \
 		./src/builtins/ft_pwd.c \
-		./src/builtins/ft_env.c
-		#./src/builtins/ft_exit.c
+		./src/builtins/ft_env.c \
+		./src/builtins/ft_exit.c
 
 ENV = ./src/environment/env_search.c \
 	./src/environment/env_utils.c \
@@ -38,7 +40,8 @@ EXEC = ./src/exec/exec.c \
 	./src/exec/path.c \
 	./src/exec/free_cmd_exit.c \
 	./src/exec/listen_heredocs.c \
-	./src/exec/pipes.c
+	./src/exec/pipes.c \
+	./src/exec/execute_builtins.c
 
 EXPEND = ./src/exec/Expension/expension.c
 

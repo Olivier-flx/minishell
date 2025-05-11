@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/11 11:41:22 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/11 16:57:38 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ typedef struct data //aqui iremos agregando todo lo que este alocado.A partir de
 	t_env		*env_list;
 	t_dlist		*cmd_list;
 	t_exe		exec_info;
-
 	t_int_array	ope_char_i; // @util ?//index of operators characters in string input
 	t_int_array	token_separators_char_i; //index of separators characters in string input
 
@@ -99,7 +98,7 @@ typedef struct s_chunk
 {
 	char		**tokens; // basic chunks that are taken from line splited by "|"
 	char		**argv;
-	char		*argv_0_nopath;
+	char		*argv_0_nopath; // store the cmd as it was written by the user
 	chunk_type	type;
 	////// REDIR FILES //////
 	bool		has_redir;
@@ -153,9 +152,11 @@ typedef struct s_operator
 
 
 // buildins
-int		echo(char string);
-int		env(char **env);
-int		b_exit(int ret_val, t_data data);
+int		ft_echo(t_env *env, char **args);
+int		ft_env(t_env *env);
+int		ft_exit(char **args); // @optimize  Es importante limpiar todo antes que el exit, entonces tiene que tomar "data"
+// int ft_exit(t_data data, char **args);
+int		ft_export(t_env **env, char **args);
 //int		create_input_token(char *src, t_dlist **line);
 
 ///// core functions
@@ -164,9 +165,11 @@ int	create_chunks(char *line,  t_dlist **cmd_list, t_data *data);
 
 /////////////// SRC //////////////
 	///////// EXEC/////////
-int	main_exec(t_data *data);
-int	init_files(t_data *data);
-int	listen_heredocs(t_chunk *chunk);
+int		main_exec(t_data *data);
+int		init_files(t_data *data);
+int		listen_heredocs(t_data *data, t_chunk *chunk);
+bool	is_builtin(char *cmd);
+int		run_builtins(t_data *data, t_exe *exe, t_chunk *chunk, int i);
 
 	////// commands init ///
 void	init_cmd(t_data *data);
@@ -176,6 +179,7 @@ void	cmd_error_msg(t_data *data, int failure);
 
 	////// path exec ////
 void	get_path(char *usr_cmd_input, t_exe *exec_info, t_env *env);
+int		usr_input_got_slash(char *str);
 
 	////// PIPES ///////
 void	close_unecessary_pipes(t_exe *exe, int i);
@@ -185,9 +189,12 @@ void	init_bool_pipes_malloced(t_data * data, t_exe *exe_info);
 void	init_pipes_2arr_for_heredoc(t_data *data, t_chunk *chunk);
 void	close_heredocs_pipes(t_chunk * chunk);
 
+	// files redirects //
+void		redirect_input_file(t_data *data, t_chunk *chunk);
+void		redirect_to_output_file(t_data *data, t_chunk *chunk);
 
 	/////// EXPENSION /////
-int	expend_all(t_data *data);
+int		expend_all(t_data *data);
 char	*expend_token(t_data *data, char *str);
 
 	///// Tokens /////

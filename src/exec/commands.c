@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 18:10:10 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/11 14:10:16 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/11 15:57:41 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	check_wrong_commands(t_data *data)
 			i_node = i_node->next;
 			continue ;
 		}
-		if (access(chunk->argv[0], X_OK) != 0)
+		if (access(chunk->argv[0], X_OK) != 0 && !is_builtin(chunk->argv[0]))
 		{
 			data->exec_info.command_err_count ++;
 
@@ -110,9 +110,6 @@ void	check_wrong_commands(t_data *data)
 		i++;
 		i_node = i_node->next;
 	}
-	// if (data->exec_info.cmd_err_msg != NULL && data->exec_info.command_err_count == data->exec_info.total_cmd_count) //@ test id 4
-	// 	printf("%s\n", data->exec_info.cmd_err_msg); //@ test id 4
-		//clean_cmds_exit(data, data->exec_info.last_status_code);
 }
 
 void	init_cmd_vect(t_data *data, t_dlist **cmd_list, t_exe *exec_info)
@@ -136,7 +133,7 @@ void	init_cmd_vect(t_data *data, t_dlist **cmd_list, t_exe *exec_info)
 					get_path(chunk->argv[0], exec_info, data->env_list);
 				if (exec_info->env_path_found == true)
 				{
-					chunk->argv_0_nopath = ft_strdup(chunk->argv[0]); // @ test id 1
+					chunk->argv_0_nopath = ft_strdup(chunk->argv[0]);
 					ft_free((void **) &chunk->argv[0]);
 					chunk->argv[0] = ft_strjoin(exec_info->env_path, chunk->argv_0_nopath);
 				}

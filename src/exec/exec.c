@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:30:25 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/11 14:29:46 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/11 16:40:11 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,19 +117,23 @@ void	run_cmd(t_data *data, t_exe *exe, t_chunk *chunk, int i)
 		strerror(errno); // @optimize
 	if (i < exe->total_cmd_count - 1)
 		close(exe->pipe_arr[i][1]);
-	execve(chunk->argv[0], chunk->argv, data->env);
+	if (0 != run_builtins(data, exe, chunk, i))
+		execve(chunk->argv[0], chunk->argv, data->env);
 	if (exe->total_cmd_count > 1)
 		exit(127);
 }
 
-static void	waiting_childs(t_exe *exe, int *pid_arr)
+
+static void	waiting_childs(t_data *data, t_exe *exe, int *pid_arr)
 {
 	int i;
 
 	i = 0;
 	while (i < exe->valid_cmd_count)
 	 {
-		//if (cmd->cmd_is_valid_arr[i] == true)
+		if (exe->total_cmd_count == 1 \
+				&& exe->cmd_is_valid_arr[i] \
+				&& !is_builtin(((t_chunk *)data->cmd_list->content)->argv[0]))
 			waitpid(pid_arr[i], NULL, 0);
 		i++;
 	 }
@@ -151,16 +155,13 @@ void	init_pid_arr(t_data *data, t_exe *exe)
 		exe->pid_arr[i++] = -2;
 }
 
-void	run_pipex(t_data *data)
+void	run_pipex(t_data *data, int i)
 {
-	int		i;
 	int		valid_cmd_i;
 	t_dlist	*i_node;
 
-	i = 0;
 	i_node = data->cmd_list;
 	valid_cmd_i = 0;
-	//while (i < data->exec_info.valid_cmd_count/*  cmd->cmd_count */)
 	while (i <  data->exec_info.total_cmd_count)
 	{
 		if (i_node && (t_chunk *)i_node->content && ((t_chunk *)i_node->content)->type != CMD)
@@ -168,16 +169,17 @@ void	run_pipex(t_data *data)
 			i_node = i_node->next;
 			continue ;
 		}
-		init_pipes_2arr_for_heredoc(data, (t_chunk *)i_node->content);
-		listen_heredocs((t_chunk *)i_node->content);
-
+		listen_heredocs(data, (t_chunk *)i_node->content);
 		if (data->exec_info.cmd_is_valid_arr[i] == true)
 		{
-			data->exec_info.pid_arr[valid_cmd_i] = fork();
-			if (data->exec_info.pid_arr[valid_cmd_i] == -1)
-				strerror(errno);
-			if (data->exec_info.pid_arr[valid_cmd_i] == 0)
-				run_cmd (data, &data->exec_info, ((t_chunk *)i_node->content), i);
+			if (1 != run_builtins(data, &data->exec_info, ((t_chunk *)i_node->content), i))
+			{
+				data->exec_info.pid_arr[valid_cmd_i] = fork();
+				if (data->exec_info.pid_arr[valid_cmd_i] == -1)
+					strerror(errno);
+				if (data->exec_info.pid_arr[valid_cmd_i] == 0)
+					run_cmd (data, &data->exec_info, ((t_chunk *)i_node->content), i);
+			}
 			valid_cmd_i++;
 		}
 		close_heredocs_pipes((t_chunk *)i_node->content);
@@ -185,34 +187,58 @@ void	run_pipex(t_data *data)
 		i_node = i_node->next;
 	}
 	close_all_pipes(&data->exec_info, &data->exec_info.pipe_arr);
-	waiting_childs(&data->exec_info, data->exec_info.pid_arr);
+	waiting_childs(data, &data->exec_info, data->exec_info.pid_arr);
 }
+
+// void	run_pipex(t_data *data)
+// {
+// 	int		i;
+// 	int		valid_cmd_i;
+// 	t_dlist	*i_node;
+
+// 	i = 0;
+// 	i_node = data->cmd_list;
+// 	valid_cmd_i = 0;
+// 	while (i <  data->exec_info.total_cmd_count)
+// 	{
+// 		if (i_node && (t_chunk *)i_node->content && ((t_chunk *)i_node->content)->type != CMD)
+// 		{
+// 			i_node = i_node->next;
+// 			continue ;
+// 		}
+// 		init_pipes_2arr_for_heredoc(data, (t_chunk *)i_node->content);
+// 		listen_heredocs((t_chunk *)i_node->content);
+// 		if (data->exec_info.cmd_is_valid_arr[i] == true)
+// 		{
+// 			data->exec_info.pid_arr[valid_cmd_i] = fork();
+// 			if (data->exec_info.pid_arr[valid_cmd_i] == -1)
+// 				strerror(errno);
+// 			if (data->exec_info.pid_arr[valid_cmd_i] == 0)
+// 				run_cmd (data, &data->exec_info, ((t_chunk *)i_node->content), i);
+// 			valid_cmd_i++;
+// 		}
+// 		close_heredocs_pipes((t_chunk *)i_node->content);
+// 		i++;
+// 		i_node = i_node->next;
+// 	}
+// 	close_all_pipes(&data->exec_info, &data->exec_info.pipe_arr);
+// 	waiting_childs(&data->exec_info, data->exec_info.pid_arr);
+// }
 
 
 int main_exec(t_data *data)
 {
-	// t_dlist	*i_node;
 	if (data)
 	{
-		// i_node = data->cmd_list;
 		init_files(data);
 		init_input_files(data);
-		// while (i_node)
-		// {
-		// 	if (((t_chunk *)(i_node->content))->type = CMD)
-		// 	{
-		// 		init_pipes_2arr_for_heredoc(data, (t_chunk *)i_node->content);
-		// 		listen_heredocs((t_chunk *)i_node->content);
-		// 	}
-		// 	i_node = i_node->next;
-		// }
 		init_cmd(data);
 		init_pid_arr(data, &data->exec_info);
 		init_pipes_2arr(data , &data->exec_info);
-		run_pipex(data);
+		run_pipex(data, 0);
 		if (data->exec_info.cmd_err_msg != NULL && \
-				data->exec_info.command_err_count == data->exec_info.total_cmd_count) //@ test id 4
-			printf("%s\n", data->exec_info.cmd_err_msg); //@ test id 4
+				data->exec_info.command_err_count == data->exec_info.total_cmd_count)
+			printf("%s\n", data->exec_info.cmd_err_msg);
 	}
 	return(EXIT_SUCCESS);
 }
