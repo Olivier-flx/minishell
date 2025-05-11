@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:30:25 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/11 12:52:04 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/11 13:43:08 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,10 +166,8 @@ void	run_pipex(t_data *data)
 			i_node = i_node->next;
 			continue ;
 		}
-		init_pipes_2arr_for_heredoc(data, (t_chunk *)i_node->content);
 		if (data->exec_info.cmd_is_valid_arr[i] == true)
 		{
-			listen_heredocs((t_chunk *)i_node->content);
 			data->exec_info.pid_arr[i] = fork();
 			if (data->exec_info.pid_arr[i] == -1)
 				strerror(errno);
@@ -187,10 +185,18 @@ void	run_pipex(t_data *data)
 
 int main_exec(t_data *data)
 {
+	t_dlist	*i_node;
 	if (data)
 	{
+		i_node = data->cmd_list;
 		init_files(data);
 		init_input_files(data);
+		while (i_node)
+		{
+			init_pipes_2arr_for_heredoc(data, (t_chunk *)i_node->content);
+			listen_heredocs((t_chunk *)i_node->content);
+			i_node = i_node->next;
+		}
 		init_cmd(data);
 		init_pid_arr(data, &data->exec_info);
 		init_pipes_2arr(data , &data->exec_info);
