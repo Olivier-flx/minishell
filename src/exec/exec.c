@@ -6,29 +6,31 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:30:25 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/10 21:35:57 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/11 12:52:04 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell.h"
 
-void redirect_input_file(t_data *data, t_chunk *chunk)
+/* void redirect_input_file(t_data *data, t_chunk *chunk)
 {
 	int	i;
+	int	lst_redir;
 
 	i = 0;
+	lst_redir = chunk->input_redir_count + chunk->nb_heredocs - 1;
 	if (!data)
 		return;
 	while (chunk->input_redir && chunk->input_redir[i])
 	{
-		listen_heredocs(chunk, i);
+		//listen_heredocs(chunk, i);
 		if(ft_strcmp(chunk->input_redir[i], "<") == 0)
 		{
 			chunk->input_file_fd[i] = open(chunk->input_redir_file[i], O_RDONLY);
 			if (chunk->input_file_fd[0] < 0)
 				strerror(errno); // @optimize
 			chunk->input_file_open[0] = true;
-			if (dup2(chunk->input_file_fd[i], STDIN_FILENO) == -1)
+			if (i == lst_redir && dup2(chunk->input_file_fd[i], STDIN_FILENO) == -1)
 				strerror(errno); // @optimize
 			close(chunk->input_file_fd[i]);
 			chunk->input_file_open[i] = false;
@@ -41,6 +43,46 @@ void redirect_input_file(t_data *data, t_chunk *chunk)
 	// 	clean_cmds_exit(cmd, EXIT_FAILURE, "Err dup2 : input file\n");
 	// close(files[0].fd);
 	//files[0].file_open = false;
+} */
+
+void redirect_input_file(t_data *data, t_chunk *chunk)
+{
+	int	i;
+	int	lst_redir;
+	int	herdoc_i;
+
+	if (!data || !chunk || !chunk->input_redir)
+		return;
+	i = 0;
+	herdoc_i = 0;
+	lst_redir = -1;
+	while (chunk->input_redir[lst_redir + 1])
+		lst_redir++;
+	printf("lst_redir index = %i\n", lst_redir); //@debug
+	while (chunk->input_redir[i])
+	{
+		if(ft_strcmp(chunk->input_redir[i], "<") == 0)
+		{
+			chunk->input_file_fd[i] = open(chunk->input_redir_file[i], O_RDONLY);
+			if (chunk->input_file_fd[0] < 0)
+				strerror(errno); // @optimize
+			chunk->input_file_open[0] = true;
+			if (i == lst_redir && dup2(chunk->input_file_fd[i], STDIN_FILENO) == -1)
+				strerror(errno); // @optimize
+			if (chunk->input_file_fd[i] >= 0 && close(chunk->input_file_fd[i]) == 0)
+				chunk->input_file_open[i] = false;
+		}
+		if (ft_strcmp(chunk->input_redir[i], "<<") == 0)
+		{
+			if (i == lst_redir && dup2(chunk->heredoc_pipe_arr[herdoc_i][0], STDIN_FILENO) == -1)
+				strerror(errno);
+			close(chunk->heredoc_pipe_arr[herdoc_i][0]);
+			herdoc_i++;
+		}
+		i++;
+	}
+	if (chunk->heredoc_pipe_arr_malloced)
+		ft_free((void ** ) &chunk->heredoc_pipe_arr);
 }
 
 void redirect_to_output_file(t_data *data, t_chunk *chunk)
@@ -68,8 +110,8 @@ void	run_cmd(t_data *data, t_exe *exe, t_chunk *chunk, int i)
 	close_unecessary_pipes(exe, i - 1);
 	redirect_input_file(data, chunk);
 	redirect_to_output_file(data, chunk);
-	//if (i > 0 && !chunk->has_input_redir && dup2(exe->pipe_arr[i - 1][0], STDIN_FILENO) == -1)
-	//	strerror(errno); // @optimize
+	if (i > 0 && !chunk->has_input_redir && dup2(exe->pipe_arr[i - 1][0], STDIN_FILENO) == -1)
+		strerror(errno); // @optimize
 	if (i >= 0 && i < exe->total_cmd_count - 1)
 		close(exe->pipe_arr[i][0]);
 	if (i < exe->total_cmd_count - 1 && !chunk->has_redir && dup2(exe->pipe_arr[i][1], STDOUT_FILENO) == -1)
@@ -79,8 +121,6 @@ void	run_cmd(t_data *data, t_exe *exe, t_chunk *chunk, int i)
 	execve(chunk->argv[0], chunk->argv, data->env);
 	if (exe->total_cmd_count > 1)
 		exit(127);
-		//clean_cmds_exit(data, EXIT_FAILURE/* , "Error executing first cmd\n" */);
-		//exit(EXIT_FAILURE);// quitte juste le sous process
 }
 
 static void	waiting_childs(t_exe *exe, int *pid_arr)
@@ -121,12 +161,6 @@ void	run_pipex(t_data *data)
 	i_node = data->cmd_list;
 	while (i < data->exec_info.valid_cmd_count/*  cmd->cmd_count */)
 	{
-		/* if (cmd->cmd_is_valid_arr[i] == false)
-		{
-			invalid_cmd++;
-			i++;
-			continue ;
-		} */
 		if (i_node && (t_chunk *)i_node->content && ((t_chunk *)i_node->content)->type != CMD)
 		{
 			i_node = i_node->next;
@@ -135,6 +169,7 @@ void	run_pipex(t_data *data)
 		init_pipes_2arr_for_heredoc(data, (t_chunk *)i_node->content);
 		if (data->exec_info.cmd_is_valid_arr[i] == true)
 		{
+			listen_heredocs((t_chunk *)i_node->content);
 			data->exec_info.pid_arr[i] = fork();
 			if (data->exec_info.pid_arr[i] == -1)
 				strerror(errno);
@@ -154,7 +189,7 @@ int main_exec(t_data *data)
 {
 	if (data)
 	{
-		init_files(data); // OK for now
+		init_files(data);
 		init_input_files(data);
 		init_cmd(data);
 		init_pid_arr(data, &data->exec_info);

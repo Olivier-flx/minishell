@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 17:37:47 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/10 21:11:52 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/11 12:40:24 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,9 +125,11 @@ void close_heredocs_pipes(t_chunk * chunk)
 	{
 		if (chunk->heredoc_pipe_arr_malloced && chunk->heredoc_pipe_arr[i])
 		{
+			close(chunk->heredoc_pipe_arr[i][0]);
 			close(chunk->heredoc_pipe_arr[i][1]);
 			ft_free((void **) &chunk->heredoc_pipe_arr[i]);
 		}
+		i++;
 	}
 	if (chunk->heredoc_pipe_arr_malloced)
 	ft_free((void **) &chunk->heredoc_pipe_arr);
