@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 18:10:10 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/10 20:36:38 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/11 14:10:16 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*get_msg(int flag, char *arg)
 	if (flag == 1)
 		msg = ft_strjoin("zsh: no such file or directory: ", arg);
 	else
-		msg = ft_strjoin("zsh: command not found: ", arg);
+		msg = ft_strjoin(arg, ": command not found");
 	if (msg && msg[0])
 	{
 		tmp = msg;
@@ -110,8 +110,8 @@ void	check_wrong_commands(t_data *data)
 		i++;
 		i_node = i_node->next;
 	}
-	if (data->exec_info.cmd_err_msg != NULL && data->exec_info.command_err_count == data->exec_info.total_cmd_count)
-		printf("%s\n", data->exec_info.cmd_err_msg);
+	// if (data->exec_info.cmd_err_msg != NULL && data->exec_info.command_err_count == data->exec_info.total_cmd_count) //@ test id 4
+	// 	printf("%s\n", data->exec_info.cmd_err_msg); //@ test id 4
 		//clean_cmds_exit(data, data->exec_info.last_status_code);
 }
 

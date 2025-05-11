@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:30:25 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/11 13:56:36 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/11 14:29:46 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ void redirect_input_file(t_data *data, t_chunk *chunk)
 	lst_redir = -1;
 	while (chunk->input_redir[lst_redir + 1])
 		lst_redir++;
-	printf("lst_redir index = %i\n", lst_redir); //@debug
 	while (chunk->input_redir[i])
 	{
 		if(ft_strcmp(chunk->input_redir[i], "<") == 0)
@@ -155,24 +154,31 @@ void	init_pid_arr(t_data *data, t_exe *exe)
 void	run_pipex(t_data *data)
 {
 	int		i;
+	int		valid_cmd_i;
 	t_dlist	*i_node;
 
 	i = 0;
 	i_node = data->cmd_list;
-	while (i < data->exec_info.valid_cmd_count/*  cmd->cmd_count */)
+	valid_cmd_i = 0;
+	//while (i < data->exec_info.valid_cmd_count/*  cmd->cmd_count */)
+	while (i <  data->exec_info.total_cmd_count)
 	{
 		if (i_node && (t_chunk *)i_node->content && ((t_chunk *)i_node->content)->type != CMD)
 		{
 			i_node = i_node->next;
 			continue ;
 		}
+		init_pipes_2arr_for_heredoc(data, (t_chunk *)i_node->content);
+		listen_heredocs((t_chunk *)i_node->content);
+
 		if (data->exec_info.cmd_is_valid_arr[i] == true)
 		{
-			data->exec_info.pid_arr[i] = fork();
-			if (data->exec_info.pid_arr[i] == -1)
+			data->exec_info.pid_arr[valid_cmd_i] = fork();
+			if (data->exec_info.pid_arr[valid_cmd_i] == -1)
 				strerror(errno);
-			if (data->exec_info.pid_arr[i] == 0)
+			if (data->exec_info.pid_arr[valid_cmd_i] == 0)
 				run_cmd (data, &data->exec_info, ((t_chunk *)i_node->content), i);
+			valid_cmd_i++;
 		}
 		close_heredocs_pipes((t_chunk *)i_node->content);
 		i++;
@@ -185,25 +191,28 @@ void	run_pipex(t_data *data)
 
 int main_exec(t_data *data)
 {
-	t_dlist	*i_node;
+	// t_dlist	*i_node;
 	if (data)
 	{
-		i_node = data->cmd_list;
+		// i_node = data->cmd_list;
 		init_files(data);
 		init_input_files(data);
-		while (i_node)
-		{
-			if (((t_chunk *)(i_node->content))->type = CMD)
-			{
-				init_pipes_2arr_for_heredoc(data, (t_chunk *)i_node->content);
-				listen_heredocs((t_chunk *)i_node->content);
-			}
-			i_node = i_node->next;
-		}
+		// while (i_node)
+		// {
+		// 	if (((t_chunk *)(i_node->content))->type = CMD)
+		// 	{
+		// 		init_pipes_2arr_for_heredoc(data, (t_chunk *)i_node->content);
+		// 		listen_heredocs((t_chunk *)i_node->content);
+		// 	}
+		// 	i_node = i_node->next;
+		// }
 		init_cmd(data);
 		init_pid_arr(data, &data->exec_info);
 		init_pipes_2arr(data , &data->exec_info);
 		run_pipex(data);
+		if (data->exec_info.cmd_err_msg != NULL && \
+				data->exec_info.command_err_count == data->exec_info.total_cmd_count) //@ test id 4
+			printf("%s\n", data->exec_info.cmd_err_msg); //@ test id 4
 	}
 	return(EXIT_SUCCESS);
 }
