@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 18:13:34 by laufarin          #+#    #+#             */
-/*   Updated: 2025/05/04 17:13:30 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/11 17:21:21 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ int	ft_exit(char **args);
 //int main(int ac, char **av, char **env);
 
 //enviroment
-
 t_env *ft_new_env_node(char *key, char *value, bool exported);
 void ft_env_add_back(t_env **head, t_env *new_node);
 t_env *ft_init_env(char **env);
@@ -52,7 +51,7 @@ void ft_unsetenv(t_env **env, char *key);
 int ft_env_size(t_env *env);
 char **ft_env_to_array(t_env *env);
 
-int is_valid_env_key(char *key);
+int	is_valid_env_key(char *key);
 void update_or_add_env(t_env **env, char *key, char *value);
 int print_sorted_env(t_env *env);
 char **env_to_sorted_array(t_env *env);

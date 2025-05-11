@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/11 16:57:38 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/11 17:19:07 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,12 +152,12 @@ typedef struct s_operator
 
 
 // buildins
-int		ft_echo(t_env *env, char **args);
-int		ft_env(t_env *env);
-int		ft_exit(char **args); // @optimize  Es importante limpiar todo antes que el exit, entonces tiene que tomar "data"
-// int ft_exit(t_data data, char **args);
-int		ft_export(t_env **env, char **args);
-//int		create_input_token(char *src, t_dlist **line);
+// int		ft_echo(t_env *env, char **args);
+// int		ft_env(t_env *env);
+// int		ft_exit(char **args); // @optimize  Es importante limpiar todo antes que el exit, entonces tiene que tomar "data"
+// // int ft_exit(t_data data, char **args);
+// int		ft_export(t_env **env, char **args);
+// //int		create_input_token(char *src, t_dlist **line);
 
 ///// core functions
 int	create_chunks(char *line,  t_dlist **cmd_list, t_data *data);

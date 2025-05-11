@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:23:22 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/11 14:45:39 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/11 17:18:22 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ int	run_minishell(t_data	*data)
 	{
 		line = NULL;
 		initialize_cmd_list(data);
-		line = readline("minishell> ");
+		line = readline("\033[1;32mminishell> \033[0m");
 		while (line && !tocken_quote_closed(line))
-			line = c_strjoin(line, readline("dquote> "), '\n');
+			line = c_strjoin(line, readline("\033[1mdquote> \033[0m"), '\n');
 		while (line && !line_accolade_closed(line))
 			line = c_strjoin(line, readline("> "), '\n');
 		//////////////// To include in process line /////////

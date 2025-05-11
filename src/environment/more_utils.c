@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   b_utils.c                                          :+:      :+:    :+:   */
+/*   more_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 17:20:12 by marvin            #+#    #+#             */
-/*   Updated: 2025/04/23 17:20:12 by marvin           ###   ########.fr       */
+/*   Updated: 2025/05/11 17:23:23 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ char **env_to_sorted_array(t_env *env)
     char    **array;
     int     i = 0;
 
-    if (!env) 
-        return NULL; 
+    if (!env)
+        return NULL;
     // 1. Contar el número de variables
     while (tmp && ++count)
         tmp = tmp->next;
@@ -49,7 +49,7 @@ char **env_to_sorted_array(t_env *env)
     array[count] = NULL;
 
     // 4. Ordenar alfabéticamente (usando ft_strcmp)
-    qsort(array, count, sizeof(char *), 
+    qsort(array, count, sizeof(char *),
         (int (*)(const void *, const void *))ft_strcmp);
 
     return (array);
@@ -60,7 +60,7 @@ int print_sorted_env(t_env *env)
     char **env_array = env_to_sorted_array(env); // Convierte a array y ordena
     int i = 0;
 
-    if (!env) 
+    if (!env)
         return 0; // No hay variables que mostrar
     if (!env_array) return 1;
     while (env_array[i])
@@ -88,7 +88,7 @@ void update_or_add_env(t_env **env, char *key, char *value)
         current = current->next;
     }
     // Si no existe, añade un nuevo nodo al final
-    ft_env_add_back(env, ft_new_env_node(ft_strdup(key), ft_strdup(value)));
+    ft_env_add_back(env, ft_new_env_node(ft_strdup(key), ft_strdup(value), true));
 }
 
 int is_valid_env_key(char *key)
