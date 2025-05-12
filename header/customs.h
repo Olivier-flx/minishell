@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/12 17:09:32 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/12 17:41:36 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,10 @@
 	// @legacy	--> not used anymore, to delete later, kept for logic implementation trace
 */
 ///////
+
+//# include "builtins.h"
+
+typedef struct	s_env t_env;
 
 typedef enum {
 	CMD,
@@ -54,13 +58,13 @@ typedef struct s_dlist
 	struct s_dlist	*next;
 }	t_dlist;
 
-typedef struct	s_env
+/* typedef struct	s_env
 {
 	char	*key;
 	char	*value;
 	bool	is_exported; //1 = in ENV, if 0 --> global variable
 	struct	s_env *next;
-}	t_env;
+}	t_env; */
 
 // struc to store the good path for commands.
 typedef struct s_exec_data
@@ -82,7 +86,7 @@ typedef struct s_exec_data
 	int		last_status_code; // para luego poder recuperar el ultimo status code cuando se hace echo $?
 }	t_exe;
 
-typedef struct data //aqui iremos agregando todo lo que este alocado.A partir de esta poder acceder a toda la info.
+typedef struct s_data //aqui iremos agregando todo lo que este alocado.A partir de esta poder acceder a toda la info.
 {
 	char		**env;
 	t_env		*env_list;

@@ -6,44 +6,11 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:30:25 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/12 17:07:25 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/12 17:11:42 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell.h"
-
-/* void redirect_input_file(t_data *data, t_chunk *chunk)
-{
-	int	i;
-	int	lst_redir;
-
-	i = 0;
-	lst_redir = chunk->input_redir_count + chunk->nb_heredocs - 1;
-	if (!data)
-		return;
-	while (chunk->input_redir && chunk->input_redir[i])
-	{
-		//listen_heredocs(chunk, i);
-		if(ft_strcmp(chunk->input_redir[i], "<") == 0)
-		{
-			chunk->input_file_fd[i] = open(chunk->input_redir_file[i], O_RDONLY);
-			if (chunk->input_file_fd[0] < 0)
-				strerror(errno); // @optimize
-			chunk->input_file_open[0] = true;
-			if (i == lst_redir && dup2(chunk->input_file_fd[i], STDIN_FILENO) == -1)
-				strerror(errno); // @optimize
-			close(chunk->input_file_fd[i]);
-			chunk->input_file_open[i] = false;
-		}
-		i++;
-	}
-	if (chunk->heredoc_pipe_arr_malloced)
-		ft_free((void ** ) &chunk->heredoc_pipe_arr);
-	// if (dup2(files[0].fd, STDIN_FILENO) == -1)
-	// 	clean_exec_info(cmd, EXIT_FAILURE, "Err dup2 : input file\n");
-	// close(files[0].fd);
-	//files[0].file_open = false;
-} */
 
 void	run_cmd(t_data *data, t_exe *exe, t_chunk *chunk, int i)
 {

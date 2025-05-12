@@ -6,34 +6,37 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 18:13:34 by laufarin          #+#    #+#             */
-/*   Updated: 2025/05/12 16:27:01 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/12 17:42:45 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILTINS_H
 # define BUILTINS_H
 
-# include "minishell.h"  // Para reutilizar structs y funciones comunes
+//# include "minishell.h"  // Para reutilizar structs y funciones comunes
+//# include "customs.h"
 
+typedef struct	s_data t_data;
 
-/* typedef struct	s_env
- {
- 	char	*key;
-    char	*value;
- 	struct	s_env *next;
- }	t_env;*/
+typedef struct	s_env
+{
+	char	*key;
+	char	*value;
+	bool	is_exported; //1 = in ENV, if 0 --> global variable
+	struct	s_env *next;
+}	t_env;
 
 
 // Prototipos de built-ins
 int	ft_echo(t_env *env, char **args);
-int	ft_cd(char **args, t_env **env);
+int	ft_cd(t_env **env, char **args);
 int	ft_pwd(void);
 int ft_export(t_env **env, char **args);
-int ft_unset(char **args, t_env **env);
+int ft_unset(t_env **env, char **args);
 int ft_env(t_env *env);
 int	ft_exit(t_data *data, char **args); // @optimize  Es importante limpiar todo antes que el exit, entonces tiene que tomar "data"
 
-int  update_pwds(t_env **env);
+// int  update_pwds(t_env **env);
 
 //enviroment
 t_env *ft_new_env_node(char *key, char *value, bool exported);

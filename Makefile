@@ -19,7 +19,8 @@ BUILTINS = ./src/builtins/is_builtin.c \
 		./src/builtins/ft_export.c \
 		./src/builtins/ft_pwd.c \
 		./src/builtins/ft_env.c \
-		./src/builtins/ft_exit.c
+		./src/builtins/ft_exit.c\
+		./src/builtins/ft_cd.c
 
 ENV = ./src/environment/env_search.c \
 	./src/environment/env_utils.c \

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 11:32:50 by marvin            #+#    #+#             */
-/*   Updated: 2025/04/30 11:32:50 by marvin           ###   ########.fr       */
+/*   Updated: 2025/05/12 17:14:59 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell.h"
 
-int	ft_unset(char **args, t_env **env)
+int	ft_unset(t_env **env, char **args)
 {
 	int i = 1;
 	int ret_status = 0;
@@ -34,7 +34,7 @@ int	ft_unset(char **args, t_env **env)
 		i++;
 	}
 	return (ret_status);
-}	
+}
 
 // ----------------------------
 // MAIN de prueba (¡eliminar después de probar!)
@@ -69,7 +69,7 @@ int	main(int argc, char **argv)
 /*int main(int argc, char **argv)
 {
     (void)argc;
-    
+
     // 1. Imprime los argumentos recibidos
     printf("=== Argumentos recibidos ===\n");
     for (int i = 0; argv[i]; i++)
@@ -79,7 +79,7 @@ int	main(int argc, char **argv)
     t_env *env = ft_init_env();
     printf("\n=== Lista REAL en memoria ===\n");
     t_env *tmp = env;
-    while (tmp) 
+    while (tmp)
     {
          printf("%p: %s=%s\n", (void *)tmp, tmp->key, tmp->value);
         tmp = tmp->next;

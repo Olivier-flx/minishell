@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 16:04:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/12 16:33:57 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/12 17:20:00 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,14 @@
 
 int	pick_and_run_builtin(t_data *data, char **argv)
 {
-	// if (ft_strcmp(argv[0], "cd") == 0)
-	// 	return (builtin_cd(data, argv));
-	/* else */ if (ft_strcmp(argv[0], "export") == 0)
+	if (ft_strcmp(argv[0], "cd") == 0)
+		return (ft_cd(&data->env_list, argv));
+	else if (ft_strcmp(argv[0], "export") == 0)
 		return (ft_export(&data->env_list, argv));
-	// else if (ft_strcmp(argv[0], "unset") == 0)
-	// 	return (ft_unset(data, argv));
+	else if (ft_strcmp(argv[0], "unset") == 0)
+		return (ft_unset(&data->env_list, argv));
 	else if (ft_strcmp(argv[0], "exit") == 0)
 		return (ft_exit(data, argv));
-	// else if (ft_strcmp(argv[0], "exit") == 0)
-		// return (ft_exit(data, argv));
 	else if (ft_strcmp(argv[0], "pwd") == 0)
 		return (ft_pwd());
 	else if (ft_strcmp(argv[0], "env") == 0)

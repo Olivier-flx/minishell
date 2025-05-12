@@ -6,12 +6,11 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 17:06:53 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/12 17:07:20 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/12 17:11:38 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../header/minishell.h"
-
 
 void redirect_input_file(t_data *data, t_chunk *chunk)
 {
