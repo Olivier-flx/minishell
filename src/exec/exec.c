@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:30:25 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/12 14:23:07 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/12 17:07:25 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,65 +44,6 @@
 	// close(files[0].fd);
 	//files[0].file_open = false;
 } */
-
-void redirect_input_file(t_data *data, t_chunk *chunk)
-{
-	int	i;
-	int	lst_redir;
-	int	herdoc_i;
-
-	if (!data || !chunk || !chunk->input_redir)
-		return;
-	i = 0;
-	herdoc_i = 0;
-	lst_redir = -1;
-	while (chunk->input_redir[lst_redir + 1])
-		lst_redir++;
-	while (chunk->input_redir[i])
-	{
-		if(ft_strcmp(chunk->input_redir[i], "<") == 0)
-		{
-			chunk->input_file_fd[i] = open(chunk->input_redir_file[i], O_RDONLY);
-			if (chunk->input_file_fd[0] < 0)
-				strerror(errno); // @optimize
-			chunk->input_file_open[0] = true;
-			if (i == lst_redir && dup2(chunk->input_file_fd[i], STDIN_FILENO) == -1)
-				strerror(errno); // @optimize
-			if (chunk->input_file_fd[i] >= 0 && close(chunk->input_file_fd[i]) == 0)
-				chunk->input_file_open[i] = false;
-		}
-		if (ft_strcmp(chunk->input_redir[i], "<<") == 0)
-		{
-			if (i == lst_redir && dup2(chunk->heredoc_pipe_arr[herdoc_i][0], STDIN_FILENO) == -1)
-				strerror(errno);
-			close(chunk->heredoc_pipe_arr[herdoc_i][0]);
-			herdoc_i++;
-		}
-		i++;
-	}
-	if (chunk->heredoc_pipe_arr_malloced)
-		ft_free((void ** ) &chunk->heredoc_pipe_arr);
-}
-
-void redirect_to_output_file(t_data *data, t_chunk *chunk)
-{
-	if (chunk->redir_file_count > 0)
-	{
-		chunk->file_fd[chunk->redir_file_count - 1] = \
-				open(chunk->redir_files[chunk->redir_file_count - 1], \
-					O_WRONLY | O_CREAT | O_TRUNC, \
-					S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-		if (chunk->file_fd[chunk->redir_file_count - 1] < 0)
-			strerror(errno); // @optimize
-		if (!data)
-			return;
-		printf(" output file : %s, file fd = %i\n", chunk->redir_files[chunk->redir_file_count - 1], chunk->file_fd[chunk->redir_file_count - 1]);// @debug
-		if (dup2(chunk->file_fd[chunk->redir_file_count - 1], STDOUT_FILENO) == -1)
-			strerror(errno); // @optimize
-		close(chunk->file_fd[chunk->redir_file_count - 1]); //@optimize : peut etre rendu plus robust avec strerror et errno
-		chunk->file_open[chunk->redir_file_count - 1] = false;
-	}
-}
 
 void	run_cmd(t_data *data, t_exe *exe, t_chunk *chunk, int i)
 {

@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/12 17:02:05 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/12 17:09:32 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,14 +144,12 @@ typedef struct s_chunk
  * ==========================
  */
 int		main_exec(t_data *data);
-int		init_files(t_data *data);
 int		listen_heredocs(t_data *data, t_chunk *chunk);
 bool	is_builtin(char *cmd);
 int		run_builtins(t_data *data, t_exe *exe, t_chunk *chunk, int i);
 
 	////// commands init ///
 void	init_cmd(t_data *data);
-int		init_input_files(t_data *data);
 void	clean_exec_info(t_data *data, int exit_val);
 void	cmd_error_msg(t_data *data, int failure);
 
@@ -168,6 +166,8 @@ void	init_pipes_2arr_for_heredoc(t_data *data, t_chunk *chunk);
 void	close_heredocs_pipes(t_chunk * chunk);
 
 /// FILES
+int		init_files(t_data *data);
+int		init_input_files(t_data *data);
 	// files redirects //
 void	redirect_input_file(t_data *data, t_chunk *chunk);
 void	redirect_to_output_file(t_data *data, t_chunk *chunk);
@@ -175,7 +175,7 @@ void	redirect_to_output_file(t_data *data, t_chunk *chunk);
 void	close_files(t_chunk *chunk);
 void	close_files_if_opened(int *fd_arr, bool *file_open);
 
-	/////// EXPENSION /////
+//// EXPENSION /////
 int		expend_all(t_data *data);
 char	*expend_token(t_data *data, char *str);
 char	*get_var_name_in_accolade(char *str, int i);
@@ -223,7 +223,6 @@ bool	has_heredoc_from_pp_char(char **content);
 
 
 		//cleaning.c
-
 void	set_ope_char_i_struc_arr(char *src, t_int_array *arr);
 void	set_ope_char_i_arr(char *src, t_int_array *arr);
 
