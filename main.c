@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:23:22 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/12 14:21:18 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/12 14:35:55 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,22 @@ int initialize_cmd_list(t_data *data)
 	return (0);
 }
 
+void	listen_incomplete_lines(t_data	*data)
+{
+	while (data->line && (!tocken_quote_closed(data->line) \
+		|| !line_accolade_closed(data->line) \
+		|| data->line[ft_strlen(data->line) - 1] == '|'))
+	{
+		while (data->line && !tocken_quote_closed(data->line))
+			data->line = c_strjoin(data->line, readline("\033[1mdquote> \033[0m"), '\n');
+		while (data->line && !line_accolade_closed(data->line))
+			data->line = c_strjoin(data->line, readline("> "), '\n');
+		printf("data->line[ft_strlen(data->line) - 1] = `%c`\n", data->line[ft_strlen(data->line) - 1]);
+		while (data->line && data->line[ft_strlen(data->line) - 1] == '|')
+			data->line = c_strjoin(data->line, readline("> "), '\n');
+	}
+}
+
 int	run_minishell(t_data	*data)
 {
 	int			control;
@@ -42,11 +58,7 @@ int	run_minishell(t_data	*data)
 			data->exit_status = g_signal_received;
 			g_signal_received = 0;
 		}
-
-		while (data->line && !tocken_quote_closed(data->line))
-			data->line = c_strjoin(data->line, readline("\033[1mdquote> \033[0m"), '\n');
-		while (data->line && !line_accolade_closed(data->line))
-			data->line = c_strjoin(data->line, readline("> "), '\n');
+		listen_incomplete_lines(data);
 		if (data->line && tocken_quote_closed(data->line))
 		{
 			control = create_chunks(data->line, &data->cmd_list, data);
