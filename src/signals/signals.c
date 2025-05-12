@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 14:28:21 by marvin            #+#    #+#             */
-/*   Updated: 2025/05/11 20:15:57 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/12 22:19:40 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,17 @@
 //#include <signal.h>
 // Solo esta global está permitida (fuera de estructuras)
 //volatile sig_atomic_t g_signal_received = 0; // @confirm
+
+void	signal_handlers_for_readline(t_data *data)
+{
+		if (!data->line)  // Caso Ctrl+D
+			handle_ctrl_d(data);
+		if (g_signal_received)
+		{
+			data->exit_status = g_signal_received;
+			g_signal_received = 0;
+		}
+}
 
 void	handle_signal(int sig)
 {

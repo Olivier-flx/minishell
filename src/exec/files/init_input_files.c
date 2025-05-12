@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 18:15:17 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/11 20:05:27 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/12 21:40:44 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ static int	malloc_input_fd_arr(t_chunk *chunk)
 	chunk->input_file_fd_malloced = false;
 	if (!chunk->input_redir)
 		return(0);
+	chunk->input_file_fd = NULL;
 	chunk->input_file_fd = malloc(sizeof(int) * chunk->input_redir_count);
 	if (!chunk->input_file_fd)
 		return (1);

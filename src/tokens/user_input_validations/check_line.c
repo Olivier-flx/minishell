@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 16:00:49 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/12 16:11:53 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/12 22:23:15 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ bool	line_finish_by_pipe(char **line)
 	return false;
 }
 
-void	listen_incomplete_lines(char **line)
+void	listen_incomplete_lines(t_data *data,char **line)
 {
 	int flag;
 
@@ -40,12 +40,22 @@ void	listen_incomplete_lines(char **line)
 		|| (*line)[ft_strlen(*line) - 1] == '|' \
 		|| (*line)[ft_strlen(*line) - 1] == ' '))
 	{
+		signal_handlers_for_readline(data);
 		/// NEED TO HANDLE SIGNAL HERE AND IN EVERY SUB-WHILE
 		while (*line && !tocken_quote_closed(*line))
+		{
+			signal_handlers_for_readline(data);
 			*line = c_strjoin(*line, readline("\033[1mdquote> \033[0m"), '\n');
+		}
 		while (*line && !line_accolade_closed(*line))
+		{
+			signal_handlers_for_readline(data);
 			*line = c_strjoin(*line, readline("> "), '\n');
+		}
 		while (*line && line_finish_by_pipe(line))
+		{
+			signal_handlers_for_readline(data);
 			flag = 1;
+		}
 	}
 }

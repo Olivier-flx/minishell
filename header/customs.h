@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/12 18:36:56 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/12 22:22:28 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,8 @@ typedef struct s_chunk
 
 
 /////////////// SRC //////////////
+void	signal_handlers_for_readline(t_data *data);
+
 /*
  * ==========================
  * 			EXEC
@@ -178,7 +180,7 @@ void	redirect_input_file(t_data *data, t_chunk *chunk);
 void	redirect_to_output_file(t_data *data, t_chunk *chunk);
 	// files management
 void	close_files(t_chunk *chunk);
-void	close_files_if_opened(int *fd_arr, bool *file_open);
+void	close_files_if_opened(int *fd_arr, bool *file_open, int len);
 
 //// EXPENSION /////
 int		expend_all(t_data *data);
@@ -193,7 +195,7 @@ char	*get_var_name_in_accolade(char *str, int i);
  */
 // verifications //
 			//user_input_validation
-void	listen_incomplete_lines(char **line);
+void	listen_incomplete_lines(t_data *data,char **line);
 int	check_for_user_input_error(t_dlist **cmd_list);
 int	check_for_triple(t_dlist **cmd_list);
 int	check_for_simple(t_dlist **cmd_list);
@@ -281,7 +283,7 @@ bool	int_var_in_arr(int var, t_int_array *arr);
 int		pp_char_len(char **array);
 // arrays_free
 void	ft_free(void ** ptr);
-void	free_av(char **av);
+void	free_av(char ***av);
 char	**free_uncomplete_av(char **av, int i);
 
 /*

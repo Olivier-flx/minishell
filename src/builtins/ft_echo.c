@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 15:40:12 by laufarin          #+#    #+#             */
-/*   Updated: 2025/04/24 14:51:55 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/12 21:17:18 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,12 @@ int	ft_echo(t_env *env, char **args)
 	while (args[i])
 	{
 		//write(1, "y aqui!\n", 7);
-		if (args[i][0] == '$')
+/* 		if (args[i][0] == '$')
 		{
 			char *value = ft_getenv(env, args[i] + 1);
 			if (value) write(STDOUT_FILENO, value, ft_strlen(value));
 		}
-		else if (args[i][0] == '~') {  // Opcional: soporte para ~
+		else  */if (args[i][0] == '~') {  // Opcional: soporte para ~
 			char *home = ft_getenv(env, "HOME");
 			write(STDOUT_FILENO, home, ft_strlen(home));
 		}

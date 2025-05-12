@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 19:22:36 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/12 20:35:47 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/12 21:59:33 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 static void free_input_redir(t_chunk *chunk)
 {
 	if(chunk->has_input_redir)
-		free_av(chunk->input_redir);
-	close_files_if_opened(chunk->input_file_fd, chunk->input_file_open);
+		free_av(&chunk->input_redir);
+	close_files_if_opened(chunk->input_file_fd, chunk->input_file_open, chunk->input_redir_count);
 	if(chunk->input_redir_file_count > 0)
-		free_av(chunk->input_redir_file);
+		free_av(&chunk->input_redir_file);
 	if (chunk->input_file_fd_malloced)
 		ft_free((void **) &chunk->input_file_fd);
 	if (chunk->input_file_open_malloced)
@@ -28,11 +28,11 @@ static void free_input_redir(t_chunk *chunk)
 static void	free_redir(t_chunk *chunk)
 {
 	if(chunk->has_redir)
-		free_av(chunk->redir);
+		free_av(&chunk->redir);
 	if(chunk->redir_file_count > 0)
 	{
-		close_files_if_opened(chunk->file_fd, chunk->file_open);
-		free_av(chunk->redir_files);
+		close_files_if_opened(chunk->file_fd, chunk->file_open, chunk->redir_count);
+		free_av(&chunk->redir_files);
 	}
 	if (chunk->file_fd_malloced)
 		ft_free((void **) &chunk->file_fd);
@@ -50,9 +50,9 @@ void	free_cmdlist(t_dlist *cmd_list)
 		if((t_chunk *)(i_node->content))
 		{
 			if (((t_chunk *)(i_node->content))->tokens)
-				free_av(((t_chunk *)(i_node->content))->tokens);
+				free_av(&((t_chunk *)(i_node->content))->tokens);
 			if (((t_chunk *)(i_node->content))->argv)
-				free_av(((t_chunk *)(i_node->content))->argv);
+				free_av(&((t_chunk *)(i_node->content))->argv);
 			if (((t_chunk *)(i_node->content))->argv_0_nopath)
 				free(((t_chunk *)(i_node->content))->argv_0_nopath);
 			free_redir((t_chunk *)(i_node->content));

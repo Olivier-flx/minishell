@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:49:47 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/10 20:28:10 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/12 21:29:45 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	create_main_chunks(char *src, t_dlist **cmd_list, t_data *data)
 		chunk = create_token(&tokens, CMD, i, (t_quote) {0}); // i correspond au numéro du chunk / index du chunk dans la string. à retirer
 		add_to_list(cmd_list, chunk);
 	}
-	free_av(all_tokens);
+	free_av(&all_tokens);
 	return (EXIT_SUCCESS);
 }
 

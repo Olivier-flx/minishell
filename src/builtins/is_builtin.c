@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 15:31:11 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/12 18:08:08 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/12 21:29:47 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,6 @@ bool	is_builtin(char *cmd)
 			|| ft_strcmp(tmp, "env") == 0 \
 			|| ft_strcmp(tmp, "exit") == 0)
 		flag = true;
-	free_av(argv_cmd);
+	free_av(&argv_cmd);
 	return (flag);
 }

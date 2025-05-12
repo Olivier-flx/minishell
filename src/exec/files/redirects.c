@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 17:06:53 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/12 17:11:38 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/12 22:39:55 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,12 @@ void redirect_input_file(t_data *data, t_chunk *chunk)
 		if(ft_strcmp(chunk->input_redir[i], "<") == 0)
 		{
 			chunk->input_file_fd[i] = open(chunk->input_redir_file[i], O_RDONLY);
-			if (chunk->input_file_fd[0] < 0)
-				strerror(errno); // @optimize
-			chunk->input_file_open[0] = true;
+			if (chunk->input_file_fd[i] < 0)
+			{
+				chunk->chunk_exec_return_status_code = errno;
+				printf( "minishell: %s: %s\n", chunk->input_redir_file[i], strerror(errno)); // @optimize
+			}
+			chunk->input_file_open[i] = true;
 			if (i == lst_redir && dup2(chunk->input_file_fd[i], STDIN_FILENO) == -1)
 				strerror(errno); // @optimize
 			if (chunk->input_file_fd[i] >= 0 && close(chunk->input_file_fd[i]) == 0)
@@ -60,7 +63,10 @@ void redirect_to_output_file(t_data *data, t_chunk *chunk)
 					O_WRONLY | O_CREAT | O_TRUNC, \
 					S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 		if (chunk->file_fd[chunk->redir_file_count - 1] < 0)
-			strerror(errno); // @optimize
+		{
+			chunk->chunk_exec_return_status_code = errno;
+			printf( "minisaasshell: %s: %s\n", chunk->redir_files[chunk->redir_file_count - 1], strerror(errno)); // @optimize
+		}
 		if (!data)
 			return;
 		printf(" output file : %s, file fd = %i\n", chunk->redir_files[chunk->redir_file_count - 1], chunk->file_fd[chunk->redir_file_count - 1]);// @debug

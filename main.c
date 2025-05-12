@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:23:22 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/12 20:20:23 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/12 22:25:33 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,9 @@ int	run_minishell(t_data	*data)
 	{
 		initialize_cmd_list(data);
 		data->line = readline("\033[1;32mminishell> \033[0m");
-		if (!data->line)  // Caso Ctrl+D
-			handle_ctrl_d(data);
-		if (g_signal_received)
-		{
-			data->exit_status = g_signal_received;
-			g_signal_received = 0;
-		}
-		listen_incomplete_lines(&data->line);
-		if (data->line /* && tocken_quote_closed(data->line) */)
+		signal_handlers_for_readline(data);
+		listen_incomplete_lines(data, &data->line);
+		if (data->line)
 		{
 			control = create_chunks(data->line, &data->cmd_list, data);
 			if (control != 3 )

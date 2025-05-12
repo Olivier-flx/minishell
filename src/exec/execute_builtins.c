@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 16:04:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/12 20:56:04 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/12 22:16:34 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,19 @@ int	pick_and_run_builtin(t_data *data, char **argv)
 
 void	execute_builtin_in_parent(t_data *data, t_exe *exe, t_chunk *chunk, int i)
 {
+	int	saved_stdin;
+	int	saved_stdout;
+
+	saved_stdin  = dup(STDIN_FILENO);
+	saved_stdout = dup(STDOUT_FILENO);
 	close_unecessary_pipes(exe, i - 1);
 	redirect_input_file(data, chunk);
 	redirect_to_output_file(data, chunk);
 	pick_and_run_builtin(data, chunk->argv);
+	dup2(saved_stdin,  STDIN_FILENO);
+	dup2(saved_stdout, STDOUT_FILENO);
+	close(saved_stdin);
+	close(saved_stdout);
 }
 
 void	execute_builtin_in_child(t_data *data, t_exe *exe, t_chunk *chunk, int i)
