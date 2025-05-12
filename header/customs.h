@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/11 20:03:34 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/12 14:23:07 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,7 @@ int		run_builtins(t_data *data, t_exe *exe, t_chunk *chunk, int i);
 	////// commands init ///
 void	init_cmd(t_data *data);
 int		init_input_files(t_data *data);
-void	clean_cmds_exit(t_data *data, int exit_val);
+void	clean_exec_info(t_data *data, int exit_val);
 void	cmd_error_msg(t_data *data, int failure);
 
 	////// path exec ////

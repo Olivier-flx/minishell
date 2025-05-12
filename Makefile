@@ -38,7 +38,6 @@ TOKENS = ./src/tokens/user_input_validations/user_input_validation.c\
 EXEC = ./src/exec/exec.c \
 	./src/exec/commands.c \
 	./src/exec/path.c \
-	./src/exec/free_cmd_exit.c \
 	./src/exec/listen_heredocs.c \
 	./src/exec/pipes.c \
 	./src/exec/execute_builtins.c
@@ -63,7 +62,8 @@ UTILS = ./utils/string/ft_split_s.c \
 		./utils/arrays/arr_frees.c \
 		./utils/msg/error_msg.c \
 		./utils/frees/custom_frees.c \
-		./utils/frees/free_resources.c
+		./utils/frees/free_resources.c \
+		./utils/frees/free_exec_info.c
 
 
 SRC = main.c \

@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:30:25 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/11 17:38:09 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/12 14:23:07 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@
 	if (chunk->heredoc_pipe_arr_malloced)
 		ft_free((void ** ) &chunk->heredoc_pipe_arr);
 	// if (dup2(files[0].fd, STDIN_FILENO) == -1)
-	// 	clean_cmds_exit(cmd, EXIT_FAILURE, "Err dup2 : input file\n");
+	// 	clean_exec_info(cmd, EXIT_FAILURE, "Err dup2 : input file\n");
 	// close(files[0].fd);
 	//files[0].file_open = false;
 } */
@@ -148,7 +148,7 @@ void	init_pid_arr(t_data *data, t_exe *exe)
 	exe->pid_arr = malloc(exe->valid_cmd_count * sizeof(int));
 	if (!exe->pid_arr)
 		strerror(errno);
-		//clean_cmds_exit(data, EXIT_FAILURE/* , "Malloc err pid_arr" */); //@optimize, normalement dans pipex, cela supprimer faisait un exit, donc la suite du program n'etait pas execute. Ici ce n'est plus le cas, il faut donc gerer differament pour etre sur de ne pas avoir des free multiples etc;
+		//clean_exec_info(data, EXIT_FAILURE/* , "Malloc err pid_arr" */); //@optimize, normalement dans pipex, cela supprimer faisait un exit, donc la suite du program n'etait pas execute. Ici ce n'est plus le cas, il faut donc gerer differament pour etre sur de ne pas avoir des free multiples etc;
 	exe->pid_arr_malloced = true;
 	while (i < exe->valid_cmd_count)
 		exe->pid_arr[i++] = -2;

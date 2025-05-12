@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 19:00:27 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/11 18:59:45 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/12 14:23:07 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	cmd_error_msg(t_data *data, int failure)
 		ft_free((void **) &msg);
 }
 
-void	clean_cmds_exit(t_data *data, int exit_val)
+void	clean_exec_info(t_data *data, int exit_val)
 {
 	if (data && data->cmd_list)
 	{
