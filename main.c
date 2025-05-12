@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:23:22 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/12 14:35:55 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/12 14:39:49 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,19 @@ void	listen_incomplete_lines(t_data	*data)
 		|| !line_accolade_closed(data->line) \
 		|| data->line[ft_strlen(data->line) - 1] == '|'))
 	{
+		/// NEED TO HANDLE SIGNAL HERE AND IN EVERY SUB-WHILE
 		while (data->line && !tocken_quote_closed(data->line))
+		{
 			data->line = c_strjoin(data->line, readline("\033[1mdquote> \033[0m"), '\n');
+		}
 		while (data->line && !line_accolade_closed(data->line))
+		{
 			data->line = c_strjoin(data->line, readline("> "), '\n');
-		printf("data->line[ft_strlen(data->line) - 1] = `%c`\n", data->line[ft_strlen(data->line) - 1]);
+		}
 		while (data->line && data->line[ft_strlen(data->line) - 1] == '|')
+		{
 			data->line = c_strjoin(data->line, readline("> "), '\n');
+		}
 	}
 }
 
