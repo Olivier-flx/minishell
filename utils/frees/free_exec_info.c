@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_cmd_exit.c                                    :+:      :+:    :+:   */
+/*   free_exec_info.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 19:00:27 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/12 14:23:07 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/12 15:37:02 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,15 @@ void	cmd_error_msg(t_data *data, int failure)
 
 	msg = data->exec_info.cmd_err_msg;
 	data->exec_info.last_status_code = failure;
-	if (msg)
-		write(STDERR_FILENO, msg, ft_strlen(msg));
+	// if (msg)
+	// 	write(STDERR_FILENO, msg, ft_strlen(msg));
 	if (data->cmd_list && data->exec_info.has_msg && msg)
 		ft_free((void **) &msg);
 }
 
 void	clean_exec_info(t_data *data, int exit_val)
 {
+
 	if (data && data->cmd_list)
 	{
 		if (data->exec_info.env_path && data->exec_info.env_path[0])

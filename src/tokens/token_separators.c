@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:37:48 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/10 16:08:18 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/12 16:19:55 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 // takes in account all redirections or pipes
 int	is_seperator(char *src, int i, t_quote *quote)
 {
-	if (quote_are_closed(quote))
+	if (quote_and_acc_are_closed(quote))
 	{
 		if (src[i] == '>' && src[i + 1] && src[i + 1] == '>')
 			return(2);

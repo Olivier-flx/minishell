@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 15:14:36 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/11 18:48:47 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/12 16:19:55 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	line_accolade_closed(char *line)
 	while (line[++i])
 	{
 		quote_increment(line, i, &quotes);
-		if (line[i] == '$' && quote_are_closed(&quotes))
+		if (line[i] == '$' && quote_and_acc_are_closed(&quotes))
 			flag_var = 1;
 		if (1 == flag_var && line[i] == '{')
 			flag_acc = 1;
@@ -96,7 +96,7 @@ int	check_tocken_accolade(char *token)
 	while (token[++i])
 	{
 		quote_increment(token, i, &quotes);
-		if(token[i] == '$' && quote_are_closed(&quotes))
+		if(token[i] == '$' && quote_and_acc_are_closed(&quotes))
 			flag_var = 1;
 		if (1 == flag_var && token[i] == '{')
 			flag_acc = 1;

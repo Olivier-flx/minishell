@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 21:54:28 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/28 21:30:31 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/12 16:21:32 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,15 @@ bool	tocken_quote_closed(char *s)
 	return (quote_are_closed(&quote));
 }
 
+
+bool	quote_are_closed(t_quote *quote)
+{
+	return (quote->dbl_quote % 2 == 0 \
+		&& quote->sgl_quote % 2 == 0);
+}
+
 /**
- * quote_are_closed - Checks if all quotes are properly closed.
+ * quote_and_acc_are_closed - Checks if all quotes are properly closed.
  * @quote: Pointer to the quote tracking structure.
  *
  * This function returns true if both single and double quotes are closed,
@@ -72,12 +79,13 @@ bool	tocken_quote_closed(char *s)
  *   true if all quotes are closed,
  *   false if any quote remains open.
  */
-bool	quote_are_closed(t_quote *quote)
+bool	quote_and_acc_are_closed(t_quote *quote)
 {
-	return (quote->dbl_quote % 2 == 0 \
-		&& quote->sgl_quote % 2 == 0 \
+	return (quote_are_closed(quote)
 		&& quote->acc % 2 == 0);
 }
+
+
 
 // cc ./utils/string/quotes.c ./utils/string/basics.c -g -o test
 // int main()

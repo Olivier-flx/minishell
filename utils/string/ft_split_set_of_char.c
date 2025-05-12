@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_set_of_char.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 11:18:50 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/28 21:14:08 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/12 16:19:55 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	quote_accolade_increment(char *src, int i, t_quote *quote)
 	else if (src[i] == '\'' && quote->dbl_quote % 2 == 0 && quote->acc % 2 == 0)
 		quote->sgl_quote++;
 	else if (src[i] == '{' && i > 0 && src[i - 1] == '$'
-			&& quote_are_closed(quote))
+			&& quote_and_acc_are_closed(quote))
 		quote->acc++;
 	else if (src[i] == '}' && quote->acc % 2 == 1 && quote->sgl_quote % 2 == 0 && quote->dbl_quote % 2 == 0)
 		quote->acc++;

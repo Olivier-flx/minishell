@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 17:38:16 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/10 16:35:38 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/12 16:19:55 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ int get_expended_tocken_len(t_data *data, char *str)
 	while (str[i])
 	{
 		quote_increment(str, i, &quotes);
-		if((quotes.dbl_quote % 2 == 1 || quote_are_closed(&quotes)) && str[i] == '$')
+		if((quotes.dbl_quote % 2 == 1 || quote_and_acc_are_closed(&quotes)) && str[i] == '$')
 		{
 			var_name = get_var_name(str, i);
 			var_value = ft_getenv(data->env_list, var_name);
@@ -160,7 +160,7 @@ char	*expend_token(t_data *data, char *str)
 	while (str[i])
 	{
 		quote_increment(str, i, &quotes);
-		if((quotes.dbl_quote % 2 == 1 || quote_are_closed(&quotes)) && str[i] == '$')
+		if((quotes.dbl_quote % 2 == 1 || quote_and_acc_are_closed(&quotes)) && str[i] == '$')
 		{
 			var_name = get_var_name(str, i);
 			var_value = ft_getenv(data->env_list, var_name);

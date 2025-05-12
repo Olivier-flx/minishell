@@ -26,7 +26,8 @@ ENV = ./src/environment/env_search.c \
 	./src/environment/enviro.c \
 	./src/environment/more_utils.c
 
-TOKENS = ./src/tokens/user_input_validations/user_input_validation.c\
+TOKENS = ./src/tokens/user_input_validations/check_line.c \
+	./src/tokens/user_input_validations/user_input_validation.c\
 	./src/tokens/user_input_validations/unique_token_operator.c\
 	./src/tokens/user_input_validations/double_operators.c \
 	./src/tokens/create_input_token.c \

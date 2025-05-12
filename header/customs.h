@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/12 14:23:07 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/12 16:20:58 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,6 +185,18 @@ char	*expend_token(t_data *data, char *str);
  * 		  Tokeninzation
  * ==========================
  */
+// verifications //
+			//user_input_validation
+void	listen_incomplete_lines(char **line);
+int	check_for_user_input_error(t_dlist **cmd_list);
+int	check_for_triple(t_dlist **cmd_list);
+int	check_for_simple(t_dlist **cmd_list);
+int	line_accolade_closed(char *line);
+
+			//system_input_validation
+void	check_system_input_error(t_data *data, t_dlist **cmd_list); // Unused.
+
+/// Chunks & segments
 int		create_chunks(char *line,  t_dlist **cmd_list, t_data *data);
 int		create_main_chunks(char *src, t_dlist **cmd_list, t_data *data);
 t_chunk	*create_token(char ***str, chunk_type type, int i, t_quote quotes);
@@ -208,15 +220,7 @@ int		count_input_redir_from_pp_char(char **content);
 int		count_heredocs_in_chunks(char **content);
 bool	has_heredoc_from_pp_char(char **content);
 
-		// verifications //
-			//user_input_validation
-int	check_for_user_input_error(t_dlist **cmd_list);
-int	check_for_triple(t_dlist **cmd_list);
-int	check_for_simple(t_dlist **cmd_list);
-int	line_accolade_closed(char *line);
 
-			//system_input_validation
-void	check_system_input_error(t_data *data, t_dlist **cmd_list); // Unused.
 		//cleaning.c
 
 void	set_ope_char_i_struc_arr(char *src, t_int_array *arr);
@@ -241,6 +245,7 @@ char	*ft_trim(char *src, bool is_malloced);
 void	init_quotes(t_quote *quote);
 bool	tocken_quote_closed(char *s);
 bool	quote_are_closed(t_quote *quote);
+bool	quote_and_acc_are_closed(t_quote *quote);
 	// custom basics
 char	*c_strjoin(char *s1, char *s2, char c);
 char	*c_ft_substr(char const *s, unsigned int start, size_t len);
