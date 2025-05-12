@@ -82,6 +82,7 @@ SRC = main.c \
 	$(ENV)
 
 OBJ = $(SRC:.c=.o)
+#MMD = $(SRC:.c=.d)
 
 ###################
 LIBFT_PATH = ./libs/libft/libft.a
@@ -93,7 +94,8 @@ $(NAME) : $(OBJ) $(LIBFT_PATH)
 		@printf "$(GREEN)[minishell] Compiled successfully.$(NC)\n"
 
 $(LIBFT_PATH):
-		@$(MAKE) -C ./libs/libft > /dev/null 2>&1
+		@$(MAKE) -C ./libs/libft
+#> /dev/null 2>&1
 		@printf "$(GREEN)[minishell] libft compiled successfully.$(NC)\n" > /dev/null
 ##
 # ┌────────────────────────────────────────────┬─────────────────────┬─────────────────┬─────────────────┐

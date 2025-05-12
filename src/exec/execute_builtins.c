@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 16:04:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/12 19:19:01 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/12 20:56:04 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,7 @@ int	pick_and_run_builtin(t_data *data, char **argv)
 	else if (ft_strcmp(argv[0], "env") == 0)
 		return (ft_env(data->env_list));
 	else if (ft_strcmp(argv[0], "echo") == 0)
-	{
 		return (ft_echo(data->env_list, argv));
-	}
 	return (EXIT_FAILURE);
 }
 

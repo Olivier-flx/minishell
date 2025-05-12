@@ -6,13 +6,14 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 18:19:29 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/10 16:32:34 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/12 20:30:34 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell.h"
 
 //Free a full char **
+//void	free_av(char ***av)
 void	free_av(char **av)
 {
 	int	i;

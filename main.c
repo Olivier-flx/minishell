@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:23:22 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/12 16:46:57 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/12 20:20:23 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void initialize_data(t_data *data, char **env)
 	data->token_separators_char_i.array = NULL;
 	data->token_separators_char_i.size = 0;
 	data->nb_chunks = 0;
+	data->exec_info.cmd_err_msg = NULL;
 	data->exec_info.env_path = NULL;
 	data->exec_info.env_path_found = false;
 	data->exec_info.cmd_is_valid_arr = NULL;
