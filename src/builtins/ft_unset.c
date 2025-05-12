@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 11:32:50 by marvin            #+#    #+#             */
-/*   Updated: 2025/05/12 17:14:59 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/12 17:49:08 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	main(int argc, char **argv)
 	return (0);
 }
 
-/*int main(int argc, char **argv)
+int main(int argc, char **argv)
 {
     (void)argc;
 
