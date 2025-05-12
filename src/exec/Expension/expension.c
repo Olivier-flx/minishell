@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 17:38:16 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/12 16:19:55 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/12 16:58:03 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,13 @@
 // 	return (k);
 // }
 
-bool	unsuported_accolade_operator(char c)
+bool	unsuported_accolade_operator(char *str, int i)
 {
-	if (c == '-' || c == '+' || c == ':' || c == '=' || c == '%' || c == '*' || \
-			c == '!' || c == '?')
+	if (str[i] == '-' || str[i] == '+' || str[i] == ':' \
+		|| str[i] == '=' || str[i] == '%' || str[i] == '*' || \
+		str[i] == '!' || (str[i] == '?' && str[i + 1] != '}'))
 	{
-		printf("Warning : unsuported minishell operator `%c` in ${}\n", c);
+		printf("Warning : unsuported minishell operator `%c` in ${}\n", str[i]);
 		return(true);
 	}
 	return (false);
@@ -55,7 +56,7 @@ char	*get_var_name_in_accolade(char *str, int i)
 	var_name = NULL;
 	while (str[i] && str[i] != '}')
 	{
-		if (unsuported_accolade_operator(str[i]))
+		if (unsuported_accolade_operator(str, i))
 			return (NULL);
 		i++;
 		var_name_len ++;
@@ -119,6 +120,8 @@ int get_expended_tocken_len(t_data *data, char *str)
 		{
 			var_name = get_var_name(str, i);
 			var_value = ft_getenv(data->env_list, var_name);
+			if (ft_strcmpq(var_name, "?") == 0)
+				var_value == ft_itoa(data->exit_status);
 			k += ft_strlen(var_value);
 			if (str[i + 1] && str[i + 1] == '{')
 				i += ft_strlen(var_name) + 3; // +1 pour le $ et les {}
