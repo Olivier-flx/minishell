@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 18:13:34 by laufarin          #+#    #+#             */
-/*   Updated: 2025/05/11 17:48:17 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/12 16:27:01 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	ft_pwd(void);
 int ft_export(t_env **env, char **args);
 int ft_unset(char **args, t_env **env);
 int ft_env(t_env *env);
-int	ft_exit(char **args); // @optimize  Es importante limpiar todo antes que el exit, entonces tiene que tomar "data"
+int	ft_exit(t_data *data, char **args); // @optimize  Es importante limpiar todo antes que el exit, entonces tiene que tomar "data"
 
 int  update_pwds(t_env **env);
 

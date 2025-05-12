@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:23:22 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/12 16:01:23 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/12 16:46:57 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	run_minishell(t_data	*data)
 			g_signal_received = 0;
 		}
 		listen_incomplete_lines(&data->line);
-		if (data->line && tocken_quote_closed(data->line))
+		if (data->line /* && tocken_quote_closed(data->line) */)
 		{
 			control = create_chunks(data->line, &data->cmd_list, data);
 			if (control != 3 )

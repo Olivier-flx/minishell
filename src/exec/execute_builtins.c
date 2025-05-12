@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 16:04:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/11 16:54:07 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/12 16:33:57 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	pick_and_run_builtin(t_data *data, char **argv)
 	// else if (ft_strcmp(argv[0], "unset") == 0)
 	// 	return (ft_unset(data, argv));
 	else if (ft_strcmp(argv[0], "exit") == 0)
-		return (ft_exit(argv));
+		return (ft_exit(data, argv));
 	// else if (ft_strcmp(argv[0], "exit") == 0)
 		// return (ft_exit(data, argv));
 	else if (ft_strcmp(argv[0], "pwd") == 0)
