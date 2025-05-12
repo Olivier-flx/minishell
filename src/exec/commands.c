@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 18:10:10 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/11 15:57:41 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/12 18:48:43 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ void	init_cmd_vect(t_data *data, t_dlist **cmd_list, t_exe *exec_info)
 		if (chunk->type == CMD && chunk->argv && chunk->argv[0])
 		{
 			exec_info->cmd_is_valid_arr[i] = false;
-			if (usr_input_got_slash(chunk->argv[0]) == 0)
+			if (usr_input_got_slash(chunk->argv[0]) == 0 && !is_builtin(chunk->argv[0]))
 			{
 				if (exec_info->env_path_found == false)
 					get_path(chunk->argv[0], exec_info, data->env_list);

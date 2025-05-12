@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/12 17:41:36 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/12 18:36:56 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,7 @@ int		main_exec(t_data *data);
 int		listen_heredocs(t_data *data, t_chunk *chunk);
 bool	is_builtin(char *cmd);
 int		run_builtins(t_data *data, t_exe *exe, t_chunk *chunk, int i);
+int		execve_builtin_in_child(t_data *data, t_exe *exe, t_chunk *chunk, int i);
 
 	////// commands init ///
 void	init_cmd(t_data *data);

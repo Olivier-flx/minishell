@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:30:25 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/12 17:11:42 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/12 19:17:09 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,13 @@ void	run_cmd(t_data *data, t_exe *exe, t_chunk *chunk, int i)
 		strerror(errno); // @optimize
 	if (i < exe->total_cmd_count - 1)
 		close(exe->pipe_arr[i][1]);
-	if (0 != run_builtins(data, exe, chunk, i))
+	if (0 != execve_builtin_in_child(data, exe, chunk, i))
 		execve(chunk->argv[0], chunk->argv, data->env);
 	if (exe->total_cmd_count > 1)
+	{
+		free_resources(data, true, true);
 		exit(127);
+	}
 }
 
 static void	waiting_childs(t_data *data, t_exe *exe, int *pid_arr)
@@ -95,6 +98,7 @@ void	run_pipex(t_data *data, int i)
 	}
 	close_all_pipes(&data->exec_info, &data->exec_info.pipe_arr);
 	waiting_childs(data, &data->exec_info, data->exec_info.pid_arr);
+	clean_exec_info(data, data->exit_status);
 }
 
 // void	run_pipex(t_data *data)

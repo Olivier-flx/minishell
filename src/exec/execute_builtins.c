@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 16:04:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/12 17:20:00 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/12 19:19:01 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,9 @@ int	pick_and_run_builtin(t_data *data, char **argv)
 	else if (ft_strcmp(argv[0], "env") == 0)
 		return (ft_env(data->env_list));
 	else if (ft_strcmp(argv[0], "echo") == 0)
+	{
 		return (ft_echo(data->env_list, argv));
+	}
 	return (EXIT_FAILURE);
 }
 
@@ -56,10 +58,20 @@ int	run_builtins(t_data *data, t_exe *exe, t_chunk *chunk, int i)
 			return (1);
 		}
 		else
-		{
-			execute_builtin_in_child (data, exe, chunk, i);
 			return (0);
-		}
 	}
 	return (-1);
+}
+
+int	execve_builtin_in_child(t_data *data, t_exe *exe, t_chunk *chunk, int i)
+{
+	if (chunk && chunk->argv && is_builtin(chunk->argv[0]))
+	{
+		if (exe->total_cmd_count > 1)
+		{
+			execute_builtin_in_child (data, exe, chunk, i);
+			return (EXIT_SUCCESS);
+		}
+	}
+	return (EXIT_FAILURE);
 }

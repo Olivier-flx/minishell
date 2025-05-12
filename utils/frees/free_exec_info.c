@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 19:00:27 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/12 15:37:02 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/12 19:33:41 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	cmd_error_msg(t_data *data, int failure)
 
 void	clean_exec_info(t_data *data, int exit_val)
 {
+	(void) exit_val;
 
 	if (data && data->cmd_list)
 	{
