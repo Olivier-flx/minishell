@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:23:22 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/12 22:25:33 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/13 09:32:06 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ void initialize_data(t_data *data, char **env)
 	data->token_separators_char_i.array = NULL;
 	data->token_separators_char_i.size = 0;
 	data->nb_chunks = 0;
+	data->exit_status = 0;
+	data->exec_info.last_status_code = 0;
 	data->exec_info.cmd_err_msg = NULL;
 	data->exec_info.env_path = NULL;
 	data->exec_info.env_path_found = false;

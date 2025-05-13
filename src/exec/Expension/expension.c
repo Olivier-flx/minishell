@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expension.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 17:38:16 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/12 17:03:25 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/13 09:49:17 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char	*get_classic_var_name(char *str, int i)
 
 	var_name_len = 0;
 	var_name = NULL;
-	while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
+	while (str[i] && (ft_isalnum(str[i]) || str[i] == '_' || str[i] == '?'))
 	{
 		i++;
 		var_name_len ++;
@@ -89,6 +89,8 @@ int get_expended_tocken_len(t_data *data, char *str)
 			if (ft_strcmp(var_name, "?") == 0)
 				var_value = ft_itoa(data->exit_status);
 			k += ft_strlen(var_value);
+			if (ft_strcmp(var_name, "?") == 0)
+				ft_free((void **) &var_value);
 			if (str[i + 1] && str[i + 1] == '{')
 				i += ft_strlen(var_name) + 3; // +1 pour le $ et les {}
 			else
@@ -133,19 +135,22 @@ char	*expend_token(t_data *data, char *str)
 		{
 			var_name = get_var_name(str, i);
 			var_value = ft_getenv(data->env_list, var_name);
-
+			if (ft_strcmp(var_name, "?") == 0)
+				var_value = ft_itoa(data->exit_status);
 			if (var_value)
 			{
 				j += ft_strlcpy(expd_token + j, var_value, (size_t) ft_strlen(var_value) + 1); // +1 pour '\0'
 				//free(var_value); // not necesary because free later in ft_free_env (env_utils.c:25)
 			}
+			if (ft_strcmp(var_name, "?") == 0)
+				ft_free((void **) &var_value);
 			if (str[i + 1] && str[i + 1] == '{')
 				i += ft_strlen(var_name) + 3; // +1 pour le $ et les {}
 			else
 				i += ft_strlen(var_name) + 1; // +1 pour le $
 			ft_free((void **) &var_name);
 		}
-		else //@optimize // expendre avec history dans le cas de "!!" ou de "!20"
+		else
 			expd_token[j++] = str[i++];
 	}
 	return (expd_token);
