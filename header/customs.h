@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/14 17:58:46 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/14 18:28:09 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,6 +197,9 @@ void	close_files_if_opened(int *fd_arr, bool *file_open, int len);
 int		expend_all(t_data *data);
 char	*expend_token(t_data *data, char *str);
 char	*get_var_name_in_accolade(char *str, int i);
+char	*get_classic_var_name(char *str, int i);
+char	*get_var_name(char *str, int i);
+int		 get_expended_tocken_len(t_data *data, char *str);
 
 	/////  /////
 /*

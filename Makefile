@@ -58,7 +58,8 @@ FILES = ./src/exec/files/init_input_files.c \
 		./src/exec/files/close_files.c \
 		./src/exec/files/redirects.c
 
-EXPEND = ./src/exec/Expension/expension.c\
+EXPEND = ./src/exec/Expension/expension.c \
+		./src/exec/Expension/expension_tocken.c \
 		./src/exec/Expension/accolades.c
 
 UTILS = ./utils/string/ft_split_s.c \
