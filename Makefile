@@ -36,7 +36,9 @@ TOKENS = ./src/tokens/user_input_validations/preliminary_checks.c \
 	./src/tokens/create_input_token.c \
 	./src/tokens/operator.c \
 	./src/tokens/count_files_in_chunks.c \
+	./src/tokens/init_file_arr.c \
 	./src/tokens/token_separators.c \
+	./src/tokens/create_argv.c \
 	./src/tokens/create_chunks.c
 
 EXEC = ./src/exec/exec.c \

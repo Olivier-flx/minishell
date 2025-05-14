@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 11:28:48 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/14 14:30:05 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/14 15:06:12 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,11 @@ int	check_for_simple(t_dlist **cmd_list)
 	init_quotes(&quotes);
 	i_node = *cmd_list;
 	i = 0;
+	debug_print_cmd_list(cmd_list);
 	while (i_node && (t_chunk *)i_node->content)
 	{
 		chunk = (t_chunk *)i_node->content;
+
 		while (chunk->tokens && chunk->tokens[i])
 		{
 			if (is_operator(chunk->tokens[i], 0, &quotes))

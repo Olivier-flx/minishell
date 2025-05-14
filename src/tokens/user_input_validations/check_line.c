@@ -6,18 +6,32 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 16:00:49 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/14 10:42:29 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/14 14:56:19 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../header/minishell.h"
 
+bool	line_only_contain_pipes(char *line)
+{
+	int i = 0;
+	if (!line)
+		return (false);
+	while (line[i])
+	{
+		if (line[i] != '|' && !ft_isspace((unsigned char)line[i]))
+			return (false);
+		i++;
+	}
+	return (true);
+}
+
 bool	line_finish_by_pipe(char *line)
 {
 	int	i;
 
-	if (!line || line_is_only_spaces(line))
-		return false;
+	if (!line || line_is_only_spaces(line) || line_only_contain_pipes(line))
+		return (false);
 	i = ft_strlen(line) - 1;
 	while (i >= 0 && ft_isspace(line[i]))
 		i--;
@@ -30,7 +44,7 @@ bool	line_finish_by_backslash(char *line)
 	int	backslash_count;
 
 	if (!line || line_is_only_spaces(line))
-		return false;
+		return (false);
 	backslash_count = 0;
 	i = ft_strlen(line) - 1;
 	while (i >= 0 && line[i] == '\\')
@@ -55,7 +69,7 @@ void	remove_trailing_backslash(char *line)
 bool	line_is_incomplete(char *line)
 {
 	if (!line || line_is_only_spaces(line))
-		return false;
+		return (false);
 	return (
 		!tocken_quote_closed(line)
 		|| !line_accolade_closed(line)

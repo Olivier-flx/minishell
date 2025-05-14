@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/14 14:26:50 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/14 15:31:03 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,6 +213,9 @@ void	set_separator_char_i_struc_arr(char *src, t_int_array *arr);
 int		is_seperator(char *src, int i, t_quote *quote);
 int		count_redir_files_in_chunks(char **content);
 
+// argv
+int		create_argvs(t_dlist **cmd_list);
+
 		// operators.c
 int		is_operator(char *src, int i, t_quote *quote);
 int		count_operador_from_pp_char(char **content);
@@ -229,6 +232,9 @@ int		count_input_redir_from_pp_char(char **content);
 int		count_heredocs_in_chunks(char **content);
 bool	has_heredoc_from_pp_char(char **content);
 
+// init file arr
+void	init_input_redir_arr_and_files(t_chunk *chunk);
+void	init_redir_arr_and_files(t_chunk *chunk);
 
 		//cleaning.c
 void	set_ope_char_i_struc_arr(char *src, t_int_array *arr);
