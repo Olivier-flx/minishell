@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:49:47 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/14 15:31:38 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/14 15:33:37 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ int	create_main_chunks(char *src, t_dlist **cmd_list, t_data *data)
 	i = 0;
 	flag_last_pipe = 0;
 	all_tokens = split_quoted2(src, data);
-	print_pp_char_arr(all_tokens); // @debug
 	while (all_tokens && all_tokens[i] && all_tokens[i][0])
 	{
 		if (i > 0 && all_tokens[i][0] == '|') // @info : Si encuentra '|' crea el chunk de antes y el chunk de '|'
