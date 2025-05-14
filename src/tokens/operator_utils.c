@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 16:39:47 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/14 16:40:53 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/14 16:43:03 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	is_redirection(char *src, int i, t_quote *quote)
 	return (0);
 }
 
-int is_input_redir(char *src, int i, t_quote *quote)
+int	is_input_redir(char *src, int i, t_quote *quote)
 {
 	if (quote->dbl_quote % 2 == 0  && quote->dbl_quote % 2 == 0)
 	{

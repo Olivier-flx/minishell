@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 16:37:22 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/14 16:40:07 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/14 16:43:32 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static void	fill_operator_positions(char *src, t_int_array *arr)
 			if (op_count == 2)
 				arr->array[j++] = i + 1;
 			i += op_count;
-			continue;
+			continue ;
 		}
 		i++;
 	}
@@ -80,10 +80,10 @@ void	set_ope_char_i_arr(char *src, t_int_array *arr)
 //calculate the lenght of the array on indexes of char that are operators in src
 void	set_ope_char_i_struc_arr(char *src, t_int_array *arr)
 {
-	int			op_count;
-	int			i;
-	t_quote		quote;
-	int			tmp;
+	int		op_count;
+	int		i;
+	t_quote	quote;
+	int		tmp;
 
 	tmp = 0;
 	init_operador_var(&quote, &op_count, &i);
