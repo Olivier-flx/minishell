@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/14 15:31:03 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/14 17:21:57 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,10 +155,19 @@ bool	is_builtin(char *cmd);
 int		run_builtins(t_data *data, t_exe *exe, t_chunk *chunk, int i);
 int		execve_builtin_in_child(t_data *data, t_exe *exe, t_chunk *chunk, int i);
 
+	////// commands ///
+void	check_wrong_commands(t_data *data);
+char	*get_msg(t_data *data, int flag, char *arg);
+void	command_is_valid(t_data *data, int i);
 	////// commands init ///
 void	init_cmd(t_data *data);
 void	clean_exec_info(t_data *data, int exit_val);
 void	cmd_error_msg(t_data *data, int failure);
+	////// commands utils ///
+int		count_cmd(t_dlist **cmd_list);
+void	command_is_valid(t_data *data, int i);
+int		usr_input_got_slash(char *str);
+char	*get_msg(t_data *data, int flag, char *arg);
 
 	////// path exec ////
 void	get_path(char *usr_cmd_input, t_exe *exec_info, t_env *env);

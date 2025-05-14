@@ -45,6 +45,8 @@ TOKENS = ./src/tokens/user_input_validations/preliminary_checks.c \
 
 EXEC = ./src/exec/exec.c \
 	./src/exec/commands.c \
+	./src/exec/commands_utils.c \
+	./src/exec/commands_check_wrong.c \
 	./src/exec/path.c \
 	./src/exec/listen_heredocs.c \
 	./src/exec/pipes.c \

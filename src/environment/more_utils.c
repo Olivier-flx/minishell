@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 17:20:12 by marvin            #+#    #+#             */
-/*   Updated: 2025/05/14 17:06:01 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/14 17:38:25 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char **env_to_sorted_array(t_env *env)
 {
-	int	 count = 0;
+	int		count = 0;
 	t_env   *tmp = env;
 	char	**array;
 	int	 i = 0;
