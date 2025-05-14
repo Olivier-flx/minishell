@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:13:36 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/14 10:27:24 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/14 15:45:38 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,23 +101,19 @@ char	*c_ft_substr(char const *s, unsigned int start, size_t len)
 
 	if(len <= 0 || start >= (unsigned int) ft_strlen(s))
 		return (NULL);
-	i = 0;
-	j = 0;
+	i = -1;
+	j = -1;
 	len = calc_malloc_len(s, start, len);
 	ptr = malloc(sizeof(char) * len + 1);
 	if (ptr == NULL)
 		return (NULL);
-	while (s[i])
+	while (s[++i])
 	{
 		if (start == i)
 		{
-			while (j < len)
-			{
+			while (++j < len)
 				ptr[j] = s[i + j];
-				j++;
-			}
 		}
-		i++;
 	}
 	ptr[j] = '\0';
 	return (ptr);

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split.c                                         :+:      :+:    :+:   */
+/*   ft_split_s.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 11:18:50 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/28 18:55:30 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/14 15:42:36 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../header/minishell.h"
+/* #include "../../header/minishell.h"
 
 static int	ft_segment_count(const char *s, char c)
 {
@@ -154,7 +154,7 @@ char	**split_quoted(char const *s, char c)
 		return (0);
 	ns_ar = ft_new_string_arr(s, c, ns_ar, segments_number);
 	return (ns_ar);
-}
+} */
 
 // cc ./utils/string/ft_split.c ./utils/string/basics.c -g -o test
 // int main()

@@ -35,6 +35,8 @@ TOKENS = ./src/tokens/user_input_validations/preliminary_checks.c \
 	./src/tokens/user_input_validations/double_operators.c \
 	./src/tokens/create_input_token.c \
 	./src/tokens/operator.c \
+	./src/tokens/operator_arr.c \
+	./src/tokens/operator_utils.c \
 	./src/tokens/count_files_in_chunks.c \
 	./src/tokens/init_file_arr.c \
 	./src/tokens/token_separators.c \

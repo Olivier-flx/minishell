@@ -6,46 +6,11 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 16:51:49 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/09 17:05:18 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/14 15:46:28 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell.h"
-
-void	print_dlist(t_dlist **list)
-{
-	t_dlist	*i_node;
-	//char	*to_print;
-	int		i;
-	int		j;
-
-	i = 0;
-	j = 0;
-	if (!list)
-		return ;
-	i_node = *list;
-	while (i_node)
-	{
-		if (i_node->content)
-		{
-			printf("chunk numero %i = ", j);
-			j++;
-			fflush(stdout);
-			i = 0;
-			while (((t_chunk *)i_node->content)->tokens[i])
-			{
-				printf("`%s`;", ((t_chunk *)i_node->content)->tokens[i++]);
-				fflush(stdout);
-			}
-			printf("\n");
-			fflush(stdout);
-		}
-		//else
-		//	printf("Error: content is NULL in node.\n");
-		i_node = i_node->next;
-	}
-}
-
 
 // @debug : Funccion que imprime la lista de comandos entera y imprime el contenido de cada nodo
 void debug_print_cmd_list(t_dlist **cmd_list_ptr)
