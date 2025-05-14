@@ -44,6 +44,7 @@ TOKENS = ./src/tokens/user_input_validations/preliminary_checks.c \
 	./src/tokens/create_chunks.c
 
 EXEC = ./src/exec/exec.c \
+	./src/exec/exec_pipex.c \
 	./src/exec/commands.c \
 	./src/exec/commands_utils.c \
 	./src/exec/commands_check_wrong.c \

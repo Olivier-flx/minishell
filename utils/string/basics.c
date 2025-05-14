@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:33:41 by marvin            #+#    #+#             */
-/*   Updated: 2025/05/14 10:41:56 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/14 17:53:03 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,3 +42,43 @@ bool	line_is_only_spaces(char *line)
 	}
 	return true;
 }
+/*
+//Retourne l'index de char c, ou -1 si pas trouvé
+static int string_search(char *s, char c)
+{
+	int	i;
+
+	i = 0;
+	while (s && s[i])
+	{
+		if (s[i] == c)
+			return (i);
+		i++;
+	}
+	return (-1);
+}
+
+//tronque en incluant l'index n
+static char	*ft_truncate(char *s, int n)
+{
+	char	*cpy;
+	int		i;
+	int		s_len;
+
+	i = 0;
+	if (!s)
+		return (NULL);
+	s_len = (int) ft_strlen(s);
+	if (n > s_len)
+		n = s_len;
+	cpy = malloc(sizeof(char) * (n + 2));
+		return (NULL);
+	while (i <= n)
+	{
+		cpy[i] = s[i];
+		i++;
+	}
+	cpy[i] = '\0';
+	return (cpy);
+}
+ */

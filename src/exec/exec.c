@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:30:25 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/12 19:17:09 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/14 17:58:15 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,83 +59,10 @@ void	init_pid_arr(t_data *data, t_exe *exe)
 	exe->pid_arr = malloc(exe->valid_cmd_count * sizeof(int));
 	if (!exe->pid_arr)
 		strerror(errno);
-		//clean_exec_info(data, EXIT_FAILURE/* , "Malloc err pid_arr" */); //@optimize, normalement dans pipex, cela supprimer faisait un exit, donc la suite du program n'etait pas execute. Ici ce n'est plus le cas, il faut donc gerer differament pour etre sur de ne pas avoir des free multiples etc;
 	exe->pid_arr_malloced = true;
 	while (i < exe->valid_cmd_count)
 		exe->pid_arr[i++] = -2;
 }
-
-void	run_pipex(t_data *data, int i)
-{
-	int		valid_cmd_i;
-	t_dlist	*i_node;
-
-	i_node = data->cmd_list;
-	valid_cmd_i = 0;
-	while (i <  data->exec_info.total_cmd_count)
-	{
-		if (i_node && (t_chunk *)i_node->content && ((t_chunk *)i_node->content)->type != CMD)
-		{
-			i_node = i_node->next;
-			continue ;
-		}
-		listen_heredocs(data, (t_chunk *)i_node->content);
-		if (data->exec_info.cmd_is_valid_arr[i] == true)
-		{
-			if (1 != run_builtins(data, &data->exec_info, ((t_chunk *)i_node->content), i))
-			{
-				data->exec_info.pid_arr[valid_cmd_i] = fork();
-				if (data->exec_info.pid_arr[valid_cmd_i] == -1)
-					strerror(errno);
-				if (data->exec_info.pid_arr[valid_cmd_i] == 0)
-					run_cmd (data, &data->exec_info, ((t_chunk *)i_node->content), i);
-			}
-			valid_cmd_i++;
-		}
-		close_heredocs_pipes((t_chunk *)i_node->content);
-		i++;
-		i_node = i_node->next;
-	}
-	close_all_pipes(&data->exec_info, &data->exec_info.pipe_arr);
-	waiting_childs(data, &data->exec_info, data->exec_info.pid_arr);
-	clean_exec_info(data, data->exit_status);
-}
-
-// void	run_pipex(t_data *data)
-// {
-// 	int		i;
-// 	int		valid_cmd_i;
-// 	t_dlist	*i_node;
-
-// 	i = 0;
-// 	i_node = data->cmd_list;
-// 	valid_cmd_i = 0;
-// 	while (i <  data->exec_info.total_cmd_count)
-// 	{
-// 		if (i_node && (t_chunk *)i_node->content && ((t_chunk *)i_node->content)->type != CMD)
-// 		{
-// 			i_node = i_node->next;
-// 			continue ;
-// 		}
-// 		init_pipes_2arr_for_heredoc(data, (t_chunk *)i_node->content);
-// 		listen_heredocs((t_chunk *)i_node->content);
-// 		if (data->exec_info.cmd_is_valid_arr[i] == true)
-// 		{
-// 			data->exec_info.pid_arr[valid_cmd_i] = fork();
-// 			if (data->exec_info.pid_arr[valid_cmd_i] == -1)
-// 				strerror(errno);
-// 			if (data->exec_info.pid_arr[valid_cmd_i] == 0)
-// 				run_cmd (data, &data->exec_info, ((t_chunk *)i_node->content), i);
-// 			valid_cmd_i++;
-// 		}
-// 		close_heredocs_pipes((t_chunk *)i_node->content);
-// 		i++;
-// 		i_node = i_node->next;
-// 	}
-// 	close_all_pipes(&data->exec_info, &data->exec_info.pipe_arr);
-// 	waiting_childs(&data->exec_info, data->exec_info.pid_arr);
-// }
-
 
 int main_exec(t_data *data)
 {
@@ -147,6 +74,9 @@ int main_exec(t_data *data)
 		init_pid_arr(data, &data->exec_info);
 		init_pipes_2arr(data , &data->exec_info);
 		run_pipex(data, 0);
+		close_all_pipes(&data->exec_info, &data->exec_info.pipe_arr);
+		waiting_childs(data, &data->exec_info, data->exec_info.pid_arr);
+		clean_exec_info(data, data->exit_status);
 		if (data->exec_info.cmd_err_msg != NULL && \
 				data->exec_info.command_err_count == data->exec_info.total_cmd_count)
 			printf("%s\n", data->exec_info.cmd_err_msg);
