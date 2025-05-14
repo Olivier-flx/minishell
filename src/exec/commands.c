@@ -6,11 +6,26 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 18:10:10 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/14 17:23:31 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/14 17:44:29 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell.h"
+
+static void	handle_path_and_builtin(t_data *data, t_exe *exec_info, t_chunk *chunk)
+{
+	if (usr_input_got_slash(chunk->argv[0]) == 0 && !is_builtin(chunk->argv[0]))
+	{
+		if (exec_info->env_path_found == false)
+			get_path(chunk->argv[0], exec_info, data->env_list);
+		if (exec_info->env_path_found == true)
+		{
+			chunk->argv_0_nopath = ft_strdup(chunk->argv[0]);
+			ft_free((void **) &chunk->argv[0]);
+			chunk->argv[0] = ft_strjoin(exec_info->env_path, chunk->argv_0_nopath);
+		}
+	}
+}
 
 void	init_cmd_vect(t_data *data, t_dlist **cmd_list, t_exe *exec_info)
 {
@@ -19,7 +34,6 @@ void	init_cmd_vect(t_data *data, t_dlist **cmd_list, t_exe *exec_info)
 	int		i;
 
 	i_node = *cmd_list;
-	chunk = NULL;
 	i = 0;
 	while (i_node)
 	{
@@ -27,18 +41,8 @@ void	init_cmd_vect(t_data *data, t_dlist **cmd_list, t_exe *exec_info)
 		if (chunk->type == CMD && chunk->argv && chunk->argv[0])
 		{
 			exec_info->cmd_is_valid_arr[i] = false;
-			if (usr_input_got_slash(chunk->argv[0]) == 0 && !is_builtin(chunk->argv[0]))
-			{
-				if (exec_info->env_path_found == false)
-					get_path(chunk->argv[0], exec_info, data->env_list);
-				if (exec_info->env_path_found == true)
-				{
-					chunk->argv_0_nopath = ft_strdup(chunk->argv[0]);
-					ft_free((void **) &chunk->argv[0]);
-					chunk->argv[0] = ft_strjoin(exec_info->env_path, chunk->argv_0_nopath);
-				}
-			}
-		i++;
+			handle_path_and_builtin(data, exec_info, chunk);
+			i++;
 		}
 		i_node = i_node->next;
 	}
