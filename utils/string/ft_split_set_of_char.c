@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_set_of_char.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 11:18:50 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/14 14:20:10 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/14 23:47:14 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static char	**ft_new_str_arr(char *s, char **ns_ar, int nb_segment, t_int_array 
 			i++;
 		ns_ar[segment_i] = allocate_next_segment(s, i, &quote, separators);
 		if (!ns_ar[segment_i])
-			return (free_uncomplete_av(ns_ar, segment_i), NULL);
+			return (free_uncomplete_av(&ns_ar, segment_i), NULL);
 		fill_token_segment(s, ns_ar[segment_i], &i, &quote);
 		segment_i++;
 	}
@@ -75,7 +75,7 @@ static char	**ft_new_str_arr(char *s, char **ns_ar, int nb_segment, t_int_array 
 	return (ns_ar);
 }
 
-char	**split_quoted2(char *s,t_data *data)
+char	**split_quoted2(char *s, t_data *data)
 {
 	char	**ns_ar;
 	int		tokens_number;
@@ -91,6 +91,7 @@ char	**split_quoted2(char *s,t_data *data)
 	if (!ns_ar)
 		return (0);
 	ns_ar = ft_new_str_arr(s, ns_ar, tokens_number, &(data->token_separators_char_i));
+	ft_free((void **) &(data->token_separators_char_i));
 	return (ns_ar);
 }
 

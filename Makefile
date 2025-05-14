@@ -31,6 +31,7 @@ ENV = ./src/environment/env_search.c \
 TOKENS = ./src/tokens/user_input_validations/preliminary_checks.c \
 	./src/tokens/user_input_validations/check_line.c \
 	./src/tokens/user_input_validations/user_input_validation.c\
+	./src/tokens/user_input_validations/check_tokens.c \
 	./src/tokens/user_input_validations/unique_token_operator.c\
 	./src/tokens/user_input_validations/double_operators.c \
 	./src/tokens/create_input_token.c \
@@ -60,12 +61,12 @@ FILES = ./src/exec/files/init_input_files.c \
 
 EXPEND = ./src/exec/Expension/expension.c \
 		./src/exec/Expension/expension_tocken.c \
-		./src/exec/Expension/accolades.c
+		./src/exec/Expension/accolades.c \
+		./src/exec/Expension/select_from_substring_arr.c \
 
 UTILS = ./utils/string/ft_split_s.c \
 		./utils/string/basics.c \
 		./utils/string/custom_basics.c \
-		./utils/string/select_from_substring_arr.c \
 		./utils/string/quotes.c \
 		./utils/string/trim.c \
 		./utils/string/ft_split_set_of_char.c \

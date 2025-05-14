@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   customs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/14 18:28:09 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/14 23:48:00 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,8 +213,9 @@ void	listen_incomplete_lines(t_data *data,char **line);
 bool	preliminary_checks_ok(t_data *data, char* line);
 int		check_for_user_input_error(t_data *data, t_dlist **cmd_list);
 int		check_for_triple(t_dlist **cmd_list);
-int		check_for_simple(t_dlist **cmd_list);
+int		check_for_simple(t_dlist *cmd_list);
 int		line_accolade_closed(char *line);
+int		accolade_not_closed(t_dlist **cmd_list);
 
 			//system_input_validation
 void	check_system_input_error(t_data *data, t_dlist **cmd_list); // Unused.
@@ -265,8 +266,8 @@ int		create_input_to_commands(char *src, t_dlist **cmd_list, t_data *data);
  * ==========================
  */
 void	quote_increment(char *src, int i, t_quote *quote);
-char	**split_quoted(char const *s, char c);// @legacy
-char	**split_quoted2(char *s,t_data *data);
+char	**split_quoted(char *s, char c);// use to split but without keeping surounding quotes
+char	**split_quoted2(char *s, t_data *data);
 int		ft_segment_len(int i, char *s, t_quote *quote, t_int_array *separators);
 int		ft_segment_count(char *s, int i, int count, t_quote *quote);
 char	**dup_pp_char(t_data *data, char **substring_arr, int start, int end);
@@ -311,7 +312,7 @@ int		pp_char_len(char **array);
 // arrays_free
 void	ft_free(void ** ptr);
 void	free_av(char ***av);
-char	**free_uncomplete_av(char **av, int i);
+char	**free_uncomplete_av(char ***av, int i);
 
 /*
  * ==========================
