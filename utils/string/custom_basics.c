@@ -3,14 +3,43 @@
 /*                                                        :::      ::::::::   */
 /*   custom_basics.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:13:36 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/01 15:11:07 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/14 10:27:24 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell.h"
+
+
+char	*strjoin_and_free(char *s1, char *s2)
+{
+	char	*ptr;
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	ptr = malloc(sizeof(char) * (ft_strlen(s1) + (ft_strlen(s2) + 1)));
+	if (ptr == NULL)
+		return (NULL);
+	while (s1 && s1[i])
+	{
+		ptr[i] = s1[i];
+		i++;
+	}
+	while (s2 && s2[j])
+	{
+		ptr[i + j] = s2[j];
+		j++;
+	}
+	ptr[i + j] = '\0';
+	ft_free ((void **) &s1);
+	ft_free ((void **) &s2);
+	return (ptr);
+}
+
 
 /**
  * @brief Joins two strings with a specific character and frees the source strings.
@@ -37,20 +66,20 @@ char	*c_strjoin(char *s1, char *s2, char c)
 	ptr = malloc(sizeof(char) * (ft_strlen(s1) + (ft_strlen(s2) + 2)));
 	if (ptr == NULL)
 		return (NULL);
-	while (s1[i])
+	while (s1 && s1[i])
 	{
 		ptr[i] = s1[i];
 		i++;
 	}
 	ptr[i] = c;
-	while (s2[j])
+	while (s2 && s2[j])
 	{
 		ptr[i + 1 + j] = s2[j];
 		j++;
 	}
 	ptr[i + 1 + j] = '\0';
-	free (s1);
-	free (s2);
+	ft_free ((void **) &s1);
+	ft_free ((void **) &s2);
 	return (ptr);
 }
 

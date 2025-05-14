@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 11:18:50 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/12 16:19:55 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/14 11:35:30 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int	ft_segment_count(char *s)
 	count = 0;
 	in_segment = false;
 	init_quotes(&quote);
-	while (s[++i] != '\0')
+	while (s && i < (int) strlen(s) && s[++i] != '\0')
 	{
 		quote_accolade_increment(s, i, &quote);
 		if (is_seperator(s, i, &quote) > 0 && s[i] == ' ')// @optimize // si space separator --> in_segment = false
@@ -44,7 +44,6 @@ static int	ft_segment_count(char *s)
 		else if (is_seperator(s, i, &quote) > 0 && s[i] != ' ') // si operateur mais pas espace
 		{
 			count++;
-			//printf("segment incremented at s[%i] = %c\n", i, s[i]); // @debug
 			i += is_seperator(s, i, &quote);
 			in_segment = false;
 			continue;
@@ -52,7 +51,6 @@ static int	ft_segment_count(char *s)
 		else if (is_seperator(s, i, &quote) == 0 && !in_segment) // si c'est un nouveau segment
 		{
 			count++;
-			//printf("segment incremented at s[%i] = %c\n", i, s[i]); // @debug
 			in_segment = true;
 		}
 	}

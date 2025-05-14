@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:23:22 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/13 09:32:06 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/14 11:05:00 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	run_minishell(t_data	*data)
 		if (data->line)
 		{
 			control = create_chunks(data->line, &data->cmd_list, data);
-			if (control != 3 )
+			if (control == 0)
 				main_exec(data);
 			add_history(data->line);
 		}

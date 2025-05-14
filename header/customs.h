@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/12 22:22:28 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/14 11:39:24 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,10 +196,11 @@ char	*get_var_name_in_accolade(char *str, int i);
 // verifications //
 			//user_input_validation
 void	listen_incomplete_lines(t_data *data,char **line);
-int	check_for_user_input_error(t_dlist **cmd_list);
-int	check_for_triple(t_dlist **cmd_list);
-int	check_for_simple(t_dlist **cmd_list);
-int	line_accolade_closed(char *line);
+bool	preliminary_checks_ok(t_data *data, char* line);
+int		check_for_user_input_error(t_data *data, t_dlist **cmd_list);
+int		check_for_triple(t_dlist **cmd_list);
+int		check_for_simple(t_dlist **cmd_list);
+int		line_accolade_closed(char *line);
 
 			//system_input_validation
 void	check_system_input_error(t_data *data, t_dlist **cmd_list); // Unused.
@@ -248,6 +249,9 @@ char	**split_quoted(char const *s, char c);// @legacy
 char	**split_quoted2(char *s,t_data *data);
 char	**dup_pp_char(t_data *data, char **substring_arr, int start, int end);
 char	*ft_trim(char *src, bool is_malloced);
+bool	ft_isspace(char c);
+bool	line_is_only_spaces(char *line);
+
 	//quotes
 void	init_quotes(t_quote *quote);
 bool	tocken_quote_closed(char *s);
@@ -256,6 +260,7 @@ bool	quote_and_acc_are_closed(t_quote *quote);
 	// custom basics
 char	*c_strjoin(char *s1, char *s2, char c);
 char	*c_ft_substr(char const *s, unsigned int start, size_t len);
+char	*strjoin_and_free(char *s1, char *s2);
 
 
 /*

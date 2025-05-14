@@ -6,27 +6,26 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 11:30:14 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/09 18:32:04 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/14 12:05:53 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../header/minishell.h"
 
 // ignore <> that is working in bash
-static int check_tokens(t_chunk *chunk)
+static int check_tokens(t_chunk *chunk, t_quote *qts)
 {
 	int		flag;
 	char	*tmp;
 	int		i;
-	t_quote	quotes;
 
-	init_quotes(&quotes);
 	flag = 0;
 	tmp = NULL;
 	i = -1;
 	while (chunk && chunk->tokens && chunk->tokens[++i])
 	{
-		if (0 == flag && (is_operator(chunk->tokens[i], 0, &quotes) || chunk->tokens[i][0] == '|'))
+		printf("chunk->tokens[i] = %s\n", chunk->tokens[i]);// @debbug
+		if (0 == flag && (is_operator(chunk->tokens[i], 0, qts) || chunk->tokens[i][0] == '|'))
 		{
 			tmp = chunk->tokens[i];
 			flag = 1;
@@ -34,11 +33,14 @@ static int check_tokens(t_chunk *chunk)
 		}
 		if (1 == flag && tmp && tmp[0] == '<' && chunk->tokens[i][0] == '>')
 			flag = 0;
-			//return(printf("bash: syntax error near unexpected token `>'\n"));
-		if (1 == flag && chunk->tokens[i][0] =='>')
+		if (1 == flag && ft_strcmp(chunk->tokens[i], ">") == 0)
 			return(printf("bash: syntax error near unexpected token `>'\n"));
-		if (1 == flag && chunk->tokens[i][0] =='<')
+		else if (1 == flag && ft_strcmp(chunk->tokens[i], "<") == 0)
 			return(printf("bash: syntax error near unexpected token `<'\n"));
+		else if (1 == flag && ft_strcmp(chunk->tokens[i], ">>") == 0)
+			return(printf("bash: syntax error near unexpected token `>>'\n"));
+		else if (1 == flag && ft_strcmp(chunk->tokens[i], "<<") == 0)
+			return(printf("bash: syntax error near unexpected token `<<'\n"));
 		flag = 0;
 	}
 	return (EXIT_SUCCESS);
@@ -50,11 +52,13 @@ static int check_tokens(t_chunk *chunk)
 int	check_for_triple(t_dlist **cmd_list)
 {
 	t_dlist	*i_node;
+	t_quote	quotes;
 
+	init_quotes(&quotes);
 	i_node = *cmd_list;
 	while(i_node)
 	{
-		if (check_tokens((t_chunk *)i_node->content) > 0)
+		if (check_tokens((t_chunk *)i_node->content, &quotes) > 0)
 			return (EXIT_FAILURE);
 		i_node = i_node->next;
 	}

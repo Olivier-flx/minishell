@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 15:14:36 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/12 16:19:55 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/14 12:09:15 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,12 +134,13 @@ int	accolade_not_closed(t_dlist **cmd_list)
 }
 
 // check from the last tocken to the first one
-int	check_for_user_input_error(t_dlist **cmd_list)
+int	check_for_user_input_error(t_data *data, t_dlist **cmd_list)
 {
-	if (check_for_simple(cmd_list) > 0)
-		return (1);
-	if (check_for_triple(cmd_list) > 0)
-		return (1);
+	if (check_for_simple(cmd_list) > 0 || check_for_triple(cmd_list) > 0)
+	{
+		data->exit_status = 2;
+		return (2);
+	}
 	//check for redir puis pipe
 	if(check_redir_pipe(cmd_list) > 0)
 		return (1);

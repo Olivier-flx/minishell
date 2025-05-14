@@ -6,56 +6,79 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 16:00:49 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/12 22:23:15 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/14 10:42:29 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../header/minishell.h"
 
-bool	line_finish_by_pipe(char **line)
+bool	line_finish_by_pipe(char *line)
 {
 	int	i;
 
-	if (!*line || ft_strlen(*line) == 0) {
+	if (!line || line_is_only_spaces(line))
 		return false;
-	}
-	i = ft_strlen(*line) - 1;
-	while (i >= 0 && (*line)[i] == ' ') {
+	i = ft_strlen(line) - 1;
+	while (i >= 0 && ft_isspace(line[i]))
 		i--;
-	}
-	if (i >= 0 && (*line)[i] == '|') {
-		*line = c_strjoin(*line, readline("> "), '\n');
-		return true;
-	}
-	return false;
+	return (i >= 0 && line[i] == '|');
 }
 
-void	listen_incomplete_lines(t_data *data,char **line)
+bool	line_finish_by_backslash(char *line)
 {
-	int flag;
+	int	i;
+	int	backslash_count;
 
-	flag = 0;
-	while (*line && flag == 0 &&  (!tocken_quote_closed(*line) \
-		|| !line_accolade_closed(*line) \
-		|| (*line)[ft_strlen(*line) - 1] == '|' \
-		|| (*line)[ft_strlen(*line) - 1] == ' '))
+	if (!line || line_is_only_spaces(line))
+		return false;
+	backslash_count = 0;
+	i = ft_strlen(line) - 1;
+	while (i >= 0 && line[i] == '\\')
+	{
+		backslash_count++;
+		i--;
+	}
+	return (backslash_count % 2 == 1);
+}
+
+void	remove_trailing_backslash(char *line)
+{
+	int	len;
+
+	if (!line)
+		return;
+	len = ft_strlen(line);
+	if (len > 0 && line[len - 1] == '\\')
+		line[len - 1] = '\0';
+}
+
+bool	line_is_incomplete(char *line)
+{
+	if (!line || line_is_only_spaces(line))
+		return false;
+	return (
+		!tocken_quote_closed(line)
+		|| !line_accolade_closed(line)
+		|| line_finish_by_pipe(line)
+		|| line_finish_by_backslash(line)
+	);
+}
+
+void	listen_incomplete_lines(t_data *data, char **line)
+{
+	while (*line && line_is_incomplete(*line))
 	{
 		signal_handlers_for_readline(data);
-		/// NEED TO HANDLE SIGNAL HERE AND IN EVERY SUB-WHILE
-		while (*line && !tocken_quote_closed(*line))
-		{
-			signal_handlers_for_readline(data);
+		if (!tocken_quote_closed(*line))
 			*line = c_strjoin(*line, readline("\033[1mdquote> \033[0m"), '\n');
-		}
-		while (*line && !line_accolade_closed(*line))
-		{
-			signal_handlers_for_readline(data);
+		else if (!line_accolade_closed(*line))
 			*line = c_strjoin(*line, readline("> "), '\n');
-		}
-		while (*line && line_finish_by_pipe(line))
+		else if (line_finish_by_pipe(*line))
+			*line = c_strjoin(*line, readline("> "), '\n');
+		else if (line_finish_by_backslash(*line))
 		{
-			signal_handlers_for_readline(data);
-			flag = 1;
+			remove_trailing_backslash(*line);
+			*line = strjoin_and_free(*line, readline("> "));
 		}
 	}
 }
