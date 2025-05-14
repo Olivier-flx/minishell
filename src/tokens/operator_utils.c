@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 16:39:47 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/14 16:43:03 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/14 16:45:00 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,38 +17,38 @@ int	is_operator(char *src, int i, t_quote *quote)
 {
 	if (!quote)
 		init_quotes(quote);
-	if (quote->dbl_quote % 2 == 0  && quote->dbl_quote % 2 == 0)
+	if (quote->dbl_quote % 2 == 0 && quote->dbl_quote % 2 == 0)
 	{
 		if (src[i] == '>' && src[i + 1] && src[i + 1] == '>')
-			return(2);
+			return (2);
 		else if (src[i] == '<' && src[i + 1] && src[i + 1] == '<')
-			return(2);
+			return (2);
 		else if (src[i] == '<')
-			return(1);
+			return (1);
 		else if (src[i] == '>')
-			return(1);
+			return (1);
 	}
 	return (0);
 }
 
 int	is_redirection(char *src, int i, t_quote *quote)
 {
-	if (quote->dbl_quote % 2 == 0  && quote->dbl_quote % 2 == 0)
+	if (quote->dbl_quote % 2 == 0 && quote->dbl_quote % 2 == 0)
 	{
 		if (src[i] == '>' && src[i + 1] && src[i + 1] == '>')
-			return(2);
+			return (2);
 		else if (src[i] == '>')
-			return(1);
+			return (1);
 	}
 	return (0);
 }
 
 int	is_input_redir(char *src, int i, t_quote *quote)
 {
-	if (quote->dbl_quote % 2 == 0  && quote->dbl_quote % 2 == 0)
+	if (quote->dbl_quote % 2 == 0 && quote->dbl_quote % 2 == 0)
 	{
 		if (src[i] == '<' && src[i + 1] && src[i + 1] == '<')
-			return(2);
+			return (2);
 		else if (src[i] == '<')
 			return (1);
 	}

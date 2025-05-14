@@ -6,12 +6,11 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:13:36 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/14 15:45:38 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/14 16:47:11 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell.h"
-
 
 char	*strjoin_and_free(char *s1, char *s2)
 {
@@ -40,17 +39,17 @@ char	*strjoin_and_free(char *s1, char *s2)
 	return (ptr);
 }
 
-
 /**
- * @brief Joins two strings with a specific character and frees the source strings.
+ * @brief Joins 2 strings with a specific char & frees the source strings.
  *
- * Concatenates `s1` and `s2` with `c` in between, allocates memory for the result,
+ * Concatenates `s1` & `s2` with `c` in between, allocates memory for the result,
  * and frees the original strings.
  *
  * @param s1 The first string to join.
  * @param s2 The second string to join.
  * @param c The character to insert between the strings.
- * @return (char *) The newly allocated concatenated string, or NULL if allocation fails.
+ * @return (char *) The newly allocated concatenated string \
+ * , or NULL if allocation fails.
  *
  * @note The caller must free the returned string.
  * @see ft_strlen
@@ -99,7 +98,7 @@ char	*c_ft_substr(char const *s, unsigned int start, size_t len)
 	unsigned int	j;
 	char			*ptr;
 
-	if(len <= 0 || start >= (unsigned int) ft_strlen(s))
+	if (len <= 0 || start >= (unsigned int) ft_strlen(s))
 		return (NULL);
 	i = -1;
 	j = -1;
@@ -119,8 +118,10 @@ char	*c_ft_substr(char const *s, unsigned int start, size_t len)
 	return (ptr);
 }
 
-// cc ./utils/string/custom_basics.c ./utils/string/quotes.c ./utils/string/basics.c -lreadline -g -o test
-// valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=readline.supp -s ./test
+// cc ./utils/string/custom_basics.c ./utils/string/quotes.c
+	// ./utils/string/basics.c -lreadline -g -o test
+// valgrind --leak-check=full --show-leak-kinds=all
+	//--track-origins=yes --suppressions=readline.supp -s ./test
 // int main()
 // {
 // 	char	*line;

@@ -6,14 +6,14 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 11:30:14 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/14 14:30:37 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/14 17:02:29 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../header/minishell.h"
 
 // ignore <> that is working in bash
-static int check_tokens(t_chunk *chunk, t_quote *qts)
+/* static int check_tokens(t_chunk *chunk, t_quote *qts)
 {
 	int		flag;
 	char	*tmp;
@@ -41,6 +41,45 @@ static int check_tokens(t_chunk *chunk, t_quote *qts)
 			return(printf("bash: syntax error near unexpected token `>>'\n"));
 		else if (1 == flag && ft_strcmp(chunk->tokens[i], "<<") == 0)
 			return(printf("bash: syntax error near unexpected token `<<'\n"));
+		flag = 0;
+	}
+	return (EXIT_SUCCESS);
+} */
+
+static int	check_invalid_sequences(char *current, char *previous, int flag)
+{
+	if (flag && previous && previous[0] == '<' && current[0] == '>')
+		return (0);
+	if (flag && ft_strcmp(current, ">") == 0)
+		return (printf("bash: syntax error near unexpected token `>'\n"));
+	if (flag && ft_strcmp(current, "<") == 0)
+		return (printf("bash: syntax error near unexpected token `<'\n"));
+	if (flag && ft_strcmp(current, ">>") == 0)
+		return (printf("bash: syntax error near unexpected token `>>'\n"));
+	if (flag && ft_strcmp(current, "<<") == 0)
+		return (printf("bash: syntax error near unexpected token `<<'\n"));
+	return (0);
+}
+
+static int	check_tokens(t_chunk *chunk, t_quote *qts)
+{
+	int		flag;
+	char	*tmp;
+	int		i;
+
+	flag = 0;
+	tmp = NULL;
+	i = -1;
+	while (chunk && chunk->tokens && chunk->tokens[++i])
+	{
+		if (!flag && (is_operator(chunk->tokens[i], 0, qts) || chunk->tokens[i][0] == '|'))
+		{
+			tmp = chunk->tokens[i];
+			flag = 1;
+			continue;
+		}
+		if (check_invalid_sequences(chunk->tokens[i], tmp, flag))
+			return (EXIT_FAILURE);
 		flag = 0;
 	}
 	return (EXIT_SUCCESS);

@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 15:26:29 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/14 16:09:58 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/14 16:47:31 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ static int	calculate_len_argv(t_chunk *chunk)
 
 	len_argv = 0;
 	len_argv = pp_char_len(chunk->tokens) \
-				- (chunk->redir_count + count_redir_files_in_chunks(chunk->tokens))
-				- (chunk->input_redir_count \
+			- (chunk->redir_count + count_redir_files_in_chunks(chunk->tokens))
+		- (chunk->input_redir_count \
 					+ count_input_files_in_chunks(chunk->tokens));
 	return (len_argv);
 }
@@ -51,7 +51,7 @@ static void	set_i_redir_and_bool(int *i_redir, bool *has_redir)
 	*has_redir = true;
 }
 
-static void handle_redir(t_chunk *chunk, int *i, int *i_redir)
+static void	handle_redir(t_chunk *chunk, int *i, int *i_redir)
 {
 	t_quote	quote;
 
