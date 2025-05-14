@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/14 11:39:24 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/14 14:26:50 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -247,6 +247,8 @@ int		create_input_to_commands(char *src, t_dlist **cmd_list, t_data *data);
 void	quote_increment(char *src, int i, t_quote *quote);
 char	**split_quoted(char const *s, char c);// @legacy
 char	**split_quoted2(char *s,t_data *data);
+int		ft_segment_len(int i, char *s, t_quote *quote, t_int_array *separators);
+int		ft_segment_count(char *s, int i, int count, t_quote *quote);
 char	**dup_pp_char(t_data *data, char **substring_arr, int start, int end);
 char	*ft_trim(char *src, bool is_malloced);
 bool	ft_isspace(char c);
@@ -299,7 +301,7 @@ char	**free_uncomplete_av(char **av, int i);
 // ERROR
 	//MSG
 void	simple_error_msg(char *msg);
-void debug_print_cmd_list(t_dlist **cmd_list_ptr); //@debug
+void	debug_print_cmd_list(t_dlist **cmd_list_ptr); //@debug
 
 /*
  * ==========================

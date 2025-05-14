@@ -61,6 +61,7 @@ UTILS = ./utils/string/ft_split_s.c \
 		./utils/string/quotes.c \
 		./utils/string/trim.c \
 		./utils/string/ft_split_set_of_char.c \
+		./utils/string/ft_split_sgmt_count.c \
 		./utils/list/list_utils.c \
 		./utils/list/list_free.c \
 		./utils/list/list_to_msg.c \

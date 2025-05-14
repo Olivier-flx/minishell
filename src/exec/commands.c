@@ -6,13 +6,13 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 18:10:10 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/12 18:48:43 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/14 14:37:54 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell.h"
 
-char	*get_msg(int flag, char *arg)
+char	*get_msg(t_data *data, int flag, char *arg)
 {
 	char	*msg;
 	char	*tmp;
@@ -20,9 +20,14 @@ char	*get_msg(int flag, char *arg)
 	msg = NULL;
 	tmp = NULL;
 	if (flag == 1)
+	{
 		msg = ft_strjoin("zsh: no such file or directory: ", arg);
+	}
 	else
+	{
 		msg = ft_strjoin(arg, ": command not found");
+		data->exit_status = 127;
+	}
 	if (msg && msg[0])
 	{
 		tmp = msg;
@@ -91,7 +96,7 @@ void	check_wrong_commands(t_data *data)
 			if (i == data->exec_info.total_cmd_count)
 				data->exec_info.last_status_code = 127;
 			flag = usr_input_got_slash(chunk->argv[0]);
-			msg = get_msg(flag, chunk->argv[0]);
+			msg = get_msg(data, flag, chunk->argv[0]);
 			if (data->exec_info.cmd_err_msg == NULL)
 			{
 				data->exec_info.cmd_err_msg = msg;

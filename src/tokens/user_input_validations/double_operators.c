@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 11:30:14 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/14 12:05:53 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/14 14:30:37 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int check_tokens(t_chunk *chunk, t_quote *qts)
 	i = -1;
 	while (chunk && chunk->tokens && chunk->tokens[++i])
 	{
-		printf("chunk->tokens[i] = %s\n", chunk->tokens[i]);// @debbug
+		//printf("chunk->tokens[i] = %s\n", chunk->tokens[i]);// @debbug
 		if (0 == flag && (is_operator(chunk->tokens[i], 0, qts) || chunk->tokens[i][0] == '|'))
 		{
 			tmp = chunk->tokens[i];

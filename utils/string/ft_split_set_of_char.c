@@ -6,115 +6,69 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 11:18:50 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/14 11:35:30 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/14 14:20:10 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell.h"
 
-void	quote_accolade_increment(char *src, int i, t_quote *quote)
-{
-	if (src[i] == '"' && quote->sgl_quote % 2 == 0 && quote->acc % 2 == 0)
-		quote->dbl_quote++;
-	else if (src[i] == '\'' && quote->dbl_quote % 2 == 0 && quote->acc % 2 == 0)
-		quote->sgl_quote++;
-	else if (src[i] == '{' && i > 0 && src[i - 1] == '$'
-			&& quote_and_acc_are_closed(quote))
-		quote->acc++;
-	else if (src[i] == '}' && quote->acc % 2 == 1 && quote->sgl_quote % 2 == 0 && quote->dbl_quote % 2 == 0)
-		quote->acc++;
-}
-
-static int	ft_segment_count(char *s)
-{
-	int		i;
-	int		count;
-	bool	in_segment;
-	t_quote	quote;
-
-	i = -1;
-	count = 0;
-	in_segment = false;
-	init_quotes(&quote);
-	while (s && i < (int) strlen(s) && s[++i] != '\0')
-	{
-		quote_accolade_increment(s, i, &quote);
-		if (is_seperator(s, i, &quote) > 0 && s[i] == ' ')// @optimize // si space separator --> in_segment = false
-			in_segment = false;
-		else if (is_seperator(s, i, &quote) > 0 && s[i] != ' ') // si operateur mais pas espace
-		{
-			count++;
-			i += is_seperator(s, i, &quote);
-			in_segment = false;
-			continue;
-		}
-		else if (is_seperator(s, i, &quote) == 0 && !in_segment) // si c'est un nouveau segment
-		{
-			count++;
-			in_segment = true;
-		}
-	}
-	return (count);
-}
-
-static int	ft_segment_len(int i, char *s, t_quote *quote, t_int_array *separators)
-{
-	int		len;
-
-	len = 0;
-	if (is_seperator(s, i, quote) > 0 && s[i]!= ' ')
-		return(is_seperator(s, i, quote));
-	if (is_seperator(s, i, quote) > 0 && s[i] == ' ')
-		return (0);
-	while (s[i] && !int_var_in_arr(i, separators))
-	{
-		len++;
-		i++;
-	}
-	return (len);
-}
-
-static void	init_var_ft_new_string_arr(int *i, int *segment_i, int *flag)
+static void	init_var_ft_new_str_arr(int *i, int *segment_i)
 {
 	*i = 0;
 	*segment_i = 0;
-	*flag = 0;
 }
 
+static char *allocate_next_segment(char *s, int i, \
+									t_quote *quote, t_int_array *separators)
+{
+	int		len;
+	char	*segment;
 
+	len = ft_segment_len(i, s, quote, separators);
+	segment = malloc(sizeof(char) * (len + 1));
+	return (segment);
+}
 
-static char	**ft_new_string_arr(char *s, char **ns_ar, int nb_segment, t_int_array *separators)
+static int fill_token_segment(char *s, char *dest, int *i, t_quote *quote)
+{
+	int	s_i;
+	int	flag;
+
+	s_i = 0;
+	flag = 0;
+	while (s[*i])
+	{
+		quote_increment(s, *i, quote);
+		flag = is_seperator(s, *i, quote);
+		if (flag > 0)
+		{
+			while (s_i < flag)
+				dest[s_i++] = s[(*i)++];
+			break;
+		}
+		else
+			dest[s_i++] = s[(*i)++];
+	}
+	dest[s_i] = '\0';
+	return (s_i);
+}
+
+static char	**ft_new_str_arr(char *s, char **ns_ar, int nb_segment, t_int_array *separators)
 {
 	int		i;
 	int		segment_i;
-	int		s_i;
 	t_quote	quote;
-	int		flag;
 
 	init_quotes(&quote);
-	init_var_ft_new_string_arr(&i, &segment_i, &flag);
+	init_var_ft_new_str_arr(&i, &segment_i);
 	while (s[i] && segment_i < nb_segment)
 	{
-		s_i = 0;
-		while (is_seperator(s, i, &quote) > 0 && s[i] == ' ') // if space not in quote ==> ignore
+		while (is_seperator(s, i, &quote) > 0 && ft_isspace(s[i]))
 			i++;
-		ns_ar[segment_i] = malloc(sizeof(char) * (ft_segment_len(i, s, &quote, separators) + 1));
-		if (NULL == ns_ar[segment_i])
+		ns_ar[segment_i] = allocate_next_segment(s, i, &quote, separators);
+		if (!ns_ar[segment_i])
 			return (free_uncomplete_av(ns_ar, segment_i), NULL);
-		while (s[i])
-		{
-			quote_increment(s, i, &quote);
-			flag = is_seperator(s, i, &quote);
-			if(flag > 0)
-			{
-				while (s_i < flag)
-					ns_ar[segment_i][s_i++] = s[i++];
-				break;
-			}
-			else
-				ns_ar[segment_i][s_i++] = s[i++];
-		}
-		ns_ar[segment_i][s_i] = '\0';
+		fill_token_segment(s, ns_ar[segment_i], &i, &quote);
 		segment_i++;
 	}
 	ns_ar[segment_i] = 0;
@@ -125,16 +79,18 @@ char	**split_quoted2(char *s,t_data *data)
 {
 	char	**ns_ar;
 	int		tokens_number;
+	t_quote	quote;
 
+	init_quotes(&quote);
 	ns_ar = NULL;
 	if (s == NULL)
 		return (NULL);
 	set_separator_char_i_struc_arr(s, &(data->token_separators_char_i));
-	tokens_number = ft_segment_count(s);
+	tokens_number = ft_segment_count(s, 0, 0, &quote);
 	ns_ar = malloc(((1 + tokens_number)) * sizeof(char *));
 	if (!ns_ar)
 		return (0);
-	ns_ar = ft_new_string_arr(s, ns_ar, tokens_number, &(data->token_separators_char_i));
+	ns_ar = ft_new_str_arr(s, ns_ar, tokens_number, &(data->token_separators_char_i));
 	return (ns_ar);
 }
 
