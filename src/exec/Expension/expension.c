@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 17:38:16 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/14 18:05:26 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/14 19:04:09 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,37 @@ char	*get_var_name(char *str, int i)
 
 }
 
+static void	handle_question_mark(t_data *data, char **var_name, \
+								char **var_value, int *k)
+{
+	if (ft_strcmp(*var_name, "?") == 0)
+		*var_value = ft_itoa(data->exit_status);
+	*k += ft_strlen(*var_value);
+	if (ft_strcmp(*var_name, "?") == 0)
+		ft_free((void **) var_value);
+}
+
+static void	get_len_and_increment_i(t_data *data, char *str, int *i, int *k)
+{
+	char	*var_name;
+	char	*var_value;
+
+	var_name = get_var_name(str, *i);
+	var_value = ft_getenv(data->env_list, var_name);
+	handle_question_mark(data, &var_name, &var_value, k);
+	if (str[(*i) + 1] && str[(*i) + 1] == '{')
+		(*i) += ft_strlen(var_name) + 3; // +1 pour le $ et les {}
+	else
+		(*i) += ft_strlen(var_name) + 1; // +1 pour le $
+	ft_free((void **) &var_name);
+
+}
+
 int get_expended_tocken_len(t_data *data, char *str)
 {
 	int	i;
 	int k;
 	t_quote	quotes;
-	char	*var_name;
-	char	*var_value;
 
 	init_quotes(&quotes);
 	i = 0;
@@ -60,21 +84,9 @@ int get_expended_tocken_len(t_data *data, char *str)
 	while (str[i])
 	{
 		quote_increment(str, i, &quotes);
-		if((quotes.dbl_quote % 2 == 1 || quote_and_acc_are_closed(&quotes)) && str[i] == '$')
-		{
-			var_name = get_var_name(str, i);
-			var_value = ft_getenv(data->env_list, var_name);
-			if (ft_strcmp(var_name, "?") == 0)
-				var_value = ft_itoa(data->exit_status);
-			k += ft_strlen(var_value);
-			if (ft_strcmp(var_name, "?") == 0)
-				ft_free((void **) &var_value);
-			if (str[i + 1] && str[i + 1] == '{')
-				i += ft_strlen(var_name) + 3; // +1 pour le $ et les {}
-			else
-				i += ft_strlen(var_name) + 1; // +1 pour le $
-			ft_free((void **) &var_name);
-		}
+		if((quotes.dbl_quote % 2 == 1 || quote_and_acc_are_closed(&quotes)) \
+			&& str[i] == '$')
+			get_len_and_increment_i(data, str, &i, &k);
 		else
 		{
 			i++;
