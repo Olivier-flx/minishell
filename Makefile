@@ -64,7 +64,8 @@ EXPEND = ./src/exec/Expension/expension.c \
 		./src/exec/Expension/accolades.c \
 		./src/exec/Expension/select_from_substring_arr.c \
 
-UTILS = ./utils/string/ft_split_s.c \
+UTILS = ./utils/string/split_quoted.c \
+		./utils/string/split_quoted_utils.c \
 		./utils/string/basics.c \
 		./utils/string/custom_basics.c \
 		./utils/string/quotes.c \

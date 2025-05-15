@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 11:18:50 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/14 23:47:14 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/15 09:48:38 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	init_var_ft_new_str_arr(int *i, int *segment_i)
 	*segment_i = 0;
 }
 
-static char *allocate_next_segment(char *s, int i, \
+static char *allocate_next_segment2(char *s, int i, \
 									t_quote *quote, t_int_array *separators)
 {
 	int		len;
@@ -65,7 +65,7 @@ static char	**ft_new_str_arr(char *s, char **ns_ar, int nb_segment, t_int_array 
 	{
 		while (is_seperator(s, i, &quote) > 0 && ft_isspace(s[i]))
 			i++;
-		ns_ar[segment_i] = allocate_next_segment(s, i, &quote, separators);
+		ns_ar[segment_i] = allocate_next_segment2(s, i, &quote, separators);
 		if (!ns_ar[segment_i])
 			return (free_uncomplete_av(&ns_ar, segment_i), NULL);
 		fill_token_segment(s, ns_ar[segment_i], &i, &quote);
