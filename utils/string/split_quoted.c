@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 11:18:50 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/15 10:55:52 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/15 10:59:35 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,23 +58,6 @@ static int no_quotes_segment_length(int i, char *s, char sep, t_quote *qts)
 		i++;
 	}
 	return (len + 1);
-}
-
-bool	should_break(char *s, int *i, char c, t_quote *qts)
-{
-	quote_increment(s, *i, qts);
-	return (s[*i] == c && quote_are_closed(qts));
-}
-
-bool	should_skip_quote(char c, t_quote *qts, int *i)
-{
-	if ((c == '"'  && qts->sgl_quote % 2 == 0) \
-		|| (c == '\'' && qts->dbl_quote % 2 == 0))
-	{
-		(*i)++;
-		return (true);
-	}
-	return (false);
 }
 
 char	*process_segment(char *s, int *i, char c, t_quote *qts)
