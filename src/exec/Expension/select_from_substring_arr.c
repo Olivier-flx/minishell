@@ -82,6 +82,7 @@ char	**dup_pp_char(t_data *data, char **substring_arr, int start, int end)
 {
 	char	**chunk;
 	char	**tmp;
+	char	*tmp2;
 	int		i;
 	int		j;
 
@@ -102,7 +103,9 @@ char	**dup_pp_char(t_data *data, char **substring_arr, int start, int end)
 	chunk[j] = NULL;
 
 	tmp = chunk;
-	chunk = split_quoted(concat_strs_sep(chunk, ' '), ' ');
+	tmp2 = concat_strs_sep(chunk, ' '); 
+	chunk = split_quoted(tmp2, ' ');
+	ft_free((void **) &tmp2);
 	free_av(&tmp);
 	return (chunk);
 }
