@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 11:18:50 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/15 00:11:26 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/15 08:45:30 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,13 +134,15 @@ static int no_quotes_segment_length(int i, char *s, char sep)
 		quote_increment(s, i, &qts);
 		if (s[i] == sep && quote_are_closed(&qts))
 			break;
-		if ( (s[i] == '"'  && qts.dbl_quote % 2 == 1) \
-		  || (s[i] == '"'  && qts.dbl_quote % 2 == 0) \
-		  || (s[i] == '\'' && qts.sgl_quote % 2 == 1) \
-		  || (s[i] == '\'' && qts.sgl_quote % 2 == 0))
+		if (s[i] == '"' && qts.sgl_quote % 2 == 0)
 		{
 			i++;
-			continue ;
+			continue;
+		}
+		if (s[i] == '\'' && qts.dbl_quote % 2 == 0)
+		{
+			i++;
+			continue;
 		}
 		len++;
 		i++;
@@ -153,17 +155,17 @@ static char	**ft_new_string_arr(char *s, char c, char **ns_ar, int nb_segment)
 	int		i;
 	int		segment_i;
 	int		s_i;
-	t_quote	quote;
+	t_quote	qts;
 
-	init_quotes(&quote);
+	init_quotes(&qts);
 	i = 0;
 	segment_i = 0;
 	while (s[i] && segment_i < nb_segment)
 	{
 		s_i = 0;
-		while (s[i] == c && quote.dbl_quote % 2 == 0 && quote.sgl_quote % 2 == 0)
+		while (s[i] == c && qts.dbl_quote % 2 == 0 && qts.sgl_quote % 2 == 0)
 		{
-			quote_increment(s, i, &quote);
+			quote_increment(s, i, &qts);
 			i++;
 		}
 		if (!s[i])
@@ -174,10 +176,11 @@ static char	**ft_new_string_arr(char *s, char c, char **ns_ar, int nb_segment)
 
 		while (s[i])
 		{
-			quote_increment(s, i, &quote);
-			if (s[i] == c && quote_are_closed(&quote))
+			quote_increment(s, i, &qts);
+			if (s[i] == c && quote_are_closed(&qts))
 				break;
-			if (s[i] == '"' || s[i] == '\'')
+			if ((s[i] == '"'  && qts.sgl_quote % 2 == 0 )  \
+				|| (s[i] == '\'' && qts.dbl_quote % 2 == 0))
 			{
 				i++;
 				continue;
