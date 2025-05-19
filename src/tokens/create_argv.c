@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 15:26:29 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/18 15:08:03 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/19 17:14:47 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,16 @@
 static int	calculate_len_argv(t_chunk *chunk)
 {
 	int	len_argv;
+	int	redir_token_len;
+	int	input_redir_token_len;
 
 	len_argv = 0;
+	redir_token_len = chunk->redir_count \
+		+ count_redir_files_in_chunks(chunk->tokens);
+	input_redir_token_len  = chunk->input_redir_count \
+					+ count_input_files_in_chunks(chunk->tokens);
 	len_argv = pp_char_len(chunk->tokens) \
-			- (chunk->redir_count + count_redir_files_in_chunks(chunk->tokens))
-		- (chunk->input_redir_count \
-					+ count_input_files_in_chunks(chunk->tokens));
+			- (redir_token_len + input_redir_token_len);
 	return (len_argv);
 }
 
@@ -51,7 +55,7 @@ static void	set_i_redir_and_bool(int *i_redir, bool *has_redir)
 	*has_redir = true;
 }
 
-static void	handle_redir(t_chunk *chunk, int *i, int *i_redir)
+static int	handle_redir(t_chunk *chunk, int *i, int *i_redir)
 {
 	t_quote	quote;
 
@@ -65,7 +69,9 @@ static void	handle_redir(t_chunk *chunk, int *i, int *i_redir)
 		else
 			printf("Error: No file name after a redir\n"); // @debug : error que gestionar despues en user validation function
 		set_i_redir_and_bool(i_redir, &chunk->has_redir);
+		return (1);
 	}
+	return (0);
 }
 
 
@@ -78,17 +84,9 @@ void	separate_arg_and_operator(t_chunk *chunk, int i, int i_redir, int i_in_redi
 	i_argv = 0;
 	while (chunk->tokens[++i])
 	{
-		handle_redir(chunk, &i, &i_redir);
-/* 		if (is_redirection(chunk->tokens[i], 0, &quote) > 0) // @info: fil the t_chunk redir file with the corresponding redirections
-		{
-			chunk->redir[i_redir] = ft_strdup(chunk->tokens[i]);
-			if (chunk->tokens[i + 1] && chunk->redir_files)
-				chunk->redir_files[i_redir] = ft_strdup(chunk->tokens[++i]);
-			else
-				printf("Error: No file name after a redir\n"); // @debug : error que gestionar despues en user validation function
-			set_i_redir_and_bool(&i_redir, &chunk->has_redir);
-		}
-		else */if (is_input_redir(chunk->tokens[i], 0, &quote) > 0)
+		if (handle_redir(chunk, &i, &i_redir) == 1)
+			continue;
+		if (is_input_redir(chunk->tokens[i], 0, &quote) > 0)
 		{
 			chunk->input_redir[i_in_redir] = ft_strdup(chunk->tokens[i]);
 			if (chunk->tokens[i + 1] && chunk->input_redir_file)
@@ -113,8 +111,6 @@ int	create_argvs(t_dlist **cmd_list)
 		chunk = (t_chunk *)i_node->content;
 		init_redir_arr_and_files(chunk);
 		init_input_redir_arr_and_files(chunk);
-		printf("chunk->redir_files\n"); // @debug
-		print_pp_char_arr(chunk->redir_files); // @debug
 		init_argv(chunk);
 		separate_arg_and_operator(chunk, -1, 0, 0);
 		i_node = i_node->next;

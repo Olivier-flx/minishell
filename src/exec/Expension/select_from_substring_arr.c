@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 17:29:54 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/15 00:12:52 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/19 16:50:58 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,6 @@ char	*concat_strs_sep(char **argv, char sep)
 char	**dup_pp_char(t_data *data, char **substring_arr, int start, int end)
 {
 	char	**chunk;
-	char	**tmp;
-	char	*tmp2;
 	int		i;
 	int		j;
 
@@ -101,11 +99,17 @@ char	**dup_pp_char(t_data *data, char **substring_arr, int start, int end)
 		j++;
 	}
 	chunk[j] = NULL;
+	return (chunk);
+}
 
-	tmp = chunk;
-	tmp2 = concat_strs_sep(chunk, ' '); 
-	chunk = split_quoted(tmp2, ' ');
+void	retocken_after_expension(char ***chunk_tokens)
+{
+	char	**tmp;
+	char	*tmp2;
+
+	tmp = *chunk_tokens;
+	tmp2 = concat_strs_sep(*chunk_tokens, ' ');
+	*chunk_tokens = split_quoted(tmp2, ' ');
 	ft_free((void **) &tmp2);
 	free_av(&tmp);
-	return (chunk);
 }

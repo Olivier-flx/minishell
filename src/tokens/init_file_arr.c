@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_file_arr.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 15:29:49 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/14 15:31:07 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/19 16:53:02 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,10 @@ void	init_redir_arr_and_files(t_chunk *chunk)
 	chunk->redir_file_count = count_redir_files_in_chunks(chunk->tokens);
 	if ( chunk->redir_file_count == 0)
 		return ;
-	chunk->redir_files = malloc(sizeof(char *) * (count_redir_files_in_chunks(chunk->tokens) + 1));
+	chunk->redir_files = malloc(sizeof(char *) * (chunk->redir_file_count + 1));
 	if (!chunk->redir_files)
 		return ; // @confirm
-	chunk->redir_files[count_redir_files_in_chunks(chunk->tokens)] = NULL;
+	chunk->redir_files[chunk->redir_file_count] = NULL;
 }
 
 void	init_input_redir_arr_and_files(t_chunk *chunk)

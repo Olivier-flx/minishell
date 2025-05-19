@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/15 10:58:19 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/19 16:49:14 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,6 +200,7 @@ char	*get_var_name_in_accolade(char *str, int i);
 char	*get_classic_var_name(char *str, int i);
 char	*get_var_name(char *str, int i);
 int		 get_expended_tocken_len(t_data *data, char *str);
+void	retocken_after_expension(char ***chunk_tokens);
 
 	/////  /////
 /*

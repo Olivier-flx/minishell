@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   count_files_in_chunks.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 17:28:17 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/10 20:25:46 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/19 17:04:23 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	count_redir_files_in_chunks(char **content)
 	{
 		if (is_redirection(content[i], 0, &quote) > 0)
 		{
-			if(content[i + 1] && !is_operator(content[i + 1], 0, &quote))
+			if(content[i + 1] && is_operator(content[i + 1], 0, &quote) == 0)
 				k++;
 		}
 		i++;
