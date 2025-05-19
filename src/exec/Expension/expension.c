@@ -3,47 +3,43 @@
 /*                                                        :::      ::::::::   */
 /*   expension.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 17:38:16 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/14 19:04:09 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/19 18:49:45 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../header/minishell.h"
 
-char	*get_classic_var_name(char *str, int i)
+void	get_classic_var_name(char **var_name, char *str, int i)
 {
 	int	var_name_len;
-	char *var_name;
 
 	var_name_len = 0;
-	var_name = NULL;
 	while (str[i] && (ft_isalnum(str[i]) || str[i] == '_' || str[i] == '?'))
 	{
 		i++;
 		var_name_len ++;
 	}
-	var_name = malloc(sizeof(char) * (var_name_len + 1));
-	if (!var_name)
-		return (NULL);
-	var_name[var_name_len] = '\0';
-	ft_strlcpy(var_name, str + i - var_name_len, var_name_len + 1); // man : Note that a byte for the NUL should be included in size.
-	return (var_name);
+	if (var_name_len == 0)
+		return;
+	*var_name = malloc(sizeof(char) * (var_name_len + 1));
+	if (!(*var_name))
+		return ;
+	*var_name[var_name_len] = '\0';
+	ft_strlcpy(*var_name, str + i - var_name_len, var_name_len + 1); // man : Note that a byte for the NUL should be included in size.
 }
 
-char	*get_var_name(char *str, int i)
+void	get_var_name(char **var_name, char *str, int i)
 {
-	char	*var_name;
-
+	*var_name = NULL;
 	if (str[i++] != '$')
-		return (printf("Error : get_var_name not a var input\n"), NULL);
+		return ;
 	if (str[i] == '{')
-		var_name = get_var_name_in_accolade(str, i + 1);
+		get_var_name_in_accolade(var_name, str, i + 1);
 	else
-		var_name = get_classic_var_name(str, i);
-	return (var_name);
-
+		get_classic_var_name(var_name,str, i);
 }
 
 static void	handle_question_mark(t_data *data, char **var_name, \
@@ -61,13 +57,15 @@ static void	get_len_and_increment_i(t_data *data, char *str, int *i, int *k)
 	char	*var_name;
 	char	*var_value;
 
-	var_name = get_var_name(str, *i);
-	var_value = ft_getenv(data->env_list, var_name);
-	handle_question_mark(data, &var_name, &var_value, k);
+	get_var_name(&var_name, str, *i);
 	if (str[(*i) + 1] && str[(*i) + 1] == '{')
 		(*i) += ft_strlen(var_name) + 3; // +1 pour le $ et les {}
 	else
 		(*i) += ft_strlen(var_name) + 1; // +1 pour le $
+	if(!var_name)
+		return ;
+	var_value = ft_getenv(data->env_list, var_name);
+	handle_question_mark(data, &var_name, &var_value, k);
 	ft_free((void **) &var_name);
 
 }
