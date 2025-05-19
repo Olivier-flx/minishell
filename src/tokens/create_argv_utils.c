@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 17:17:00 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/19 17:18:43 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/19 18:09:39 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,19 +36,19 @@ int	handle_redir(t_chunk *chunk, int *i, int *i_redir)
 	return (0);
 }
 
-int	handle_input_redir(t_chunk *chunk, int *i, int *i_redir)
+int	handle_input_redir(t_chunk *chunk, int *i, int *i_in_redir)
 {
 	t_quote	quote;
 
 	init_quotes(&quote);
-	if (is_input_redir(chunk->tokens[i], 0, &quote) > 0)
+	if (is_input_redir(chunk->tokens[*i], 0, &quote) > 0)
 	{
-		chunk->input_redir[i_in_redir] = ft_strdup(chunk->tokens[i]);
-		if (chunk->tokens[i + 1] && chunk->input_redir_file)
-			chunk->input_redir_file[i_in_redir] = ft_strdup(chunk->tokens[++i]);
+		chunk->input_redir[*i_in_redir] = ft_strdup(chunk->tokens[*i]);
+		if (chunk->tokens[(*i) + 1] && chunk->input_redir_file)
+			chunk->input_redir_file[*i_in_redir] = ft_strdup(chunk->tokens[++(*i)]);
 		else
 			printf("Error: No file name after a input redir or no EOL\n"); // @debug : error que gestionar despues en user validation function
-		set_i_redir_and_bool(&i_in_redir, &chunk->has_input_redir);
+		set_i_redir_and_bool(i_in_redir, &chunk->has_input_redir);
 		return (1);
 	}
 	return (0);

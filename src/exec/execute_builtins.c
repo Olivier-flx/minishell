@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 16:04:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/18 14:33:11 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/19 18:05:11 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,19 +42,14 @@ void	execute_builtin_in_parent(t_data *data, t_exe *exe, t_chunk *chunk, int i)
 	close_unecessary_pipes(exe, i - 1);
 	redirect_input_file(data, chunk);
 	redirect_to_output_file(data, chunk);
-	pick_and_run_builtin(data, chunk->argv);
+	data->exit_status = pick_and_run_builtin(data, chunk->argv);
 	dup2(saved_stdin,  STDIN_FILENO);
 	dup2(saved_stdout, STDOUT_FILENO);
 	close(saved_stdin);
 	close(saved_stdout);
 }
 
-void	execute_builtin_in_child(t_data *data, t_exe *exe, t_chunk *chunk, int i)
-{
-	if ( !data || !exe || !chunk || i < 0)
-		return ;
-	pick_and_run_builtin(data, chunk->argv);
-}
+
 
 int	run_builtins(t_data *data, t_exe *exe, t_chunk *chunk, int i)
 {
@@ -71,13 +66,16 @@ int	run_builtins(t_data *data, t_exe *exe, t_chunk *chunk, int i)
 	return (-1);
 }
 
+
 int	execve_builtin_in_child(t_data *data, t_exe *exe, t_chunk *chunk, int i)
 {
 	if (chunk && chunk->argv && is_builtin(chunk->argv[0]))
 	{
 		if (exe->total_cmd_count > 1)
 		{
-			execute_builtin_in_child (data, exe, chunk, i);
+			if ( !data || !exe || !chunk || i < 0)
+				return (EXIT_FAILURE);
+			data->exit_status = pick_and_run_builtin(data, chunk->argv);
 			return (EXIT_SUCCESS);
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 15:26:29 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/19 17:20:48 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/19 18:08:03 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	separate_arg_and_operator(t_chunk *chunk, int i, int i_redir, int i_in_redi
 	{
 		if (handle_redir(chunk, &i, &i_redir) == 1)
 			continue ;
-		if (handle_input_redir(chunk, &i, &i_redir) == 1)
+		if (handle_input_redir(chunk, &i, &i_in_redir) == 1)
 			continue ;
 		chunk->argv[i_argv++] = ft_strdup(chunk->tokens[i]);
 	}
