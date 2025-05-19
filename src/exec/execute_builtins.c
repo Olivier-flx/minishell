@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_builtins.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 16:04:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/12 22:16:34 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/18 14:33:11 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ int	pick_and_run_builtin(t_data *data, char **argv)
 		return (ft_pwd());
 	else if (ft_strcmp(argv[0], "env") == 0)
 		return (ft_env(data->env_list));
-	else if (ft_strcmp(argv[0], "echo") == 0)
+	//debug_print_cmd_list(&data->cmd_list);
+	if (ft_strcmp(argv[0], "echo") == 0)
 		return (ft_echo(data->env_list, argv));
 	return (EXIT_FAILURE);
 }

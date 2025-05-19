@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_argv.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 15:26:29 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/14 16:47:31 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/18 15:08:03 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ static void	handle_redir(t_chunk *chunk, int *i, int *i_redir)
 	{
 		chunk->redir[*i_redir] = ft_strdup(chunk->tokens[*i]);
 		if (chunk->tokens[(*i) + 1] && chunk->redir_files)
-			chunk->redir_files[*i_redir] = ft_strdup(chunk->tokens[++(*i)]);
+			/* { */chunk->redir_files[*i_redir] = ft_strdup(chunk->tokens[++(*i)]);
+			//printf("chunk->tokens[*%i] = %s\n", *i, chunk->tokens[*i]);} //@debug
 		else
 			printf("Error: No file name after a redir\n"); // @debug : error que gestionar despues en user validation function
 		set_i_redir_and_bool(i_redir, &chunk->has_redir);
@@ -112,6 +113,8 @@ int	create_argvs(t_dlist **cmd_list)
 		chunk = (t_chunk *)i_node->content;
 		init_redir_arr_and_files(chunk);
 		init_input_redir_arr_and_files(chunk);
+		printf("chunk->redir_files\n"); // @debug
+		print_pp_char_arr(chunk->redir_files); // @debug
 		init_argv(chunk);
 		separate_arg_and_operator(chunk, -1, 0, 0);
 		i_node = i_node->next;

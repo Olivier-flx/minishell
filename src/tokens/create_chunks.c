@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_chunks.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:49:47 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/14 15:33:37 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/18 14:48:09 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ int	create_chunks(char *line,  t_dlist **cmd_list, t_data *data)
 		return (3);
 	if (create_argvs(cmd_list) == 1) // if error retrun 1
 		return (2);
+	//debug_print_cmd_list(cmd_list);
 	data->nb_chunks = (int) stack_lenght(cmd_list);
 	return(EXIT_SUCCESS); // @confirm : what value to return if success ? is returning void couldn't be better ?
 }
