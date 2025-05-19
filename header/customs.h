@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/19 17:20:21 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/19 17:53:09 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,8 +150,8 @@ void	signal_handlers_for_readline(t_data *data);
  * ==========================
  */
 int		main_exec(t_data *data);
-void	run_pipex(t_data *data, int i);
-void	run_cmd(t_data *data, t_exe *exe, t_chunk *chunk, int i);
+void	exec_cmds(t_data *data, int i);
+void	run_pipex(t_data *data, t_exe *exe, t_chunk *chunk, int i);
 int		listen_heredocs(t_data *data, t_chunk *chunk);
 bool	is_builtin(char *cmd);
 int		run_builtins(t_data *data, t_exe *exe, t_chunk *chunk, int i);

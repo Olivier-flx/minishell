@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 17:37:47 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/12 14:23:07 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/19 17:52:37 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	init_pipes_2arr(t_data *data, t_exe *exe)
 		exe->pipes_malloced[i] = true;
 		if (pipe(exe->pipe_arr[i]) == -1)
 			strerror(errno);
-			// clean_exec_info(data, EXIT_FAILURE/* , "Error in pipe : run_pipex" */); //@optimize, same as before
+			// clean_exec_info(data, EXIT_FAILURE/* , "Error in pipe : exec_cmds" */); //@optimize, same as before
 		i++;
 	}
 }

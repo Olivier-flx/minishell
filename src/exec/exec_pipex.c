@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipex.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 17:55:52 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/14 17:58:01 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/19 17:53:47 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,14 @@ static void	process_command_iteration(t_data *data, t_chunk *chunk, int i, \
 			if (data->exec_info.pid_arr[*valid_cmd_i] == -1)
 				strerror(errno);
 			if (data->exec_info.pid_arr[*valid_cmd_i] == 0)
-				run_cmd(data, &data->exec_info, chunk, i);
+				run_pipex(data, &data->exec_info, chunk, i);
 		}
 		(*valid_cmd_i)++;
 	}
 	close_heredocs_pipes(chunk);
 }
 
-void	run_pipex(t_data *data, int i)
+void	exec_cmds(t_data *data, int i)
 {
 	int		valid_cmd_i;
 	t_dlist	*i_node;
@@ -52,7 +52,7 @@ void	run_pipex(t_data *data, int i)
 	}
 }
 
-/* void	run_pipex(t_data *data, int i)
+/* void	exec_cmds(t_data *data, int i)
 {
 	int		valid_cmd_i;
 	t_dlist	*i_node;
@@ -75,7 +75,7 @@ void	run_pipex(t_data *data, int i)
 				if (data->exec_info.pid_arr[valid_cmd_i] == -1)
 					strerror(errno);
 				if (data->exec_info.pid_arr[valid_cmd_i] == 0)
-					run_cmd (data, &data->exec_info, ((t_chunk *)i_node->content), i);
+					run_pipex (data, &data->exec_info, ((t_chunk *)i_node->content), i);
 			}
 			valid_cmd_i++;
 		}

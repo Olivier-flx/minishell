@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:30:25 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/14 17:58:15 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/19 17:53:09 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell.h"
 
-void	run_cmd(t_data *data, t_exe *exe, t_chunk *chunk, int i)
+void	run_pipex(t_data *data, t_exe *exe, t_chunk *chunk, int i)
 {
 	close_unecessary_pipes(exe, i - 1);
 	redirect_input_file(data, chunk);
@@ -73,7 +73,7 @@ int main_exec(t_data *data)
 		init_cmd(data);
 		init_pid_arr(data, &data->exec_info);
 		init_pipes_2arr(data , &data->exec_info);
-		run_pipex(data, 0);
+		exec_cmds(data, 0);
 		close_all_pipes(&data->exec_info, &data->exec_info.pipe_arr);
 		waiting_childs(data, &data->exec_info, data->exec_info.pid_arr);
 		clean_exec_info(data, data->exit_status);
