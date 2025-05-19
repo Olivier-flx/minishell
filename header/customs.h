@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/19 16:49:14 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/19 17:20:21 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,8 +229,11 @@ void	set_separator_char_i_struc_arr(char *src, t_int_array *arr);
 int		is_seperator(char *src, int i, t_quote *quote);
 int		count_redir_files_in_chunks(char **content);
 
-// argv
+// argv & argv utils
 int		create_argvs(t_dlist **cmd_list);
+int		handle_input_redir(t_chunk *chunk, int *i, int *i_redir);
+int		handle_redir(t_chunk *chunk, int *i, int *i_redir);
+void	set_i_redir_and_bool(int *i_redir, bool *has_redir);
 
 		// operators.c
 int		is_operator(char *src, int i, t_quote *quote);
