@@ -6,23 +6,18 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 18:03:45 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/21 19:01:44 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/21 22:20:23 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../header/minishell.h"
 
-static int	handle_expension(t_data *data, char **var_name/* , char *str_sub */, char *expd_token_j)
+static int	handle_expension(t_data *data, char **var_name, char *expd_token_j)
 {
 	char	*var_value;
 	int		copied_len;
 
 	copied_len = 0;
-	// if (!var_name || !*var_name || !(*var_name)[0])
-	// 	return(0);
-	// get_var_name(var_name, str_sub, 0);
-	// if (!*var_name)
-	// 	return (0);
 	var_value = ft_getenv(data->env_list, *var_name);
 	if (ft_strcmp(*var_name, "?") == 0)
 		var_value = ft_itoa(data->exit_status);
@@ -45,7 +40,7 @@ static char *process_expension_loop(t_data *data, char *str, char **expd_token,
 
 	i = 0;
 	j = 0;
-	while (str[i])
+	while (str && str[i])
 	{
 		quote_increment(str, i, quotes);
 		if ((quotes->dbl_quote % 2 == 1 || quote_and_acc_are_closed(quotes)) \
@@ -57,11 +52,11 @@ static char *process_expension_loop(t_data *data, char *str, char **expd_token,
 				(*expd_token)[j++] = str[i++];
 				continue ;
 			}
-			j += handle_expension(data, &var_name/* , str + i */, (*expd_token) + j);
 			if (str[i + 1] && str[i + 1] == '{')
 				i += ft_strlen(var_name) + 3;
 			else
 				i += ft_strlen(var_name) + 1;
+			j += handle_expension(data, &var_name, (*expd_token) + j);
 			ft_free((void **)&var_name);
 		}
 		else

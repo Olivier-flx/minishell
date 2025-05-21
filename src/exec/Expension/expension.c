@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 17:38:16 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/21 19:05:22 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/21 22:21:01 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,11 @@ void	get_classic_var_name(char **var_name, char *str, int i)
 	}
 	if (var_name_len == 0)
 		return ;
+	printf("get_classic_var_name -> var_name_len = %i, var_name = %s\n", var_name_len, *var_name);
 	*var_name = malloc(sizeof(char) * (var_name_len + 1));
 	if (!(*var_name))
 		return ;
-	*var_name[var_name_len] = '\0';
+	(*var_name)[var_name_len] = '\0';
 	ft_strlcpy(*var_name, str + i - var_name_len, var_name_len + 1); // man : Note that a byte for the NUL should be included in size.
 }
 
@@ -83,7 +84,7 @@ static int	handle_empty_var_name(char *str, int *i, char **var_value)
 		return (1);
 	}
 	if (str[(*i)] && str[(*i) + 1] && str[(*i) + 1] == '{')
-		return (-1);
+		return (3);
 	return (0);
 }
 
@@ -123,18 +124,13 @@ int get_expended_tocken_len(t_data *data, char *str)
 		quote_increment(str, i, &quotes);
 		if((quotes.dbl_quote % 2 == 1 || quote_and_acc_are_closed(&quotes)) \
 			&& str[i] == '$')
-		{
 			get_len_and_increment_i(data, str, &i, &k);
-			if (k == -1)
-				return (k);
-		}
 		else
 		{
 			i++;
 			k++;
 		}
 	}
-	printf("get_expended_tocken_len  K = %i\n", k); // @debug
 	return (k);
 }
 /// Si le nom de la variable n'est pas correct, on doit retourner le message [-bash: ${world${test}}: bad substitution]

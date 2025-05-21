@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 16:59:46 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/19 18:43:01 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/21 22:06:55 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,6 @@ void	get_var_name_in_accolade(char **var_name, char *str, int i)
 	*var_name = malloc(sizeof(char) * (var_name_len + 1));
 	if (!(*var_name))
 		return ;
-	*var_name[var_name_len] = '\0';
+	(*var_name)[var_name_len] = '\0';
 	ft_strlcpy(*var_name, str + i - var_name_len, var_name_len + 1);
 }
