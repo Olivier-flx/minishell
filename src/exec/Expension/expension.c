@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 17:38:16 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/19 18:49:45 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/21 19:05:22 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	get_classic_var_name(char **var_name, char *str, int i)
 		var_name_len ++;
 	}
 	if (var_name_len == 0)
-		return;
+		return ;
 	*var_name = malloc(sizeof(char) * (var_name_len + 1));
 	if (!(*var_name))
 		return ;
@@ -42,9 +42,11 @@ void	get_var_name(char **var_name, char *str, int i)
 		get_classic_var_name(var_name,str, i);
 }
 
-static void	handle_question_mark(t_data *data, char **var_name, \
+static void	handle_question_mark_set_k(t_data *data, char **var_name, \
 								char **var_value, int *k)
 {
+	if (!var_name)
+		return ;
 	if (ft_strcmp(*var_name, "?") == 0)
 		*var_value = ft_itoa(data->exit_status);
 	*k += ft_strlen(*var_value);
@@ -52,22 +54,59 @@ static void	handle_question_mark(t_data *data, char **var_name, \
 		ft_free((void **) var_value);
 }
 
-static void	get_len_and_increment_i(t_data *data, char *str, int *i, int *k)
+/* static void	get_len_and_increment_i(t_data *data, char *str, int *i, int *k)
 {
 	char	*var_name;
 	char	*var_value;
 
 	get_var_name(&var_name, str, *i);
+	// if(!var_name)
+	// {
+	// 	(*i)++;
+	// 	return ;
+	// }
 	if (str[(*i) + 1] && str[(*i) + 1] == '{')
 		(*i) += ft_strlen(var_name) + 3; // +1 pour le $ et les {}
 	else
 		(*i) += ft_strlen(var_name) + 1; // +1 pour le $
-	if(!var_name)
-		return ;
 	var_value = ft_getenv(data->env_list, var_name);
-	handle_question_mark(data, &var_name, &var_value, k);
+	handle_question_mark_set_k(data, &var_name, &var_value, k);
 	ft_free((void **) &var_name);
 
+} */
+
+static int	handle_empty_var_name(char *str, int *i, char **var_value)
+{
+	if (str[(*i)] && !str[(*i) + 1])
+	{
+		*var_value = ft_strdup("$");
+		return (1);
+	}
+	if (str[(*i)] && str[(*i) + 1] && str[(*i) + 1] == '{')
+		return (-1);
+	return (0);
+}
+
+static void	get_len_and_increment_i(t_data *data, char *str, int *i, int *k)
+{
+	char	*var_name;
+	char	*var_value;
+
+	var_name = NULL;
+	get_var_name(&var_name, str, *i);
+	if (!var_name)
+		*k += handle_empty_var_name(str, i, &var_value);
+	if (str[(*i) + 1] && str[(*i) + 1] == '{')
+		(*i) += 3; // +1 pour le $ et les {}
+	else
+		(*i) += 1; // +1 pour le $
+	if(var_name)
+	{
+		(*i) += ft_strlen(var_name);
+		var_value = ft_getenv(data->env_list, var_name);
+		handle_question_mark_set_k(data, &var_name, &var_value, k);
+		ft_free((void **) &var_name);
+	}
 }
 
 int get_expended_tocken_len(t_data *data, char *str)
@@ -84,13 +123,18 @@ int get_expended_tocken_len(t_data *data, char *str)
 		quote_increment(str, i, &quotes);
 		if((quotes.dbl_quote % 2 == 1 || quote_and_acc_are_closed(&quotes)) \
 			&& str[i] == '$')
+		{
 			get_len_and_increment_i(data, str, &i, &k);
+			if (k == -1)
+				return (k);
+		}
 		else
 		{
 			i++;
 			k++;
 		}
 	}
+	printf("get_expended_tocken_len  K = %i\n", k); // @debug
 	return (k);
 }
 /// Si le nom de la variable n'est pas correct, on doit retourner le message [-bash: ${world${test}}: bad substitution]

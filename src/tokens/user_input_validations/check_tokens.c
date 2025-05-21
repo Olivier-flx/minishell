@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 21:34:13 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/14 23:12:58 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/21 18:39:33 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,42 @@ int check_consecutive_pipes(t_dlist *cmd_list)
 	return (EXIT_SUCCESS);
 }
 
+bool	contains_bad_var_substitution(char **tks)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (tks && tks[i])
+	{
+		j = 0;
+		while (tks[i][j])
+		{
+			if (tks[i][j] == '$' && tks[i][j + 1] &&tks[i][j + 1] == '{' \
+				&& tks[i][j + 2] && tks[i][j + 2] == '}')
+				return(true);
+			j++;
+		}
+		i++;
+	}
+	return (false);
+}
+
+bool	bad_var_substitution(t_data *data, t_dlist *cmd_list)
+{
+	while (cmd_list)
+	{
+		if (contains_bad_var_substitution(((t_chunk *)cmd_list->content)->tokens))
+		{
+			write (STDERR_FILENO, "-bash: ${}: bad substitution\n", 30);
+			data->exit_status = 1;
+			return (true);
+		}
+		cmd_list = cmd_list->next;
+	}
+	return (false);
+}
 
 // check from the last tocken to the first one
 //check for redir puis pipe (check_redir_pipe)
@@ -117,6 +153,8 @@ int	check_for_user_input_error(t_data *data, t_dlist **cmd_list)
 		data->exit_status = 2;
 		return (2);
 	}
+	if (bad_var_substitution(data, *cmd_list))
+		return (1);
 	// check si accolade not closed
 	if(accolade_not_closed(cmd_list) > 0) // @Util ? devrait déjà être géré par run_minishell here with line_accolade_closed()
 		return (1); // @Util ?
