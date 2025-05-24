@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 18:03:45 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/24 10:03:11 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/24 12:23:54 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ static	void	increment_i_expension_loop(char *var_name, char *str, int	*i)
 {
 	int var_name_len;
 
+	var_name_len = 0;
 	var_name_len = ft_strlen(var_name);
 	if (str[(*i) + 1] && str[(*i) + 1] == '{')
 				(*i) += var_name_len + 3;
@@ -60,14 +61,22 @@ static char	*process_expension_loop(t_data *data, char *str, char **expd_token,
 			get_var_name(&var_name, str + i, 0);
 			if(var_name)
 			{
+				printf("process_expension_loop var_name = %s\n",var_name);
 				increment_i_expension_loop(var_name, str, &i);
 				j += handle_expension(data, &var_name, (*expd_token) + j);
 			}
 			else
+			{
+				printf("process_expension_loop var_name = NULL\n");
 				(*expd_token)[j++] = str[i++];
+				continue;
+			}
 		}
 		else
+		{
 			(*expd_token)[j++] = str[i++];
+			printf("(*expd_token)[%i] = %c, str[%i] = %c \n",  j -1, (*expd_token)[j- 1], i- 1,  str[i - 1]); // @debug
+		}
 	}
 	return (*expd_token);
 }
@@ -82,6 +91,7 @@ char	*expend_token(t_data *data, char *str)
 
 	ret_tocken = NULL;
 	expd_token_len = get_expended_tocken_len(data, str);
+	printf("expend_token --> expd_token_len = %i\n", expd_token_len);// @debug
 	if (expd_token_len < 0)
 		return (NULL);
 	if (expd_token_len >= 0)
