@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 17:38:16 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/21 22:21:01 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/24 10:16:41 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	get_classic_var_name(char **var_name, char *str, int i)
 	}
 	if (var_name_len == 0)
 		return ;
-	printf("get_classic_var_name -> var_name_len = %i, var_name = %s\n", var_name_len, *var_name);
 	*var_name = malloc(sizeof(char) * (var_name_len + 1));
 	if (!(*var_name))
 		return ;
