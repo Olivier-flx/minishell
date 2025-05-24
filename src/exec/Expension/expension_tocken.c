@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 18:03:45 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/21 22:20:23 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/24 10:03:11 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,18 @@ static int	handle_expension(t_data *data, char **var_name, char *expd_token_j)
 	return (copied_len);
 }
 
-static char *process_expension_loop(t_data *data, char *str, char **expd_token,
+static	void	increment_i_expension_loop(char *var_name, char *str, int	*i)
+{
+	int var_name_len;
+
+	var_name_len = ft_strlen(var_name);
+	if (str[(*i) + 1] && str[(*i) + 1] == '{')
+				(*i) += var_name_len + 3;
+			else
+				(*i) += var_name_len + 1;
+}
+
+static char	*process_expension_loop(t_data *data, char *str, char **expd_token,
 									t_quote *quotes)
 {
 	char *var_name;
@@ -47,17 +58,13 @@ static char *process_expension_loop(t_data *data, char *str, char **expd_token,
 			 && str[i] == '$')
 		{
 			get_var_name(&var_name, str + i, 0);
-			if(!var_name)
+			if(var_name)
 			{
-				(*expd_token)[j++] = str[i++];
-				continue ;
+				increment_i_expension_loop(var_name, str, &i);
+				j += handle_expension(data, &var_name, (*expd_token) + j);
 			}
-			if (str[i + 1] && str[i + 1] == '{')
-				i += ft_strlen(var_name) + 3;
 			else
-				i += ft_strlen(var_name) + 1;
-			j += handle_expension(data, &var_name, (*expd_token) + j);
-			ft_free((void **)&var_name);
+				(*expd_token)[j++] = str[i++];
 		}
 		else
 			(*expd_token)[j++] = str[i++];
