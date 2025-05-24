@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 17:38:16 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/24 12:02:15 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/24 13:15:58 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,9 @@ static void	handle_question_mark_set_k(t_data *data, char **var_name, \
 
 static int	handle_empty_var_name(char *str, int *i, char **var_value)
 {
+	int	k;
+
+	k = 1;
 	if (str[(*i)] && !str[(*i) + 1])
 	{
 		*var_value = ft_strdup("$");
@@ -86,7 +89,9 @@ static int	handle_empty_var_name(char *str, int *i, char **var_value)
 	}
 	if (str[(*i)] && str[(*i) + 1] && str[(*i) + 1] == '{')
 		return (3);
-	return (0);
+	while(str[k] && str[k] != '$')
+		k++;
+	return (k - 1);
 }
 
 static void	get_len_and_increment_i(t_data *data, char *str, int *i, int *k)
@@ -133,6 +138,7 @@ int get_expended_tocken_len(t_data *data, char *str)
 			k++;
 		}
 	}
+	printf("get_expended_tocken_len = %i\n", k); //@debug
 	return (k);
 }
 /// Si le nom de la variable n'est pas correct, on doit retourner le message [-bash: ${world${test}}: bad substitution]

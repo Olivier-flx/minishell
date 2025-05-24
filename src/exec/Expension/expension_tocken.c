@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 18:03:45 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/24 12:23:54 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/24 12:58:25 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,10 @@ static int	handle_expension(t_data *data, char **var_name, char *expd_token_j)
 		var_value = ft_itoa(data->exit_status);
 	if (var_value)
 		copied_len = ft_strlcpy(expd_token_j, var_value, ft_strlen(var_value) + 1);
+	// else if(!var_value && )
+	// 	copied_len = ft_strlcpy(expd_token_j, "$", 2);
 	else
-		copied_len = ft_strlcpy(expd_token_j, "$", 2);
+		copied_len = ft_strlcpy(expd_token_j, "", 2);
 	if (ft_strcmp(*var_name, "?") == 0)
 		ft_free((void **) &var_value);
 	ft_free((void **) var_name);
