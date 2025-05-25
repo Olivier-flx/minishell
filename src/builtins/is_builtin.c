@@ -12,7 +12,7 @@
 
 #include "../../header/minishell.h"
 
-
+/*
 bool	is_builtin(char *cmd)
 {
 	char	**argv_cmd;
@@ -36,6 +36,31 @@ bool	is_builtin(char *cmd)
 		flag = true;
 	free_av(&argv_cmd);
 	return (flag);
+}
+*/
+bool is_builtin(char *cmd)
+{
+    if (!cmd)
+        return (false);
+
+    // Extraer nombre base del comando (manejo de paths)
+    char *base_cmd = cmd;
+    char *last_slash = cmd;
+    while (*last_slash)
+	{
+        if (*last_slash == '/')
+            base_cmd = last_slash + 1;
+        last_slash++;
+    }
+    return (
+        ft_strcmp(base_cmd, "echo") == 0 ||
+        ft_strcmp(base_cmd, "cd") == 0 ||
+        ft_strcmp(base_cmd, "pwd") == 0 ||
+        ft_strcmp(base_cmd, "export") == 0 ||
+        ft_strcmp(base_cmd, "unset") == 0 ||
+        ft_strcmp(base_cmd, "env") == 0 ||
+        ft_strcmp(base_cmd, "exit") == 0
+    );
 }
 
 /*static bool	is_builtin_cmd(char *cmd)

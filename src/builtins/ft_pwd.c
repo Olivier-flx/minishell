@@ -11,27 +11,32 @@
 /* ************************************************************************** */
 
 #include "../../header/minishell.h"
-//#include <unistd.h> //BORRAR
-//#include <stdlib.h> //BORRAR
-//#include<stdio.h> //BORRAR
 
-int	ft_pwd(void)
+/*#include <unistd.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <errno.h>*/
+
+int ft_pwd(void)
 {
-	char	buff[PATH_MAX];
+    char *cwd;
 
-	if (getcwd(buff, PATH_MAX) == NULL)
-	{
-		perror("getcwd");
-		return (1);
-	}
-	printf("%s\n", buff);
-	return (0);
+    cwd = getcwd(NULL, 0); // Asignación dinámica
+    if (cwd == NULL)
+    {
+        ft_putstr_fd("minishell: pwd: ", STDERR_FILENO);
+        ft_putstr_fd(strerror(errno), STDERR_FILENO);
+        ft_putstr_fd("\n", STDERR_FILENO);
+        return (1);
+    }
+    
+    ft_putstr_fd(cwd, STDOUT_FILENO);
+    ft_putstr_fd("\n", STDOUT_FILENO);
+    free(cwd);
+    return (0);
 }
 
-int	main(void)
+int main(void)
 {
-	if (ft_pwd() != 0)
-		return (EXIT_FAILURE);
-	return (EXIT_SUCCESS);
+    return (ft_pwd());
 }
-
