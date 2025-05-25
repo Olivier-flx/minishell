@@ -49,6 +49,8 @@ int	ft_echo(t_env *env, char **args)
 		if (args[i][0] == '~')
 		{
 			home = ft_getenv(env, "HOME");
+			if (!home)  // <-- Añadí esta comprobación no se si es necesaria
+        	home = "";
 			write(STDOUT_FILENO, home, ft_strlen(home));
 		}
 		else

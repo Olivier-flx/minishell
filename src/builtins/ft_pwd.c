@@ -36,7 +36,7 @@ int ft_pwd(void)
     return (0);
 }
 
-int main(void)
+/*int main(void)
 {
     return (ft_pwd());
-}
+}*/

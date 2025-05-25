@@ -42,18 +42,21 @@ int ft_export(t_env **env, char **args)
 		char *key = key_value;
 		char *value = NULL;
 
-		if (equal_sign) {
+		if (equal_sign)
+		{
 			*equal_sign = '\0'; // Separamos key y value
 			value = equal_sign + 1;
 		}
 
-		if (!is_valid_env_key(key)) {
+		if (!is_valid_env_key(key))
+		{
 			ft_putstr_fd("minishell: export: `", STDERR_FILENO);
 			ft_putstr_fd(args[i], STDERR_FILENO);
 			ft_putstr_fd("`: not a valid identifier\n", STDERR_FILENO);
 			status = 1;
 		}
-		else if (equal_sign) {
+		else if (equal_sign) 
+		{
 			update_or_add_env(env, key, value);
 		}
 
