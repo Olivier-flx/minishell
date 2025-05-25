@@ -36,60 +36,45 @@
 		flag = true;
 	free_av(&argv_cmd);
 	return (flag);
-}
-*/
-/*bool is_builtin(char *cmd)
-{
-    if (!cmd)
-        return (false);
-
-    // Extraer nombre base del comando (manejo de paths)
-    char *base_cmd = cmd;
-    char *last_slash = cmd;
-    while (*last_slash)
-	{
-        if (*last_slash == '/')
-            base_cmd = last_slash + 1;
-        last_slash++;
-    }
-    return (
-        ft_strcmp(base_cmd, "echo") == 0 ||
-        ft_strcmp(base_cmd, "cd") == 0 ||
-        ft_strcmp(base_cmd, "pwd") == 0 ||
-        ft_strcmp(base_cmd, "export") == 0 ||
-        ft_strcmp(base_cmd, "unset") == 0 ||
-        ft_strcmp(base_cmd, "env") == 0 ||
-        ft_strcmp(base_cmd, "exit") == 0
-    );
 }*/
 
-bool is_builtin(char *cmd)
+bool	is_builtin(char *cmd)
 {
-    if (!cmd || !*cmd)
-        return false;
+	char	**parts;
+	char	*last;
+	bool	flag;
 
-    // Encontrar el último segmento después de la última '/'
-    char *base = cmd;
-    char *last_slash = ft_strrchr(cmd, '/');
-    if (last_slash)
-        base = last_slash + 1;
+	if (!cmd)
+		return (false);
+	// Si hay slash, dividimos en partes
+	if (usr_input_got_slash(cmd))
+		parts = ft_split(cmd, '/');
+	else
+	{
+		parts = malloc(sizeof(char *) * 2);
+		if (!parts)
+			return (false);
+		parts[0] = ft_strdup(cmd);
+		parts[1] = NULL;
+	}
+	if (!parts || !parts[0])
+		return (false);
+	
+	last = parts[pp_char_len(parts) - 1];
 
-    // Calcular longitud ignorando '/' finales
-    size_t len = 0;
-    while (base[len] && base[len] != '/')
-        len++;
+	flag = (ft_strcmp(last, "echo") == 0
+		|| ft_strcmp(last, "cd") == 0
+		|| ft_strcmp(last, "pwd") == 0
+		|| ft_strcmp(last, "export") == 0
+		|| ft_strcmp(last, "unset") == 0
+		|| ft_strcmp(last, "env") == 0
+		|| ft_strcmp(last, "exit") == 0);
 
-    // Comparación exacta con builtins
-    if (len == 4 && !ft_strncmp(base, "echo", 4)) return true;
-    if (len == 2 && !ft_strncmp(base, "cd", 2)) return true;
-    if (len == 3 && !ft_strncmp(base, "pwd", 3)) return true;
-    if (len == 6 && !ft_strncmp(base, "export", 6)) return true;
-    if (len == 5 && !ft_strncmp(base, "unset", 5)) return true;
-    if (len == 3 && !ft_strncmp(base, "env", 3)) return true;
-    if (len == 4 && !ft_strncmp(base, "exit", 4)) return true;
-
-    return false;
+	free_av(&parts);
+	return (flag);
 }
+
+
 int main(void)
 {
 
@@ -122,17 +107,3 @@ int main(void)
 
     return 0;
 }
-
-/*static bool	is_builtin_cmd(char *cmd)
-{
-	return (ft_strcmp(cmd, "echo") == 0
-		|| ft_strcmp(cmd, "cd") == 0
-		|| ft_strcmp(cmd, "pwd") == 0
-		|| ft_strcmp(cmd, "export") == 0
-		|| ft_strcmp(cmd, "unset") == 0
-		|| ft_strcmp(cmd, "env") == 0
-		|| ft_strcmp(cmd, "exit") == 0);
-}
-flag = is_builtin_cmd(tmp);
-
-*/
