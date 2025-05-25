@@ -17,28 +17,21 @@
 
 int	ft_pwd(void)
 {
-	char	*buff;
+	char	buff[PATH_MAX];
 
-	buff = malloc(1024); //tamaño arbitrario 
-	if(!buff)
-	{
-		perror("malloc");
-		return(1);
-	}
-	if(getcwd(buff, 1024) == NULL)
+	if (getcwd(buff, PATH_MAX) == NULL)
 	{
 		perror("getcwd");
-		free(buff);
-		return(1);
+		return (1);
 	}
 	printf("%s\n", buff);
-	free(buff);
-	return(0);
+	return (0);
 }
-/*
-int	main()
+
+int	main(void)
 {
-	ft_pwd();
-	return(0);
+	if (ft_pwd() != 0)
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }
-*/
+

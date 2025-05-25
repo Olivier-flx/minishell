@@ -33,6 +33,7 @@
 # include <string.h>     // strerror
 #include <errno.h>		 // set errno
 # include <stdio.h>      // perror
+#include <limits.h>
 
 # include <stdbool.h>
 

@@ -29,7 +29,8 @@ int ft_export(t_env **env, char **args)
 
 	while (args[i])
 	{
-		if (!args[i]) {
+		if (!args[i]) 
+		{
 			i++;
 			continue;
 		}

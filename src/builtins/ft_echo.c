@@ -42,7 +42,7 @@ int	ft_echo(t_env *env, char **args)
 	new_line = true;
 	if (!args || !env)
 		return (EXIT_FAILURE);
-	if (check_for_n(args, &new_line, &i) > 1)
+		if (check_for_n(args, &new_line, &i) != EXIT_SUCCESS)
 		return (EXIT_FAILURE);
 	while (args[i])
 	{
@@ -61,6 +61,52 @@ int	ft_echo(t_env *env, char **args)
 	return (0);
 }
 
+//
+/*int ft_echo(t_env *env, char **args)
+{
+    int i;
+    bool new_line; 
+	char *home ;
+
+	bool new = true;	
+	home = NULL;
+
+    if (!args || !env)
+		return EXIT_FAILURE;
+    
+    if (check_for_n(args, &new_line, &i) != EXIT_SUCCESS)
+        return EXIT_FAILURE;
+
+    while (args[i])
+	{
+        if (args[i][0] == '~' && (args[i][1] == '\0' || args[i][1] == '/'))
+		{
+            home = ft_getenv(env, "HOME");
+            if (home)
+			{
+                write(STDOUT_FILENO, home, ft_strlen(home));
+                if (args[i][1] == '/')
+                    write(STDOUT_FILENO, &args[i][1], ft_strlen(&args[i][1]));
+            }
+			else
+			{
+                write(STDOUT_FILENO, args[i], ft_strlen(args[i]));
+            }
+        } 
+		else
+		{
+            write(STDOUT_FILENO, args[i], ft_strlen(args[i]));
+        }
+        
+        if (args[++i])
+            write(STDOUT_FILENO, " ", 1);
+    }    
+    if (new_line)
+        write(STDOUT_FILENO, "\n", 1);
+    
+    if (home) free(home); // Liberar memoria asignada
+    return EXIT_SUCCESS;
+}*/
 //cc -Wall -Wextra -Wall ./src/builtins/ft_echo.c ./src/enviroment/env.c ./src/enviroment/env_utils.c ./src/enviroment/env_search.c ./libs/libft/libft.a -lreadline -o testEcho
 // int main(int ac, char **argv, char **env)
 // {

@@ -12,6 +12,31 @@
 
 #include "../../header/minishell.h"
 
+
+void bubble_sort(char **array, int count)
+{
+    int i;
+    int j;
+    char *temp;
+
+    i = 0;
+    while (i < count - 1)
+    {
+        j = 0;
+        while (j < count - i - 1)
+        {
+            if (ft_strcmp(array[j], array[j + 1]) > 0)
+            {
+                temp = array[j];
+                array[j] = array[j + 1];
+                array[j + 1] = temp;
+            }
+            j++;
+        }
+        i++;
+    }
+}
+
 char **env_to_sorted_array(t_env *env)
 {
 	int		count = 0;
@@ -41,8 +66,8 @@ char **env_to_sorted_array(t_env *env)
 		i++;
 	}
 	array[count] = NULL;
-	qsort(array, count, sizeof(char *), /// @Laura
-		(int (*)(const void *, const void *))ft_strcmp);
+	bubble_sort(array, count);
+		((int (*)(const void *, const void *))ft_strcmp);
 
 	return (array);
 }

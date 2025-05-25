@@ -54,7 +54,7 @@ static void init_eq_key_val(char **eq,char **key, char **val)
 
 //#include <unistd.h> // Para 'environ'
 
-t_env *ft_init_env(char **env)
+/*t_env *ft_init_env(char **env)
 {
 	int	i;
 	t_env *head;
@@ -76,7 +76,7 @@ t_env *ft_init_env(char **env)
 		free(value);
 	}
 	return (head);
-}
+}*/
 
 void ft_print_env(t_env *env)
 {
@@ -85,4 +85,32 @@ void ft_print_env(t_env *env)
 		printf("%s=%s\n", env->key, env->value);
 		env = env->next;
 	}
+}
+t_env *ft_init_env(char **env)
+{
+	int i;
+	t_env *head;
+	char *equal;
+	char *key;
+	char *value;
+
+	head = NULL;
+	i = 0;
+	while (env[i])
+	{
+		equal = ft_strchr(env[i], '=');
+		if (!equal)
+		{
+			// Si no hay '=', ignoramos esta entrada (puedes hacer log o aviso si quieres)
+			i++;
+			continue;
+		}
+		key = ft_substr(env[i], 0, equal - env[i]);
+		value = ft_strdup(equal + 1);
+		ft_env_add_back(&head, ft_new_env_node(key, value, true));
+		free(key);
+		free(value);
+		i++;
+	}
+	return head;
 }
