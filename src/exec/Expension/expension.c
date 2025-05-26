@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 17:38:16 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/26 08:29:21 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/26 08:31:50 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,6 @@ int get_expended_tocken_len(t_data *data, char *str)
 			k++;
 		}
 	}
-	printf("get_expended_tocken_len = %i\n", k); //@debug
 	return (k);
 }
 /// Si le nom de la variable n'est pas correct, on doit retourner le message [-bash: ${world${test}}: bad substitution]
