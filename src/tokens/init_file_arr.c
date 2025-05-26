@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 15:29:49 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/19 16:53:02 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/26 08:28:18 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 void	init_redir_arr_and_files(t_chunk *chunk)
 {
 	if (!chunk)
-		printf("Error: init_redir_arr_and_files - No chunk\n"); // @debug
+		printf("Error: init_redir_arr_and_files - No chunk\n");
 	chunk->redir_count = count_redir_from_pp_char(chunk->tokens);
 	if (chunk->redir_count > 0)
 		chunk->has_redir = true;
@@ -59,7 +59,7 @@ void	init_redir_arr_and_files(t_chunk *chunk)
 void	init_input_redir_arr_and_files(t_chunk *chunk)
 {
 	if (!chunk)
-		printf("Error: init_input_redir_arr_and_files - No chunk\n"); // @debug
+		printf("Error: init_input_redir_arr_and_files - No chunk\n");
 	chunk->input_redir_count = count_input_redir_from_pp_char(chunk->tokens);
 	if (chunk->input_redir_count > 0)
 		chunk->has_input_redir = true;

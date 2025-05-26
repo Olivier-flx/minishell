@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 17:38:16 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/24 13:15:58 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/26 08:29:21 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	get_classic_var_name(char **var_name, char *str, int i)
 		i++;
 		var_name_len ++;
 	}
-	printf("get_classic_var_name -> var_name_len = %i\n", var_name_len); // @debug
 	if (var_name_len == 0)
 		return ;
 	*var_name = malloc(sizeof(char) * (var_name_len + 1));
@@ -30,7 +29,6 @@ void	get_classic_var_name(char **var_name, char *str, int i)
 		return ;
 	(*var_name)[var_name_len] = '\0';
 	ft_strlcpy(*var_name, str + i - var_name_len, var_name_len + 1); // man : Note that a byte for the NUL should be included in size.
-	printf("get_classic_var_name -> var_name = %s\n", (*var_name)); // @debug
 }
 
 void	get_var_name(char **var_name, char *str, int i)
@@ -107,7 +105,6 @@ static void	get_len_and_increment_i(t_data *data, char *str, int *i, int *k)
 		(*i) += 3; // +1 pour le $ et les {}
 	else
 		(*i) += 1; // +1 pour le $
-	printf("get_len_and_increment_i var_name-> %s\n", var_name); // @debug
 	if(var_name)
 	{
 		(*i) += ft_strlen(var_name);
