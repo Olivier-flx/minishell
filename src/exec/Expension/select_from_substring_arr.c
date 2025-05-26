@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 17:29:54 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/19 16:50:58 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/26 19:55:11 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,12 @@ static int	calc_total_len(char **argv)
 
 	i = 0;
 	total_len = 0;
-	while (argv[i])
+	//print_pp_char_arr(argv); // @ debug
+	while (argv[i]  && argv[i][0])
 	{
-		total_len += strlen(argv[i]);
+		if (argv[i] && argv[i][0])
+			total_len += ft_strlen(argv[i]);
+		//printf("calc_total_len -> argv[%i] = `%s`\n", i, argv[i]); // @ debug
 		if (argv[i + 1])
 			total_len += 1;
 		i++;
@@ -61,7 +64,7 @@ static void	copy_with_sep(char **argv, char sep, char *result)
 	result[offset] = '\0';
 }
 
-char	*concat_strs_sep(char **argv, char sep)
+char	*concat_substrs_sep(char **argv, char sep)
 {
 	int		total_len;
 	char	*result;
@@ -108,7 +111,7 @@ void	retocken_after_expension(char ***chunk_tokens)
 	char	*tmp2;
 
 	tmp = *chunk_tokens;
-	tmp2 = concat_strs_sep(*chunk_tokens, ' ');
+	tmp2 = concat_substrs_sep(*chunk_tokens, ' ');
 	*chunk_tokens = split_quoted(tmp2, ' ');
 	ft_free((void **) &tmp2);
 	free_av(&tmp);

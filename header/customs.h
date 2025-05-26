@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/26 12:04:27 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/26 19:29:21 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -293,6 +293,7 @@ bool	tocken_quote_closed(char *s);
 bool	quote_are_closed(t_quote *quote);
 bool	quote_and_acc_are_closed(t_quote *quote);
 bool	is_quote(char c);
+bool	bool_quote_increment(char *src, int *i, t_quote *qts);
 	// custom basics
 char	*c_strjoin(char *s1, char *s2, char c);
 char	*c_ft_substr(char const *s, unsigned int start, size_t len);

@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 18:03:45 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/26 15:32:50 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/26 19:51:37 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,16 +45,16 @@ static	void	increment_i_expension_loop(char *var_name, char *str, int	*i)
 				(*i) += var_name_len + 1;
 }
 
-static bool	skip_quotes (char *str, int i, t_quote *qts)
+/* static bool	skip_quotes (char *str, int i, t_quote *qts)
 {
 	if (str[i] == '\'' && qts->sgl_quote % 2 == 1 && qts->dbl_quote % 2 == 0)
 		return (true);
 	if (str[i] == '"'  && qts->dbl_quote % 2 == 1 && qts->sgl_quote % 2 == 0)
 		return (true);
 	return(false);
-}
+} */
 
-static char	*process_expension_loop(t_data *data, char *str, char **expd_token,
+/* static char	*process_expension_loop(t_data *data, char *str, char **expd_token,
 									t_quote *quotes)
 {
 	char *var_name;
@@ -77,6 +77,7 @@ static char	*process_expension_loop(t_data *data, char *str, char **expd_token,
 			}
 			else if (!str[i + 1] || quotes->dbl_quote % 2 == 1)
 			{
+				printf("ENTRA1 str[%i] = %c\n", i, str[i]); // @debug
 				(*expd_token)[j++] = str[i++];
 			}
 			else
@@ -85,14 +86,69 @@ static char	*process_expension_loop(t_data *data, char *str, char **expd_token,
 				i++;
 			}
 		}
-		// else if (is_quote(str[i]) && (quotes->sgl_quote % 2 == 1 || quote_are_closed(quotes) )) // suppression de  && quote_are_closed(quotes)
+		// else if (is_quote(str[i]) && (quotes->sgl_quote % 2 == 1 || quote_are_closed(quotes) )) // suppression de  && quote_are_closed(quotes) // @ test id 1
 		else if (skip_quotes(str, i, quotes))
+		{
+			printf("ENTRA2 str[%i] = %c\n", i, str[i]); // @debug
+			i++;
+		}
+		else
+		{
+			printf("ENTRA3 str[%i] = %c\n", i, str[i]); // @debug
+			(*expd_token)[j++] = str[i++];
+		}
+	}
+	printf("process_expension_loop *expd_token = %s\n", *expd_token); // @ debug
+	return (*expd_token);
+} */
+
+
+static char	*process_expension_loop(t_data *data, char *str, char **expd_token,
+									t_quote *quotes)
+{
+	char	 *var_name;
+	int		i;
+	int		j;
+	bool	was_qts;
+
+	i = 0;
+	j = 0;
+	was_qts = false;
+	while (str && str[i])
+	{
+		was_qts = bool_quote_increment(str, &i, quotes);
+		if ((quotes->dbl_quote % 2 == 1 || quote_and_acc_are_closed(quotes)) \
+			 && str[i] == '$')
+		{
+			get_var_name(&var_name, str + i, 0);
+			if(var_name)
+			{
+				increment_i_expension_loop(var_name, str, &i);
+				j += handle_expension(data, &var_name, (*expd_token) + j);
+			}
+			else if (!str[i + 1] || quotes->dbl_quote % 2 == 1)
+			{
+				printf("ENTRA1 str[%i] = %c\n", i, str[i]); // @debug
+				(*expd_token)[j++] = str[i++];
+			}
+			else
+			{
+				printf("ENTRA \n"); // @ debug
+				i++;
+			}
+		}
+		else if (was_qts)
 			i++;
 		else
+		{
+			printf("ENTRA3 str[%i] = %c\n", i, str[i]); // @debug
 			(*expd_token)[j++] = str[i++];
+		}
 	}
+	//printf("process_expension_loop *expd_token = %s\n", *expd_token); // @ debug
 	return (*expd_token);
 }
+
 
 
 char	*expend_token(t_data *data, char *str)
@@ -107,6 +163,7 @@ char	*expend_token(t_data *data, char *str)
 	printf ("expend_token --> str = %s ; expd_token_len = %i\n", str, expd_token_len); // @debug
 	if (expd_token_len < 0)
 		return (NULL);
+	// if (expd_token_len >= 0)
 	if (expd_token_len >= 0)
 	{
 		expd_token = malloc(sizeof(char) * (expd_token_len + 1));

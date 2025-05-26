@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 17:38:16 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/26 14:51:10 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/26 20:13:26 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,23 +77,25 @@ static void	handle_question_mark_set_k(t_data *data, char **var_name, \
 
 } */
 
-static int	handle_empty_var_name(char *str, int *i/* , char **var_value */)
+static int	handle_empty_var_name(char *str, int i/* , char **var_value */)
 {
 	int	k;
 
 	k = 1;
-	if (str[(*i)] && !str[(*i) + 1])
+	if (str[(i)] && !str[(i) + 1])
 	{
 		//*var_value = ft_strdup("$");
 		return (1);
 	}
-	if (str[(*i)] && str[(*i) + 1] && (str[(*i) + 1] == '{' /* || is_quote(str[(*i) + 1]) */))
+	if (str[(i)] && str[(i) + 1] && (str[(i) + 1] == '{' /* || is_quote(str[(i) + 1]) */))
 		return (3);
-	while(str[k] && str[k] != '$' && !is_quote(str[k]) && !ft_isalnum(str[k]))
+	while(str[i] && str[i] != '$' && !is_quote(str[i]) && !ft_isalnum(str[i]))
+	{
 		k++;
-
-	printf("handle_empty_var_name --> k - 1 = %i\n", k - 1); // @ debug
-	return (k - 1);
+		i++;
+	}
+	printf("handle_empty_var_name --> k - 1 = %i\n", k); // @ debug
+	return (k);
 }
 
 static void	get_len_and_increment_i(t_data *data, char *str, int *i, int *k)
@@ -105,7 +107,7 @@ static void	get_len_and_increment_i(t_data *data, char *str, int *i, int *k)
 	get_var_name(&var_name, str, *i);
 	printf("get_len_and_increment_i -> var_name = %s\n", var_name); // @debug
 	if (!var_name)
-		*k += handle_empty_var_name(str, i/* , &var_value */);
+		*k += handle_empty_var_name(str, *i/* , &var_value */);
 	if (str[(*i) + 1] && (str[(*i) + 1] == '{' /* || is_quote(str[(*i) + 1]) */))
 		(*i) += 3; // +1 pour le $ et les {}
 	else
@@ -119,7 +121,7 @@ static void	get_len_and_increment_i(t_data *data, char *str, int *i, int *k)
 	}
 }
 
-int get_expended_tocken_len(t_data *data, char *str)
+/* int get_expended_tocken_len(t_data *data, char *str)
 {
 	int	i;
 	int k;
@@ -135,9 +137,40 @@ int get_expended_tocken_len(t_data *data, char *str)
 			&& str[i] == '$')
 		{
 			get_len_and_increment_i(data, str, &i, &k);
-			printf("get_expended_tocken_len -> k = %i\n", k);
+			printf("get_expended_tocken_len -> k = %i\n", k);// @debug
 		}
 		else if (is_quote(str[i]) && ( quotes.sgl_quote % 2 == 1 || quote_are_closed(&quotes))) // @ debug @ test id 1
+			i++;
+		else
+		{
+			i++;
+			k++;
+		}
+	}
+	return (k);
+} */
+
+int get_expended_tocken_len(t_data *data, char *str)
+{
+	int	i;
+	int k;
+	t_quote	quotes;
+	bool	was_quotes;
+
+	init_quotes(&quotes);
+	i = 0;
+	k = 0;
+	was_quotes = false;
+	while (str[i])
+	{
+		was_quotes = bool_quote_increment(str, &i, &quotes);
+		if((quotes.dbl_quote % 2 == 1 || quote_and_acc_are_closed(&quotes)) \
+			&& str[i] == '$' && !is_quote(str[i + 1]))
+		{
+			get_len_and_increment_i(data, str, &i, &k);
+			printf("get_expended_tocken_len -> k = %i\n", k); // @debug
+		}
+		else if (was_quotes/*  || (str[i] == '$' && is_quote(str[i + 1])) */) // @ debug @ test id 1 // PROBLEME ICI avec echo $""
 			i++;
 		else
 		{
