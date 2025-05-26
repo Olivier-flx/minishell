@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 18:03:45 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/26 14:30:44 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/26 15:32:50 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,15 @@ static	void	increment_i_expension_loop(char *var_name, char *str, int	*i)
 				(*i) += var_name_len + 1;
 }
 
+static bool	skip_quotes (char *str, int i, t_quote *qts)
+{
+	if (str[i] == '\'' && qts->sgl_quote % 2 == 1 && qts->dbl_quote % 2 == 0)
+		return (true);
+	if (str[i] == '"'  && qts->dbl_quote % 2 == 1 && qts->sgl_quote % 2 == 0)
+		return (true);
+	return(false);
+}
+
 static char	*process_expension_loop(t_data *data, char *str, char **expd_token,
 									t_quote *quotes)
 {
@@ -76,7 +85,8 @@ static char	*process_expension_loop(t_data *data, char *str, char **expd_token,
 				i++;
 			}
 		}
-		else if (is_quote(str[i]) && quote_are_closed(quotes)) // suppression de  && quote_are_closed(quotes)
+		// else if (is_quote(str[i]) && (quotes->sgl_quote % 2 == 1 || quote_are_closed(quotes) )) // suppression de  && quote_are_closed(quotes)
+		else if (skip_quotes(str, i, quotes))
 			i++;
 		else
 			(*expd_token)[j++] = str[i++];

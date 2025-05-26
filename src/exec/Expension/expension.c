@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 17:38:16 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/26 14:40:13 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/26 14:51:10 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ int get_expended_tocken_len(t_data *data, char *str)
 			get_len_and_increment_i(data, str, &i, &k);
 			printf("get_expended_tocken_len -> k = %i\n", k);
 		}
-		else if (is_quote(str[i]) && /* quotes.sgl_quote % 2 == 1 */ quote_are_closed(&quotes)) // @ debug @ test id 1
+		else if (is_quote(str[i]) && ( quotes.sgl_quote % 2 == 1 || quote_are_closed(&quotes))) // @ debug @ test id 1
 			i++;
 		else
 		{
