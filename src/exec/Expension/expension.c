@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 17:38:16 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/26 08:31:50 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/26 14:40:13 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ void	get_var_name(char **var_name, char *str, int i)
 		return ;
 	if (str[i] == '{')
 		get_var_name_in_accolade(var_name, str, i + 1);
+/* 	else if (is_quote(str[i]))
+		get_var_name_in_quotes(var_name, str, i); */
 	else
 		get_classic_var_name(var_name,str, i);
 }
@@ -75,20 +77,22 @@ static void	handle_question_mark_set_k(t_data *data, char **var_name, \
 
 } */
 
-static int	handle_empty_var_name(char *str, int *i, char **var_value)
+static int	handle_empty_var_name(char *str, int *i/* , char **var_value */)
 {
 	int	k;
 
 	k = 1;
 	if (str[(*i)] && !str[(*i) + 1])
 	{
-		*var_value = ft_strdup("$");
+		//*var_value = ft_strdup("$");
 		return (1);
 	}
-	if (str[(*i)] && str[(*i) + 1] && str[(*i) + 1] == '{')
+	if (str[(*i)] && str[(*i) + 1] && (str[(*i) + 1] == '{' /* || is_quote(str[(*i) + 1]) */))
 		return (3);
-	while(str[k] && str[k] != '$')
+	while(str[k] && str[k] != '$' && !is_quote(str[k]) && !ft_isalnum(str[k]))
 		k++;
+
+	printf("handle_empty_var_name --> k - 1 = %i\n", k - 1); // @ debug
 	return (k - 1);
 }
 
@@ -99,13 +103,14 @@ static void	get_len_and_increment_i(t_data *data, char *str, int *i, int *k)
 
 	var_name = NULL;
 	get_var_name(&var_name, str, *i);
+	printf("get_len_and_increment_i -> var_name = %s\n", var_name); // @debug
 	if (!var_name)
-		*k += handle_empty_var_name(str, i, &var_value);
-	if (str[(*i) + 1] && str[(*i) + 1] == '{')
+		*k += handle_empty_var_name(str, i/* , &var_value */);
+	if (str[(*i) + 1] && (str[(*i) + 1] == '{' /* || is_quote(str[(*i) + 1]) */))
 		(*i) += 3; // +1 pour le $ et les {}
 	else
 		(*i) += 1; // +1 pour le $
-	if(var_name)
+	if (var_name)
 	{
 		(*i) += ft_strlen(var_name);
 		var_value = ft_getenv(data->env_list, var_name);
@@ -128,7 +133,12 @@ int get_expended_tocken_len(t_data *data, char *str)
 		quote_increment(str, i, &quotes);
 		if((quotes.dbl_quote % 2 == 1 || quote_and_acc_are_closed(&quotes)) \
 			&& str[i] == '$')
+		{
 			get_len_and_increment_i(data, str, &i, &k);
+			printf("get_expended_tocken_len -> k = %i\n", k);
+		}
+		else if (is_quote(str[i]) && /* quotes.sgl_quote % 2 == 1 */ quote_are_closed(&quotes)) // @ debug @ test id 1
+			i++;
 		else
 		{
 			i++;
@@ -138,6 +148,17 @@ int get_expended_tocken_len(t_data *data, char *str)
 	return (k);
 }
 /// Si le nom de la variable n'est pas correct, on doit retourner le message [-bash: ${world${test}}: bad substitution]
+
+
+
+
+
+
+
+
+
+
+
 
 int	expend_chunk(t_data *data, t_chunk *chunk)
 {

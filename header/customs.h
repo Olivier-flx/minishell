@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/19 18:37:46 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/26 12:04:27 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,9 +198,11 @@ int		expend_all(t_data *data);
 char	*expend_token(t_data *data, char *str);
 void	get_var_name_in_accolade(char **var_name, char *str, int i);
 void	get_classic_var_name(char **var_name, char *str, int i);
+void	get_var_name_in_quotes(char **var_name, char *str, int i);
 void	get_var_name(char **var_name, char *str, int i);
 int		get_expended_tocken_len(t_data *data, char *str);
 void	retocken_after_expension(char ***chunk_tokens);
+bool	unsuported_accolade_operator(char *str, int i);
 
 	/////  /////
 /*
@@ -290,6 +292,7 @@ void	init_quotes(t_quote *quote);
 bool	tocken_quote_closed(char *s);
 bool	quote_are_closed(t_quote *quote);
 bool	quote_and_acc_are_closed(t_quote *quote);
+bool	is_quote(char c);
 	// custom basics
 char	*c_strjoin(char *s1, char *s2, char c);
 char	*c_ft_substr(char const *s, unsigned int start, size_t len);

@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 18:03:45 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/26 08:27:12 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/26 14:30:44 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,18 @@ static char	*process_expension_loop(t_data *data, char *str, char **expd_token,
 				increment_i_expension_loop(var_name, str, &i);
 				j += handle_expension(data, &var_name, (*expd_token) + j);
 			}
-			else
+			else if (!str[i + 1] || quotes->dbl_quote % 2 == 1)
+			{
 				(*expd_token)[j++] = str[i++];
+			}
+			else
+			{
+				printf("ENTRA \n"); // @ debug
+				i++;
+			}
 		}
+		else if (is_quote(str[i]) && quote_are_closed(quotes)) // suppression de  && quote_are_closed(quotes)
+			i++;
 		else
 			(*expd_token)[j++] = str[i++];
 	}
@@ -85,6 +94,7 @@ char	*expend_token(t_data *data, char *str)
 
 	ret_tocken = NULL;
 	expd_token_len = get_expended_tocken_len(data, str);
+	printf ("expend_token --> str = %s ; expd_token_len = %i\n", str, expd_token_len); // @debug
 	if (expd_token_len < 0)
 		return (NULL);
 	if (expd_token_len >= 0)

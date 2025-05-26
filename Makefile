@@ -63,6 +63,7 @@ FILES = ./src/exec/files/init_input_files.c \
 EXPEND = ./src/exec/Expension/expension.c \
 		./src/exec/Expension/expension_tocken.c \
 		./src/exec/Expension/accolades.c \
+		./src/exec/Expension/expension_quotes.c \
 		./src/exec/Expension/select_from_substring_arr.c \
 
 UTILS = ./utils/string/split_quoted.c \
@@ -70,6 +71,7 @@ UTILS = ./utils/string/split_quoted.c \
 		./utils/string/basics.c \
 		./utils/string/custom_basics.c \
 		./utils/string/quotes.c \
+		./utils/string/quotes_2.c \
 		./utils/string/trim.c \
 		./utils/string/ft_split_set_of_char.c \
 		./utils/string/ft_split_sgmt_count.c \

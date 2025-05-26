@@ -1,36 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   accolades.c                                        :+:      :+:    :+:   */
+/*   expension_quotes.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/12 16:59:46 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/26 11:25:03 by ofilloux         ###   ########.fr       */
+/*   Created: 2025/05/26 11:23:00 by ofilloux          #+#    #+#             */
+/*   Updated: 2025/05/26 11:52:31 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../header/minishell.h"
 
-bool	unsuported_accolade_operator(char *str, int i)
+void	get_var_name_in_quotes(char **var_name, char *str, int i)
 {
-	if (str[i] == '-' || str[i] == '+' || str[i] == ':' \
-		|| str[i] == '=' || str[i] == '%' || str[i] == '*' || \
-		str[i] == '!' || (str[i] == '?' && str[i + 1] != '}'))
-	{
-		printf("Warning : unsuported minishell operator `%c` in $var\n", str[i]);
-		return(true);
-	}
-	return (false);
-}
-
-void	get_var_name_in_accolade(char **var_name, char *str, int i)
-{
-	int	var_name_len;
+	int		var_name_len;
+	t_quote	qts;
 
 	var_name_len = 0;
-	while (str[i] && str[i] != '}')
+	init_quotes(&qts);
+	quote_increment(str, i++, &qts);
+	while (str[i] && !quote_are_closed(&qts))
 	{
+		quote_increment(str, i, &qts);
+		if (quote_are_closed(&qts))
+			break ;
 		if (unsuported_accolade_operator(str, i))
 			return ;
 		i++;
