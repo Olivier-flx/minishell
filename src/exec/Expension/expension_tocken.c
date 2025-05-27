@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 18:03:45 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/27 21:30:27 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/27 21:36:07 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,63 +45,6 @@ static	void	increment_i_expension_loop(char *var_name, char *str, int	*i)
 				(*i) += var_name_len + 1;
 }
 
-/* static bool	skip_quotes (char *str, int i, t_quote *qts)
-{
-	if (str[i] == '\'' && qts->sgl_qt % 2 == 1 && qts->dbl_qt % 2 == 0)
-		return (true);
-	if (str[i] == '"'  && qts->dbl_qt % 2 == 1 && qts->sgl_qt % 2 == 0)
-		return (true);
-	return(false);
-} */
-
-/* static char	*process_exp_loop(t_data *data, char *str, char **expd_token,
-									t_quote *quotes)
-{
-	char *var_name;
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (str && str[i])
-	{
-		quote_increment(str, i, quotes);
-		if ((quotes->dbl_qt % 2 == 1 || qts_acc_closed(quotes)) \
-			 && str[i] == '$')
-		{
-			get_var_name(&var_name, str + i, 0);
-			if(var_name)
-			{
-				increment_i_expension_loop(var_name, str, &i);
-				j += handle_expension(data, &var_name, (*expd_token) + j);
-			}
-			else if (!str[i + 1] || quotes->dbl_qt % 2 == 1)
-			{
-				printf("ENTRA1 str[%i] = %c\n", i, str[i]); // @debug
-				(*expd_token)[j++] = str[i++];
-			}
-			else
-			{
-				printf("ENTRA \n"); // @ debug
-				i++;
-			}
-		}
-		// else if (is_quote(str[i]) && (quotes->sgl_qt % 2 == 1 || quote_are_closed(quotes) )) // suppression de  && quote_are_closed(quotes) // @ test id 1
-		else if (skip_quotes(str, i, quotes))
-		{
-			printf("ENTRA2 str[%i] = %c\n", i, str[i]); // @debug
-			i++;
-		}
-		else
-		{
-			printf("ENTRA3 str[%i] = %c\n", i, str[i]); // @debug
-			(*expd_token)[j++] = str[i++];
-		}
-	}
-	printf("process_exp_loop *expd_token = %s\n", *expd_token); // @ debug
-	return (*expd_token);
-} */
-
 static void	init_i_j(int *i, int *j)
 {
 	*i = 0;
@@ -136,6 +79,31 @@ static char *process_exp_loop(t_data *data, char *str, char **expd_token, \
 			(*expd_token)[j++] = str[i++];
 	}
 	return (*expd_token);
+}
+
+char	*expend_token(t_data *data, char *str)
+{
+	t_quote	quotes;
+	char	*expd_token;
+	int		expd_token_len;
+	char	*ret_tocken;
+
+	ret_tocken = NULL;
+	expd_token_len = get_expended_tocken_len(data, str);
+	printf ("expend_token --> str = %s ; expd_token_len = %i\n", str, expd_token_len); // @debug
+	if (expd_token_len < 0)
+		return (NULL);
+	// if (expd_token_len >= 0)
+	if (expd_token_len >= 0)
+	{
+		expd_token = malloc(sizeof(char) * (expd_token_len + 1));
+		if (!expd_token)
+			return (printf("Error : malloc expension\n"), NULL);
+		expd_token[expd_token_len] = '\0';
+	}
+	init_quotes(&quotes);
+	ret_tocken = process_exp_loop(data, str, &expd_token, &quotes);
+	return (ret_tocken);
 }
 
 //V2
@@ -246,30 +214,7 @@ static char *process_exp_loop(t_data *data, char *str, char **expd_token, \
 
 
 
-char	*expend_token(t_data *data, char *str)
-{
-	t_quote	quotes;
-	char	*expd_token;
-	int		expd_token_len;
-	char	*ret_tocken;
 
-	ret_tocken = NULL;
-	expd_token_len = get_expended_tocken_len(data, str);
-	printf ("expend_token --> str = %s ; expd_token_len = %i\n", str, expd_token_len); // @debug
-	if (expd_token_len < 0)
-		return (NULL);
-	// if (expd_token_len >= 0)
-	if (expd_token_len >= 0)
-	{
-		expd_token = malloc(sizeof(char) * (expd_token_len + 1));
-		if (!expd_token)
-			return (printf("Error : malloc expension\n"), NULL);
-		expd_token[expd_token_len] = '\0';
-	}
-	init_quotes(&quotes);
-	ret_tocken = process_exp_loop(data, str, &expd_token, &quotes);
-	return (ret_tocken);
-}
 
 /* char	*expend_token(t_data *data, char *str)
 {

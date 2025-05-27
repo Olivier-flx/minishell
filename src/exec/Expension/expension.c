@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 17:38:16 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/27 21:29:10 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/27 21:47:11 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,28 +77,29 @@ int	handle_empty_var_name(char *str, int i)
 	return (k);
 }
 
-int get_expended_tocken_len(t_data *data, char *str)
+//V2
+int get_expended_tocken_len(t_data *data, char *s)
 {
 	int		i;
 	int		k;
-	t_quote quotes;
+	t_quote qts;
 
 	i = 0;
 	k = 0;
-	init_quotes(&quotes);
-	while (str[i])
+	init_quotes(&qts);
+	while (s[i])
 	{
-		if (skip_quote(&i, &quotes, str))
+		if (skip_quote(&i, &qts, s) || skip_dollar_quote(&i, &qts, s))
 			continue;
-		if (skip_dollar_quote(&i, &quotes, str))
-			continue;
-		if (str[i] == '$' && (quotes.dbl_qt % 2 == 1 \
-			|| qts_acc_closed(&quotes)))
+		if (s[i] == '$' && (qts.dbl_qt % 2 == 1 \
+			|| qts_acc_closed(&qts)) \
+			&& (ft_isalnum(s[i + 1]) || s[i + 1] == '_' || s[i + 1] == '?')
+		)
 		{
-			get_len_and_increment_i(data, str, &i, &k);
+			get_len_and_increment_i(data, s, &i, &k);
 			continue;
 		}
-		if (handle_invalid_dollar(&i, &k, &quotes, str))
+		if (handle_invalid_dollar(&i, &k, &qts, s))
 			continue;
 		i++;
 		k++;
@@ -106,6 +107,7 @@ int get_expended_tocken_len(t_data *data, char *str)
 	return k;
 }
 
+//V1
 /* int get_expended_tocken_len(t_data *data, char *str)
 {
 	int	i;

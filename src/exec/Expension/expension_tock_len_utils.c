@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 20:36:31 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/27 21:29:10 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/27 21:43:02 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,7 @@ void	get_len_and_increment_i(t_data *data, char *str, int *i, int *k)
 // Si on rencontre un guillemet, on le marque et on saute
 bool skip_quote(int *i, t_quote *quotes, char *str)
 {
-	if (bool_quote_increment(str, i, quotes))
-		return (true);
-	return (false);
+	return (bool_quote_increment(str, i, quotes));
 }
 
 //Cas `$` suivi de quote hors contexte de quote fermée
