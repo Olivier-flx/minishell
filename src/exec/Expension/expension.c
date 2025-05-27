@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 17:38:16 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/26 20:13:26 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/27 19:52:22 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,8 +107,8 @@ static void	get_len_and_increment_i(t_data *data, char *str, int *i, int *k)
 	get_var_name(&var_name, str, *i);
 	printf("get_len_and_increment_i -> var_name = %s\n", var_name); // @debug
 	if (!var_name)
-		*k += handle_empty_var_name(str, *i/* , &var_value */);
-	if (str[(*i) + 1] && (str[(*i) + 1] == '{' /* || is_quote(str[(*i) + 1]) */))
+		*k += handle_empty_var_name(str, *i);
+	if (str[(*i) + 1] && (str[(*i) + 1] == '{'))
 		(*i) += 3; // +1 pour le $ et les {}
 	else
 		(*i) += 1; // +1 pour le $
@@ -152,34 +152,75 @@ static void	get_len_and_increment_i(t_data *data, char *str, int *i, int *k)
 
 int get_expended_tocken_len(t_data *data, char *str)
 {
-	int	i;
-	int k;
+	int		i = 0;
+	int		k = 0;
 	t_quote	quotes;
 	bool	was_quotes;
 
 	init_quotes(&quotes);
-	i = 0;
-	k = 0;
-	was_quotes = false;
 	while (str[i])
 	{
 		was_quotes = bool_quote_increment(str, &i, &quotes);
-		if((quotes.dbl_quote % 2 == 1 || quote_and_acc_are_closed(&quotes)) \
-			&& str[i] == '$' && !is_quote(str[i + 1]))
+		if (was_quotes)
+			continue;
+		if (str[i] == '$' && quote_are_closed(quotes) && is_quote(str[i + 1]))
+		{
+			i++;
+			bool_quote_increment(str, &i, &quotes);
+			continue;
+		}
+		if (str[i] == '$'
+			&& (quotes.dbl_quote % 2 == 1 || quote_and_acc_are_closed(&quotes)))
 		{
 			get_len_and_increment_i(data, str, &i, &k);
-			printf("get_expended_tocken_len -> k = %i\n", k); // @debug
+			continue;
 		}
-		else if (was_quotes/*  || (str[i] == '$' && is_quote(str[i + 1])) */) // @ debug @ test id 1 // PROBLEME ICI avec echo $""
-			i++;
-		else
+		if (str[i] == '$' && quotes.sgl_quote % 2 == 0)
 		{
 			i++;
-			k++;
+			if (str[i]
+				&& !ft_isalnum(str[i])
+				&& str[i] != '_'
+				&& str[i] != '?')
+				i++;
+			continue;
 		}
+		i++;
+		k++;
 	}
-	return (k);
+	return k;
 }
+
+// int get_expended_tocken_len(t_data *data, char *str)
+// {
+// 	int	i;
+// 	int k;
+// 	t_quote	quotes;
+// 	bool	was_quotes;
+
+// 	init_quotes(&quotes);
+// 	i = 0;
+// 	k = 0;
+// 	was_quotes = false;
+// 	while (str[i])
+// 	{
+// 		was_quotes = bool_quote_increment(str, &i, &quotes);
+// 		if((quotes.dbl_quote % 2 == 1 || quote_and_acc_are_closed(&quotes))
+// 			&& str[i] == '$' && !was_quotes)
+// 		{
+// 			get_len_and_increment_i(data, str, &i, &k);
+// 			printf("get_expended_tocken_len -> k = %i\n", k); // @debug
+// 		}
+// 		else if (was_quotes || (str[i] == '$' && is_quote(str[i + 1]))) // @ debug @ test id 1 // PROBLEME ICI avec echo $""
+// 			i++;
+// 		else
+// 		{
+// 			i++;
+// 			k++;
+// 		}
+// 	}
+// 	return (k);
+// }
 /// Si le nom de la variable n'est pas correct, on doit retourner le message [-bash: ${world${test}}: bad substitution]
 
 

@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 11:58:34 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/26 19:29:10 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/27 18:12:22 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ bool	bool_quote_increment(char *src, int *i, t_quote *qts)
 		flag = true;
 		qts->sgl_quote++;
 	}
-	// if (flag)
-	// 	(*i)++;
+	if (flag)
+		(*i)++;
 	return (flag);
 }
