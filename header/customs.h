@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/26 19:29:21 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/27 21:27:03 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,15 +194,25 @@ void	close_files(t_chunk *chunk);
 void	close_files_if_opened(int *fd_arr, bool *file_open, int len);
 
 //// EXPENSION /////
-int		expend_all(t_data *data);
 char	*expend_token(t_data *data, char *str);
 void	get_var_name_in_accolade(char **var_name, char *str, int i);
 void	get_classic_var_name(char **var_name, char *str, int i);
 void	get_var_name_in_quotes(char **var_name, char *str, int i);
-void	get_var_name(char **var_name, char *str, int i);
+bool	get_var_name(char **var_name, char *str, int i);
 int		get_expended_tocken_len(t_data *data, char *str);
 void	retocken_after_expension(char ***chunk_tokens);
 bool	unsuported_accolade_operator(char *str, int i);
+	/// Expension Utils
+bool	skip_quote(int *i, t_quote *quotes, char *str);
+bool	skip_dollar_quote(int *i, t_quote *quotes, char *str);
+bool	handle_expansion_len(t_data *data, char *str, int *i, int *k);
+bool	handle_invalid_dollar(int *i, int *k, t_quote *quotes, char *str);
+void	get_len_and_increment_i(t_data *data, char *str, int *i, int *k);
+int		handle_empty_var_name(char *str, int i);
+void	handle_question_mark_set_k(t_data *data, char **var_name, \
+								char **var_value, int *k);
+
+
 
 	/////  /////
 /*
@@ -291,7 +301,7 @@ bool	line_is_only_spaces(char *line);
 void	init_quotes(t_quote *quote);
 bool	tocken_quote_closed(char *s);
 bool	quote_are_closed(t_quote *quote);
-bool	quote_and_acc_are_closed(t_quote *quote);
+bool	qts_acc_closed(t_quote *quote);
 bool	is_quote(char c);
 bool	bool_quote_increment(char *src, int *i, t_quote *qts);
 	// custom basics

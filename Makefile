@@ -61,6 +61,7 @@ FILES = ./src/exec/files/init_input_files.c \
 		./src/exec/files/redirects.c
 
 EXPEND = ./src/exec/Expension/expension.c \
+		./src/exec/Expension/expension_tock_len_utils.c \
 		./src/exec/Expension/expension_tocken.c \
 		./src/exec/Expension/accolades.c \
 		./src/exec/Expension/expension_quotes.c \

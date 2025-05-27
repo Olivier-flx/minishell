@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 18:03:45 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/27 19:52:48 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/27 21:27:50 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static	void	increment_i_expension_loop(char *var_name, char *str, int	*i)
 	return(false);
 } */
 
-/* static char	*process_expension_loop(t_data *data, char *str, char **expd_token,
+/* static char	*process_exp_loop(t_data *data, char *str, char **expd_token,
 									t_quote *quotes)
 {
 	char *var_name;
@@ -66,7 +66,7 @@ static	void	increment_i_expension_loop(char *var_name, char *str, int	*i)
 	while (str && str[i])
 	{
 		quote_increment(str, i, quotes);
-		if ((quotes->dbl_quote % 2 == 1 || quote_and_acc_are_closed(quotes)) \
+		if ((quotes->dbl_quote % 2 == 1 || qts_acc_closed(quotes)) \
 			 && str[i] == '$')
 		{
 			get_var_name(&var_name, str + i, 0);
@@ -98,62 +98,98 @@ static	void	increment_i_expension_loop(char *var_name, char *str, int	*i)
 			(*expd_token)[j++] = str[i++];
 		}
 	}
-	printf("process_expension_loop *expd_token = %s\n", *expd_token); // @ debug
+	printf("process_exp_loop *expd_token = %s\n", *expd_token); // @ debug
 	return (*expd_token);
 } */
 
-
-static char	*process_expension_loop(t_data *data, char *str, char **expd_token,
-									t_quote *quotes)
+static void	init_i_j(int *i, int *j)
 {
-	char	 *var_name;
+	*i = 0;
+	*j = 0;
+}
+
+static char *process_exp_loop(t_data *data, char *str, char **expd_token, \
+	t_quote *quotes)
+{
 	int		i;
 	int		j;
-	bool	was_qts;
+	char	*var_name;
 
-	i = 0;
-	j = 0;
-	was_qts = false;
+	init_i_j (&i, &j);
 	while (str && str[i])
 	{
-		was_qts = bool_quote_increment(str, &i, quotes);
-		if (was_qts)
-			continue ;
-		if (str[i] == '$'
-			&& quotes->sgl_quote % 2 == 0
-			&& quotes->dbl_quote % 2 == 0 && is_quote(str[i + 1]))
+		if (skip_quote(&i, quotes, str) || skip_dollar_quote(&i, quotes, str))
+			continue;
+		else if ((quotes->dbl_quote % 2 == 1 || qts_acc_closed(quotes)) && str[i] == '$')
 		{
-			i++;
-			bool_quote_increment(str, &i, quotes);
-			continue ;
-		}
-		if ((quotes->dbl_quote % 2 == 1 || quote_and_acc_are_closed(quotes)) \
-			 && str[i] == '$')
-		{
-			get_var_name(&var_name, str + i, 0);
-			if(var_name)
+			if (get_var_name(&var_name, str + i, 0))
 			{
 				increment_i_expension_loop(var_name, str, &i);
-				j += handle_expension(data, &var_name, (*expd_token) + j);
+				j += handle_expension(data, &var_name, *expd_token + j);
 			}
 			else
 				(*expd_token)[j++] = str[i++];
-			continue ;
 		}
-		if (str[i] == '$' && quote_are_closed(quotes))
-		{
+		else if (handle_invalid_dollar(&i, &j, quotes, str))
+			(*expd_token)[j - 1] = '$';
+		else
 			(*expd_token)[j++] = str[i++];
-			if (str[i] && !ft_isalnum(str[i]) && str[i] != '_' && str[i] != '?')
-				(*expd_token)[j++] = str[i++];
-			continue ;
-		}
-		(*expd_token)[j++] = str[i++];
 	}
 	return (*expd_token);
 }
 
+//V2
+// static char	*process_exp_loop(t_data *data, char *str, char **expd_token,
+// 									t_quote *quotes)
+// {
+// 	char	 *var_name;
+// 	int		i;
+// 	int		j;
+// 	bool	was_qts;
 
-// static char	*process_expension_loop(t_data *data, char *str, char **expd_token,
+// 	i = 0;
+// 	j = 0;
+// 	was_qts = false;
+// 	while (str && str[i])
+// 	{
+// 		was_qts = bool_quote_increment(str, &i, quotes);
+// 		if (was_qts)
+// 			continue ;
+// 		if (str[i] == '$'
+// 			&& quotes->sgl_quote % 2 == 0
+// 			&& quotes->dbl_quote % 2 == 0 && is_quote(str[i + 1]))
+// 		{
+// 			i++;
+// 			bool_quote_increment(str, &i, quotes);
+// 			continue ;
+// 		}
+// 		if ((quotes->dbl_quote % 2 == 1 || qts_acc_closed(quotes))
+// 			 && str[i] == '$')
+// 		{
+// 			get_var_name(&var_name, str + i, 0);
+// 			if(var_name)
+// 			{
+// 				increment_i_expension_loop(var_name, str, &i);
+// 				j += handle_expension(data, &var_name, (*expd_token) + j);
+// 			}
+// 			else
+// 				(*expd_token)[j++] = str[i++];
+// 			continue ;
+// 		}
+// 		if (str[i] == '$' && quote_are_closed(quotes))
+// 		{
+// 			(*expd_token)[j++] = str[i++];
+// 			if (str[i] && !ft_isalnum(str[i]) && str[i] != '_' && str[i] != '?')
+// 				(*expd_token)[j++] = str[i++];
+// 			continue ;
+// 		}
+// 		(*expd_token)[j++] = str[i++];
+// 	}
+// 	return (*expd_token);
+// }
+
+//V1
+// static char	*process_exp_loop(t_data *data, char *str, char **expd_token,
 // 									t_quote *quotes)
 // {
 // 	char	 *var_name;
@@ -176,7 +212,7 @@ static char	*process_expension_loop(t_data *data, char *str, char **expd_token,
 // 			bool_quote_increment(str, &i, quotes);
 // 			continue;
 // 		}
-// 		if ((quotes->dbl_quote % 2 == 1 || quote_and_acc_are_closed(quotes))
+// 		if ((quotes->dbl_quote % 2 == 1 || qts_acc_closed(quotes))
 // 			 && str[i] == '$')
 // 		{
 // 			get_var_name(&var_name, str + i, 0);
@@ -204,7 +240,7 @@ static char	*process_expension_loop(t_data *data, char *str, char **expd_token,
 // 			(*expd_token)[j++] = str[i++];
 // 		}
 // 	}
-// 	//printf("process_expension_loop *expd_token = %s\n", *expd_token); // @ debug
+// 	//printf("process_exp_loop *expd_token = %s\n", *expd_token); // @ debug
 // 	return (*expd_token);
 // }
 
@@ -231,7 +267,7 @@ char	*expend_token(t_data *data, char *str)
 		expd_token[expd_token_len] = '\0';
 	}
 	init_quotes(&quotes);
-	ret_tocken = process_expension_loop(data, str, &expd_token, &quotes);
+	ret_tocken = process_exp_loop(data, str, &expd_token, &quotes);
 	return (ret_tocken);
 }
 
@@ -258,7 +294,7 @@ char	*expend_token(t_data *data, char *str)
 	while (str[i])
 	{
 		quote_increment(str, i, &quotes);
-		if((quotes.dbl_quote % 2 == 1 || quote_and_acc_are_closed(&quotes)) && str[i] == '$')
+		if((quotes.dbl_quote % 2 == 1 || qts_acc_closed(&quotes)) && str[i] == '$')
 		{
 			var_name = get_var_name(str, i);
 			var_value = ft_getenv(data->env_list, var_name);

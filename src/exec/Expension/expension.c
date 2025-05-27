@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 17:38:16 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/27 19:52:22 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/27 21:27:03 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,20 +31,21 @@ void	get_classic_var_name(char **var_name, char *str, int i)
 	ft_strlcpy(*var_name, str + i - var_name_len, var_name_len + 1); // man : Note that a byte for the NUL should be included in size.
 }
 
-void	get_var_name(char **var_name, char *str, int i)
+bool	get_var_name(char **var_name, char *str, int i)
 {
 	*var_name = NULL;
 	if (str[i++] != '$')
-		return ;
+		return (false);
 	if (str[i] == '{')
 		get_var_name_in_accolade(var_name, str, i + 1);
-/* 	else if (is_quote(str[i]))
-		get_var_name_in_quotes(var_name, str, i); */
 	else
 		get_classic_var_name(var_name,str, i);
+	if (var_name)
+		return (true);
+	return (false);
 }
 
-static void	handle_question_mark_set_k(t_data *data, char **var_name, \
+void	handle_question_mark_set_k(t_data *data, char **var_name, \
 								char **var_value, int *k)
 {
 	if (!var_name)
@@ -56,28 +57,7 @@ static void	handle_question_mark_set_k(t_data *data, char **var_name, \
 		ft_free((void **) var_value);
 }
 
-/* static void	get_len_and_increment_i(t_data *data, char *str, int *i, int *k)
-{
-	char	*var_name;
-	char	*var_value;
-
-	get_var_name(&var_name, str, *i);
-	// if(!var_name)
-	// {
-	// 	(*i)++;
-	// 	return ;
-	// }
-	if (str[(*i) + 1] && str[(*i) + 1] == '{')
-		(*i) += ft_strlen(var_name) + 3; // +1 pour le $ et les {}
-	else
-		(*i) += ft_strlen(var_name) + 1; // +1 pour le $
-	var_value = ft_getenv(data->env_list, var_name);
-	handle_question_mark_set_k(data, &var_name, &var_value, k);
-	ft_free((void **) &var_name);
-
-} */
-
-static int	handle_empty_var_name(char *str, int i/* , char **var_value */)
+int	handle_empty_var_name(char *str, int i)
 {
 	int	k;
 
@@ -94,31 +74,36 @@ static int	handle_empty_var_name(char *str, int i/* , char **var_value */)
 		k++;
 		i++;
 	}
-	printf("handle_empty_var_name --> k - 1 = %i\n", k); // @ debug
 	return (k);
 }
 
-static void	get_len_and_increment_i(t_data *data, char *str, int *i, int *k)
+int get_expended_tocken_len(t_data *data, char *str)
 {
-	char	*var_name;
-	char	*var_value;
+	int		i;
+	int		k;
+	t_quote quotes;
 
-	var_name = NULL;
-	get_var_name(&var_name, str, *i);
-	printf("get_len_and_increment_i -> var_name = %s\n", var_name); // @debug
-	if (!var_name)
-		*k += handle_empty_var_name(str, *i);
-	if (str[(*i) + 1] && (str[(*i) + 1] == '{'))
-		(*i) += 3; // +1 pour le $ et les {}
-	else
-		(*i) += 1; // +1 pour le $
-	if (var_name)
+	i = 0;
+	k = 0;
+	init_quotes(&quotes);
+	while (str[i])
 	{
-		(*i) += ft_strlen(var_name);
-		var_value = ft_getenv(data->env_list, var_name);
-		handle_question_mark_set_k(data, &var_name, &var_value, k);
-		ft_free((void **) &var_name);
+		if (skip_quote(&i, &quotes, str))
+			continue;
+		if (skip_dollar_quote(&i, &quotes, str))
+			continue;
+		if (str[i] == '$' && (quotes.dbl_quote % 2 == 1 \
+			|| qts_acc_closed(&quotes)))
+		{
+			get_len_and_increment_i(data, str, &i, &k);
+			continue;
+		}
+		if (handle_invalid_dollar(&i, &k, &quotes, str))
+			continue;
+		i++;
+		k++;
 	}
+	return k;
 }
 
 /* int get_expended_tocken_len(t_data *data, char *str)
@@ -133,7 +118,7 @@ static void	get_len_and_increment_i(t_data *data, char *str, int *i, int *k)
 	while (str[i])
 	{
 		quote_increment(str, i, &quotes);
-		if((quotes.dbl_quote % 2 == 1 || quote_and_acc_are_closed(&quotes)) \
+		if((quotes.dbl_quote % 2 == 1 || qts_acc_closed(&quotes)) \
 			&& str[i] == '$')
 		{
 			get_len_and_increment_i(data, str, &i, &k);
@@ -150,7 +135,7 @@ static void	get_len_and_increment_i(t_data *data, char *str, int *i, int *k)
 	return (k);
 } */
 
-int get_expended_tocken_len(t_data *data, char *str)
+/* int get_expended_tocken_len(t_data *data, char *str)
 {
 	int		i = 0;
 	int		k = 0;
@@ -170,7 +155,7 @@ int get_expended_tocken_len(t_data *data, char *str)
 			continue;
 		}
 		if (str[i] == '$'
-			&& (quotes.dbl_quote % 2 == 1 || quote_and_acc_are_closed(&quotes)))
+			&& (quotes.dbl_quote % 2 == 1 || qts_acc_closed(&quotes)))
 		{
 			get_len_and_increment_i(data, str, &i, &k);
 			continue;
@@ -188,8 +173,8 @@ int get_expended_tocken_len(t_data *data, char *str)
 		i++;
 		k++;
 	}
-	return k;
-}
+	return (k);
+} */
 
 // int get_expended_tocken_len(t_data *data, char *str)
 // {
@@ -205,7 +190,7 @@ int get_expended_tocken_len(t_data *data, char *str)
 // 	while (str[i])
 // 	{
 // 		was_quotes = bool_quote_increment(str, &i, &quotes);
-// 		if((quotes.dbl_quote % 2 == 1 || quote_and_acc_are_closed(&quotes))
+// 		if((quotes.dbl_quote % 2 == 1 || qts_acc_closed(&quotes))
 // 			&& str[i] == '$' && !was_quotes)
 // 		{
 // 			get_len_and_increment_i(data, str, &i, &k);
@@ -222,49 +207,3 @@ int get_expended_tocken_len(t_data *data, char *str)
 // 	return (k);
 // }
 /// Si le nom de la variable n'est pas correct, on doit retourner le message [-bash: ${world${test}}: bad substitution]
-
-
-
-
-
-
-
-
-
-
-
-
-int	expend_chunk(t_data *data, t_chunk *chunk)
-{
-	int	i;
-	char *ret_val;
-
-	ret_val = NULL;
-	i = 0;
-	while (chunk->tokens && chunk->tokens[i])
-	{
-		ret_val = expend_token(data, chunk->tokens[i]);
-		ft_free((void **) &ret_val);
-		if (!ret_val)
-			return (1); // @confirm : à voir s'il y a un bug d'expension, s'il faut arrêter l'expension du rest ou non
-		i++;
-	}
-	return (0);
-}
-
-int	expend_all(t_data *data)
-{
-	int		ret_val;
-	t_dlist	*i_node;
-
-	i_node = data->cmd_list;
-	ret_val = 0;
-	while (i_node)
-	{
-		expend_chunk(data, (t_chunk *)i_node->content);
-		if (ret_val != 0)
-			return (ret_val); // @confirm : à voir s'il y a un bug d'expension, s'il faut arrêter l'expension du rest ou non
-		i_node = i_node->next;
-	}
-	return (ret_val);
-}

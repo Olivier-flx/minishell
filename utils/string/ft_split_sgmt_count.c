@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_sgmt_count.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:12:14 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/14 14:23:33 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/27 21:27:03 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	quote_accolade_increment(char *src, int i, t_quote *quote)
 	else if (src[i] == '\'' && quote->dbl_quote % 2 == 0 && quote->acc % 2 == 0)
 		quote->sgl_quote++;
 	else if (src[i] == '{' && i > 0 && src[i - 1] == '$'
-			&& quote_and_acc_are_closed(quote))
+			&& qts_acc_closed(quote))
 		quote->acc++;
 	else if (src[i] == '}' && quote->acc % 2 == 1 && quote->sgl_quote % 2 == 0 \
 				&& quote->dbl_quote % 2 == 0)
@@ -39,7 +39,7 @@ static void process_word(int *i, int *count, bool *in_segment)
 
 static int operator_len(char *s, int i, t_quote *quote)
 {
-	if (!quote_and_acc_are_closed(quote))
+	if (!qts_acc_closed(quote))
 		return 0;
 	if (s[i] == '>' && s[i + 1] == '>')
 		return 2;

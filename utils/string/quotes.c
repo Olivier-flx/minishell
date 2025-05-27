@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 21:54:28 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/12 16:21:32 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/27 21:27:03 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ bool	quote_are_closed(t_quote *quote)
 }
 
 /**
- * quote_and_acc_are_closed - Checks if all quotes are properly closed.
+ * qts_acc_closed - Checks if all quotes are properly closed.
  * @quote: Pointer to the quote tracking structure.
  *
  * This function returns true if both single and double quotes are closed,
@@ -79,7 +79,7 @@ bool	quote_are_closed(t_quote *quote)
  *   true if all quotes are closed,
  *   false if any quote remains open.
  */
-bool	quote_and_acc_are_closed(t_quote *quote)
+bool	qts_acc_closed(t_quote *quote)
 {
 	return (quote_are_closed(quote)
 		&& quote->acc % 2 == 0);
