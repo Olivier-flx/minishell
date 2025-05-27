@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 21:54:28 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/27 21:27:03 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/27 21:29:10 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,20 @@
 
 void	quote_increment(char *src, int i, t_quote *quote)
 {
-	if (src[i] == '"' && quote->sgl_quote % 2 == 0 && quote->acc % 2 == 0)
-		quote->dbl_quote++;
-	if (src[i] == '\'' && quote->dbl_quote % 2 == 0 && quote->acc % 2 == 0)
-		quote->sgl_quote++;
-	if (src[i] == '{' && quote->dbl_quote % 2 == 0 && quote->sgl_quote % 2 == 0)
+	if (src[i] == '"' && quote->sgl_qt % 2 == 0 && quote->acc % 2 == 0)
+		quote->dbl_qt++;
+	if (src[i] == '\'' && quote->dbl_qt % 2 == 0 && quote->acc % 2 == 0)
+		quote->sgl_qt++;
+	if (src[i] == '{' && quote->dbl_qt % 2 == 0 && quote->sgl_qt % 2 == 0)
 		quote->acc++;
-	if (src[i] == '}' && quote->dbl_quote % 2 == 0 && quote->sgl_quote % 2 == 0)
+	if (src[i] == '}' && quote->dbl_qt % 2 == 0 && quote->sgl_qt % 2 == 0)
 		quote->acc++;
 }
 
 void	init_quotes(t_quote *parsing_context)
 {
-	parsing_context->dbl_quote = 0;
-	parsing_context->sgl_quote = 0;
+	parsing_context->dbl_qt = 0;
+	parsing_context->sgl_qt = 0;
 	parsing_context->acc = 0;
 }
 
@@ -64,8 +64,8 @@ bool	tocken_quote_closed(char *s)
 
 bool	quote_are_closed(t_quote *quote)
 {
-	return (quote->dbl_quote % 2 == 0 \
-		&& quote->sgl_quote % 2 == 0);
+	return (quote->dbl_qt % 2 == 0 \
+		&& quote->sgl_qt % 2 == 0);
 }
 
 /**

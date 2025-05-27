@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 20:36:31 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/27 21:16:26 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/27 21:29:10 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ bool skip_dollar_quote(int *i, t_quote *quotes, char *str)
 // $ isolé ou invalide hors simple-quote : on compte 1 char
 bool handle_invalid_dollar(int *i, int *k, t_quote *quotes, char *str)
 {
-	if (str[*i] == '$' && quotes->sgl_quote % 2 == 0)
+	if (str[*i] == '$' && quotes->sgl_qt % 2 == 0)
 	{
 		(*i)++;
 		(*k)++;

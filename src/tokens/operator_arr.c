@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   operator_arr.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 16:37:22 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/14 16:43:32 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/27 21:28:55 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ int	count_operador(char *src)
 		return (1);
 	while (src[i])
 	{
-		if (src[i] == '"' && quote.dbl_quote % 2 == 0)
-			quote.dbl_quote++;
-		if (src[i] == '\'' && quote.dbl_quote % 2 == 0)
-			quote.dbl_quote++;
+		if (src[i] == '"' && quote.dbl_qt % 2 == 0)
+			quote.dbl_qt++;
+		if (src[i] == '\'' && quote.dbl_qt % 2 == 0)
+			quote.dbl_qt++;
 		tmp = is_operator(src, i, &quote);
 		if (tmp > 0)
 		{

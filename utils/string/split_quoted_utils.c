@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 09:50:17 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/15 10:59:31 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/27 21:29:10 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void ignore_sep(char *s, int *i, char c, t_quote *qts)
 {
-	while (s[*i] == c && qts->dbl_quote % 2 == 0 && qts->sgl_quote % 2 == 0)
+	while (s[*i] == c && qts->dbl_qt % 2 == 0 && qts->sgl_qt % 2 == 0)
 	{
 		quote_increment(s, *i, qts);
 		(*i)++;
@@ -29,8 +29,8 @@ bool	should_break(char *s, int *i, char c, t_quote *qts)
 
 bool	should_skip_quote(char c, t_quote *qts, int *i)
 {
-	if ((c == '"'  && qts->sgl_quote % 2 == 0) \
-		|| (c == '\'' && qts->dbl_quote % 2 == 0))
+	if ((c == '"'  && qts->sgl_qt % 2 == 0) \
+		|| (c == '\'' && qts->dbl_qt % 2 == 0))
 	{
 		(*i)++;
 		return (true);

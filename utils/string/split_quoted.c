@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 11:18:50 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/15 10:59:35 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/27 21:29:10 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ static int no_quotes_segment_length(int i, char *s, char sep, t_quote *qts)
 		quote_increment(s, i, qts);
 		if (s[i] == sep && quote_are_closed(qts))
 			break;
-		if ((s[i] == '"' && qts->sgl_quote % 2 == 0) \
-			|| (s[i] == '\'' && qts->dbl_quote % 2 == 0))
+		if ((s[i] == '"' && qts->sgl_qt % 2 == 0) \
+			|| (s[i] == '\'' && qts->dbl_qt % 2 == 0))
 		{
 			i++;
 			continue;

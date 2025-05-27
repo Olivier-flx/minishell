@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:12:14 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/27 21:27:03 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/27 21:29:10 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,15 @@
 
 void	quote_accolade_increment(char *src, int i, t_quote *quote)
 {
-	if (src[i] == '"' && quote->sgl_quote % 2 == 0 && quote->acc % 2 == 0)
-		quote->dbl_quote++;
-	else if (src[i] == '\'' && quote->dbl_quote % 2 == 0 && quote->acc % 2 == 0)
-		quote->sgl_quote++;
+	if (src[i] == '"' && quote->sgl_qt % 2 == 0 && quote->acc % 2 == 0)
+		quote->dbl_qt++;
+	else if (src[i] == '\'' && quote->dbl_qt % 2 == 0 && quote->acc % 2 == 0)
+		quote->sgl_qt++;
 	else if (src[i] == '{' && i > 0 && src[i - 1] == '$'
 			&& qts_acc_closed(quote))
 		quote->acc++;
-	else if (src[i] == '}' && quote->acc % 2 == 1 && quote->sgl_quote % 2 == 0 \
-				&& quote->dbl_quote % 2 == 0)
+	else if (src[i] == '}' && quote->acc % 2 == 1 && quote->sgl_qt % 2 == 0 \
+				&& quote->dbl_qt % 2 == 0)
 		quote->acc++;
 }
 

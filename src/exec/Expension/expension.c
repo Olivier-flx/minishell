@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 17:38:16 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/27 21:27:03 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/27 21:29:10 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int get_expended_tocken_len(t_data *data, char *str)
 			continue;
 		if (skip_dollar_quote(&i, &quotes, str))
 			continue;
-		if (str[i] == '$' && (quotes.dbl_quote % 2 == 1 \
+		if (str[i] == '$' && (quotes.dbl_qt % 2 == 1 \
 			|| qts_acc_closed(&quotes)))
 		{
 			get_len_and_increment_i(data, str, &i, &k);
@@ -118,13 +118,13 @@ int get_expended_tocken_len(t_data *data, char *str)
 	while (str[i])
 	{
 		quote_increment(str, i, &quotes);
-		if((quotes.dbl_quote % 2 == 1 || qts_acc_closed(&quotes)) \
+		if((quotes.dbl_qt % 2 == 1 || qts_acc_closed(&quotes)) \
 			&& str[i] == '$')
 		{
 			get_len_and_increment_i(data, str, &i, &k);
 			printf("get_expended_tocken_len -> k = %i\n", k);// @debug
 		}
-		else if (is_quote(str[i]) && ( quotes.sgl_quote % 2 == 1 || quote_are_closed(&quotes))) // @ debug @ test id 1
+		else if (is_quote(str[i]) && ( quotes.sgl_qt % 2 == 1 || quote_are_closed(&quotes))) // @ debug @ test id 1
 			i++;
 		else
 		{
@@ -155,12 +155,12 @@ int get_expended_tocken_len(t_data *data, char *str)
 			continue;
 		}
 		if (str[i] == '$'
-			&& (quotes.dbl_quote % 2 == 1 || qts_acc_closed(&quotes)))
+			&& (quotes.dbl_qt % 2 == 1 || qts_acc_closed(&quotes)))
 		{
 			get_len_and_increment_i(data, str, &i, &k);
 			continue;
 		}
-		if (str[i] == '$' && quotes.sgl_quote % 2 == 0)
+		if (str[i] == '$' && quotes.sgl_qt % 2 == 0)
 		{
 			i++;
 			if (str[i]
@@ -190,7 +190,7 @@ int get_expended_tocken_len(t_data *data, char *str)
 // 	while (str[i])
 // 	{
 // 		was_quotes = bool_quote_increment(str, &i, &quotes);
-// 		if((quotes.dbl_quote % 2 == 1 || qts_acc_closed(&quotes))
+// 		if((quotes.dbl_qt % 2 == 1 || qts_acc_closed(&quotes))
 // 			&& str[i] == '$' && !was_quotes)
 // 		{
 // 			get_len_and_increment_i(data, str, &i, &k);
