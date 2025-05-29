@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 17:29:54 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/26 19:55:11 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/29 07:29:49 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,10 @@ static int	calc_total_len(char **argv)
 
 	i = 0;
 	total_len = 0;
-	//print_pp_char_arr(argv); // @ debug
-	while (argv[i]  && argv[i][0])
+	while (argv[i])
 	{
 		if (argv[i] && argv[i][0])
 			total_len += ft_strlen(argv[i]);
-		//printf("calc_total_len -> argv[%i] = `%s`\n", i, argv[i]); // @ debug
 		if (argv[i + 1])
 			total_len += 1;
 		i++;
@@ -57,7 +55,7 @@ static void	copy_with_sep(char **argv, char sep, char *result)
 		j = 0;
 		while (argv[i][j])
 			result[offset++] = argv[i][j++];
-		if (argv[i + 1])
+		if (argv[i]  && argv[i + 1])
 			result[offset++] = sep;
 		i++;
 	}
