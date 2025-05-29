@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/27 21:29:10 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/29 09:03:09 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -287,7 +287,8 @@ void	quote_increment(char *src, int i, t_quote *quote);
 char	**split_quoted(char *s, char c);// use to split but without keeping surounding quotes
 void	ignore_sep(char *s, int *i, char c, t_quote *qts);
 bool	should_break(char *s, int *i, char c, t_quote *qts);
-bool	should_skip_quote(char c, t_quote *qts, int *i);
+bool	should_skip_quote(char *s, char c, t_quote *qts, int *i);
+bool	qts_en_seguida_ignore(char *s, int i,t_quote *qts);
 // *****
 char	**split_quoted2(char *s, t_data *data);
 int		ft_segment_len(int i, char *s, t_quote *quote, t_int_array *separators);

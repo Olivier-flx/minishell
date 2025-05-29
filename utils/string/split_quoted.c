@@ -6,27 +6,57 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 11:18:50 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/27 21:29:10 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/29 10:17:20 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell.h"
+
+//V1
+// static int	ft_count_segment(char *s, char c)
+// {
+// 	int		i;
+// 	int		count;
+// 	bool	in_word;
+// 	t_quote	quote;
+
+// 	i = 0;
+// 	count = 0;
+// 	in_word = false;
+// 	init_quotes(&quote);
+// 	while (s[i] != '\0')
+// 	{
+// 		quote_increment(s, i, &quote);
+// 		if (s[i] == c &&  quote_are_closed(&quote))
+// 			in_word = false;
+// 		else if (s[i] != c && !in_word)
+// 		{
+// 			count++;
+// 			in_word = true;
+// 		}
+// 		i++;
+// 	}
+// 	return (count);
+// }
+
 
 static int	ft_count_segment(char *s, char c)
 {
 	int		i;
 	int		count;
 	bool	in_word;
-	t_quote	quote;
+	t_quote	qts;
 
 	i = 0;
 	count = 0;
 	in_word = false;
-	init_quotes(&quote);
+	init_quotes(&qts);
 	while (s[i] != '\0')
 	{
-		quote_increment(s, i, &quote);
-		if (s[i] == c &&  quote_are_closed(&quote))
+		quote_increment(s, i, &qts);
+		if (qts_en_seguida_ignore(s, i, &qts)) // @test id 3
+			i++;
+		else if (s[i] == c &&  quote_are_closed(&qts))
 			in_word = false;
 		else if (s[i] != c && !in_word)
 		{
@@ -35,10 +65,11 @@ static int	ft_count_segment(char *s, char c)
 		}
 		i++;
 	}
+	printf("ft_count_segment -> count = %i\n", count); // @debug
 	return (count);
 }
 
-static int no_quotes_segment_length(int i, char *s, char sep, t_quote *qts)
+static int no_qts_seg_len(int i, char *s, char sep, t_quote *qts)
 {
 	int		len;
 
@@ -48,17 +79,34 @@ static int no_quotes_segment_length(int i, char *s, char sep, t_quote *qts)
 		quote_increment(s, i, qts);
 		if (s[i] == sep && quote_are_closed(qts))
 			break;
-		if ((s[i] == '"' && qts->sgl_qt % 2 == 0) \
-			|| (s[i] == '\'' && qts->dbl_qt % 2 == 0))
-		{
-			i++;
+		if (should_skip_quote(s, s[i], qts, &i))
 			continue;
-		}
 		len++;
 		i++;
 	}
-	return (len + 1);
+	return (len);
 }
+// static int no_qts_seg_len(int i, char *s, char sep, t_quote *qts)
+// {
+// 	int		len;
+
+// 	len = 0;
+// 	while (s[i])
+// 	{
+// 		quote_increment(s, i, qts);
+// 		if (s[i] == sep && quote_are_closed(qts))
+// 			break;
+// 		if ((s[i] == '"' && qts->sgl_qt % 2 == 0)
+// 			|| (s[i] == '\'' && qts->dbl_qt % 2 == 0))
+// 		{
+// 			i++;
+// 			continue;
+// 		}
+// 		len++;
+// 		i++;
+// 	}
+// 	return (len + 1);
+// }
 
 char	*process_segment(char *s, int *i, char c, t_quote *qts)
 {
@@ -71,18 +119,20 @@ char	*process_segment(char *s, int *i, char c, t_quote *qts)
 	if (!s[*i])
 		return (NULL);
 	q_cpy = *qts;
-	new_seg = malloc(no_quotes_segment_length(*i, s, c, &q_cpy) * sizeof(char));
+	new_seg = malloc((no_qts_seg_len(*i, s, c, &q_cpy) + 1) * sizeof(char));
 	if (new_seg == NULL)
 		return (NULL);
+	printf ("no_qts_seg_len(*i, s, c, &q_cpy) = %i\n", no_qts_seg_len(*i, s, c, &q_cpy));
 	while (s[*i])
 	{
 		if (should_break(s, i, c, qts))
 			break;
-		if (should_skip_quote(s[*i], qts, i))
+		if (should_skip_quote(s, s[*i], qts, i))
 			continue;
 		new_seg[s_i++] = s[(*i)++];
 	}
 	new_seg[s_i] = '\0';
+	printf("process_segment new_seg = `%s`\n", new_seg); // @debug
 	return (new_seg);
 }
 
@@ -97,7 +147,7 @@ static char	**ft_new_string_arr(char *s, char c, char **ns_ar, int nb_segment)
 	segment_i = 0;
 	while (s[i] && segment_i < nb_segment)
 	{
-		ns_ar[segment_i] = process_segment (s, &i, c, &qts);
+		ns_ar[segment_i] = process_segment(s, &i, c, &qts);
 		if (ns_ar[segment_i] == NULL)
 			return (free_uncomplete_av(&ns_ar, segment_i));
 		segment_i++;
