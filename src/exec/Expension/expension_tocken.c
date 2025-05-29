@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 18:03:45 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/27 22:05:43 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/29 06:56:51 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,10 @@ static char *process_exp_loop(t_data *data, char *str, char **expd_token, \
 		if (skip_quote(&i, qts, str) || skip_dollar_quote(&i, qts, str))
 			continue;
 		if (str[i] == '$' && (qts->dbl_qt % 2 == 1 || qts_acc_closed(qts)) \
-			&& get_var_name(&var_name, str + i, 0))
+			 && get_var_name(&var_name, str + i, 0) && var_name && *var_name)
 		{
 				increment_i_expension_loop(var_name, str, &i);
 				j += handle_expension(data, &var_name, *expd_token + j);
-			continue;
 		}
 		else if (handle_invalid_dollar(&i, &j, qts, str))
 			(*expd_token)[j - 1] = '$';
@@ -102,6 +101,38 @@ char	*expend_token(t_data *data, char *str)
 	ret_tocken = process_exp_loop(data, str, &expd_token, &quotes);
 	return (ret_tocken);
 }
+
+
+// VERSION OK MAIS TROP LONGUE
+/* static char *process_exp_loop(t_data *data, char *str, char **expd_token, \
+	t_quote *qts)
+{
+	int		i;
+	int		j;
+	char	*var_name;
+
+	init_i_j (&i, &j);
+	while (str && str[i])
+	{
+		if (skip_quote(&i, qts, str) || skip_dollar_quote(&i, qts, str))
+			continue;
+		if (str[i] == '$' && (qts->dbl_qt % 2 == 1 || qts_acc_closed(qts)))
+		{
+			if (get_var_name(&var_name, str + i, 0) && var_name && *var_name)
+			{
+				increment_i_expension_loop(var_name, str, &i);
+				j += handle_expension(data, &var_name, *expd_token + j);
+			}
+			else
+				(*expd_token)[j++] = str[i++];
+		}
+		else if (handle_invalid_dollar(&i, &j, qts, str))
+			(*expd_token)[j - 1] = '$';
+		else
+			(*expd_token)[j++] = str[i++];
+	}
+	return (*expd_token);
+} */
 
 //V2
 // static char	*process_exp_loop(t_data *data, char *str, char **expd_token,
