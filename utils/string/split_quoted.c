@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 11:18:50 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/29 10:17:20 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/31 11:27:53 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,14 +72,16 @@ static int	ft_count_segment(char *s, char c)
 static int no_qts_seg_len(int i, char *s, char sep, t_quote *qts)
 {
 	int		len;
+	t_quote	q_cpy;
 
 	len = 0;
+	q_cpy = *qts;
 	while (s[i])
 	{
-		quote_increment(s, i, qts);
-		if (s[i] == sep && quote_are_closed(qts))
+		quote_increment(s, i, &q_cpy);
+		if (s[i] == sep && quote_are_closed(&q_cpy))
 			break;
-		if (should_skip_quote(s, s[i], qts, &i))
+		if (should_skip_quote(s, s[i], &q_cpy, &i))
 			continue;
 		len++;
 		i++;
@@ -108,21 +110,21 @@ static int no_qts_seg_len(int i, char *s, char sep, t_quote *qts)
 // 	return (len + 1);
 // }
 
+
+
 char	*process_segment(char *s, int *i, char c, t_quote *qts)
 {
 	int		s_i;
 	char	*new_seg;
-	t_quote	q_cpy;
 
 	s_i = 0;
-	ignore_sep(s, i, c, qts);
+	ignore_unecesary_char(s, i, c, qts);
 	if (!s[*i])
 		return (NULL);
-	q_cpy = *qts;
-	new_seg = malloc((no_qts_seg_len(*i, s, c, &q_cpy) + 1) * sizeof(char));
+	new_seg = malloc((no_qts_seg_len(*i, s, c, qts) + 1) * sizeof(char));
 	if (new_seg == NULL)
 		return (NULL);
-	printf ("no_qts_seg_len(*i, s, c, &q_cpy) = %i\n", no_qts_seg_len(*i, s, c, &q_cpy));
+	printf ("no_qts_seg_len(*i, s, c, qts) = %i\n", no_qts_seg_len(*i, s, c, qts));
 	while (s[*i])
 	{
 		if (should_break(s, i, c, qts))
