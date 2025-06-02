@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 11:18:50 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/31 11:27:53 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/02 10:17:15 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static int	ft_count_segment(char *s, char c)
 		}
 		i++;
 	}
-	printf("ft_count_segment -> count = %i\n", count); // @debug
+	//printf("ft_count_segment -> count = %i\n", count); // @debug
 	return (count);
 }
 
@@ -124,7 +124,7 @@ char	*process_segment(char *s, int *i, char c, t_quote *qts)
 	new_seg = malloc((no_qts_seg_len(*i, s, c, qts) + 1) * sizeof(char));
 	if (new_seg == NULL)
 		return (NULL);
-	printf ("no_qts_seg_len(*i, s, c, qts) = %i\n", no_qts_seg_len(*i, s, c, qts));
+	//printf ("no_qts_seg_len(*i, s, c, qts) = %i\n", no_qts_seg_len(*i, s, c, qts)); //@debug
 	while (s[*i])
 	{
 		if (should_break(s, i, c, qts))
@@ -134,7 +134,7 @@ char	*process_segment(char *s, int *i, char c, t_quote *qts)
 		new_seg[s_i++] = s[(*i)++];
 	}
 	new_seg[s_i] = '\0';
-	printf("process_segment new_seg = `%s`\n", new_seg); // @debug
+	//printf("process_segment new_seg = `%s`\n", new_seg); // @debug
 	return (new_seg);
 }
 

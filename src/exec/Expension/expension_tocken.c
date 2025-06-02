@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 18:03:45 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/29 08:20:02 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/02 12:08:51 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,12 @@ static char *process_exp_loop(t_data *data, char *str, char **expd_token, \
 	init_i_j (&i, &j);
 	while (str && str[i])
 	{
-		if (/* skip_quote(&i, qts, str) || */ skip_dollar_quote(&i, qts, str)) // @test id 2
+		//printf("process_exp_loop str[%i] = %c\n", i, str[i]);
+		if (skip_quote2(&i, NULL, qts, str) || skip_dollar_quote2(&i, NULL, qts, str)) // @test id 2
+		{
+			(*expd_token)[j++] = str[i++];
 			continue;
+		}
 		if (str[i] == '$' && (qts->dbl_qt % 2 == 1 || qts_acc_closed(qts)) \
 			 && get_var_name(&var_name, str + i, 0) && var_name && *var_name)
 		{
@@ -74,6 +78,7 @@ static char *process_exp_loop(t_data *data, char *str, char **expd_token, \
 		else
 			(*expd_token)[j++] = str[i++];
 	}
+	//printf("process_exp_loop expd_token = %s\n",*expd_token); // @debug
 	return (*expd_token);
 }
 
@@ -86,6 +91,7 @@ char	*expend_token(t_data *data, char *str)
 
 	ret_tocken = NULL;
 	expd_token_len = get_expended_tocken_len(data, str);
+	//printf("expend_token expd_token_len = %i\n",expd_token_len); // @debug
 	if (expd_token_len < 0)
 		return (NULL);
 	if (expd_token_len >= 0)

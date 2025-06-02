@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 09:50:17 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/31 11:31:17 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/02 10:14:01 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ bool	should_skip_quote(char *s, char c, t_quote *qts, int *i)
 {
 	if(qts_en_seguida_ignore(s, *i, qts)) //@test id 3
 	{
-		printf("ENTRA2\n"); //@debug
 		(*i)++;
 		quote_increment(s, *i, qts);
 		(*i)++;

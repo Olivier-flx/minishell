@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/31 11:27:48 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/02 11:31:38 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,8 +203,11 @@ int		get_expended_tocken_len(t_data *data, char *str);
 void	retocken_after_expension(char ***chunk_tokens);
 bool	unsuported_accolade_operator(char *str, int i);
 	/// Expension Utils
-bool	skip_quote(int *i, t_quote *quotes, char *str);
-bool	skip_dollar_quote(int *i, t_quote *quotes, char *str);
+bool	skip_quote(int *i, int *k, t_quote *quotes, char *str);
+bool	skip_dollar_quote(int *i, int *k, t_quote *quotes, char *str);
+bool	skip_quote2(int *i, int *k, t_quote *quotes, char *str);
+bool	skip_dollar_quote2(int *i, int *k, t_quote *quotes, char *str);
+
 bool	handle_expansion_len(t_data *data, char *str, int *i, int *k);
 bool	handle_invalid_dollar(int *i, int *k, t_quote *quotes, char *str);
 void	get_len_and_increment_i(t_data *data, char *str, int *i, int *k);
@@ -305,7 +308,7 @@ bool	tocken_quote_closed(char *s);
 bool	quote_are_closed(t_quote *quote);
 bool	qts_acc_closed(t_quote *quote);
 bool	is_quote(char c);
-bool	bool_quote_increment(char *src, int *i, t_quote *qts);
+bool	bool_quote_increment(char *src, int *i, t_quote *qts, bool i_inc);
 	// custom basics
 char	*c_strjoin(char *s1, char *s2, char c);
 char	*c_ft_substr(char const *s, unsigned int start, size_t len);

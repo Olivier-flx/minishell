@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 11:58:34 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/27 21:29:10 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/02 11:28:33 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ bool	is_quote(char c)
 	return(c == '\'' || c == '"');
 }
 
-bool	bool_quote_increment(char *src, int *i, t_quote *qts)
+bool	bool_quote_increment(char *src, int *i, t_quote *qts, bool i_inc)
 {
 	bool	flag;
 
@@ -32,7 +32,7 @@ bool	bool_quote_increment(char *src, int *i, t_quote *qts)
 		flag = true;
 		qts->sgl_qt++;
 	}
-	if (flag)
+	if (flag && i_inc)
 		(*i)++;
 	return (flag);
 }

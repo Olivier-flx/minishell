@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 20:36:31 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/27 21:43:02 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/02 12:01:56 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,24 +34,74 @@ void	get_len_and_increment_i(t_data *data, char *str, int *i, int *k)
 	}
 }
 
+// V2
 // Si on rencontre un guillemet, on le marque et on saute
-bool skip_quote(int *i, t_quote *quotes, char *str)
+bool skip_quote(int *i, int *k, t_quote *quotes, char *str) // @test id5
 {
-	return (bool_quote_increment(str, i, quotes));
+	if (bool_quote_increment(str, i, quotes, true))
+	{
+		if (k)
+			(*k)++;
+		return (true);
+	}
+	return (false);
 }
+// V1
+// // Si on rencontre un guillemet, on le marque et on saute
+// bool skip_quote(int *i, t_quote *quotes, char *str)
+// {
+// 	return (bool_quote_increment(str, i, quotes));
+// }
 
 //Cas `$` suivi de quote hors contexte de quote fermée
-bool skip_dollar_quote(int *i, t_quote *quotes, char *str)
+bool skip_dollar_quote(int *i, int *k, t_quote *quotes, char *str)
 {
 	if (str[*i] == '$' && quote_are_closed(quotes)  \
 		&& is_quote(str[*i + 1]))
 	{
 		(*i)++;
-		bool_quote_increment(str, i, quotes);
+		bool_quote_increment(str, i, quotes, true);
+		if (k)
+			(*k)++;
 		return (true);
 	}
 	return (false);
 }
+
+bool skip_quote2(int *i, int *k, t_quote *quotes, char *str) // @test id5
+{
+	if (bool_quote_increment(str, i, quotes, false))
+	{
+		if (k)
+			(*k)++;
+		return (true);
+	}
+	return (false);
+}
+// V1
+// // Si on rencontre un guillemet, on le marque et on saute
+// bool skip_quote(int *i, t_quote *quotes, char *str)
+// {
+// 	return (bool_quote_increment(str, i, quotes));
+// }
+
+//Cas `$` suivi de quote hors contexte de quote fermée
+bool skip_dollar_quote2(int *i, int *k, t_quote *quotes, char *str)
+{
+	if (str[*i] == '$' && quote_are_closed(quotes)  \
+		&& is_quote(str[*i + 1]))
+	{
+		(*i)++;
+		bool_quote_increment(str, i, quotes, false);
+		if (k)
+			(*k)++;
+		return (true);
+	}
+	return (false);
+}
+
+
+
 
 // $ isolé ou invalide hors simple-quote : on compte 1 char
 bool handle_invalid_dollar(int *i, int *k, t_quote *quotes, char *str)
