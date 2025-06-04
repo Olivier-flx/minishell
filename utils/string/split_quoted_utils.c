@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 09:50:17 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/02 10:14:01 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/04 11:03:48 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,13 @@ bool	should_break(char *s, int *i, char c, t_quote *qts)
 
 bool qts_en_seguida_ignore(char *s, int i,t_quote *qts)
 {
-	return((qts->dbl_qt % 2 == 1 || qts->sgl_qt % 2 == 1) && \
-			((s[i] == '\'' && s[i + 1] == '\'') \
-			|| (s[i] == '"' && s[i + 1] == '"')));
+	return( (qts->sgl_qt % 2 == 1 && s[i] == '\'' && s[i + 1] == '\'') \
+			|| (qts->dbl_qt % 2 == 1  && s[i] == '"' && s[i + 1] == '"'));
 }
 
 bool	should_skip_quote(char *s, char c, t_quote *qts, int *i)
 {
+	printf("should_skip_quote c = %c, db_qts = %i, sg_qts = %i\n", c, qts->dbl_qt, qts->sgl_qt);
 	if(qts_en_seguida_ignore(s, *i, qts)) //@test id 3
 	{
 		(*i)++;
@@ -46,6 +46,7 @@ bool	should_skip_quote(char *s, char c, t_quote *qts, int *i)
 	else if ((c == '"'  && qts->sgl_qt % 2 == 0) \
 		|| (c == '\'' && qts->dbl_qt % 2 == 0))
 	{
+		quote_increment(s, *i, qts);
 		(*i)++;
 		return (true);
 	}
