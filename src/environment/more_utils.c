@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   more_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 17:20:12 by marvin            #+#    #+#             */
-/*   Updated: 2025/05/14 17:38:25 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/04 13:15:06 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void update_or_add_env(t_env **env, char *key, char *value)
 		{
 			free(current->value); // Libera el valor antiguo
 			current->value = ft_strdup(value); // Asigna el nuevo valor
-			return;
+			return ;
 		}
 		current = current->next;
 	}

@@ -1,24 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   system_input_validation.c                          :+:      :+:    :+:   */
+/*   check_pipe_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/26 15:19:05 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/04 13:25:47 by ofilloux         ###   ########.fr       */
+/*   Created: 2025/06/04 13:32:44 by ofilloux          #+#    #+#             */
+/*   Updated: 2025/06/04 13:33:11 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../header/minishell.h"
 
-// void	check_system_input_error(t_data *data, t_dlist **cmd_list)
-// {
-//  // >	Redirección a un archivo sin permisos
-//bash: /root/file.txt: Permission denied
-//  // >>	Añadir a un archivo sin permisos
-// bash: /root/file.txt: Permission denied
-//  // <	Redirección desde un archivo inexistente
-// bash: non_existent_file.txt: No such file or directory
-//  // |	Con malos commandos despues
-// }
+bool	is_pipe_chunk(t_chunk *chunk)
+{
+	return (chunk && chunk->tokens \
+		&& chunk->tokens[0] \
+		&& chunk->tokens[0][0] == '|' \
+		&& chunk->tokens[0][1] == '\0');
+}

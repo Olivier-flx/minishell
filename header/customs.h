@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/04 12:01:02 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/04 13:34:31 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,6 +230,7 @@ bool	preliminary_checks_ok(t_data *data, char* line);
 int		check_for_user_input_error(t_data *data, t_dlist **cmd_list);
 int		check_for_triple(t_dlist **cmd_list);
 int		check_for_simple(t_dlist *cmd_list);
+bool	is_pipe_chunk(t_chunk *chunk);
 int		line_accolade_closed(char *line);
 int		accolade_not_closed(t_dlist **cmd_list);
 

@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 11:28:48 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/04 12:03:32 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/04 13:24:52 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,13 @@ int	check_for_simple(t_dlist *list)
 			if (is_operator(chunk->tokens[i], 0, &quotes))
 			{
 				if (pp_char_len(chunk->tokens) == 1)
-					return (printf("bash: syntax error near unexpected token `%s'\n",\
+					return (printf("bash: syntax error near \
+						unexpected token `%s'\n", \
 						unexpected_token(list)), EXIT_FAILURE);
-				if (pp_char_len(chunk->tokens) > 1 && i > 0  && is_operator(chunk->tokens[i - 1], 0, &quotes))
-					return (printf("bash: syntax error near unexpected token `%s'\n",\
+				if (pp_char_len(chunk->tokens) > 1 && i > 0 \
+					&& is_operator(chunk->tokens[i - 1], 0, &quotes))
+					return (printf("bash: syntax error near \
+						unexpected token `%s'\n", \
 						chunk->tokens[i - 1]), EXIT_FAILURE);
 			}
 		}
@@ -66,11 +69,13 @@ int	check_for_simple(t_dlist *list)
 		if (chunk->tokens && chunk->tokens[0])
 		{
 			if (is_operator(chunk->tokens[0], 0, &quotes) && chunk->tokens[1])
-				return (printf("bash: syntax error near unexpected token `%s'\n",\
+				return (printf("bash: syntax error
+					near unexpected token `%s'\n",\
 					unexpected_token(i_node)), EXIT_FAILURE);
 
 			if (is_operator(chunk->tokens[0], 0, &quotes) && !chunk->tokens[1])
-				return (printf("bash: syntax error near unexpected token `%s'\n",\
+				return (printf("bash: syntax
+					error near unexpected token `%s'\n",\
 					unexpected_token(i_node)), EXIT_FAILURE);
 		}
 		i_node = i_node->next;

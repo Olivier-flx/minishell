@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:30:25 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/04 11:54:24 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/04 13:15:06 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	init_pid_arr(t_data *data, t_exe *exe)
 	int i;
 
 	if (!data)
-		return;
+		return ;
 	i = 0;
 	exe->pid_arr = malloc(exe->valid_cmd_count * sizeof(int));
 	if (!exe->pid_arr)

@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 15:14:36 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/04 12:03:32 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/04 13:29:30 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@ int	line_accolade_closed(char *line)
 			flag_var = 1;
 		if (1 == flag_var && line[i] == '{')
 			flag_acc = 1;
-		// if (flag_acc == 1 && line[i] != '{' && line[i] != '}')
-		// 	k++;
 		if (flag_acc == 1 && line[i] == '}')
 		{
 			flag_var = 0;
@@ -42,7 +40,7 @@ int	line_accolade_closed(char *line)
 }
 
 // <> funccionna
-int	check_tocken_accolade(char *token)
+int	check_tok_acc(char *token)
 {
 	int		i;
 	t_quote	quotes;
@@ -60,8 +58,6 @@ int	check_tocken_accolade(char *token)
 			flag_var = 1;
 		if (1 == flag_var && token[i] == '{')
 			flag_acc = 1;
-		// if (flag_acc == 1 && token[i] != '{' && token[i] != '}')
-		// 	k++;
 		if (flag_acc == 1 && token[i] == '}')
 		{
 			flag_var = 0;
@@ -75,16 +71,17 @@ int	accolade_not_closed(t_dlist **cmd_list)
 {
 	t_dlist	*i_node;
 	int		i;
-	int flag;
+	int		flag;
 
 	i_node = *cmd_list;
 	flag = 0;
-	while(i_node)
+	while (i_node)
 	{
 		i = 0;
 		while (((t_chunk *)i_node->content)->tokens[i] && flag > 1)
 		{
-			flag = check_tocken_accolade(((t_chunk *)i_node->content)->tokens[i++]);
+			flag = \
+				check_tok_acc(((t_chunk *)i_node->content)->tokens[i++]);
 			if (flag > 0)
 				return (EXIT_FAILURE);
 		}
@@ -92,4 +89,3 @@ int	accolade_not_closed(t_dlist **cmd_list)
 	}
 	return (EXIT_SUCCESS);
 }
-

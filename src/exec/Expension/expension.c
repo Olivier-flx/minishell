@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 17:38:16 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/04 12:06:17 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/04 13:20:46 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	handle_empty_var_name(char *str, int i)
 	}
 	if (str[(i)] && str[(i) + 1] && (str[(i) + 1] == '{' /* || is_quote(str[(i) + 1]) */))
 		return (3);
-	while(str[i] && str[i] != '$' && !is_quote(str[i]) && !ft_isalnum(str[i]))
+	while (str[i] && str[i] != '$' && !is_quote(str[i]) && !ft_isalnum(str[i]))
 	{
 		k++;
 		i++;

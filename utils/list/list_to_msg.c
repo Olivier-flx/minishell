@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   list_to_msg.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 16:51:49 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/14 15:46:28 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/04 13:11:03 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell.h"
 
-// @debug : Funccion que imprime la lista de comandos entera y imprime el contenido de cada nodo
+/* // @debug : Funccion que imprime la lista de comandos
+// entera y imprime el contenido de cada nodo
 void debug_print_cmd_list(t_dlist **cmd_list_ptr)
 {
 	t_dlist *current = *cmd_list_ptr;
@@ -49,7 +50,8 @@ void debug_print_cmd_list(t_dlist **cmd_list_ptr)
 					{
 						printf("      [%d]: \"%s\"\n", i, chunk->tokens[i]);
 					}
-					printf("      [%d]: NULL (fin de la tabla)\n", pp_char_len(chunk->tokens));
+					printf("      [%d]: NULL (fin de la tabla)\n",
+						pp_char_len(chunk->tokens));
 					// print argv
 					printf("    chunk->argv:\n");
 					if (chunk->argv)
@@ -59,7 +61,8 @@ void debug_print_cmd_list(t_dlist **cmd_list_ptr)
 							printf("      [%d]: \"%s\"\n", i, chunk->argv[i]);
 						}
 					}
-					printf("      [%d]: NULL (fin de la tabla)\n", pp_char_len(chunk->argv));
+					printf("      [%d]: NULL (fin de la tabla)\n",
+						pp_char_len(chunk->argv));
 					// print redir
 					printf("    chunk->redir:\n");
 					if (chunk->redir)
@@ -67,23 +70,28 @@ void debug_print_cmd_list(t_dlist **cmd_list_ptr)
 						for (int i = 0; chunk->redir[i] != NULL; i++)
 							printf("      [%d]: \"%s\"\n", i, chunk->redir[i]);
 					}
-					printf("      [%d]: NULL (fin de la tabla)\n", pp_char_len(chunk->redir));
+					printf("      [%d]: NULL (fin de la tabla)\n",
+						pp_char_len(chunk->redir));
 					// print redir_files
 					printf("    chunk->redir_files:\n");
 					if (chunk->redir_files)
 					{
 						for (int i = 0; chunk->redir_files[i] != NULL; i++)
 						{
-							printf("      [%d]: \"%s\"\n", i, chunk->redir_files[i]);
+							printf("      [%d]: \"%s\"\n", i,
+								chunk->redir_files[i]);
 						}
 					}
-					printf("      [%d]: NULL (fin de la tabla)\n", pp_char_len(chunk->redir_files));
+					printf("      [%d]: NULL (fin de la tabla)\n",
+						pp_char_len(chunk->redir_files));
 				}
 				//printf("    chunk->index: %d\n", chunk->index);
 				printf("    chunk->type: %d\n", chunk->type);
-				printf("    chunk->has_redir: %s\n", chunk->has_redir ? "true" : "false");
+				printf("    chunk->has_redir: %s\n",
+					chunk->has_redir ? "true" : "false");
 				printf("    chunk->redir_count: %d\n", chunk->redir_count);
-				printf("    chunk->redir_file_count: %d\n", chunk->redir_file_count);
+				printf("    chunk->redir_file_count: %d\n",
+					chunk->redir_file_count);
 			}
 			current = current->next;
 			index++;
@@ -91,3 +99,4 @@ void debug_print_cmd_list(t_dlist **cmd_list_ptr)
 	}
 	printf("--- Fin de la impresión de cmd_list ---\n\n");
 }
+ */

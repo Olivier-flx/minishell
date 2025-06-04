@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 15:26:29 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/19 18:08:03 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/04 13:22:32 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	calculate_len_argv(t_chunk *chunk)
 	len_argv = 0;
 	redir_token_len = chunk->redir_count \
 		+ count_redir_files_in_chunks(chunk->tokens);
-	input_redir_token_len  = chunk->input_redir_count \
+	input_redir_token_len = chunk->input_redir_count \
 					+ count_input_files_in_chunks(chunk->tokens);
 	len_argv = pp_char_len(chunk->tokens) \
 			- (redir_token_len + input_redir_token_len);
@@ -44,16 +44,15 @@ void	init_argv(t_chunk *chunk)
 	if (NULL == chunk->argv)
 	{
 		printf("Malloc error : al asignar el argv\n");
-		return ;// @confirm
+		return ;
 	}
 	chunk->argv[len_argv] = NULL;
 }
 
-
-
-void	separate_arg_and_operator(t_chunk *chunk, int i, int i_redir, int i_in_redir)
+void	separate_arg_and_operator(t_chunk *chunk, int i, int i_redir, \
+	int i_in_redir)
 {
-	int	i_argv;
+	int		i_argv;
 	t_quote	quote;
 
 	init_quotes(&quote);

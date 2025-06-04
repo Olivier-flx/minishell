@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 17:37:47 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/04 12:03:32 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/04 13:15:06 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	init_bool_pipes_malloced(t_data * data, t_exe *exe_info)
 	int	i;
 
 	if (!data)
-		return;
+		return ;
 	i = 0;
 	if (exe_info->total_cmd_count < 2)
 		return ;
@@ -71,7 +71,7 @@ void	init_pipes_2arr(t_data *data, t_exe *exe)
 	int i;
 
 	if (!data || exe->total_cmd_count < 2)
-		return;
+		return ;
 	exe->pipe_arr = malloc(sizeof(int *) * (exe->total_cmd_count - 1));
 	if (!exe->pipe_arr)
 		strerror(errno);
@@ -98,7 +98,7 @@ void	init_pipes_2arr_for_heredoc(t_data *data, t_chunk *chunk)
 	int i;
 
 	if (!data)
-		return;
+		return ;
 
 	chunk->heredoc_pipe_arr_malloced = false;
 	chunk->heredoc_pipe_arr = malloc(sizeof(int *) * (chunk->nb_heredocs));

@@ -6,17 +6,18 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 19:22:36 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/04 12:03:32 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/04 13:08:31 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell.h"
 
-static void free_input_redir(t_chunk *chunk)
+static void	free_input_redir(t_chunk *chunk)
 {
 	if (chunk->has_input_redir)
 		free_av(&chunk->input_redir);
-	close_files_if_opened(chunk->input_file_fd, chunk->input_file_open, chunk->input_redir_count);
+	close_files_if_opened(chunk->input_file_fd, \
+		chunk->input_file_open, chunk->input_redir_count);
 	if (chunk->input_redir_file_count > 0)
 		free_av(&chunk->input_redir_file);
 	if (chunk->input_file_fd_malloced)
@@ -31,7 +32,8 @@ static void	free_redir(t_chunk *chunk)
 		free_av(&chunk->redir);
 	if (chunk->redir_file_count > 0)
 	{
-		close_files_if_opened(chunk->file_fd, chunk->file_open, chunk->redir_count);
+		close_files_if_opened(chunk->file_fd, chunk->file_open, \
+			chunk->redir_count);
 		free_av(&chunk->redir_files);
 	}
 	if (chunk->file_fd_malloced)
@@ -76,7 +78,7 @@ void	free_resources(t_data *data, bool clear_env, bool free_line)
 	if (data->cmd_list)
 	{
 		free_cmdlist(data->cmd_list);
-		clean_exec_info(data, EXIT_SUCCESS); // @util ?
+		clean_exec_info(data, EXIT_SUCCESS);
 	}
 	if (clear_env)
 	{

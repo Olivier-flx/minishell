@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   methods.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 20:59:43 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/07 16:41:39 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/04 13:07:01 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ bool	int_var_in_arr(int var, t_int_array *arr)
 	return (false);
 }
 
-int		pp_char_len(char **array)
+int	pp_char_len(char **array)
 {
 	int	i;
 

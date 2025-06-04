@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 17:06:53 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/04 12:03:32 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/04 13:15:06 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void redirect_input_file(t_data *data, t_chunk *chunk)
 	int	herdoc_i;
 
 	if (!data || !chunk || !chunk->input_redir)
-		return;
+		return ;
 	i = 0;
 	herdoc_i = 0;
 	lst_redir = -1;
@@ -68,7 +68,7 @@ void redirect_to_output_file(t_data *data, t_chunk *chunk)
 			printf( "minisaasshell: %s: %s\n", chunk->redir_files[chunk->redir_file_count - 1], strerror(errno)); // @optimize
 		}
 		if (!data)
-			return;
+			return ;
 		printf(" output file : %s, file fd = %i\n", chunk->redir_files[chunk->redir_file_count - 1], chunk->file_fd[chunk->redir_file_count - 1]);// @debug
 		if (dup2(chunk->file_fd[chunk->redir_file_count - 1], STDOUT_FILENO) == -1)
 			strerror(errno); // @optimize

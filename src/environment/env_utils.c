@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 20:56:46 by marvin            #+#    #+#             */
-/*   Updated: 2025/06/04 12:03:32 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/04 13:20:46 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void ft_setenv(t_env **env, char *key, char *value)
 	t_env   *current;
 
 	current = *env;
-	while(current)
+	while (current)
 	{
 		if (ft_strcmp(current->key, key) == 0)
 		{
@@ -50,7 +50,7 @@ void ft_unsetenv(t_env **env, char *key)
 	t_env	*prev = NULL;
 	t_env	*current = *env;
 
-	while(current)
+	while (current)
 	{
 		if (ft_strcmp(current->key, key) == 0)
 		{

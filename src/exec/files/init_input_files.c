@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 18:15:17 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/04 11:54:24 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/04 13:20:46 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int init_input_files(t_data *data)
 	t_dlist	*i_node;
 
 	i_node = data->cmd_list;
-	while(i_node)
+	while (i_node)
 	{
 		if (malloc_input_fd_arr((t_chunk *)i_node->content) == 1)
 			return (printf("Malloc Error : init_files malloc_fd_arr\n"));

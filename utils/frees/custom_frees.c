@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   custom_frees.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 11:31:40 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/12 19:08:02 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/04 13:08:57 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell.h"
 
-void	ft_free(void ** ptr)
+void	ft_free(void **ptr)
 {
 	if (ptr && *ptr)
 	{
@@ -21,9 +21,9 @@ void	ft_free(void ** ptr)
 	}
 }
 
-void free_pipes_arr(int **pipe_arr, t_exe *exec_info)
+void	free_pipes_arr(int **pipe_arr, t_exe *exec_info)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!exec_info || !exec_info->pipes_malloced)

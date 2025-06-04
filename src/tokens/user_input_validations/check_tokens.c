@@ -6,46 +6,25 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 21:34:13 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/04 12:03:32 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/04 13:33:12 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../header/minishell.h"
-
-static bool is_pipe_chunk(t_chunk *chunk)
-{
-	return (chunk && chunk->tokens \
-		&& chunk->tokens[0] \
-		&& chunk->tokens[0][0] == '|' \
-		&& chunk->tokens[0][1] == '\0');
-}
-
-/* static int count_consecutive_pipes(t_dlist *node)
-{
-	int k;
-
-	k = 0;
-	while (node && is_pipe_chunk((t_chunk *)node->content))
-	{
-		k++;
-		node = node->next;
-	}
-	return (k);
-} */
 
 //verifica que un Pipe no sea directamente despues de una redireccion
 int	check_redir_pipe(t_dlist **cmd_list)
 {
 	t_dlist	*i_node;
 	int		i;
-	int flag;
+	int		flag;
 	t_quote	quotes;
 
 	init_quotes(&quotes);
 	i_node = *cmd_list;
 	flag = 0;
 	i = 0;
-	while(i_node)
+	while (i_node)
 	{
 		if (flag == 1 && ((t_chunk *)i_node->content)->tokens[0][0] == '|')
 			return (printf("bash: syntax error near unexpected token `|'\n"), EXIT_FAILURE);
@@ -60,7 +39,7 @@ int	check_redir_pipe(t_dlist **cmd_list)
 	return (EXIT_SUCCESS);
 }
 
-int check_pipe_is_first(t_dlist *list)
+int	check_pipe_is_first(t_dlist *list)
 {
 
 	if (!list)
@@ -68,17 +47,23 @@ int check_pipe_is_first(t_dlist *list)
 	if (is_pipe_chunk((t_chunk *)list->content))
 		return (printf("bash: syntax error near unexpected token `|'\n"));
 	return (0);
+}
 /* 	t_dlist	*last_node;
 
 	last_node = find_last_d_node(cmd_list);
-	// last_node = last_node->prev; // @debug : jai l impression qu il y a un probleme avec un noeud supplementaire vide qui s ajoute a la fin de la liste. Si cela ne cause pas de probleme en soit, cela implique que apres avoir utilise la fonction find_last_node, il fasse faire un cmd_list->prev pour avoir le dernier noeud effectif de la liste
+	// last_node = last_node->prev; // @debug :
+	 jai l impression qu il y a un probleme avec un noeud supplementaire
+	  vide qui s ajoute a la fin de la liste. Si cela ne cause pas de
+	   probleme en soit, cela implique que apres avoir utilise
+	   la fonction find_last_node, il fasse faire un cmd_list->prev
+	   pour avoir le dernier noeud effectif de la liste
 	if (last_node && ((t_chunk *)(last_node->content))->tokens[0] \
 			&& ((t_chunk *)(last_node->content))->tokens[0][0] == '|')
-		return (printf("bash: syntax error near unexpected token `newline'\n"), EXIT_FAILURE);
+		return (printf("bash: syntax error near
+		unexpected token `newline'\n"), EXIT_FAILURE);
 	return (0); */
-}
 
-int check_consecutive_pipes(t_dlist *cmd_list)
+int	check_consecutive_pipes(t_dlist *cmd_list)
 {
 	int		count;
 
@@ -87,7 +72,8 @@ int check_consecutive_pipes(t_dlist *cmd_list)
 		if (is_pipe_chunk((t_chunk *)cmd_list->content))
 		{
 			count = 1;
-			while (cmd_list->next && is_pipe_chunk((t_chunk *)cmd_list->next->content))
+			while (cmd_list->next && \
+				is_pipe_chunk((t_chunk *)cmd_list->next->content))
 			{
 				count++;
 				cmd_list = cmd_list->next;

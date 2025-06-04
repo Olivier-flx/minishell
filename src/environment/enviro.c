@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 18:33:21 by marvin            #+#    #+#             */
-/*   Updated: 2025/06/04 12:03:32 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/04 13:20:46 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,10 @@ void ft_env_add_back(t_env **head, t_env *new_node)
 	if (!*head)
 	{
 		*head = new_node;
-		return;
+		return ;
 	}
 	last = *head;
-	while(last->next)
+	while (last->next)
 	{
 		last = last->next;
 	}
