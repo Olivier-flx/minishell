@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 15:14:36 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/27 21:27:03 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/04 12:03:32 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	check_tocken_accolade(char *token)
 	while (token[++i])
 	{
 		quote_increment(token, i, &quotes);
-		if(token[i] == '$' && qts_acc_closed(&quotes))
+		if (token[i] == '$' && qts_acc_closed(&quotes))
 			flag_var = 1;
 		if (1 == flag_var && token[i] == '{')
 			flag_acc = 1;
@@ -85,7 +85,7 @@ int	accolade_not_closed(t_dlist **cmd_list)
 		while (((t_chunk *)i_node->content)->tokens[i] && flag > 1)
 		{
 			flag = check_tocken_accolade(((t_chunk *)i_node->content)->tokens[i++]);
-			if(flag > 0)
+			if (flag > 0)
 				return (EXIT_FAILURE);
 		}
 		i_node = i_node->next;

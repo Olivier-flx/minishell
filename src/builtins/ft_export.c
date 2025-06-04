@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 11:53:38 by marvin            #+#    #+#             */
-/*   Updated: 2025/05/12 17:53:06 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/04 12:06:17 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int ft_export(t_env **env, char **args)
 	{
 		if (!args[i]) {
 			i++;
-			continue;
+			continue ;
 		}
 
 		char *key_value = ft_strdup(args[i]); // Copiamos el argumento

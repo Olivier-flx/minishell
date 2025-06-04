@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/02 11:31:38 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/04 12:01:02 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ typedef struct s_data //aqui iremos agregando todo lo que este alocado.A partir 
 	t_dlist		*cmd_list;
 	t_exe		exec_info;
 	t_int_array	ope_char_i; // @util ?//index of operators characters in string input
-	t_int_array	token_separators_char_i; //index of separators characters in string input
+	t_int_array	tok_sep_char_i; //index of separators characters in string input
 	int			exit_status;
 
 	int			nb_chunks; //number of commands and argv separated by operators

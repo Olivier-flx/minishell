@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_resources.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 19:22:36 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/12 21:59:33 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/04 12:03:32 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 static void free_input_redir(t_chunk *chunk)
 {
-	if(chunk->has_input_redir)
+	if (chunk->has_input_redir)
 		free_av(&chunk->input_redir);
 	close_files_if_opened(chunk->input_file_fd, chunk->input_file_open, chunk->input_redir_count);
-	if(chunk->input_redir_file_count > 0)
+	if (chunk->input_redir_file_count > 0)
 		free_av(&chunk->input_redir_file);
 	if (chunk->input_file_fd_malloced)
 		ft_free((void **) &chunk->input_file_fd);
@@ -27,9 +27,9 @@ static void free_input_redir(t_chunk *chunk)
 
 static void	free_redir(t_chunk *chunk)
 {
-	if(chunk->has_redir)
+	if (chunk->has_redir)
 		free_av(&chunk->redir);
-	if(chunk->redir_file_count > 0)
+	if (chunk->redir_file_count > 0)
 	{
 		close_files_if_opened(chunk->file_fd, chunk->file_open, chunk->redir_count);
 		free_av(&chunk->redir_files);
@@ -47,7 +47,7 @@ void	free_cmdlist(t_dlist *cmd_list)
 	i_node = cmd_list;
 	while (i_node)
 	{
-		if((t_chunk *)(i_node->content))
+		if ((t_chunk *)(i_node->content))
 		{
 			if (((t_chunk *)(i_node->content))->tokens)
 				free_av(&((t_chunk *)(i_node->content))->tokens);
@@ -68,8 +68,8 @@ void	free_resources(t_data *data, bool clear_env, bool free_line)
 {
 	if (data)
 	{
-		ft_free((void **)&data->token_separators_char_i.array);
-		data->token_separators_char_i.size = 0;
+		ft_free((void **)&data->tok_sep_char_i.array);
+		data->tok_sep_char_i.size = 0;
 		if (free_line)
 			ft_free((void **)&data->line);
 	}

@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 18:03:45 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/02 12:08:51 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/04 12:06:17 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int	handle_expension(t_data *data, char **var_name, char *expd_token_j)
 		var_value = ft_itoa(data->exit_status);
 	if (var_value)
 		copied_len = ft_strlcpy(expd_token_j, var_value, ft_strlen(var_value) + 1);
-	// else if(!var_value && )
+	// else if (!var_value && )
 	// 	copied_len = ft_strlcpy(expd_token_j, "$", 2);
 	else
 		copied_len = ft_strlcpy(expd_token_j, "", 2);
@@ -65,7 +65,7 @@ static char *process_exp_loop(t_data *data, char *str, char **expd_token, \
 		if (skip_quote2(&i, NULL, qts, str) || skip_dollar_quote2(&i, NULL, qts, str)) // @test id 2
 		{
 			(*expd_token)[j++] = str[i++];
-			continue;
+			continue ;
 		}
 		if (str[i] == '$' && (qts->dbl_qt % 2 == 1 || qts_acc_closed(qts)) \
 			 && get_var_name(&var_name, str + i, 0) && var_name && *var_name)
@@ -119,7 +119,7 @@ char	*expend_token(t_data *data, char *str)
 	while (str && str[i])
 	{
 		if (skip_quote(&i, qts, str) || skip_dollar_quote(&i, qts, str))
-			continue;
+			continue ;
 		if (str[i] == '$' && (qts->dbl_qt % 2 == 1 || qts_acc_closed(qts)))
 		{
 			if (get_var_name(&var_name, str + i, 0) && var_name && *var_name)
@@ -167,7 +167,7 @@ char	*expend_token(t_data *data, char *str)
 // 			 && str[i] == '$')
 // 		{
 // 			get_var_name(&var_name, str + i, 0);
-// 			if(var_name)
+// 			if (var_name)
 // 			{
 // 				increment_i_expension_loop(var_name, str, &i);
 // 				j += handle_expension(data, &var_name, (*expd_token) + j);
@@ -210,13 +210,13 @@ char	*expend_token(t_data *data, char *str)
 // 			i++;
 // 			/* laisse bool_quote_increment gérer la quote */
 // 			bool_quote_increment(str, &i, quotes);
-// 			continue;
+// 			continue ;
 // 		}
 // 		if ((quotes->dbl_qt % 2 == 1 || qts_acc_closed(quotes))
 // 			 && str[i] == '$')
 // 		{
 // 			get_var_name(&var_name, str + i, 0);
-// 			if(var_name)
+// 			if (var_name)
 // 			{
 // 				increment_i_expension_loop(var_name, str, &i);
 // 				j += handle_expension(data, &var_name, (*expd_token) + j);
@@ -271,7 +271,7 @@ char	*expend_token(t_data *data, char *str)
 	while (str[i])
 	{
 		quote_increment(str, i, &quotes);
-		if((quotes.dbl_qt % 2 == 1 || qts_acc_closed(&quotes)) && str[i] == '$')
+		if ((quotes.dbl_qt % 2 == 1 || qts_acc_closed(&quotes)) && str[i] == '$')
 		{
 			var_name = get_var_name(str, i);
 			var_value = ft_getenv(data->env_list, var_name);

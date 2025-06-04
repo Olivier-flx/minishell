@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 11:58:34 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/02 11:28:33 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/04 11:54:24 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 bool	is_quote(char c)
 {
-	return(c == '\'' || c == '"');
+	return (c == '\'' || c == '"');
 }
 
 bool	bool_quote_increment(char *src, int *i, t_quote *qts, bool i_inc)

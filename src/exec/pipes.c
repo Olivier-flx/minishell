@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 17:37:47 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/19 17:52:37 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/04 12:03:32 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ void close_heredocs_pipes(t_chunk * chunk)
 {
 	int i;
 
-	if(!chunk->has_here_doc)
+	if (!chunk->has_here_doc)
 		return ;
 	i = 0;
 	while (i < chunk->nb_heredocs)

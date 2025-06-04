@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 11:28:48 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/14 22:36:42 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/04 12:03:32 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static char	*unexpected_token(t_dlist *i_node)
 {
 	if (!i_node->next)
 		return ("newline");
-	if(((t_chunk *)(i_node->next->content))->tokens[0])
+	if (((t_chunk *)(i_node->next->content))->tokens[0])
 		return (((t_chunk *)(i_node->next->content))->tokens[0]);
 	return (NULL);
 }
@@ -63,9 +63,9 @@ int	check_for_simple(t_dlist *list)
 	while (i_node && (t_chunk *)i_node->content)
 	{
 		chunk = (t_chunk *)i_node->content;
-		if(chunk->tokens && chunk->tokens[0])
+		if (chunk->tokens && chunk->tokens[0])
 		{
-			if(is_operator(chunk->tokens[0], 0, &quotes) && chunk->tokens[1])
+			if (is_operator(chunk->tokens[0], 0, &quotes) && chunk->tokens[1])
 				return (printf("bash: syntax error near unexpected token `%s'\n",\
 					unexpected_token(i_node)), EXIT_FAILURE);
 

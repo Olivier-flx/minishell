@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:23:22 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/14 11:05:00 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/04 12:01:02 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,9 @@ void initialize_data(t_data *data, char **env)
 	data->line = NULL;
 	data->cmd_list = NULL;
 	data->ope_char_i = (t_int_array) {0}; // @util ?
-	//data->token_separators_char_i = (t_int_array) {0};
-	data->token_separators_char_i.array = NULL;
-	data->token_separators_char_i.size = 0;
+	//data->tok_sep_char_i = (t_int_array) {0};
+	data->tok_sep_char_i.array = NULL;
+	data->tok_sep_char_i.size = 0;
 	data->nb_chunks = 0;
 	data->exit_status = 0;
 	data->exec_info.last_status_code = 0;
@@ -78,7 +78,7 @@ int	main(int ac, char **av, char **env)
 	if (ac > 1)
 		return (1);
 	if (!env)
-		return(printf("No environment defined\n"), 1);
+		return (printf("No environment defined\n"), 1);
 	initialize_data(&data, env);
 
 	if (ac == 1 && av) // modificcar para arrancar igual si no hay env

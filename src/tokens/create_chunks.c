@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:49:47 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/19 16:49:49 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/04 11:54:24 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	create_main_chunks(char *src, t_dlist **cmd_list, t_data *data)
 	int		flag_last_pipe;
 
 	if (!cmd_list) // @util ?
-		return(EXIT_FAILURE); // @util ?
+		return (EXIT_FAILURE); // @util ?
 	i = 0;
 	flag_last_pipe = 0;
 	all_tokens = split_quoted2(src, data);
@@ -90,9 +90,9 @@ int	create_main_chunks(char *src, t_dlist **cmd_list, t_data *data)
 int	create_chunks(char *line,  t_dlist **cmd_list, t_data *data)
 {
 	if (! data)
-		return(EXIT_FAILURE);
+		return (EXIT_FAILURE);
 	if (!preliminary_checks_ok(data, line))
-		return(EXIT_FAILURE);
+		return (EXIT_FAILURE);
 	if (create_main_chunks(line, cmd_list, data) > 0)
 		return (printf("Error : create_main_chunks"));
 	if (check_for_user_input_error(data, cmd_list) != 0)
@@ -101,5 +101,5 @@ int	create_chunks(char *line,  t_dlist **cmd_list, t_data *data)
 		return (2);
 	//debug_print_cmd_list(cmd_list);
 	data->nb_chunks = (int) stack_lenght(cmd_list);
-	return(EXIT_SUCCESS); // @confirm : what value to return if success ? is returning void couldn't be better ?
+	return (EXIT_SUCCESS); // @confirm : what value to return if success ? is returning void couldn't be better ?
 }

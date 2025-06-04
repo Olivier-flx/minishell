@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   double_operators.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 11:30:14 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/14 17:02:29 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/04 12:06:17 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,13 @@
 		if (1 == flag && tmp && tmp[0] == '<' && chunk->tokens[i][0] == '>')
 			flag = 0;
 		if (1 == flag && ft_strcmp(chunk->tokens[i], ">") == 0)
-			return(printf("bash: syntax error near unexpected token `>'\n"));
+			return (printf("bash: syntax error near unexpected token `>'\n"));
 		else if (1 == flag && ft_strcmp(chunk->tokens[i], "<") == 0)
-			return(printf("bash: syntax error near unexpected token `<'\n"));
+			return (printf("bash: syntax error near unexpected token `<'\n"));
 		else if (1 == flag && ft_strcmp(chunk->tokens[i], ">>") == 0)
-			return(printf("bash: syntax error near unexpected token `>>'\n"));
+			return (printf("bash: syntax error near unexpected token `>>'\n"));
 		else if (1 == flag && ft_strcmp(chunk->tokens[i], "<<") == 0)
-			return(printf("bash: syntax error near unexpected token `<<'\n"));
+			return (printf("bash: syntax error near unexpected token `<<'\n"));
 		flag = 0;
 	}
 	return (EXIT_SUCCESS);
@@ -76,7 +76,7 @@ static int	check_tokens(t_chunk *chunk, t_quote *qts)
 		{
 			tmp = chunk->tokens[i];
 			flag = 1;
-			continue;
+			continue ;
 		}
 		if (check_invalid_sequences(chunk->tokens[i], tmp, flag))
 			return (EXIT_FAILURE);
@@ -101,5 +101,5 @@ int	check_for_triple(t_dlist **cmd_list)
 			return (EXIT_FAILURE);
 		i_node = i_node->next;
 	}
-	return(EXIT_SUCCESS);
+	return (EXIT_SUCCESS);
 }

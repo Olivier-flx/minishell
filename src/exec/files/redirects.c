@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirects.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 17:06:53 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/12 22:39:55 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/04 12:03:32 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void redirect_input_file(t_data *data, t_chunk *chunk)
 		lst_redir++;
 	while (chunk->input_redir[i])
 	{
-		if(ft_strcmp(chunk->input_redir[i], "<") == 0)
+		if (ft_strcmp(chunk->input_redir[i], "<") == 0)
 		{
 			chunk->input_file_fd[i] = open(chunk->input_redir_file[i], O_RDONLY);
 			if (chunk->input_file_fd[i] < 0)

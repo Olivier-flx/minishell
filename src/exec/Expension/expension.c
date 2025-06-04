@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 17:38:16 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/02 12:06:28 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/04 12:06:17 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int get_expended_tocken_len(t_data *data, char *s)
 		if (skip_quote(&i, &k, &qts, s) || skip_dollar_quote(&i, &k ,&qts, s)) // @test id 2
 		{
 			//printf("ENTRA\n"); //@debug
-			continue;
+			continue ;
 		}
 		if (s[i] == '$' && (qts.dbl_qt % 2 == 1 \
 			|| qts_acc_closed(&qts)) \
@@ -101,10 +101,10 @@ int get_expended_tocken_len(t_data *data, char *s)
 		)
 		{
 			get_len_and_increment_i(data, s, &i, &k);
-			continue;
+			continue ;
 		}
 		if (handle_invalid_dollar(&i, &k, &qts, s))
-			continue;
+			continue ;
 		i++;
 		k++;
 	}
@@ -124,7 +124,7 @@ int get_expended_tocken_len(t_data *data, char *s)
 	while (str[i])
 	{
 		quote_increment(str, i, &quotes);
-		if((quotes.dbl_qt % 2 == 1 || qts_acc_closed(&quotes)) \
+		if ((quotes.dbl_qt % 2 == 1 || qts_acc_closed(&quotes)) \
 			&& str[i] == '$')
 		{
 			get_len_and_increment_i(data, str, &i, &k);
@@ -153,18 +153,18 @@ int get_expended_tocken_len(t_data *data, char *s)
 	{
 		was_quotes = bool_quote_increment(str, &i, &quotes);
 		if (was_quotes)
-			continue;
+			continue ;
 		if (str[i] == '$' && quote_are_closed(quotes) && is_quote(str[i + 1]))
 		{
 			i++;
 			bool_quote_increment(str, &i, &quotes);
-			continue;
+			continue ;
 		}
 		if (str[i] == '$'
 			&& (quotes.dbl_qt % 2 == 1 || qts_acc_closed(&quotes)))
 		{
 			get_len_and_increment_i(data, str, &i, &k);
-			continue;
+			continue ;
 		}
 		if (str[i] == '$' && quotes.sgl_qt % 2 == 0)
 		{
@@ -174,7 +174,7 @@ int get_expended_tocken_len(t_data *data, char *s)
 				&& str[i] != '_'
 				&& str[i] != '?')
 				i++;
-			continue;
+			continue ;
 		}
 		i++;
 		k++;
@@ -196,7 +196,7 @@ int get_expended_tocken_len(t_data *data, char *s)
 // 	while (str[i])
 // 	{
 // 		was_quotes = bool_quote_increment(str, &i, &quotes);
-// 		if((quotes.dbl_qt % 2 == 1 || qts_acc_closed(&quotes))
+// 		if ((quotes.dbl_qt % 2 == 1 || qts_acc_closed(&quotes))
 // 			&& str[i] == '$' && !was_quotes)
 // 		{
 // 			get_len_and_increment_i(data, str, &i, &k);

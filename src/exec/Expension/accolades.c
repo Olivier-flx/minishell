@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 16:59:46 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/26 11:25:03 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/04 11:54:24 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ bool	unsuported_accolade_operator(char *str, int i)
 		str[i] == '!' || (str[i] == '?' && str[i + 1] != '}'))
 	{
 		printf("Warning : unsuported minishell operator `%c` in $var\n", str[i]);
-		return(true);
+		return (true);
 	}
 	return (false);
 }

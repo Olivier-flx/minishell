@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:30:25 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/19 17:53:09 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/04 11:54:24 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,5 +81,5 @@ int main_exec(t_data *data)
 				data->exec_info.command_err_count == data->exec_info.total_cmd_count)
 			printf("%s\n", data->exec_info.cmd_err_msg);
 	}
-	return(EXIT_SUCCESS);
+	return (EXIT_SUCCESS);
 }

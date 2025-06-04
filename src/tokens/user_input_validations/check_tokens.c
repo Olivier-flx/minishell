@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 21:34:13 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/21 18:39:33 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/04 12:03:32 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,12 @@ int	check_redir_pipe(t_dlist **cmd_list)
 	while(i_node)
 	{
 		if (flag == 1 && ((t_chunk *)i_node->content)->tokens[0][0] == '|')
-			return(printf("bash: syntax error near unexpected token `|'\n"), EXIT_FAILURE);
+			return (printf("bash: syntax error near unexpected token `|'\n"), EXIT_FAILURE);
 		flag = 0;
 		i = 0;
 		while (((t_chunk *)i_node->content)->tokens[i])
 			i++;
-		if(i > 0 && is_operator(((t_chunk *)i_node->content)->tokens[i - 1] , 0, &quotes))
+		if (i > 0 && is_operator(((t_chunk *)i_node->content)->tokens[i - 1] , 0, &quotes))
 			flag = 1;
 		i_node = i_node->next;
 	}
@@ -74,7 +74,7 @@ int check_pipe_is_first(t_dlist *list)
 	// last_node = last_node->prev; // @debug : jai l impression qu il y a un probleme avec un noeud supplementaire vide qui s ajoute a la fin de la liste. Si cela ne cause pas de probleme en soit, cela implique que apres avoir utilise la fonction find_last_node, il fasse faire un cmd_list->prev pour avoir le dernier noeud effectif de la liste
 	if (last_node && ((t_chunk *)(last_node->content))->tokens[0] \
 			&& ((t_chunk *)(last_node->content))->tokens[0][0] == '|')
-		return(printf("bash: syntax error near unexpected token `newline'\n"), EXIT_FAILURE);
+		return (printf("bash: syntax error near unexpected token `newline'\n"), EXIT_FAILURE);
 	return (0); */
 }
 
@@ -117,7 +117,7 @@ bool	contains_bad_var_substitution(char **tks)
 		{
 			if (tks[i][j] == '$' && tks[i][j + 1] &&tks[i][j + 1] == '{' \
 				&& tks[i][j + 2] && tks[i][j + 2] == '}')
-				return(true);
+				return (true);
 			j++;
 		}
 		i++;
@@ -156,7 +156,7 @@ int	check_for_user_input_error(t_data *data, t_dlist **cmd_list)
 	if (bad_var_substitution(data, *cmd_list))
 		return (1);
 	// check si accolade not closed
-	if(accolade_not_closed(cmd_list) > 0) // @Util ? devrait déjà être géré par run_minishell here with line_accolade_closed()
+	if (accolade_not_closed(cmd_list) > 0) // @Util ? devrait déjà être géré par run_minishell here with line_accolade_closed()
 		return (1); // @Util ?
 
 	// check for incorrect variable name --> à gérer au niveau de l'expension

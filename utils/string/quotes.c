@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 21:54:28 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/27 21:29:10 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/04 12:05:52 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,19 @@ void	init_quotes(t_quote *parsing_context)
 }
 
 /**
- * tocken_quote_closed - Checks if all quotes in a given string are properly closed.
+ * tocken_quote_closed - Checks if all quotes in a given string
+ *  are properly closed.
  * @s: The input string to check.
  *
- * This function analyzes a string to determine whether all single (') and double (") quotes
- * are correctly closed. It tracks the state of single and double quotes separately,
- * ensuring that quotes are only considered opened or closed when not inside another quote.
+ * This function analyzes a string to determine whether a
+ * ll single (') and double (") quotes
+ * are correctly closed. It tracks the state
+ * of single and double quotes separately,
+ * ensuring that quotes are only considered opened or
+ * closed when not inside another quote.
  *
- * The function uses a t_quote structure to count quote occurrences and returns true
+ * The function uses a t_quote structure to count
+ * quote occurrences and returns true
  * if all quotes are balanced (i.e., closed), or false if any quote remains open.
  *
  * Returns:
@@ -60,7 +65,6 @@ bool	tocken_quote_closed(char *s)
 	}
 	return (quote_are_closed(&quote));
 }
-
 
 bool	quote_are_closed(t_quote *quote)
 {
@@ -84,8 +88,6 @@ bool	qts_acc_closed(t_quote *quote)
 	return (quote_are_closed(quote)
 		&& quote->acc % 2 == 0);
 }
-
-
 
 // cc ./utils/string/quotes.c ./utils/string/basics.c -g -o test
 // int main()

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   enviro.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 18:33:21 by marvin            #+#    #+#             */
-/*   Updated: 2025/05/11 18:07:27 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/04 12:03:32 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,21 +18,21 @@ t_env *ft_new_env_node(char *key, char *value, bool exported)
 	t_env	*node;
 
 	node = malloc(sizeof(t_env));
-	if(!node)
-		return(NULL);
+	if (!node)
+		return (NULL);
 
 	node->key = ft_strdup(key);
 	node->value = ft_strdup(value);
 	node->is_exported = exported;
 	node->next = NULL;
-	return(node);
+	return (node);
 }
 
 void ft_env_add_back(t_env **head, t_env *new_node)
 {
 	t_env	*last;
 
-	if(!*head)
+	if (!*head)
 	{
 		*head = new_node;
 		return;

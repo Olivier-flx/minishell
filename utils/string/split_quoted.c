@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 11:18:50 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/04 11:42:36 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/04 12:06:34 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@
 // 	return (count);
 // }
 
-
 static int	ft_count_segment(char *s, char c)
 {
 	int		i;
@@ -54,9 +53,9 @@ static int	ft_count_segment(char *s, char c)
 	while (s[i] != '\0')
 	{
 		quote_increment(s, i, &qts);
-		if (qts_en_seguida_ignore(s, i, &qts)) // @test id 3
+		if (qts_en_seguida_ignore(s, i, &qts))
 			i++;
-		else if (s[i] == c &&  quote_are_closed(&qts))
+		else if (s[i] == c && quote_are_closed(&qts))
 			in_word = false;
 		else if (s[i] != c && !in_word)
 		{
@@ -65,11 +64,10 @@ static int	ft_count_segment(char *s, char c)
 		}
 		i++;
 	}
-	//printf("ft_count_segment -> count = %i\n", count); // @debug
 	return (count);
 }
 
-static int no_qts_seg_len(int i, char *s, char sep, t_quote *qts)
+static int	no_qts_seg_len(int i, char *s, char sep, t_quote *qts)
 {
 	int		len;
 	t_quote	q_cpy;
@@ -80,14 +78,15 @@ static int no_qts_seg_len(int i, char *s, char sep, t_quote *qts)
 	{
 		quote_increment(s, i, &q_cpy);
 		if (s[i] == sep && quote_are_closed(&q_cpy))
-			break;
+			break ;
 		if (should_skip_quote(s, s[i], &q_cpy, &i))
-			continue;
+			continue ;
 		len++;
 		i++;
 	}
 	return (len);
 }
+
 // static int no_qts_seg_len(int i, char *s, char sep, t_quote *qts)
 // {
 // 	int		len;
@@ -97,20 +96,18 @@ static int no_qts_seg_len(int i, char *s, char sep, t_quote *qts)
 // 	{
 // 		quote_increment(s, i, qts);
 // 		if (s[i] == sep && quote_are_closed(qts))
-// 			break;
+// 			break ;
 // 		if ((s[i] == '"' && qts->sgl_qt % 2 == 0)
 // 			|| (s[i] == '\'' && qts->dbl_qt % 2 == 0))
 // 		{
 // 			i++;
-// 			continue;
+// 			continue ;
 // 		}
 // 		len++;
 // 		i++;
 // 	}
 // 	return (len + 1);
 // }
-
-
 
 char	*process_segment(char *s, int *i, char c, t_quote *qts)
 {
@@ -128,9 +125,9 @@ char	*process_segment(char *s, int *i, char c, t_quote *qts)
 	while (s[*i])
 	{
 		if (should_break(s, i, c, qts))
-			break;
+			break ;
 		if (should_skip_quote(s, s[*i], qts, i))
-			continue;
+			continue ;
 		new_seg[s_i++] = s[(*i)++];
 	}
 	new_seg[s_i] = '\0';
@@ -162,7 +159,6 @@ char	**split_quoted(char *s, char c)
 	char	**ns_ar;
 	int		segments_number;
 
-	printf("split_quoted s = `%s`\n",s);
 	if (!s)
 		return (NULL);
 	segments_number = ft_count_segment(s, c);
@@ -205,7 +201,7 @@ static int fill_token_segment(char *s, char *dest, int *i, t_quote *quote)
 		{
 			while (s_i < flag)
 				dest[s_i++] = s[(*i)++];
-			break;
+			break ;
 		}
 		else
 			dest[s_i++] = s[(*i)++];
@@ -214,7 +210,8 @@ static int fill_token_segment(char *s, char *dest, int *i, t_quote *quote)
 	return (s_i);
 }
 
-static char	**ft_new_str_arr(char *s, char **ns_ar, int nb_segment, t_int_array *separators)
+static char	**ft_new_str_arr(char *s, char **ns_ar,
+int nb_segment, t_int_array *separators)
 {
 	int		i;
 	int		segment_i;
@@ -246,13 +243,13 @@ char	**split_quoted(char *s, t_data *data)
 	ns_ar = NULL;
 	if (s == NULL)
 		return (NULL);
-	set_separator_char_i_struc_arr(s, &(data->token_separators_char_i));
+	set_separator_char_i_struc_arr(s, &(data->tok_sep_char_i));
 	tokens_number = ft_segment_count(s, 0, 0, &quote);
 	ns_ar = malloc(((1 + tokens_number)) * sizeof(char *));
 	if (!ns_ar)
 		return (0);
-	ns_ar = ft_new_str_arr(s, ns_ar, tokens_number, &(data->token_separators_char_i));
-	ft_free((void **) &(data->token_separators_char_i));
+	ns_ar = ft_new_str_arr(s, ns_ar, tokens_number, &(data->tok_sep_char_i));
+	ft_free((void **) &(data->tok_sep_char_i));
 	return (ns_ar);
 } */
 
@@ -264,8 +261,10 @@ char	**split_quoted(char *s, t_data *data)
 
 // 	// new_string = split_quoted("he'l'lo > \"le '  ' fcdf  \"    Yo", ' ');
 // 	//new_string = split_quoted("he\"l\"lo > \"le '  ' fcdf  \"    Yo", ' ');
-// 	new_string = split_quoted(" h\"e'l'o  !\" ces\"T\" > le 'nouv\"e a u\"    monde !'  | ce'st' s\"ur\"", ' ');
-// 	//new_string = split_quoted("hello > 'le fcdf monde'    | cest'   ' pas moi      moi", ' ');
+// 	new_string = split_quoted(" h\"e'l'o  !\" ces\"T\" > le
+// 'nouv\"e a u\"    monde !'  | ce'st' s\"ur\"", ' ');
+// 	//new_string = split_quoted("hello > 'le fcdf monde'
+//| cest'   ' pas moi      moi", ' ');
 // 	while (new_string[i])
 // 	{
 // 		printf("%i] : `%s`\n", i ,new_string[i]);
