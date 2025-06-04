@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   basics.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:33:41 by marvin            #+#    #+#             */
-/*   Updated: 2025/05/14 17:53:03 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/04 11:48:22 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ bool	line_is_only_spaces(char *line)
 	}
 	return true;
 }
+
 /*
 //Retourne l'index de char c, ou -1 si pas trouvé
 static int string_search(char *s, char c)
@@ -81,4 +82,4 @@ static char	*ft_truncate(char *s, int n)
 	cpy[i] = '\0';
 	return (cpy);
 }
- */
+*/

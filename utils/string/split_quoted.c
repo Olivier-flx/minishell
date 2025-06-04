@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 11:18:50 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/02 12:14:38 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/04 11:42:36 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,10 +121,10 @@ char	*process_segment(char *s, int *i, char c, t_quote *qts)
 	ignore_unecesary_char(s, i, c, qts);
 	if (!s[*i])
 		return (NULL);
+	init_quotes(qts);
 	new_seg = malloc((no_qts_seg_len(*i, s, c, qts) + 1) * sizeof(char));
 	if (new_seg == NULL)
 		return (NULL);
-	printf ("no_qts_seg_len(*i, s, c, qts) = %i\n", no_qts_seg_len(*i, s, c, qts)); //@debug
 	while (s[*i])
 	{
 		if (should_break(s, i, c, qts))
@@ -134,7 +134,6 @@ char	*process_segment(char *s, int *i, char c, t_quote *qts)
 		new_seg[s_i++] = s[(*i)++];
 	}
 	new_seg[s_i] = '\0';
-	printf("process_segment new_seg = `%s`\n", new_seg); // @debug
 	return (new_seg);
 }
 
@@ -163,6 +162,7 @@ char	**split_quoted(char *s, char c)
 	char	**ns_ar;
 	int		segments_number;
 
+	printf("split_quoted s = `%s`\n",s);
 	if (!s)
 		return (NULL);
 	segments_number = ft_count_segment(s, c);
