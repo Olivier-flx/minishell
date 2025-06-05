@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 17:11:08 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/05 11:20:37 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/05 12:22:15 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,37 @@ static void	handle_invalid_command(t_data *data, t_chunk *chunk, int i)
 	append_error_message(data, msg);
 }
 
-static void	handle_chunk_command(t_data *data, t_chunk *chunk, int i)
+static void	handle_chunk_command(t_data *data, t_chunk *chunk, int i)// @test id 1
 {
+	struct stat	s;
+
 	printf("handle_chunk_command chunk->argv[0] = %s\n", chunk->argv[0]);
-	if (access(chunk->argv[0], X_OK) != 0 && !is_builtin(chunk->argv[0]))
+	stat(chunk->argv[0], &s);
+	if (s.st_mode == S_IFDIR)
+	{
+		printf("-bash: %s: Is a directory\n", chunk->argv[0]);
+		data->exe_nfo.cmd_is_valid_arr[i] = false;
+		append_error_message(data, ft_strjoin("-bash: ", \
+				ft_strjoin(chunk->argv[0], ": Is a directory\n"));)
+		data->exe_nfo.last_status_code = 126;
+	}
+	if (s.st_mode == S_IFREG && access(chunk->argv[0], X_OK) != 0 \
+			&& !is_builtin(chunk->argv[0]))
 		handle_invalid_command(data, chunk, i);
 	else
 		command_is_valid(data, i);
 }
+
+// static void	handle_chunk_command(t_data *data, t_chunk *chunk, int i)
+// {
+// 	printf("handle_chunk_command chunk->argv[0] = %s\n", chunk->argv[0]);
+// 	if (chunk->argv[0])
+// 		stat(const char *pathname, struct stat *statbuf);
+// 	if (access(chunk->argv[0], X_OK) != 0 && !is_builtin(chunk->argv[0]))
+// 		handle_invalid_command(data, chunk, i);
+// 	else
+// 		command_is_valid(data, i);
+// }
 
 void	check_wrong_commands(t_data *data)
 {

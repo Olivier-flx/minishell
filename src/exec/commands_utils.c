@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 17:19:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/05 10:58:57 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/05 12:19:48 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*get_msg(t_data *data, int flag, char *arg)
 	tmp = NULL;
 	if (flag == 1)
 	{
-		msg = ft_strjoin("zsh: no such file or directory: ", arg);
+		msg = ft_strjoin("bash: no such file or directory: ", arg);
 	}
 	else
 	{

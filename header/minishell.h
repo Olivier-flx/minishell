@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:46:36 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/05 10:33:49 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/05 12:15:43 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,14 @@
 # include <readline/history.h>   // add_history
 # include <fcntl.h>      // open
 # include <sys/stat.h>   // stat, lstat, fstat
+# include <sys/types.h>  // stat, lstat, fstat
 # include <dirent.h>     // opendir, readdir, closedir
 # include <sys/wait.h>   // wait, waitpid, wait3, wait4
 # include <signal.h>     // signal, sigaction, sigemptyset, sigaddset, kill
 # include <termios.h>    // tcsetattr, tcgetattr
 # include <termcap.h>    // tgetent, tgetflag, tgetnum, tgetstr, tgoto, tputs
 # include <string.h>     // strerror
-#include <errno.h>		 // set errno
+# include <errno.h>		 // set errno
 # include <stdio.h>      // perror
 
 # include <stdbool.h>
