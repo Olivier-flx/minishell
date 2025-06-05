@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:46:36 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/12 17:41:40 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/05 10:33:49 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ extern volatile sig_atomic_t g_signal_received;
 // Prototipos de funciones de señales
 void	handle_signal(int sig);
 void	setup_signals(void);
-void 	handle_ctrl_d(t_data *data);
+void	handle_ctrl_d(t_data *data);
 
 #endif
 
