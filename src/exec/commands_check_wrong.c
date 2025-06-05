@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 17:11:08 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/05 13:28:41 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/05 13:31:32 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	cmd_is_dir(t_data *data, t_chunk *chunk, int i)
 		data->exe_nfo.last_status_code = 0;
 }
 
-static void	handle_chunk_command(t_data *data, t_chunk *chunk, int i)// @test id 1
+static void	handle_chunk_command(t_data *data, t_chunk *chunk, int i)// @test ID 1
 {
 	struct stat	s;
 	int			s_ret;
