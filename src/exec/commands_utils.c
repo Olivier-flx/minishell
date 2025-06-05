@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 17:19:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/05 10:52:01 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/05 10:58:57 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,8 @@ void	command_is_valid(t_data *data, int i)
 
 int	count_cmd(t_dlist **cmd_list)
 {
-	t_dlist *i_node;
-	int	k;
+	t_dlist	*i_node;
+	int		k;
 
 	i_node = *cmd_list;
 	k = 0;

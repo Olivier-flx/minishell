@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 17:11:08 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/05 10:52:01 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/05 11:20:37 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,10 @@ static void	handle_invalid_command(t_data *data, t_chunk *chunk, int i)
 	data->exe_nfo.command_err_count++;
 	data->exe_nfo.cmd_is_valid_arr[i] = false;
 	if (i == data->exe_nfo.total_cmd_count)
-		data->exe_nfo.last_status_code = 127;
+	{
+		data->exe_nfo.last_status_code = errno; // @test id 1
+		//data->exe_nfo.last_status_code = 127;
+	}
 	else
 		data->exe_nfo.last_status_code = 0;
 	flag = usr_input_got_slash(chunk->argv[0]);
@@ -48,6 +51,7 @@ static void	handle_invalid_command(t_data *data, t_chunk *chunk, int i)
 
 static void	handle_chunk_command(t_data *data, t_chunk *chunk, int i)
 {
+	printf("handle_chunk_command chunk->argv[0] = %s\n", chunk->argv[0]);
 	if (access(chunk->argv[0], X_OK) != 0 && !is_builtin(chunk->argv[0]))
 		handle_invalid_command(data, chunk, i);
 	else
@@ -58,12 +62,13 @@ void	check_wrong_commands(t_data *data)
 {
 	int		i;
 	t_dlist	*i_node;
+	t_chunk	*chunk;
 
 	i = 0;
 	i_node = data->cmd_list;
 	while (i < data->nb_chunks && i_node)
 	{
-		t_chunk *chunk = (t_chunk *)i_node->content;
+		chunk = (t_chunk *)i_node->content;
 		if (!chunk->argv || chunk->type != CMD)
 		{
 			i_node = i_node->next;

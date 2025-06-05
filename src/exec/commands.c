@@ -6,23 +6,24 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 18:10:10 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/05 10:52:01 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/05 11:03:43 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell.h"
 
-static void	handle_path_and_builtin(t_data *data, t_exe *exe_nfo, t_chunk *chunk)
+static void	handle_path_and_builtin(t_data *data, \
+									t_exe *exe_nfo, t_chunk *chnk)
 {
-	if (usr_input_got_slash(chunk->argv[0]) == 0 && !is_builtin(chunk->argv[0]))
+	if (usr_input_got_slash(chnk->argv[0]) == 0 && !is_builtin(chnk->argv[0]))
 	{
 		if (exe_nfo->env_path_found == false)
-			get_path(chunk->argv[0], exe_nfo, data->env_list);
+			get_path(chnk->argv[0], exe_nfo, data->env_list);
 		if (exe_nfo->env_path_found == true)
 		{
-			chunk->argv_0_nopath = ft_strdup(chunk->argv[0]);
-			ft_free((void **) &chunk->argv[0]);
-			chunk->argv[0] = ft_strjoin(exe_nfo->env_path, chunk->argv_0_nopath);
+			chnk->argv_0_nopath = ft_strdup(chnk->argv[0]);
+			ft_free((void **) &chnk->argv[0]);
+			chnk->argv[0] = ft_strjoin(exe_nfo->env_path, chnk->argv_0_nopath);
 		}
 	}
 }

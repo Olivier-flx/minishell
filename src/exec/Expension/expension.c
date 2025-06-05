@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 17:38:16 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/04 13:20:46 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/05 11:17:53 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,23 +78,19 @@ int	handle_empty_var_name(char *str, int i)
 }
 
 //V2
-int get_expended_tocken_len(t_data *data, char *s)
+int	get_expended_tocken_len(t_data *data, char *s)
 {
 	int		i;
 	int		k;
-	t_quote qts;
+	t_quote	qts;
 
 	i = 0;
 	k = 0;
 	init_quotes(&qts);
 	while (s[i])
 	{
-		//printf("get_expended_tocken_len s[%i] = %c\n", i, s[i]); //@debug
-		if (skip_quote(&i, &k, &qts, s) || skip_dollar_quote(&i, &k ,&qts, s)) // @test id 2
-		{
-			//printf("ENTRA\n"); //@debug
+		if (skip_quote(&i, &k, &qts, s) || skip_dollar_quote(&i, &k, &qts, s))
 			continue ;
-		}
 		if (s[i] == '$' && (qts.dbl_qt % 2 == 1 \
 			|| qts_acc_closed(&qts)) \
 			&& (ft_isalnum(s[i + 1]) || s[i + 1] == '_' || s[i + 1] == '?')
@@ -108,7 +104,7 @@ int get_expended_tocken_len(t_data *data, char *s)
 		i++;
 		k++;
 	}
-	return k;
+	return (k);
 }
 
 //V1
@@ -130,7 +126,8 @@ int get_expended_tocken_len(t_data *data, char *s)
 			get_len_and_increment_i(data, str, &i, &k);
 			printf("get_expended_tocken_len -> k = %i\n", k);// @debug
 		}
-		else if (is_quote(str[i]) && ( quotes.sgl_qt % 2 == 1 || quote_are_closed(&quotes))) // @ debug @ test id 1
+		else if (is_quote(str[i]) && ( quotes.sgl_qt % 2 == 1
+		|| quote_are_closed(&quotes)))
 			i++;
 		else
 		{
@@ -202,7 +199,7 @@ int get_expended_tocken_len(t_data *data, char *s)
 // 			get_len_and_increment_i(data, str, &i, &k);
 // 			printf("get_expended_tocken_len -> k = %i\n", k); // @debug
 // 		}
-// 		else if (was_quotes || (str[i] == '$' && is_quote(str[i + 1]))) // @ debug @ test id 1 // PROBLEME ICI avec echo $""
+// 		else if (was_quotes || (str[i] == '$' && is_quote(str[i + 1])))
 // 			i++;
 // 		else
 // 		{
@@ -212,4 +209,5 @@ int get_expended_tocken_len(t_data *data, char *s)
 // 	}
 // 	return (k);
 // }
-/// Si le nom de la variable n'est pas correct, on doit retourner le message [-bash: ${world${test}}: bad substitution]
+/// Si le nom de la variable n'est pas correct, on doit retourner
+//le message [-bash: ${world${test}}: bad substitution]
