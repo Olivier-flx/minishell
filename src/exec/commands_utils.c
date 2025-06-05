@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 17:19:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/14 17:22:02 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/05 10:52:01 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ int	usr_input_got_slash(char *str)
 
 void	command_is_valid(t_data *data, int i)
 {
-	data->exec_info.cmd_is_valid_arr[i] = true;
-	data->exec_info.valid_cmd_count++;
+	data->exe_nfo.cmd_is_valid_arr[i] = true;
+	data->exe_nfo.valid_cmd_count++;
 }
 
 int	count_cmd(t_dlist **cmd_list)

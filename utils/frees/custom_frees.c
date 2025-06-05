@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 11:31:40 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/04 13:08:57 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/05 10:52:01 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,14 @@ void	ft_free(void **ptr)
 	}
 }
 
-void	free_pipes_arr(int **pipe_arr, t_exe *exec_info)
+void	free_pipes_arr(int **pipe_arr, t_exe *exe_nfo)
 {
 	int	i;
 
 	i = 0;
-	if (!exec_info || !exec_info->pipes_malloced)
+	if (!exe_nfo || !exe_nfo->pipes_malloced)
 		return ;
-	while (i < exec_info->total_cmd_count - 1 && exec_info->pipes_malloced[i])
+	while (i < exe_nfo->total_cmd_count - 1 && exe_nfo->pipes_malloced[i])
 	{
 		ft_free((void **) &pipe_arr[i]);
 		i++;

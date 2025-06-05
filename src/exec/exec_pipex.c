@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 17:55:52 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/19 17:53:47 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/05 10:52:01 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,15 @@ static void	process_command_iteration(t_data *data, t_chunk *chunk, int i, \
 									int *valid_cmd_i)
 {
 	listen_heredocs(data, chunk);
-	if (data->exec_info.cmd_is_valid_arr[i] == true)
+	if (data->exe_nfo.cmd_is_valid_arr[i] == true)
 	{
-		if (run_builtins(data, &data->exec_info, chunk, i) != 1)
+		if (run_builtins(data, &data->exe_nfo, chunk, i) != 1)
 		{
-			data->exec_info.pid_arr[*valid_cmd_i] = fork();
-			if (data->exec_info.pid_arr[*valid_cmd_i] == -1)
+			data->exe_nfo.pid_arr[*valid_cmd_i] = fork();
+			if (data->exe_nfo.pid_arr[*valid_cmd_i] == -1)
 				strerror(errno);
-			if (data->exec_info.pid_arr[*valid_cmd_i] == 0)
-				run_pipex(data, &data->exec_info, chunk, i);
+			if (data->exe_nfo.pid_arr[*valid_cmd_i] == 0)
+				run_pipex(data, &data->exe_nfo, chunk, i);
 		}
 		(*valid_cmd_i)++;
 	}
@@ -38,7 +38,7 @@ void	exec_cmds(t_data *data, int i)
 
 	i_node = data->cmd_list;
 	valid_cmd_i = 0;
-	while (i < data->exec_info.total_cmd_count)
+	while (i < data->exe_nfo.total_cmd_count)
 	{
 		t_chunk *chunk = (t_chunk *)i_node->content;
 		if (i_node && chunk && chunk->type != CMD)
@@ -59,7 +59,7 @@ void	exec_cmds(t_data *data, int i)
 
 	i_node = data->cmd_list;
 	valid_cmd_i = 0;
-	while (i <  data->exec_info.total_cmd_count)
+	while (i <  data->exe_nfo.total_cmd_count)
 	{
 		if (i_node && (t_chunk *)i_node->content && ((t_chunk *)i_node->content)->type != CMD)
 		{
@@ -67,15 +67,15 @@ void	exec_cmds(t_data *data, int i)
 			continue ;
 		}
 		listen_heredocs(data, (t_chunk *)i_node->content);
-		if (data->exec_info.cmd_is_valid_arr[i] == true)
+		if (data->exe_nfo.cmd_is_valid_arr[i] == true)
 		{
-			if (1 != run_builtins(data, &data->exec_info, ((t_chunk *)i_node->content), i))
+			if (1 != run_builtins(data, &data->exe_nfo, ((t_chunk *)i_node->content), i))
 			{
-				data->exec_info.pid_arr[valid_cmd_i] = fork();
-				if (data->exec_info.pid_arr[valid_cmd_i] == -1)
+				data->exe_nfo.pid_arr[valid_cmd_i] = fork();
+				if (data->exe_nfo.pid_arr[valid_cmd_i] == -1)
 					strerror(errno);
-				if (data->exec_info.pid_arr[valid_cmd_i] == 0)
-					run_pipex (data, &data->exec_info, ((t_chunk *)i_node->content), i);
+				if (data->exe_nfo.pid_arr[valid_cmd_i] == 0)
+					run_pipex (data, &data->exe_nfo, ((t_chunk *)i_node->content), i);
 			}
 			valid_cmd_i++;
 		}

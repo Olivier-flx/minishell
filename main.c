@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:23:22 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/04 12:01:02 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/05 10:52:01 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 volatile sig_atomic_t g_signal_received = 0;
 
-int initialize_cmd_list(t_data *data)
+int	initialize_cmd_list(t_data *data)
 {
 	t_dlist		*cmd_list;
 
@@ -51,30 +51,29 @@ int	run_minishell(t_data	*data)
 	return (0);
 }
 
-void initialize_data(t_data *data, char **env)
+void	initialize_data(t_data *data, char **env)
 {
 	data->env = env;
 	data->env_list = ft_init_env(env);
 	data->line = NULL;
 	data->cmd_list = NULL;
-	data->ope_char_i = (t_int_array) {0}; // @util ?
-	//data->tok_sep_char_i = (t_int_array) {0};
+	data->ope_char_i = (t_int_array){0};
 	data->tok_sep_char_i.array = NULL;
 	data->tok_sep_char_i.size = 0;
 	data->nb_chunks = 0;
 	data->exit_status = 0;
-	data->exec_info.last_status_code = 0;
-	data->exec_info.cmd_err_msg = NULL;
-	data->exec_info.env_path = NULL;
-	data->exec_info.env_path_found = false;
-	data->exec_info.cmd_is_valid_arr = NULL;
+	data->exe_nfo.last_status_code = 0;
+	data->exe_nfo.cmd_err_msg = NULL;
+	data->exe_nfo.env_path = NULL;
+	data->exe_nfo.env_path_found = false;
+	data->exe_nfo.cmd_is_valid_arr = NULL;
 }
 
 int	main(int ac, char **av, char **env)
 {
 	t_data	data;
 
-	data = (t_data) {0};
+	data = (t_data){0};
 	if (ac > 1)
 		return (1);
 	if (!env)

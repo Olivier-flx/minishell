@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:30:25 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/04 13:15:06 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/05 10:52:08 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,22 +64,22 @@ void	init_pid_arr(t_data *data, t_exe *exe)
 		exe->pid_arr[i++] = -2;
 }
 
-int main_exec(t_data *data)
+int	main_exec(t_data *data)
 {
 	if (data)
 	{
 		init_files(data);
 		init_input_files(data);
 		init_cmd(data);
-		init_pid_arr(data, &data->exec_info);
-		init_pipes_2arr(data , &data->exec_info);
+		init_pid_arr(data, &data->exe_nfo);
+		init_pipes_2arr(data, &data->exe_nfo);
 		exec_cmds(data, 0);
-		close_all_pipes(&data->exec_info, &data->exec_info.pipe_arr);
-		waiting_childs(data, &data->exec_info, data->exec_info.pid_arr);
-		clean_exec_info(data, data->exit_status);
-		if (data->exec_info.cmd_err_msg != NULL && \
-				data->exec_info.command_err_count == data->exec_info.total_cmd_count)
-			printf("%s\n", data->exec_info.cmd_err_msg);
+		close_all_pipes(&data->exe_nfo, &data->exe_nfo.pipe_arr);
+		waiting_childs(data, &data->exe_nfo, data->exe_nfo.pid_arr);
+		clean_exe_nfo(data, data->exit_status);
+		if (data->exe_nfo.cmd_err_msg != NULL && \
+			data->exe_nfo.command_err_count == data->exe_nfo.total_cmd_count)
+			printf("%s\n", data->exe_nfo.cmd_err_msg);
 	}
 	return (EXIT_SUCCESS);
 }

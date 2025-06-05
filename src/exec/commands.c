@@ -3,31 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   commands.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 18:10:10 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/14 17:45:31 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/05 10:52:01 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell.h"
 
-static void	handle_path_and_builtin(t_data *data, t_exe *exec_info, t_chunk *chunk)
+static void	handle_path_and_builtin(t_data *data, t_exe *exe_nfo, t_chunk *chunk)
 {
 	if (usr_input_got_slash(chunk->argv[0]) == 0 && !is_builtin(chunk->argv[0]))
 	{
-		if (exec_info->env_path_found == false)
-			get_path(chunk->argv[0], exec_info, data->env_list);
-		if (exec_info->env_path_found == true)
+		if (exe_nfo->env_path_found == false)
+			get_path(chunk->argv[0], exe_nfo, data->env_list);
+		if (exe_nfo->env_path_found == true)
 		{
 			chunk->argv_0_nopath = ft_strdup(chunk->argv[0]);
 			ft_free((void **) &chunk->argv[0]);
-			chunk->argv[0] = ft_strjoin(exec_info->env_path, chunk->argv_0_nopath);
+			chunk->argv[0] = ft_strjoin(exe_nfo->env_path, chunk->argv_0_nopath);
 		}
 	}
 }
 
-void	init_cmd_vect(t_data *data, t_dlist **cmd_list, t_exe *exec_info)
+void	init_cmd_vect(t_data *data, t_dlist **cmd_list, t_exe *exe_nfo)
 {
 	t_dlist	*i_node;
 	t_chunk	*chunk;
@@ -40,8 +40,8 @@ void	init_cmd_vect(t_data *data, t_dlist **cmd_list, t_exe *exec_info)
 		chunk = (t_chunk *) i_node->content;
 		if (chunk->type == CMD && chunk->argv && chunk->argv[0])
 		{
-			exec_info->cmd_is_valid_arr[i] = false;
-			handle_path_and_builtin(data, exec_info, chunk);
+			exe_nfo->cmd_is_valid_arr[i] = false;
+			handle_path_and_builtin(data, exe_nfo, chunk);
 			i++;
 		}
 		i_node = i_node->next;
@@ -63,22 +63,22 @@ void	init_cmd_is_valid_arr(t_exe *exe_info, int nb_cmd)
 
 void	init_cmd(t_data *data)
 {
-	data->exec_info.total_cmd_count = count_cmd(&data->cmd_list);
-	init_cmd_is_valid_arr(&data->exec_info, data->exec_info.total_cmd_count);
-	data->exec_info.env_path = NULL;
-	data->exec_info.env_path_found = false;
-	data->exec_info.pid_arr = NULL;
-	data->exec_info.pid_arr_malloced = false;
-	data->exec_info.pipe_arr = false;
-	data->exec_info.pipe_arr_malloced = false;
-	data->exec_info.pipes_malloced = false;
-	data->exec_info.cmd_err_msg = NULL;
-	data->exec_info.has_msg = false;
-	data->exec_info.valid_cmd_count = 0;
-	data->exec_info.command_err_count = 0;
-	data->exec_info.last_status_code = 0;
-	init_cmd_vect(data, &data->cmd_list, &data->exec_info);
+	data->exe_nfo.total_cmd_count = count_cmd(&data->cmd_list);
+	init_cmd_is_valid_arr(&data->exe_nfo, data->exe_nfo.total_cmd_count);
+	data->exe_nfo.env_path = NULL;
+	data->exe_nfo.env_path_found = false;
+	data->exe_nfo.pid_arr = NULL;
+	data->exe_nfo.pid_arr_malloced = false;
+	data->exe_nfo.pipe_arr = false;
+	data->exe_nfo.pipe_arr_malloced = false;
+	data->exe_nfo.pipes_malloced = false;
+	data->exe_nfo.cmd_err_msg = NULL;
+	data->exe_nfo.has_msg = false;
+	data->exe_nfo.valid_cmd_count = 0;
+	data->exe_nfo.command_err_count = 0;
+	data->exe_nfo.last_status_code = 0;
+	init_cmd_vect(data, &data->cmd_list, &data->exe_nfo);
 	check_wrong_commands(data);
-	init_bool_pipes_malloced(data, &data->exec_info);
+	init_bool_pipes_malloced(data, &data->exe_nfo);
 	return ;
 }

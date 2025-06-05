@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/05 10:35:47 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/05 10:52:01 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ typedef struct s_data
 	t_env		*env_list;
 	char		*line;
 	t_dlist		*cmd_list;
-	t_exe		exec_info;
+	t_exe		exe_nfo;
 	t_int_array	ope_char_i;
 	t_int_array	tok_sep_char_i; //index of separators characters in string input
 	int			exit_status;
@@ -168,7 +168,7 @@ char	*get_msg(t_data *data, int flag, char *arg);
 void	command_is_valid(t_data *data, int i);
 	////// commands init ///
 void	init_cmd(t_data *data);
-void	clean_exec_info(t_data *data, int exit_val);
+void	clean_exe_nfo(t_data *data, int exit_val);
 void	cmd_error_msg(t_data *data, int failure);
 	////// commands utils ///
 int		count_cmd(t_dlist **cmd_list);
@@ -177,7 +177,7 @@ int		usr_input_got_slash(char *str);
 char	*get_msg(t_data *data, int flag, char *arg);
 
 	////// path exec ////
-void	get_path(char *usr_cmd_input, t_exe *exec_info, t_env *env);
+void	get_path(char *usr_cmd_input, t_exe *exe_nfo, t_env *env);
 int		usr_input_got_slash(char *str);
 
 	////// PIPES ///////
@@ -371,6 +371,6 @@ void	debug_print_cmd_list(t_dlist **cmd_list_ptr); //@debug
 // FREES
 void	free_resources(t_data *data, bool clear_env, bool free_line);
 void	free_cmdlist(t_dlist *cmd_list);
-void	free_pipes_arr(int **pipe_arr, t_exe *exec_info);
+void	free_pipes_arr(int **pipe_arr, t_exe *exe_nfo);
 
 #endif

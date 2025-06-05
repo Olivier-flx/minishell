@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 17:37:47 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/04 13:15:06 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/05 10:52:01 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	init_bool_pipes_malloced(t_data * data, t_exe *exe_info)
 	exe_info->pipes_malloced = malloc(sizeof(bool) * (exe_info->total_cmd_count - 1));
 	if (!exe_info->pipes_malloced)
 		strerror(errno);
-		//clean_exec_info(data, EXIT_FAILURE);
+		//clean_exe_nfo(data, EXIT_FAILURE);
 	while (i < exe_info->total_cmd_count - 1)
 	{
 		exe_info->pipes_malloced[i] = false;
@@ -75,7 +75,7 @@ void	init_pipes_2arr(t_data *data, t_exe *exe)
 	exe->pipe_arr = malloc(sizeof(int *) * (exe->total_cmd_count - 1));
 	if (!exe->pipe_arr)
 		strerror(errno);
-		//clean_exec_info(data, EXIT_FAILURE/* , "Malloc err pipes" */);
+		//clean_exe_nfo(data, EXIT_FAILURE/* , "Malloc err pipes" */);
 	exe->pipe_arr_malloced = true;
 	i = 0;
 	while (i < exe->total_cmd_count - 1)
@@ -83,11 +83,11 @@ void	init_pipes_2arr(t_data *data, t_exe *exe)
 		exe->pipe_arr[i] = malloc(sizeof(int) * 2);
 		if (!exe->pipe_arr[i])
 			strerror(errno);
-			// clean_exec_info(data, EXIT_FAILURE/* , "Malloc err pipe_arr[i]" */); //@optimize, same as before and // pourrait rendre plus robuste si erreur de malloc
+			// clean_exe_nfo(data, EXIT_FAILURE/* , "Malloc err pipe_arr[i]" */); //@optimize, same as before and // pourrait rendre plus robuste si erreur de malloc
 		exe->pipes_malloced[i] = true;
 		if (pipe(exe->pipe_arr[i]) == -1)
 			strerror(errno);
-			// clean_exec_info(data, EXIT_FAILURE/* , "Error in pipe : exec_cmds" */); //@optimize, same as before
+			// clean_exe_nfo(data, EXIT_FAILURE/* , "Error in pipe : exec_cmds" */); //@optimize, same as before
 		i++;
 	}
 }
