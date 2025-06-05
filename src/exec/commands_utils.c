@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 17:19:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/05 12:19:48 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/05 13:26:47 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ char	*get_msg(t_data *data, int flag, char *arg)
 
 	msg = NULL;
 	tmp = NULL;
-	if (flag == 1)
-	{
+	if (flag == 1 && (ft_isalnum(arg[0]) || arg[0] == '.' || arg[0] == '/'))
 		msg = ft_strjoin("bash: no such file or directory: ", arg);
-	}
+	else if (flag == 2)
+		msg = ft_strjoin3("bash: ", arg, ": Is a directory");
 	else
 	{
 		msg = ft_strjoin(arg, ": command not found");

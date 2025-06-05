@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 17:11:08 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/05 12:22:15 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/05 13:28:41 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	append_error_message(t_data *data, char *msg)
 {
-	char *tmp_msg;
+	char	*tmp_msg;
 
 	if (data->exe_nfo.cmd_err_msg == NULL)
 	{
@@ -37,11 +37,8 @@ static void	handle_invalid_command(t_data *data, t_chunk *chunk, int i)
 
 	data->exe_nfo.command_err_count++;
 	data->exe_nfo.cmd_is_valid_arr[i] = false;
-	if (i == data->exe_nfo.total_cmd_count)
-	{
-		data->exe_nfo.last_status_code = errno; // @test id 1
-		//data->exe_nfo.last_status_code = 127;
-	}
+	if (i == data->exe_nfo.total_cmd_count - 1)
+		data->exe_nfo.last_status_code = 127;
 	else
 		data->exe_nfo.last_status_code = 0;
 	flag = usr_input_got_slash(chunk->argv[0]);
@@ -49,22 +46,39 @@ static void	handle_invalid_command(t_data *data, t_chunk *chunk, int i)
 	append_error_message(data, msg);
 }
 
+void	cmd_is_dir(t_data *data, t_chunk *chunk, int i)
+{
+	data->exe_nfo.cmd_is_valid_arr[i] = false;
+	append_error_message(data, get_msg(data, 2, chunk->argv[0]));
+	if (i == data->exe_nfo.total_cmd_count - 1)
+	{
+		data->exe_nfo.last_status_code = 126;
+		data->exit_status = 126;
+	}
+	else
+		data->exe_nfo.last_status_code = 0;
+}
+
 static void	handle_chunk_command(t_data *data, t_chunk *chunk, int i)// @test id 1
 {
 	struct stat	s;
+	int			s_ret;
 
-	printf("handle_chunk_command chunk->argv[0] = %s\n", chunk->argv[0]);
-	stat(chunk->argv[0], &s);
-	if (s.st_mode == S_IFDIR)
+	if (is_builtin(chunk->argv[0]))
 	{
-		printf("-bash: %s: Is a directory\n", chunk->argv[0]);
-		data->exe_nfo.cmd_is_valid_arr[i] = false;
-		append_error_message(data, ft_strjoin("-bash: ", \
-				ft_strjoin(chunk->argv[0], ": Is a directory\n"));)
-		data->exe_nfo.last_status_code = 126;
+		command_is_valid(data, i);
+		return ;
 	}
-	if (s.st_mode == S_IFREG && access(chunk->argv[0], X_OK) != 0 \
-			&& !is_builtin(chunk->argv[0]))
+	s_ret = stat(chunk->argv[0], &s);
+	if (s_ret != 0)
+	{
+		handle_invalid_command(data, chunk, i);
+		return ;
+	}
+	if (s_ret == 0 && (s.st_mode & S_IFMT) == S_IFDIR)
+		cmd_is_dir(data, chunk, i);
+	else if (s_ret == 0 && (s.st_mode & S_IFMT) == S_IFREG \
+			&& access(chunk->argv[0], X_OK) != 0 && !is_builtin(chunk->argv[0]))
 		handle_invalid_command(data, chunk, i);
 	else
 		command_is_valid(data, i);

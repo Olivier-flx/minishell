@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 16:04:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/19 18:05:11 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/05 13:07:32 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,7 @@ int	pick_and_run_builtin(t_data *data, char **argv)
 		return (ft_pwd());
 	else if (ft_strcmp(argv[0], "env") == 0)
 		return (ft_env(data->env_list));
-	//debug_print_cmd_list(&data->cmd_list);
-	if (ft_strcmp(argv[0], "echo") == 0)
+	else if (ft_strcmp(argv[0], "echo") == 0)
 		return (ft_echo(data->env_list, argv));
 	return (EXIT_FAILURE);
 }
@@ -37,13 +36,13 @@ void	execute_builtin_in_parent(t_data *data, t_exe *exe, t_chunk *chunk, int i)
 	int	saved_stdin;
 	int	saved_stdout;
 
-	saved_stdin  = dup(STDIN_FILENO);
+	saved_stdin = dup(STDIN_FILENO);
 	saved_stdout = dup(STDOUT_FILENO);
 	close_unecessary_pipes(exe, i - 1);
 	redirect_input_file(data, chunk);
 	redirect_to_output_file(data, chunk);
 	data->exit_status = pick_and_run_builtin(data, chunk->argv);
-	dup2(saved_stdin,  STDIN_FILENO);
+	dup2(saved_stdin, STDIN_FILENO);
 	dup2(saved_stdout, STDOUT_FILENO);
 	close(saved_stdin);
 	close(saved_stdout);

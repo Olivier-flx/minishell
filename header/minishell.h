@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:46:36 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/05 12:15:43 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/05 12:44:51 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 # include <termios.h>    // tcsetattr, tcgetattr
 # include <termcap.h>    // tgetent, tgetflag, tgetnum, tgetstr, tgoto, tputs
 # include <string.h>     // strerror
-# include <errno.h>		 // set errno
+# include <errno.h>      // set errno
 # include <stdio.h>      // perror
 
 # include <stdbool.h>
