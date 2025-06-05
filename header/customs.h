@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/04 13:34:31 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/05 10:31:47 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,25 +18,29 @@
 //////// Tipos de commentarios ///////
 /*
 	// @TODO	--> queda por hacer
-	// @Util	--> Todavia no se se si va a ser util pero se imagino que si, comprobar en el futuro
-	// @debug	--> lineas de codigo hechas para debugear, quitar antes de entregar el proyecto
+	// @Util	--> Todavia no se se si va a ser util pero
+		se imagino que si, comprobar en el futuro
+	// @debug	--> lineas de codigo hechas para debugear,
+		 quitar antes de entregar el proyecto
 	// @info	--> informaciones adicionales sobre la logica o un bloc de codigo
 	// @confirm	--> need to confirm if it's the best way to do it
 	// @optimize --> Codigo que se puede optimisar
 	// @NF		--> New Feater : used temporarly while modifying a function
-	// @legacy	--> not used anymore, to delete later, kept for logic implementation trace
+	// @legacy	--> not used anymore, to delete later,
+		kept for logic implementation trace
 */
 ///////
 
 //# include "builtins.h"
 
-typedef struct	s_env t_env;
+typedef struct s_env	t_env;
 
-typedef enum {
+typedef enum s_chunk_type
+{
 	CMD,
 	PIPE,
 	VAR
-} chunk_type;
+}	t_chk_type;
 
 typedef struct s_quote
 {
@@ -71,7 +75,7 @@ typedef struct s_exec_data
 {
 	char	*env_path;
 	bool	env_path_found;
-	bool	*cmd_is_valid_arr; // check ether each argv in each chunk is valid or not
+	bool	*cmd_is_valid_arr;
 	bool	cmd_is_valid_arr_malloced;
 	int		*pid_arr; // USED ??
 	bool	pid_arr_malloced;
@@ -83,17 +87,17 @@ typedef struct s_exec_data
 	int		valid_cmd_count;
 	int		command_err_count;
 	int		total_cmd_count;
-	int		last_status_code; // para luego poder recuperar el ultimo status code cuando se hace echo $?
+	int		last_status_code;
 }	t_exe;
 
-typedef struct s_data //aqui iremos agregando todo lo que este alocado.A partir de esta poder acceder a toda la info.
+typedef struct s_data
 {
 	char		**env;
 	t_env		*env_list;
 	char		*line;
 	t_dlist		*cmd_list;
 	t_exe		exec_info;
-	t_int_array	ope_char_i; // @util ?//index of operators characters in string input
+	t_int_array	ope_char_i;
 	t_int_array	tok_sep_char_i; //index of separators characters in string input
 	int			exit_status;
 
@@ -102,10 +106,10 @@ typedef struct s_data //aqui iremos agregando todo lo que este alocado.A partir 
 
 typedef struct s_chunk
 {
-	char		**tokens; // basic chunks that are taken from line splited by "|"
+	char		**tokens;
 	char		**argv;
 	char		*argv_0_nopath; // store the cmd as it was written by the user
-	chunk_type	type;
+	t_chk_type	type;
 	////// REDIR FILES //////
 	bool		has_redir;
 	int			redir_count;
@@ -155,7 +159,8 @@ void	run_pipex(t_data *data, t_exe *exe, t_chunk *chunk, int i);
 int		listen_heredocs(t_data *data, t_chunk *chunk);
 bool	is_builtin(char *cmd);
 int		run_builtins(t_data *data, t_exe *exe, t_chunk *chunk, int i);
-int		execve_builtin_in_child(t_data *data, t_exe *exe, t_chunk *chunk, int i);
+int		execve_builtin_in_child(t_data *data, t_exe *exe, \
+			t_chunk *chunk, int i);
 
 	////// commands ///
 void	check_wrong_commands(t_data *data);
@@ -179,9 +184,9 @@ int		usr_input_got_slash(char *str);
 void	close_unecessary_pipes(t_exe *exe, int i);
 void	close_all_pipes(t_exe *exe, int ***pipe_arr);
 void	init_pipes_2arr(t_data *data, t_exe *exe);
-void	init_bool_pipes_malloced(t_data * data, t_exe *exe_info);
+void	init_bool_pipes_malloced(t_data *data, t_exe *exe_info);
 void	init_pipes_2arr_for_heredoc(t_data *data, t_chunk *chunk);
-void	close_heredocs_pipes(t_chunk * chunk);
+void	close_heredocs_pipes(t_chunk *chunk);
 
 /// FILES
 int		init_files(t_data *data);
@@ -225,8 +230,8 @@ void	handle_question_mark_set_k(t_data *data, char **var_name, \
  */
 // verifications //
 			//user_input_validation
-void	listen_incomplete_lines(t_data *data,char **line);
-bool	preliminary_checks_ok(t_data *data, char* line);
+void	listen_incomplete_lines(t_data *data, char **line);
+bool	preliminary_checks_ok(t_data *data, char *line);
 int		check_for_user_input_error(t_data *data, t_dlist **cmd_list);
 int		check_for_triple(t_dlist **cmd_list);
 int		check_for_simple(t_dlist *cmd_list);
@@ -238,9 +243,9 @@ int		accolade_not_closed(t_dlist **cmd_list);
 void	check_system_input_error(t_data *data, t_dlist **cmd_list); // Unused.
 
 /// Chunks & segments
-int		create_chunks(char *line,  t_dlist **cmd_list, t_data *data);
+int		create_chunks(char *line, t_dlist **cmd_list, t_data *data);
 int		create_main_chunks(char *src, t_dlist **cmd_list, t_data *data);
-t_chunk	*create_token(char ***str, chunk_type type, int i, t_quote quotes);
+t_chunk	*create_token(char ***str, t_chk_type type, int i, t_quote quotes);
 void	set_separator_char_i_struc_arr(char *src, t_int_array *arr);
 int		is_seperator(char *src, int i, t_quote *quote);
 int		count_redir_files_in_chunks(char **content);
@@ -288,11 +293,11 @@ int		create_input_to_commands(char *src, t_dlist **cmd_list, t_data *data);
 void	quote_increment(char *src, int i, t_quote *quote);
 
 // split_quoted
-char	**split_quoted(char *s, char c);// use to split but without keeping surounding quotes
+char	**split_quoted(char *s, char c);// split without surounding quotes
 void	ignore_sep(char *s, int *i, char c, t_quote *qts);
 bool	should_break(char *s, int *i, char c, t_quote *qts);
 bool	should_skip_quote(char *s, char c, t_quote *qts, int *i);
-bool	qts_en_seguida_ignore(char *s, int i,t_quote *qts);
+bool	qts_en_seguida_ignore(char *s, int i, t_quote *qts);
 void	ignore_unecesary_char(char *s, int *i, char c, t_quote *qts);
 // *****
 char	**split_quoted2(char *s, t_data *data);
@@ -340,7 +345,7 @@ void	print_pp_char_arr(char **str);
 bool	int_var_in_arr(int var, t_int_array *arr);
 int		pp_char_len(char **array);
 // arrays_free
-void	ft_free(void ** ptr);
+void	ft_free(void **ptr);
 void	free_av(char ***av);
 char	**free_uncomplete_av(char ***av, int i);
 

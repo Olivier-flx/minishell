@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 17:57:45 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/04 13:26:07 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/05 10:31:44 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ t_chunk	*initialize_t_chunk1(void)
 	return (tok);
 }
 
-t_chunk	*create_token(char ***str, chunk_type type, int i, t_quote quotes)
+t_chunk	*create_token(char ***str, t_chk_type type, int i, t_quote quotes)
 {
 	t_chunk	*token;
 
