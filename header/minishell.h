@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:46:36 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/06 20:59:01 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/06 21:39:25 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ extern volatile sig_atomic_t g_signal_received;
 void	handle_signal(int sig);
 void	setup_signals(void);
 void	reset_signals_to_default(void);
-void	handle_sub_process_signal(t_data *data, int status);
+void	handle_sub_process_signal(t_data *data, int status, bool *printed);
 void	handle_ctrl_d(t_data *data);
 
 #endif

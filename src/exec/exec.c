@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:30:25 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/06 20:59:53 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/06 21:39:16 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,19 +50,21 @@ void	run_pipex(t_data *data, t_exe *exe, t_chunk *chunk, int i)
 } */
 static void	waiting_childs(t_data *data, t_exe *exe, int *pid_arr)
 {
-	int	i;
-	int	status;
+	int		i;
+	int		status;
+	bool	printed;
 
 	if (!data)
 		return ;
 	i = 0;
+	printed = false;
 	while (i < exe->valid_cmd_count)
 	{
 		if (exe->cmd_is_valid_arr[i])
 		{
 			status = 0;
 			waitpid(pid_arr[i], &status, 0);
-			handle_sub_process_signal(data, status);
+			handle_sub_process_signal(data, status, &printed);
 		}
 		i++;
 	}
