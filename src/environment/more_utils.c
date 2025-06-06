@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 17:20:12 by marvin            #+#    #+#             */
-/*   Updated: 2025/06/06 12:28:56 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/06 13:11:56 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,32 @@ int	init_env_sorted(char ***array, t_env *env)
 	return (k);
 }
 
+void	sort_env(t_env **env)
+{
+	t_env	*start;
+	int		i;
+
+	i = 0;
+	start = *env;
+	while ((*env)->next)
+	{
+		i++;
+		if ((*env)->key == NULL)
+			break ;
+		if ((*env)->key[0] > (*env)->next->key[0])
+		{
+			(*env)->next = (*env)->next->next;
+			(*env)->next->next = (*env);
+			if (i > 1)
+				start = *env;
+			(*env) = start;
+		}
+		else
+			(*env) = (*env)->next;
+	}
+
+}
+
 char	**env_to_sorted_array(t_env *env)
 {
 	char	**array;
@@ -41,6 +67,11 @@ char	**env_to_sorted_array(t_env *env)
 	k = init_env_sorted(&array, env);
 	if (!array)
 		return (NULL);
+	printf("___________________\n"); //@debug
+	print_env_list(env);
+	sort_env(&env);
+	print_env_list(env);
+	printf("___________________\n");
 	while (env)
 	{
 		array[i] = ft_strjoin3(env->key, "=", env->value);

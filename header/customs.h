@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/06 09:12:33 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/06 12:41:46 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -334,7 +334,8 @@ char	*strjoin_and_free(char *s1, char *s2);
 void	free_list(t_dlist *stack_to_free);
 void	free_list1(t_dlist **stack_to_free);
 int		add_to_list(t_dlist **line, void *content);
-void	print_dlist(t_dlist **list);
+void	print_dlist(t_dlist **list);// UNUsed
+void	print_env_list(t_env *env);
 t_dlist	*find_last_d_node(t_dlist **lst);
 long	stack_lenght(t_dlist **list);
 void	print_int_arr(t_int_array *arr);

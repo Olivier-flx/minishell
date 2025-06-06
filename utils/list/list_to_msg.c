@@ -6,13 +6,23 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 16:51:49 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/06 08:12:35 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/06 12:43:02 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell.h"
 
- // @debug : Funccion que imprime la lista de comandos
+void	print_env_list(t_env *env)
+{
+	while (env)
+	{
+		printf("env->key=%s\t\tenv->value = %s\n", env->key, env->value);
+		env = env->next;
+	}
+}
+
+
+// @debug : Funccion que imprime la lista de comandos
 // entera y imprime el contenido de cada nodo
 void debug_print_cmd_list(t_dlist **cmd_list_ptr)
 {
