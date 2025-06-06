@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 14:28:21 by marvin            #+#    #+#             */
-/*   Updated: 2025/06/06 19:04:34 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/06 21:00:12 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	handle_signal(int sig)
 	if (sig == SIGQUIT && !(rl_readline_state & RL_STATE_READCMD))
 	{
 		g_signal_received = 131;
-		write(STDOUT_FILENO, "Quit (core dumped)\n", 19);
+		write(STDOUT_FILENO, "Quit (core dumped)\n", 20);
 	}
 }
 
@@ -54,19 +54,51 @@ void	setup_signals(void)
 	sa.sa_flags = SA_RESTART;
 	sigaction(SIGINT, &sa, NULL);
 
-	//sa.sa_handler = SIG_IGN; //@test ID 8
+	sa.sa_handler = SIG_IGN;
 	sigaction(SIGQUIT, &sa, NULL);
+	sigaction(SIGTSTP, &sa, NULL);
 }
 //IT (Ctrl+\) -> ignorar
 
-void	handle_ctrl_bs(t_data *data, int sig)
+void	handle_sub_process_signal(t_data *data, int status)
 {
-	if (sig == SIGINT && !(rl_readline_state & RL_STATE_READCMD))
+	int	sig;
+
+	if (!status)
+		return ;
+	if ((status & 0x7F) != 0)
 	{
-		g_signal_received = 131;
-		write(STDOUT_FILENO, "^\\Quit (core dumped)\n", 21);
-		free_resources(data, true, true);
+		sig = status & 0x7F;
+		if (sig == SIGQUIT)
+		{
+			write(STDOUT_FILENO, "Quit (core dumped)\n", 20);
+			data->exit_status = 128 + SIGQUIT;
+		}
+		else if (sig == SIGINT)
+		{
+			write(STDOUT_FILENO, "\n", 1);
+			data->exit_status = 128 + SIGINT;
+		}
+		else
+		{
+			data->exit_status = 128 + sig;
+		}
 	}
+	else
+		data->exit_status = (status >> 8) & 0xFF;
+}
+
+
+void	reset_signals_to_default(void)
+{
+	struct sigaction	sa;
+
+	sigemptyset(&sa.sa_mask);
+	sa.sa_handler = SIG_DFL;
+	sa.sa_flags = 0;
+
+	sigaction(SIGINT, &sa, NULL);
+	sigaction(SIGQUIT, &sa, NULL);
 }
 
 void	handle_ctrl_d(t_data *data)

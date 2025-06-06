@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 17:55:52 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/06 10:48:23 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/06 20:01:43 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,10 @@ static void	process_command_iteration(t_data *data, t_chunk *chunk, int i, \
 			if (data->exe_nfo.pid_arr[*valid_cmd_i] == -1)
 				strerror(errno);
 			if (data->exe_nfo.pid_arr[*valid_cmd_i] == 0)
+			{
+				reset_signals_to_default();
 				run_pipex(data, &data->exe_nfo, chunk, i);
+			}
 		}
 		(*valid_cmd_i)++;
 	}

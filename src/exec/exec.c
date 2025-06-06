@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:30:25 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/06 19:03:49 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/06 20:59:53 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,6 @@ static void	waiting_childs(t_data *data, t_exe *exe, int *pid_arr)
 {
 	int	i;
 	int	status;
-	int	sig;
-
 
 	if (!data)
 		return ;
@@ -64,13 +62,7 @@ static void	waiting_childs(t_data *data, t_exe *exe, int *pid_arr)
 		{
 			status = 0;
 			waitpid(pid_arr[i], &status, 0);
-			if (status && (status & 0x7F) != 0)
-			{
-				sig = status & 0x7F;// numéro du signal (bits 0-6)
-				data->exit_status = 128 + sig;
-			}
-			else
-				data->exit_status = (status >> 8) & 0xFF;
+			handle_sub_process_signal(data, status);
 		}
 		i++;
 	}
