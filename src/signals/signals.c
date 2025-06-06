@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 14:28:21 by marvin            #+#    #+#             */
-/*   Updated: 2025/06/06 11:38:08 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/06 15:29:20 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ void	handle_signal(int sig)
 		write(STDOUT_FILENO, "\n", 1);
 		rl_replace_line("", 0);
 		rl_on_new_line();
-		//rl_redisplay();
+		if (rl_readline_state & RL_STATE_READCMD)
+			rl_redisplay();
 	}
 }
 

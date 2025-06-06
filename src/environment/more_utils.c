@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 17:20:12 by marvin            #+#    #+#             */
-/*   Updated: 2025/06/06 13:11:56 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/06 14:56:10 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	sort_env(t_env **env)
 		i++;
 		if ((*env)->key == NULL)
 			break ;
+		printf("sort_env (*env)->key[0] = %c\n", (*env)->key[0]);
 		if ((*env)->key[0] > (*env)->next->key[0])
 		{
 			(*env)->next = (*env)->next->next;
@@ -69,9 +70,10 @@ char	**env_to_sorted_array(t_env *env)
 		return (NULL);
 	printf("___________________\n"); //@debug
 	print_env_list(env);
+	printf("___________________\n"); //@debug
 	sort_env(&env);
 	print_env_list(env);
-	printf("___________________\n");
+	printf("___________________\n\n\n");
 	while (env)
 	{
 		array[i] = ft_strjoin3(env->key, "=", env->value);

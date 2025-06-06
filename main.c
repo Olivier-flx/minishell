@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:23:22 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/06 11:45:59 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/06 15:19:32 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int	run_minishell(t_data	*data)
 	{
 		initialize_cmd_list(data);
 		data->line = readline("\033[1;32mminishell> \033[0m");
+		g_signal_received = 1;
 		signal_handlers_for_readline(data);
 		listen_incomplete_lines(data, &data->line);
 		if (data->line)
