@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:30:25 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/05 10:56:01 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/06 19:03:49 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,17 +34,44 @@ void	run_pipex(t_data *data, t_exe *exe, t_chunk *chunk, int i)
 	}
 }
 
-static void	waiting_childs(t_data *data, t_exe *exe, int *pid_arr)
+/* static void	waiting_childs(t_data *data, t_exe *exe, int *pid_arr)
 {
 	int	i;
 
 	i = 0;
 	while (i < exe->valid_cmd_count)
 	{
-		if (exe->total_cmd_count == 1 \
+		if (exe->total_cmd_count != 1 \
 				&& exe->cmd_is_valid_arr[i] \
 				&& !is_builtin(((t_chunk *)data->cmd_list->content)->argv[0]))
 			waitpid(pid_arr[i], NULL, 0);
+		i++;
+	}
+} */
+static void	waiting_childs(t_data *data, t_exe *exe, int *pid_arr)
+{
+	int	i;
+	int	status;
+	int	sig;
+
+
+	if (!data)
+		return ;
+	i = 0;
+	while (i < exe->valid_cmd_count)
+	{
+		if (exe->cmd_is_valid_arr[i])
+		{
+			status = 0;
+			waitpid(pid_arr[i], &status, 0);
+			if (status && (status & 0x7F) != 0)
+			{
+				sig = status & 0x7F;// numéro du signal (bits 0-6)
+				data->exit_status = 128 + sig;
+			}
+			else
+				data->exit_status = (status >> 8) & 0xFF;
+		}
 		i++;
 	}
 }

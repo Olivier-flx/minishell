@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 14:28:21 by marvin            #+#    #+#             */
-/*   Updated: 2025/06/06 15:52:46 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/06 19:04:34 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,11 @@ void	handle_signal(int sig)
 		if (rl_readline_state & RL_STATE_READCMD)
 			rl_redisplay();
 	}
+	if (sig == SIGQUIT && !(rl_readline_state & RL_STATE_READCMD))
+	{
+		g_signal_received = 131;
+		write(STDOUT_FILENO, "Quit (core dumped)\n", 19);
+	}
 }
 
 void	setup_signals(void)
@@ -49,11 +54,20 @@ void	setup_signals(void)
 	sa.sa_flags = SA_RESTART;
 	sigaction(SIGINT, &sa, NULL);
 
-	sa.sa_handler = SIG_IGN;
+	//sa.sa_handler = SIG_IGN; //@test ID 8
 	sigaction(SIGQUIT, &sa, NULL);
 }
 //IT (Ctrl+\) -> ignorar
 
+void	handle_ctrl_bs(t_data *data, int sig)
+{
+	if (sig == SIGINT && !(rl_readline_state & RL_STATE_READCMD))
+	{
+		g_signal_received = 131;
+		write(STDOUT_FILENO, "^\\Quit (core dumped)\n", 21);
+		free_resources(data, true, true);
+	}
+}
 
 void	handle_ctrl_d(t_data *data)
 {
