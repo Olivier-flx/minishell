@@ -6,44 +6,54 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 17:20:12 by marvin            #+#    #+#             */
-/*   Updated: 2025/06/06 12:05:49 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/06 12:28:56 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell.h"
 
-char **env_to_sorted_array(t_env *env)
+int	init_env_sorted(char ***array, t_env *env)
 {
-	int		count = 0;
-	t_env   *tmp = env;
-	char	**array;
-	int	 i = 0;
+	int	k;
 
+	k = 0;
+	while (env)
+	{
+		k++;
+		env = env->next;
+	}
+	*array = (char **)malloc((k + 1) * sizeof(char *));
+	if (!(*array))
+		return (-1);
+	(*array)[k] = NULL;
+	return (k);
+}
+
+char	**env_to_sorted_array(t_env *env)
+{
+	char	**array;
+	int		i;
+	int		k;
+
+	i = 0;
 	if (!env)
-		return NULL;
-	while (tmp && ++count)
-		tmp = tmp->next;
-	array = (char **)malloc((count + 1) * sizeof(char *));
+		return (NULL);
+	k = init_env_sorted(&array, env);
 	if (!array)
 		return (NULL);
-	tmp = env;
-	while (tmp)
+	while (env)
 	{
-		array[i] = ft_strjoin3(tmp->key, "=", tmp->value);
+		array[i] = ft_strjoin3(env->key, "=", env->value);
 		if (!array[i])
 		{
-			while (--i >= 0)
-				free(array[i]);
-			free(array);
+			free_uncomplete_av(&array, i);
 			return (NULL);
 		}
-		tmp = tmp->next;
+		env = env->next;
 		i++;
 	}
-	array[count] = NULL;
-	qsort(array, count, sizeof(char *), /// @Laura
+	qsort(array, k, sizeof(char *), /// @Laura
 		(int (*)(const void *, const void *))ft_strcmp);
-
 	return (array);
 }
 
