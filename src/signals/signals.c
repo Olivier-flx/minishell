@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 14:28:21 by marvin            #+#    #+#             */
-/*   Updated: 2025/06/06 15:29:20 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/06 15:52:46 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,16 @@
 
 void	signal_handlers_for_readline(t_data *data)
 {
-		if (!data->line)  // Caso Ctrl+D
-			handle_ctrl_d(data);
-		if (g_signal_received)
-		{
-			data->exit_status = g_signal_received;
-			g_signal_received = 0;
-		}
+	if (!data->line)
+		handle_ctrl_d(data);
+	if (g_signal_received)
+	{
+		data->exit_status = g_signal_received;
+		g_signal_received = 0;
+	}
 }
 
+// cat /usr/include/readline/readline.h for RL_STATE_READCMD
 void	handle_signal(int sig)
 {
 	if (sig == SIGINT)
