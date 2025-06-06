@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 17:57:45 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/05 10:31:44 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/06 09:42:29 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ t_chunk	*create_token(char ***str, t_chk_type type, int i, t_quote quotes)
 	t_chunk	*token;
 
 	token = initialize_t_chunk1();
-	if (!token)
-		return (NULL);
+	// if (!token)
+	// 	return (NULL);
 	token->tokens = *str;
 	token->type = type;
 	token->index = i;

@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 18:10:10 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/05 11:03:43 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/06 10:34:53 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void	init_cmd_is_valid_arr(t_exe *exe_info, int nb_cmd)
 	exe_info->cmd_is_valid_arr = malloc(sizeof(bool) * (nb_cmd + 1));
 	if (!exe_info->cmd_is_valid_arr)
 		return ;
+	ft_memset(exe_info->cmd_is_valid_arr, 0, sizeof(bool) * (nb_cmd + 1)); // @TEST ID 3
 	exe_info->cmd_is_valid_arr_malloced = true;
 	return ;
 }

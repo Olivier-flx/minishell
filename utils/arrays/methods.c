@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 20:59:43 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/04 13:07:01 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/06 08:53:16 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,16 @@ void	print_pp_char_arr(char **str)
 	int	i;
 
 	i = 0;
-	if (!str || !str[0])
+	if (!str)
+	{
+		printf("PP_char _ arr is NULL\n");
 		return ;
+	}
+	if (!str[0])
+	{
+		printf("PP_char _ arr[0] is NULL\n");
+		return ;
+	}
 	while (str && str[i] && str[i][0])
 	{
 		printf("*str[%i] = `%s`\n", i, str[i]);

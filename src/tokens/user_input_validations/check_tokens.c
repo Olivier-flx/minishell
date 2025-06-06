@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 21:34:13 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/04 13:33:12 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/06 10:09:03 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int	check_consecutive_pipes(t_dlist *cmd_list)
 	return (EXIT_SUCCESS);
 }
 
-bool	contains_bad_var_substitution(char **tks)
+bool	has_bad_var_substitution(char **tks)
 {
 	int	i;
 	int	j;
@@ -101,7 +101,7 @@ bool	contains_bad_var_substitution(char **tks)
 		j = 0;
 		while (tks[i][j])
 		{
-			if (tks[i][j] == '$' && tks[i][j + 1] &&tks[i][j + 1] == '{' \
+			if (tks[i][j] == '$' && tks[i][j + 1] && tks[i][j + 1] == '{' \
 				&& tks[i][j + 2] && tks[i][j + 2] == '}')
 				return (true);
 			j++;
@@ -115,7 +115,7 @@ bool	bad_var_substitution(t_data *data, t_dlist *cmd_list)
 {
 	while (cmd_list)
 	{
-		if (contains_bad_var_substitution(((t_chunk *)cmd_list->content)->tokens))
+		if (has_bad_var_substitution(((t_chunk *)cmd_list->content)->tokens))
 		{
 			write (STDERR_FILENO, "-bash: ${}: bad substitution\n", 30);
 			data->exit_status = 1;
@@ -126,10 +126,30 @@ bool	bad_var_substitution(t_data *data, t_dlist *cmd_list)
 	return (false);
 }
 
+bool	chunk_is_empty(t_chunk *chk)
+{
+	return (!(chk->tokens[0]));
+}
+
+bool	unique_empty_node(t_data *data, t_dlist *cmd_list)
+{
+	t_chunk	*chk;
+
+	chk = ((t_chunk *) cmd_list->content);
+	if (!cmd_list->next && chunk_is_empty(chk))
+	{
+		data->exit_status = 0;
+		return (true);
+	}
+	return (false);
+}
+
 // check from the last tocken to the first one
 //check for redir puis pipe (check_redir_pipe)
 int	check_for_user_input_error(t_data *data, t_dlist **cmd_list)
 {
+	if (unique_empty_node(data, *cmd_list))
+		return (3);
 	if (check_for_simple(*cmd_list) > 0 \
 	|| check_for_triple(cmd_list) > 0 \
 	|| check_redir_pipe(cmd_list) > 0 \
@@ -141,11 +161,7 @@ int	check_for_user_input_error(t_data *data, t_dlist **cmd_list)
 	}
 	if (bad_var_substitution(data, *cmd_list))
 		return (1);
-	// check si accolade not closed
-	if (accolade_not_closed(cmd_list) > 0) // @Util ? devrait déjà être géré par run_minishell here with line_accolade_closed()
-		return (1); // @Util ?
-
-	// check for incorrect variable name --> à gérer au niveau de l'expension
-
+	if (accolade_not_closed(cmd_list) > 0)
+		return (1);
 	return (0);
 }

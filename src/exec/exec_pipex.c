@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 17:55:52 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/05 13:05:57 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/06 10:48:23 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,10 @@ void	exec_cmds(t_data *data, int i)
 	while (i < data->exe_nfo.total_cmd_count)
 	{
 		chunk = (t_chunk *)i_node->content;
-		if (i_node && chunk && chunk->type != CMD)
+		if (((t_chunk *)i_node->content)->type == EMPTY)
+			i++;
+		if (((t_chunk *)i_node->content)->type == EMPTY \
+			|| (i_node && chunk && chunk->type != CMD))
 		{
 			i_node = i_node->next;
 			continue ;

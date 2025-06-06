@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:49:47 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/04 13:17:02 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/06 10:49:02 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,32 +36,40 @@ static int	create_pipe_chunk(int i, t_dlist **cmd_list)
 void	handle_chunk_before_pipe(t_data *data, char **tokens, \
 		int start, int end)
 {
-	char	**sub_tokens;
-	t_chunk	*chunk;
+	char		**sub_tokens;
+	t_chunk		*chunk;
+	t_chk_type	type;
 
+	type = CMD;
 	if (start > end)
 		return ;
 	sub_tokens = dup_pp_char(data, tokens, start, end);
 	retocken_after_expension(&sub_tokens);
-	if (!sub_tokens || !sub_tokens[0])
+	if (!sub_tokens)
 		return ;
-	chunk = create_token(&sub_tokens, CMD, start, (t_quote){0});
+	if (!sub_tokens[0])
+		type = EMPTY;
+	chunk = create_token(&sub_tokens, type, start, (t_quote){0});
 	add_to_list(&data->cmd_list, chunk);
 }
 
 void	handle_chunk_after_last_pipe(t_data *data, char **tokens, \
 		int start, int end)
 {
-	char	**sub_tokens;
-	t_chunk	*chunk;
+	char		**sub_tokens;
+	t_chunk		*chunk;
+	t_chk_type	type;
 
+	type = CMD;
 	if (start > end)
 		return ;
 	sub_tokens = dup_pp_char(data, tokens, start, end);
 	retocken_after_expension(&sub_tokens);
-	if (!sub_tokens || !sub_tokens[0])
+	if (!sub_tokens)
 		return ;
-	chunk = create_token(&sub_tokens, CMD, start, (t_quote){0});
+	if (!sub_tokens[0])
+		type = EMPTY;
+	chunk = create_token(&sub_tokens, type, start, (t_quote){0});
 	add_to_list(&data->cmd_list, chunk);
 }
 

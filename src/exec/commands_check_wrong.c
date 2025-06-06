@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 17:11:08 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/05 13:31:32 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/06 10:47:02 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,8 @@ void	check_wrong_commands(t_data *data)
 		chunk = (t_chunk *)i_node->content;
 		if (!chunk->argv || chunk->type != CMD)
 		{
+			if (chunk->type == EMPTY)
+				i++;
 			i_node = i_node->next;
 			continue ;
 		}

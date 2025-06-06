@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 14:28:21 by marvin            #+#    #+#             */
-/*   Updated: 2025/05/12 22:19:40 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/06 11:38:08 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	handle_signal(int sig)
 		write(STDOUT_FILENO, "\n", 1);
 		rl_replace_line("", 0);
 		rl_on_new_line();
-		rl_redisplay();
+		//rl_redisplay();
 	}
 }
 
@@ -49,10 +49,11 @@ void	setup_signals(void)
 
 	sa.sa_handler = SIG_IGN;
 	sigaction(SIGQUIT, &sa, NULL);
-} //IT (Ctrl+\) -> ignorar
+}
+//IT (Ctrl+\) -> ignorar
 
 
-void handle_ctrl_d(t_data *data)
+void	handle_ctrl_d(t_data *data)
 {
 	write(STDOUT_FILENO, "exit\n", 5);
 	free_resources(data, true, true);

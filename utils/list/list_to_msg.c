@@ -6,13 +6,13 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 16:51:49 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/04 13:11:03 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/06 08:12:35 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell.h"
 
-/* // @debug : Funccion que imprime la lista de comandos
+ // @debug : Funccion que imprime la lista de comandos
 // entera y imprime el contenido de cada nodo
 void debug_print_cmd_list(t_dlist **cmd_list_ptr)
 {
@@ -99,4 +99,4 @@ void debug_print_cmd_list(t_dlist **cmd_list_ptr)
 	}
 	printf("--- Fin de la impresión de cmd_list ---\n\n");
 }
- */
+

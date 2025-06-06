@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 17:29:54 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/02 12:14:39 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/06 10:51:21 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,17 +93,16 @@ char	**dup_pp_char(t_data *data, char **substring_arr, int start, int end)
 		return (NULL);
 	while (i <= end)
 	{
-		//printf("dup_pp_char before chunk[%i] = `%s`\n", j, substring_arr[i]); // @debug
 		chunk[j] = expend_token(data, substring_arr[i]);
-		printf("dup_pp_char After chunk[%i] = `%s`\n\n", j, chunk[j]); // @debug
 		if (NULL == chunk[j])
-			return (free_uncomplete_av(&chunk, j));
+		return (free_uncomplete_av(&chunk, j));
 		i++;
 		j++;
 	}
 	chunk[j] = NULL;
 	return (chunk);
 }
+//printf("dup_pp_char After chunk[%i] = `%s`\n\n", j, chunk[j]); // @debug
 
 void	retocken_after_expension(char ***chunk_tokens)
 {
@@ -112,10 +111,7 @@ void	retocken_after_expension(char ***chunk_tokens)
 
 	tmp = *chunk_tokens;
 	tmp2 = concat_substrs_sep(*chunk_tokens, ' ');
-	//printf("retocken_after_expension --> tmp2 = `%s`\n", tmp2); // @debug
 	*chunk_tokens = split_quoted(tmp2, ' ');
-	//*chunk_tokens = ft_split(tmp2, ' ');
-
 	ft_free((void **) &tmp2);
 	free_av(&tmp);
 }

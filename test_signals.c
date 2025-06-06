@@ -36,7 +36,7 @@ void	setup_signals(void)
 }
 
 // Programa principal de prueba
-int	main(void)
+/* int	main(void)
 {
 	char	*input;
 
@@ -58,3 +58,4 @@ int	main(void)
 	}
 	return (0);
 }
+ */
