@@ -6,10 +6,9 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 18:33:21 by marvin            #+#    #+#             */
-/*   Updated: 2025/06/06 16:43:09 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/06 22:27:28 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../../header/minishell.h"
 

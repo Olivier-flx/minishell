@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 20:56:46 by marvin            #+#    #+#             */
-/*   Updated: 2025/06/06 11:54:53 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/06 22:26:34 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,4 +102,3 @@ char	**ft_env_to_array(t_env *env)
 	array[len] = NULL;
 	return (array);
 }
-

@@ -6,12 +6,11 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 17:20:12 by marvin            #+#    #+#             */
-/*   Updated: 2025/06/06 16:04:49 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/06 22:26:18 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell.h"
-
 
 void	update_or_add_env(t_env **env, char *key, char *value)
 {
@@ -36,7 +35,6 @@ int	is_valid_env_key(char *key)
 {
 	if (!key || !*key || ft_isdigit(*key))
 		return (0);
-
 	while (*key)
 	{
 		if (!ft_isalnum(*key) && *key != '_')

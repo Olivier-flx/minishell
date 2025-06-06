@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 14:28:21 by marvin            #+#    #+#             */
-/*   Updated: 2025/06/06 21:40:44 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/06 22:17:42 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,35 +57,6 @@ void	setup_signals(void)
 	sa.sa_handler = SIG_IGN;
 	sigaction(SIGQUIT, &sa, NULL);
 	sigaction(SIGTSTP, &sa, NULL);
-}
-//IT (Ctrl+\) -> ignorar
-
-void	handle_sub_process_signal(t_data *data, int status, bool *printed)
-{
-	int		sig;
-
-	if (!status)
-		return ;
-	if ((status & 0x7F) != 0)
-	{
-		sig = status & 0x7F;
-		if (sig == SIGQUIT)
-		{
-			if (!(*printed))
-			{
-				write(STDOUT_FILENO, "Quit (core dumped)\n", 20);
-				*printed = true;
-			}
-
-			data->exit_status = 128 + SIGQUIT;
-		}
-		else if (sig == SIGINT)
-			data->exit_status = 128 + SIGINT;
-		else
-			data->exit_status = 128 + sig;
-	}
-	else
-		data->exit_status = (status >> 8) & 0xFF;
 }
 
 void	reset_signals_to_default(void)

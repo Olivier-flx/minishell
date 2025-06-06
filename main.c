@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:23:22 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/06 15:55:12 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/06 22:22:10 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 	--track-origins=yes --suppressions=readline.supp -s ./minishell
 */
 
-volatile sig_atomic_t g_signal_received = 0;
+volatile sig_atomic_t	g_signal_received = 0;
 
 int	initialize_cmd_list(t_data *data)
 {
@@ -90,37 +90,3 @@ int	main(int ac, char **av, char **env)
 		return (ft_free_env(data.env_list), EXIT_FAILURE);
 	return (0);
 }
-
-
-/////////////////// LAURA //////////////////////
-
-
-/* void free_resources(t_data *data)
-{
-    if (data->env_list)
-        ft_free_env(data->env_list);
-    if (data->cmd_list)
-        free_cmdlist(data->cmd_list);
-    // Liberar cualquier otro recurso si es necesario
-}
-
-int main(int ac, char **av, char **env)
-{
-    t_data data;
-
-    if (!env)
-        return (printf("No environment defined\n"), 1);
-
-    // Inicialización de la estructura data
-    ft_memset(&data, 0, sizeof(t_data));
-    data.env_list = ft_init_env(env);
-    data.exit_status = 0;
-
-    if (ac == 1)  // Modo interactivo
-
-        run_minishell(&data);
-
-    free_resources(&data);
-    return (data.exit_status);
-}
- */

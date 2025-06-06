@@ -12,7 +12,8 @@ CFLAGS = -Wall -Wextra -Werror -g -O0 -I./header
 LDFLAGS = -lreadline
 
 #INC = -I./header
-SIGNALS = ./src/signals/signals.c
+SIGNALS = ./src/signals/signals.c \
+		./src/signals/sub_proc_sig.c
 
 BUILTINS = ./src/builtins/is_builtin.c \
 		./src/builtins/ft_echo.c \
