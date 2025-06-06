@@ -6,26 +6,24 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 11:53:38 by marvin            #+#    #+#             */
-/*   Updated: 2025/06/04 12:06:17 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/06 16:25:12 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell.h"
 
-int ft_export(t_env **env, char **args)
+int	ft_export(t_env **env, char **args)
 {
-	int i;
-	int status;
+	int	i;
+	int	status;
 
 	i = 1;
 	status = 0;
 	if (!env || !args)
-		return 1;
-
-
-	// Caso sin argumentos (mostrar entorno)
+		return (1);
 	if (!args[i])
 		return (print_sorted_env(*env));
+
 
 	while (args[i])
 	{

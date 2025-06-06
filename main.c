@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:23:22 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/06 15:19:32 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/06 15:55:12 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ int	run_minishell(t_data	*data)
 	{
 		initialize_cmd_list(data);
 		data->line = readline("\033[1;32mminishell> \033[0m");
-		g_signal_received = 1;
 		signal_handlers_for_readline(data);
 		listen_incomplete_lines(data, &data->line);
 		if (data->line)
@@ -82,7 +81,7 @@ int	main(int ac, char **av, char **env)
 	if (!env)
 		return (printf("No environment defined\n"), 1);
 	initialize_data(&data, env);
-	if (ac == 1 && av) // modificcar para arrancar igual si no hay env
+	if (ac == 1 && av)
 	{
 		setup_signals();
 		return (run_minishell(&data));

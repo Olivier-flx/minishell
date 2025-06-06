@@ -26,7 +26,8 @@ BUILTINS = ./src/builtins/is_builtin.c \
 ENV = ./src/environment/env_search.c \
 	./src/environment/env_utils.c \
 	./src/environment/enviro.c \
-	./src/environment/more_utils.c
+	./src/environment/env_utils_2.c \
+	./src/environment/sort_env.c
 
 TOKENS = ./src/tokens/user_input_validations/preliminary_checks.c \
 	./src/tokens/user_input_validations/check_line.c \

@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 18:33:21 by marvin            #+#    #+#             */
-/*   Updated: 2025/06/06 11:56:40 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/06 16:43:09 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ t_env	*ft_new_env_node(char *key, char *value, bool exported)
 	node = malloc(sizeof(t_env));
 	if (!node)
 		return (NULL);
-
 	node->key = ft_strdup(key);
 	node->value = ft_strdup(value);
 	node->is_exported = exported;
