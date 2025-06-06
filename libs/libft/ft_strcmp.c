@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:09:29 by laufarin          #+#    #+#             */
-/*   Updated: 2025/05/12 21:12:57 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/06 11:48:39 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
 
 /// @brief The  strcmp()  function compares the two strings s1 and s2.
 //    strcmp() returns an integer indicating the result of the comparison, as
@@ -50,9 +49,12 @@ int main(void)
     char *str3 = "holb";
     char *str4 = "hol";
 
-    printf("Comparando '%s' y '%s': %d\n", str1, str2, ft_strcmp(str1, str2)); // 0
-    printf("Comparando '%s' y '%s': %d\n", str1, str3, ft_strcmp(str1, str3)); // negativo
-    printf("Comparando '%s' y '%s': %d\n", str1, str4, ft_strcmp(str1, str4)); // positivo
+    printf("Comparando '%s' y '%s': %d\n", str1,
+		str2, ft_strcmp(str1, str2)); // 0
+    printf("Comparando '%s' y '%s': %d\n",
+		str1, str3, ft_strcmp(str1, str3)); // negativo
+    printf("Comparando '%s' y '%s': %d\n", str1, str4,
+		ft_strcmp(str1, str4)); // positivo
 
     return 0;
 }

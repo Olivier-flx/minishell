@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 17:20:12 by marvin            #+#    #+#             */
-/*   Updated: 2025/06/04 13:15:06 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/06 12:05:49 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,50 +47,54 @@ char **env_to_sorted_array(t_env *env)
 	return (array);
 }
 
-int print_sorted_env(t_env *env)
+int	print_sorted_env(t_env *env)
 {
-	char **env_array = env_to_sorted_array(env); // Convierte a array y ordena
-	int i = 0;
+	char	**env_sorted;
+	int		i;
 
+	env_sorted = env_to_sorted_array(env);
+	i = 0;
 	if (!env)
-		return 0; // No hay variables que mostrar
-	if (!env_array) return 1;
-	while (env_array[i])
+		return (0);
+	if (!env_sorted)
+		return (1);
+	while (env_sorted[i])
 	{
-		printf("declare -x %s\n", env_array[i]); // Formato "declare -x VAR=valor"
-		free(env_array[i]); // Libera cada string
+		printf("declare -x %s\n", env_sorted[i]);
+		ft_free((void **) &(env_sorted[i]));
 		i++;
 	}
-	free(env_array); // Libera el array
+	ft_free((void **) env_sorted);
 	return (0);
 }
 
-void update_or_add_env(t_env **env, char *key, char *value)
+void	update_or_add_env(t_env **env, char *key, char *value)
 {
-	t_env *current = *env;
+	t_env	*current;
 
-	while (current) // Busca si la variable ya existe
+	current = *env;
+	while (current)
 	{
 		if (ft_strcmp(current->key, key) == 0)
 		{
-			free(current->value); // Libera el valor antiguo
-			current->value = ft_strdup(value); // Asigna el nuevo valor
+			ft_free((void **) &current->value);
+			current->value = ft_strdup(value);
 			return ;
 		}
 		current = current->next;
 	}
-	// Si no existe, añade un nuevo nodo al final
-	ft_env_add_back(env, ft_new_env_node(ft_strdup(key), ft_strdup(value), true));
+	ft_env_add_back(env, ft_new_env_node(ft_strdup(key), \
+		ft_strdup(value), true));
 }
 
-int is_valid_env_key(char *key)
+int	is_valid_env_key(char *key)
 {
-	if (!key || !*key || ft_isdigit(*key)) // Si está vacío o empieza con número
+	if (!key || !*key || ft_isdigit(*key))
 		return (0);
 
 	while (*key)
 	{
-		if (!ft_isalnum(*key) && *key != '_') // Caracteres no permitidos
+		if (!ft_isalnum(*key) && *key != '_')
 			return (0);
 		key++;
 	}

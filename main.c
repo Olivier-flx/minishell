@@ -6,14 +6,16 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:23:22 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/05 10:52:01 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/06 11:45:59 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./header/minishell.h"
 
 // HOW TO RUN //
-// valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=readline.supp -s ./minishell
+/* valgrind --leak-check=full --show-leak-kinds=all
+	--track-origins=yes --suppressions=readline.supp -s ./minishell
+*/
 
 volatile sig_atomic_t g_signal_received = 0;
 
@@ -79,14 +81,13 @@ int	main(int ac, char **av, char **env)
 	if (!env)
 		return (printf("No environment defined\n"), 1);
 	initialize_data(&data, env);
-
 	if (ac == 1 && av) // modificcar para arrancar igual si no hay env
 	{
 		setup_signals();
 		return (run_minishell(&data));
 	}
 	else
-		return (ft_free_env(data.env_list),  EXIT_FAILURE);
+		return (ft_free_env(data.env_list), EXIT_FAILURE);
 	return (0);
 }
 

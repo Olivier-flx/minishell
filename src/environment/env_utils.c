@@ -6,13 +6,13 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 20:56:46 by marvin            #+#    #+#             */
-/*   Updated: 2025/06/04 13:20:46 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/06 11:54:53 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell.h"
 
-void ft_free_env(t_env *env)
+void	ft_free_env(t_env *env)
 {
 	t_env	*tmp;
 
@@ -27,9 +27,9 @@ void ft_free_env(t_env *env)
 	}
 }
 
-void ft_setenv(t_env **env, char *key, char *value)
+void	ft_setenv(t_env **env, char *key, char *value)
 {
-	t_env   *current;
+	t_env	*current;
 
 	current = *env;
 	while (current)
@@ -42,14 +42,17 @@ void ft_setenv(t_env **env, char *key, char *value)
 		}
 		current = current->next;
 	}
-	ft_env_add_back(env, ft_new_env_node(ft_strdup(key), ft_strdup(value), true));
+	ft_env_add_back(env, \
+		ft_new_env_node(ft_strdup(key), ft_strdup(value), true));
 }
 
-void ft_unsetenv(t_env **env, char *key)
+void	ft_unsetenv(t_env **env, char *key)
 {
-	t_env	*prev = NULL;
-	t_env	*current = *env;
+	t_env	*prev;
+	t_env	*current;
 
+	prev = NULL;
+	current = *env;
 	while (current)
 	{
 		if (ft_strcmp(current->key, key) == 0)
@@ -58,9 +61,9 @@ void ft_unsetenv(t_env **env, char *key)
 				prev->next = current->next;
 			else
 				*env = current->next;
-			free(current->key);
-			free(current->value);
-			free(current);
+			ft_free((void **) &current->key);
+			ft_free((void **) &current->value);
+			ft_free((void **) &current);
 			return ;
 		}
 		prev = current;
@@ -68,10 +71,11 @@ void ft_unsetenv(t_env **env, char *key)
 	}
 }
 
-int ft_env_size(t_env *env)
+int	ft_env_size(t_env *env)
 {
-	int size = 0;
+	int	size;
 
+	size = 0;
 	while (env)
 	{
 		size++;
@@ -80,12 +84,15 @@ int ft_env_size(t_env *env)
 	return (size);
 }
 
-char **ft_env_to_array(t_env *env)
+char	**ft_env_to_array(t_env *env)
 {
-	int len = ft_env_size(env);
-	char **array = malloc((len + 1) * sizeof(char *));
-	int i = 0;
+	int		len;
+	char	**array;
+	int		i;
 
+	len = ft_env_size(env);
+	array = malloc((len + 1) * sizeof(char *));
+	i = 0;
 	while (env)
 	{
 		array[i] = ft_strjoin3(env->key, "=", env->value);
