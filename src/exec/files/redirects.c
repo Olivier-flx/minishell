@@ -6,13 +6,96 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 17:06:53 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/04 13:15:06 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/08 10:51:19 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../header/minishell.h"
 
-void redirect_input_file(t_data *data, t_chunk *chunk)
+/* static int	get_last_redir_index(char **input_redir)
+{
+	int	i;
+
+	i = 0;
+	if (!input_redir)
+		return (-1);
+	while (input_redir[i])
+		i++;
+	return (i - 1);
+}
+
+static void	process_single_redir(t_data *data, t_chunk *chunk, \
+		int i, int lst_redir)
+{
+	static int heredoc_i;
+
+	if (ft_strcmp(chunk->input_redir[i], "<") == 0)
+	{
+		chunk->input_file_fd[i] = open(
+			chunk->input_redir_file[i], O_RDONLY);
+		if (chunk->input_file_fd[i] < 0)
+		{
+			chunk->chunk_exec_return_status_code = errno;
+			printf("minishell: %s: %s\n",
+				chunk->input_redir_file[i], strerror(errno));
+		}
+		chunk->input_file_open[i] = true;
+		if (i == lst_redir)
+			dup2(chunk->input_file_fd[i], STDIN_FILENO);
+		close(chunk->input_file_fd[i]);
+		chunk->input_file_open[i] = false;
+	}
+	else if (ft_strcmp(chunk->input_redir[i], "<<") == 0)
+	{
+		if (i == lst_redir)
+			dup2(
+				chunk->heredoc_pipe_arr[heredoc_i][0], STDIN_FILENO);
+		close(chunk->heredoc_pipe_arr[heredoc_i][0]);
+		heredoc_i++;
+	}
+}
+
+void	redirect_input_file(t_data *data, t_chunk *chunk)
+{
+	int	i;
+	int	lst_redir;
+	int	herdoc_i;
+
+	if (!data || !chunk || !chunk->input_redir)
+		return ;
+	init_i_j(&i, &herdoc_i);
+	lst_redir = get_last_redir_index(chunk->input_redir);
+	while (chunk->input_redir[i])
+	{
+		if (ft_strcmp(chunk->input_redir[i], "<") == 0)
+		{
+			chunk->input_file_fd[i] = open(chunk->input_redir_file[i], O_RDONLY);
+			if (chunk->input_file_fd[i] < 0)
+			{
+				chunk->chunk_exec_return_status_code = errno;
+				printf("minishell: %s: %s\n", chunk->input_redir_file[i], strerror(errno)); // @optimize
+			}
+			chunk->input_file_open[i] = true;
+			if (i == lst_redir && dup2(chunk->input_file_fd[i], STDIN_FILENO) == -1)
+				strerror(errno);
+			if (chunk->input_file_fd[i] >= 0 && close(chunk->input_file_fd[i]) == 0)
+				chunk->input_file_open[i] = false;
+		}
+		if (ft_strcmp(chunk->input_redir[i], "<<") == 0)
+		{
+			if (i == lst_redir && dup2(chunk->heredoc_pipe_arr[herdoc_i][0], STDIN_FILENO) == -1)
+				strerror(errno);
+			close(chunk->heredoc_pipe_arr[herdoc_i][0]);
+			herdoc_i++;
+		}
+		i++;
+	}
+	if (chunk->heredoc_pipe_arr_malloced)
+		ft_free((void **) &chunk->heredoc_pipe_arr);
+} */
+
+// V OK mais trop long
+void	redirect_input_file(t_data *data, t_chunk *chunk)
 {
 	int	i;
 	int	lst_redir;
@@ -29,21 +112,26 @@ void redirect_input_file(t_data *data, t_chunk *chunk)
 	{
 		if (ft_strcmp(chunk->input_redir[i], "<") == 0)
 		{
-			chunk->input_file_fd[i] = open(chunk->input_redir_file[i], O_RDONLY);
+			chunk->input_file_fd[i] = open(chunk->input_redir_file[i],
+				O_RDONLY);
 			if (chunk->input_file_fd[i] < 0)
 			{
 				chunk->chunk_exec_return_status_code = errno;
-				printf( "minishell: %s: %s\n", chunk->input_redir_file[i], strerror(errno)); // @optimize
+				printf("minishell: %s: %s\n", chunk->input_redir_file[i],
+					strerror(errno)); // @optimize
 			}
 			chunk->input_file_open[i] = true;
-			if (i == lst_redir && dup2(chunk->input_file_fd[i], STDIN_FILENO) == -1)
-				strerror(errno); // @optimize
-			if (chunk->input_file_fd[i] >= 0 && close(chunk->input_file_fd[i]) == 0)
+			if (i == lst_redir && dup2(chunk->input_file_fd[i],
+					STDIN_FILENO) == -1)
+				strerror(errno);
+			if (chunk->input_file_fd[i] >= 0 &&
+					close(chunk->input_file_fd[i]) == 0)
 				chunk->input_file_open[i] = false;
 		}
 		if (ft_strcmp(chunk->input_redir[i], "<<") == 0)
 		{
-			if (i == lst_redir && dup2(chunk->heredoc_pipe_arr[herdoc_i][0], STDIN_FILENO) == -1)
+			if (i == lst_redir && dup2(chunk->heredoc_pipe_arr[herdoc_i][0],
+					STDIN_FILENO) == -1)
 				strerror(errno);
 			close(chunk->heredoc_pipe_arr[herdoc_i][0]);
 			herdoc_i++;
@@ -51,10 +139,10 @@ void redirect_input_file(t_data *data, t_chunk *chunk)
 		i++;
 	}
 	if (chunk->heredoc_pipe_arr_malloced)
-		ft_free((void ** ) &chunk->heredoc_pipe_arr);
+		ft_free((void **) &chunk->heredoc_pipe_arr);
 }
 
-void redirect_to_output_file(t_data *data, t_chunk *chunk)
+void	redirect_to_output_file(t_data *data, t_chunk *chunk)
 {
 	if (chunk->redir_file_count > 0)
 	{
@@ -65,14 +153,16 @@ void redirect_to_output_file(t_data *data, t_chunk *chunk)
 		if (chunk->file_fd[chunk->redir_file_count - 1] < 0)
 		{
 			chunk->chunk_exec_return_status_code = errno;
-			printf( "minisaasshell: %s: %s\n", chunk->redir_files[chunk->redir_file_count - 1], strerror(errno)); // @optimize
+			printf("minisaasshell: %s: %s\n", \
+				chunk->redir_files[chunk->redir_file_count - 1], \
+				strerror(errno));
 		}
 		if (!data)
 			return ;
-		printf(" output file : %s, file fd = %i\n", chunk->redir_files[chunk->redir_file_count - 1], chunk->file_fd[chunk->redir_file_count - 1]);// @debug
-		if (dup2(chunk->file_fd[chunk->redir_file_count - 1], STDOUT_FILENO) == -1)
-			strerror(errno); // @optimize
-		close(chunk->file_fd[chunk->redir_file_count - 1]); //@optimize : peut etre rendu plus robust avec strerror et errno
+		if (dup2(chunk->file_fd[chunk->redir_file_count - 1], \
+			STDOUT_FILENO) == -1)
+			strerror(errno);
+		close(chunk->file_fd[chunk->redir_file_count - 1]);
 		chunk->file_open[chunk->redir_file_count - 1] = false;
 	}
 }
