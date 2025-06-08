@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/06 12:41:46 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/08 09:43:24 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,8 +147,6 @@ typedef struct s_chunk
 
 
 /////////////// SRC //////////////
-void	signal_handlers_for_readline(t_data *data);
-
 /*
  * ==========================
  * 			EXEC
@@ -208,6 +206,7 @@ bool	get_var_name(char **var_name, char *str, int i);
 int		get_expended_tocken_len(t_data *data, char *str);
 void	retocken_after_expension(char ***chunk_tokens);
 bool	unsuported_accolade_operator(char *str, int i);
+
 	/// Expension Utils
 bool	skip_quote(int *i, int *k, t_quote *quotes, char *str);
 bool	skip_dollar_quote(int *i, int *k, t_quote *quotes, char *str);
@@ -220,8 +219,9 @@ void	get_len_and_increment_i(t_data *data, char *str, int *i, int *k);
 int		handle_empty_var_name(char *str, int i);
 void	handle_question_mark_set_k(t_data *data, char **var_name, \
 								char **var_value, int *k);
-
-
+void	increment_i_expension_loop(char *var_name, char *str, int	*i);
+void	init_i_j(int *i, int *j);
+int		handle_expension(t_data *data, char **var_name, char *expd_token_j);
 
 	/////  /////
 /*

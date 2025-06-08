@@ -6,52 +6,13 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 18:03:45 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/04 12:06:17 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/08 09:26:31 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../header/minishell.h"
 
-static int	handle_expension(t_data *data, char **var_name, char *expd_token_j)
-{
-	char	*var_value;
-	int		copied_len;
-
-	copied_len = 0;
-	var_value = ft_getenv(data->env_list, *var_name);
-	if (ft_strcmp(*var_name, "?") == 0)
-		var_value = ft_itoa(data->exit_status);
-	if (var_value)
-		copied_len = ft_strlcpy(expd_token_j, var_value, ft_strlen(var_value) + 1);
-	// else if (!var_value && )
-	// 	copied_len = ft_strlcpy(expd_token_j, "$", 2);
-	else
-		copied_len = ft_strlcpy(expd_token_j, "", 2);
-	if (ft_strcmp(*var_name, "?") == 0)
-		ft_free((void **) &var_value);
-	ft_free((void **) var_name);
-	return (copied_len);
-}
-
-static	void	increment_i_expension_loop(char *var_name, char *str, int	*i)
-{
-	int var_name_len;
-
-	var_name_len = 0;
-	var_name_len = ft_strlen(var_name);
-	if (str[(*i) + 1] && str[(*i) + 1] == '{')
-				(*i) += var_name_len + 3;
-			else
-				(*i) += var_name_len + 1;
-}
-
-static void	init_i_j(int *i, int *j)
-{
-	*i = 0;
-	*j = 0;
-}
-
-static char *process_exp_loop(t_data *data, char *str, char **expd_token, \
+static char	*process_exp_loop(t_data *data, char *str, char **expd_token, \
 	t_quote *qts)
 {
 	int		i;
@@ -61,24 +22,23 @@ static char *process_exp_loop(t_data *data, char *str, char **expd_token, \
 	init_i_j (&i, &j);
 	while (str && str[i])
 	{
-		//printf("process_exp_loop str[%i] = %c\n", i, str[i]);
-		if (skip_quote2(&i, NULL, qts, str) || skip_dollar_quote2(&i, NULL, qts, str)) // @test id 2
+		if (skip_quote2(&i, NULL, qts, str) || \
+			skip_dollar_quote(&i, NULL, qts, str))
 		{
 			(*expd_token)[j++] = str[i++];
 			continue ;
 		}
 		if (str[i] == '$' && (qts->dbl_qt % 2 == 1 || qts_acc_closed(qts)) \
-			 && get_var_name(&var_name, str + i, 0) && var_name && *var_name)
+			&& get_var_name(&var_name, str + i, 0) && var_name && *var_name)
 		{
-				increment_i_expension_loop(var_name, str, &i);
-				j += handle_expension(data, &var_name, *expd_token + j);
+			increment_i_expension_loop(var_name, str, &i);
+			j += handle_expension(data, &var_name, *expd_token + j);
 		}
 		else if (handle_invalid_dollar(&i, &j, qts, str))
 			(*expd_token)[j - 1] = '$';
 		else
 			(*expd_token)[j++] = str[i++];
 	}
-	//printf("process_exp_loop expd_token = %s\n",*expd_token); // @debug
 	return (*expd_token);
 }
 
@@ -91,7 +51,6 @@ char	*expend_token(t_data *data, char *str)
 
 	ret_tocken = NULL;
 	expd_token_len = get_expended_tocken_len(data, str);
-	//printf("expend_token expd_token_len = %i\n",expd_token_len); // @debug
 	if (expd_token_len < 0)
 		return (NULL);
 	if (expd_token_len >= 0)
@@ -105,7 +64,6 @@ char	*expend_token(t_data *data, char *str)
 	ret_tocken = process_exp_loop(data, str, &expd_token, &quotes);
 	return (ret_tocken);
 }
-
 
 // VERSION OK MAIS TROP LONGUE
 /* static char *process_exp_loop(t_data *data, char *str, char **expd_token, \
@@ -244,10 +202,6 @@ char	*expend_token(t_data *data, char *str)
 // 	return (*expd_token);
 // }
 
-
-
-
-
 /* char	*expend_token(t_data *data, char *str)
 {
 	int		i;
@@ -278,7 +232,8 @@ char	*expend_token(t_data *data, char *str)
 			if (ft_strcmp(var_name, "?") == 0)
 				var_value = ft_itoa(data->exit_status);
 			if (var_value)
-				j += ft_strlcpy(expd_token + j, var_value, (size_t) ft_strlen(var_value) + 1); // +1 pour '\0'
+				j += ft_strlcpy(expd_token + j, var_value,
+					(size_t) ft_strlen(var_value) + 1); // +1 pour '\0'
 			if (ft_strcmp(var_name, "?") == 0)
 				ft_free((void **) &var_value);
 			if (str[i + 1] && str[i + 1] == '{')

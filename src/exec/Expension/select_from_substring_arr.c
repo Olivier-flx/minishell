@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 17:29:54 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/06 10:51:21 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/08 09:30:24 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static void	copy_with_sep(char **argv, char sep, char *result)
 		j = 0;
 		while (argv[i][j])
 			result[offset++] = argv[i][j++];
-		if (argv[i]  && argv[i + 1])
+		if (argv[i] && argv[i + 1])
 			result[offset++] = sep;
 		i++;
 	}
@@ -79,6 +79,8 @@ char	*concat_substrs_sep(char **argv, char sep)
 
 // @info : duplicate a segmented substring, in a char **;
 // from a start point included to a end point included.
+//@info chunk malloc :
+//    end - start +1 to include the starst and the end ;  +1 for the null
 char	**dup_pp_char(t_data *data, char **substring_arr, int start, int end)
 {
 	char	**chunk;
@@ -88,14 +90,14 @@ char	**dup_pp_char(t_data *data, char **substring_arr, int start, int end)
 	i = start;
 	j = 0;
 	chunk = NULL;
-	chunk = malloc(sizeof(char *) * (end - start + 1 + 1)); //@info end - start +1 to include the starst and the end ;  +1 for the null
+	chunk = malloc(sizeof(char *) * (end - start + 1 + 1));
 	if (!chunk)
 		return (NULL);
 	while (i <= end)
 	{
 		chunk[j] = expend_token(data, substring_arr[i]);
 		if (NULL == chunk[j])
-		return (free_uncomplete_av(&chunk, j));
+			return (free_uncomplete_av(&chunk, j));
 		i++;
 		j++;
 	}

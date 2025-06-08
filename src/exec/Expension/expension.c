@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 17:38:16 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/05 11:17:53 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/08 09:29:31 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	get_classic_var_name(char **var_name, char *str, int i)
 	if (!(*var_name))
 		return ;
 	(*var_name)[var_name_len] = '\0';
-	ft_strlcpy(*var_name, str + i - var_name_len, var_name_len + 1); // man : Note that a byte for the NUL should be included in size.
+	ft_strlcpy(*var_name, str + i - var_name_len, var_name_len + 1);
 }
 
 bool	get_var_name(char **var_name, char *str, int i)
@@ -39,7 +39,7 @@ bool	get_var_name(char **var_name, char *str, int i)
 	if (str[i] == '{')
 		get_var_name_in_accolade(var_name, str, i + 1);
 	else
-		get_classic_var_name(var_name,str, i);
+		get_classic_var_name(var_name, str, i);
 	if (var_name)
 		return (true);
 	return (false);
@@ -63,11 +63,8 @@ int	handle_empty_var_name(char *str, int i)
 
 	k = 1;
 	if (str[(i)] && !str[(i) + 1])
-	{
-		//*var_value = ft_strdup("$");
 		return (1);
-	}
-	if (str[(i)] && str[(i) + 1] && (str[(i) + 1] == '{' /* || is_quote(str[(i) + 1]) */))
+	if (str[(i)] && str[(i) + 1] && (str[(i) + 1] == '{'))
 		return (3);
 	while (str[i] && str[i] != '$' && !is_quote(str[i]) && !ft_isalnum(str[i]))
 	{
@@ -76,6 +73,28 @@ int	handle_empty_var_name(char *str, int i)
 	}
 	return (k);
 }
+
+//V1
+// int	handle_empty_var_name(char *str, int i)
+// {
+// 	int	k;
+
+// 	k = 1;
+// 	if (str[(i)] && !str[(i) + 1])
+// 	{
+// 		//*var_value = ft_strdup("$");
+// 		return (1);
+// 	}
+// 	if (str[(i)] && str[(i) + 1] && (str[(i) + 1] == '{' /*
+//		|| is_quote(str[(i) + 1]) */))
+// 		return (3);
+// 	while (str[i] && str[i] != '$' && !is_quote(str[i]) && !ft_isalnum(str[i]))
+// 	{
+// 		k++;
+// 		i++;
+// 	}
+// 	return (k);
+// }
 
 //V2
 int	get_expended_tocken_len(t_data *data, char *s)

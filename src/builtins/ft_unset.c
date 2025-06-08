@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 11:32:50 by marvin            #+#    #+#             */
-/*   Updated: 2025/06/06 22:29:30 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/06 22:43:01 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int	ft_unset(t_env **env, char **args)
 	ret_status = 0;
 	if (!args[1])
 		return (0);
-
 	while (args[i])
 	{
 		if (!is_valid_env_key(args[i]))

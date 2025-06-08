@@ -70,6 +70,7 @@ EXPEND = ./src/exec/Expension/expension.c \
 		./src/exec/Expension/accolades.c \
 		./src/exec/Expension/expension_quotes.c \
 		./src/exec/Expension/select_from_substring_arr.c \
+		./src/exec/Expension/exp_utils.c
 
 UTILS = ./utils/string/split_quoted.c \
 		./utils/string/split_quoted_utils.c \

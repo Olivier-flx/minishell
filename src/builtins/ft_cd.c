@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/30 13:34:19 by marvin            #+#    #+#             */
-/*   Updated: 2025/06/06 22:32:21 by ofilloux         ###   ########.fr       */
+/*   Created: 2025/06/08 09:32:58 by ofilloux          #+#    #+#             */
+/*   Updated: 2025/06/08 09:40:45 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,12 @@
 
 static int	update_pwds(t_env **env)
 {
-	char	cwd[PATH_MAX]; // @ Laura
+	char	cwd[PATH_MAX];
 	char	*oldpwd;
 
 	oldpwd = ft_getenv(*env, "PWD");
-	if (!getcwd(cwd, PATH_MAX)) // @ Laura
+	if (!getcwd(cwd, PATH_MAX))
 		return (perror("cd: error retrieving current directory"), 1);
-
 	if (oldpwd)
 		ft_setenv(env, "OLDPWD", oldpwd);
 	ft_setenv(env, "PWD", cwd);
@@ -38,7 +37,6 @@ int	ft_cd(t_env **env, char **args)
 		path = ft_getenv(*env, "OLDPWD");
 	else
 		path = args[1];
-
 	if (!path)
 		return (ft_putstr_fd("minishell: cd: HOME not set\n", 2), 1);
 	if (access(path, F_OK) == -1)

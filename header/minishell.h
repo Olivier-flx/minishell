@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:46:36 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/06 21:39:25 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/08 09:43:22 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 # include <string.h>     // strerror
 # include <errno.h>      // set errno
 # include <stdio.h>      // perror
+# include <limits.h>      // PATH_MAX
 
 # include <stdbool.h>
 
@@ -55,6 +56,9 @@ void	setup_signals(void);
 void	reset_signals_to_default(void);
 void	handle_sub_process_signal(t_data *data, int status, bool *printed);
 void	handle_ctrl_d(t_data *data);
+
+void	signal_handlers_for_readline(t_data *data);
+
 
 #endif
 
