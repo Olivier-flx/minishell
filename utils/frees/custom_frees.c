@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   custom_frees.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 11:31:40 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/09 21:02:21 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/10 01:08:55 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,6 @@ void	free_pipes_arr(int **pipe_arr, t_exe *exe_nfo)
 		i++;
 	}
 	ft_free((void **) &pipe_arr);
+	exe_nfo->pipe_arr_malloced = false;
 	pipe_arr = NULL;
 }

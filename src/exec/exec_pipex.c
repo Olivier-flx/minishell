@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipex.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 17:55:52 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/09 23:32:29 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/10 01:10:42 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	execve_builtin_in_child(t_data *data, t_exe *exe, t_chunk *chunk, int i)
 		}
 	}
 	else
-		close_all_pipes_child(exe); // Test id 8
+		close_all_pipes_child(exe);
 	return (EXIT_FAILURE);
 }
 
@@ -51,10 +51,7 @@ void	run_pipex(t_data *data, t_exe *exe, t_chunk *chunk, int i)
 		execve(chunk->argv[0], chunk->argv, data->env);
 	if (exe->total_cmd_count > 1)
 	{
-		execve("/bin/true", (char *[]){ "true", NULL }, NULL);
-		// fprintf(stderr, "run_pipex failing cmd : %s\n",chunk->argv[0]); // @debug
-		// free_resources(data, true, true);
-		// ft_putstr_fd("execve failed : ", STDERR_FILENO);
+		execve("/bin/true", (char *[]){"true", NULL}, NULL);
 		exit (127);
 	}
 }
@@ -82,12 +79,8 @@ void	process_invalide_cmd(t_data *data, t_exe *exe, int i)
 			while (read(exe->pipe_arr[i - 1][0], buf, sizeof(buf)) > 0)
 				continue ;
 			close(exe->pipe_arr[i - 1][0]);
-					fprintf(stderr, "process_invalide_cmd [pid %d] ; cmd = %i\n", getpid(), i);
-
-			execve("/bin/true", (char *[]){ "true", NULL }, NULL);
-			// if (i == exe->command_err_count - 1)
-			// 	free_resources(data, true, true);
-			//exit(127);
+			execve("/bin/true", (char *[]){"true", NULL}, NULL);
+			exit(127);
 		}
 	}
 }
@@ -96,7 +89,6 @@ void	process_command_iteration(t_data *data, t_chunk *chunk, int i, \
 									int *valid_cmd_i)
 {
 	listen_heredocs(data, chunk);
-			printf("process_command_iteration data->exe_nfo.cmd_is_valid_arr[%i] == %i  chunk cmd = %s\n", i, data->exe_nfo.cmd_is_valid_arr[i], chunk->argv[0]);
 	if (data->exe_nfo.cmd_is_valid_arr[i] == true)
 	{
 		if (run_builtins(data, &data->exe_nfo, chunk, i) != 1)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes_close.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 10:41:01 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/09 22:04:27 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/10 01:11:12 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ void	close_all_pipes(t_exe *exe, int ***pipe_arr)
 	j = 0;
 	while (j < exe->total_cmd_count - 1)
 	{
-		fprintf(stderr, "[pid %d] closing all pipes [%d][%d]\n", getpid(), j, exe->pipe_arr[j][0]);
 		if (close((*pipe_arr)[j][0]) == -1)
 			perror("Err close_all_pipes [j][0]");
 		if (close((*pipe_arr)[j][1]) == -1)
