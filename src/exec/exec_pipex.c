@@ -3,19 +3,100 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipex.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 17:55:52 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/06 20:01:43 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/09 23:32:29 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell.h"
 
-static void	process_command_iteration(t_data *data, t_chunk *chunk, int i, \
+int	execve_builtin_in_child(t_data *data, t_exe *exe, t_chunk *chunk, int i)
+{
+	if (chunk && chunk->argv && is_builtin(chunk->argv[0]))
+	{
+		if (exe->total_cmd_count > 1)
+		{
+			if (!data || !exe || !chunk || i < 0)
+				return (EXIT_FAILURE);
+			data->exit_status = pick_and_run_builtin(data, chunk->argv);
+			close_all_pipes_child(exe);
+			if (data->exit_required)
+				exit(data->exit_code);
+			return (EXIT_SUCCESS);
+		}
+	}
+	else
+		close_all_pipes_child(exe); // Test id 8
+	return (EXIT_FAILURE);
+}
+
+void	run_pipex(t_data *data, t_exe *exe, t_chunk *chunk, int i)
+{
+	close_unecessary_pipes(exe, i - 1);
+	redirect_input_file(data, chunk);
+	redirect_to_output_file(data, chunk);
+	if (i > 0 && !chunk->has_input_redir && dup2(exe->pipe_arr[i - 1][0], \
+		STDIN_FILENO) == -1)
+		perror("dup2 input");
+	if (i >= 0 && i < exe->total_cmd_count - 1)
+		close(exe->pipe_arr[i][0]);
+	if (i < exe->total_cmd_count - 1 && !chunk->has_redir \
+			&& dup2(exe->pipe_arr[i][1], STDOUT_FILENO) == -1)
+		perror("dup2 redir");
+	if (i < exe->total_cmd_count - 1)
+		close(exe->pipe_arr[i][1]);
+	if (0 != execve_builtin_in_child(data, exe, chunk, i))
+		execve(chunk->argv[0], chunk->argv, data->env);
+	if (exe->total_cmd_count > 1)
+	{
+		execve("/bin/true", (char *[]){ "true", NULL }, NULL);
+		// fprintf(stderr, "run_pipex failing cmd : %s\n",chunk->argv[0]); // @debug
+		// free_resources(data, true, true);
+		// ft_putstr_fd("execve failed : ", STDERR_FILENO);
+		exit (127);
+	}
+}
+
+void	process_invalide_cmd(t_data *data, t_exe *exe, int i)
+{
+	int		pid;
+	char	buf[10];
+	int		j;
+
+	(void) data;
+	if (i > 0 && i < exe->total_cmd_count)
+	{
+		pid = fork();
+		if (pid == 0)
+		{
+			j = 0;
+			while (j < exe->total_cmd_count - 1)
+			{
+				if (j != i - 1)
+					close(exe->pipe_arr[j][0]);
+				close(exe->pipe_arr[j][1]);
+				j++;
+			}
+			while (read(exe->pipe_arr[i - 1][0], buf, sizeof(buf)) > 0)
+				continue ;
+			close(exe->pipe_arr[i - 1][0]);
+					fprintf(stderr, "process_invalide_cmd [pid %d] ; cmd = %i\n", getpid(), i);
+
+			execve("/bin/true", (char *[]){ "true", NULL }, NULL);
+			// if (i == exe->command_err_count - 1)
+			// 	free_resources(data, true, true);
+			//exit(127);
+		}
+	}
+}
+
+void	process_command_iteration(t_data *data, t_chunk *chunk, int i, \
 									int *valid_cmd_i)
 {
 	listen_heredocs(data, chunk);
+			printf("process_command_iteration data->exe_nfo.cmd_is_valid_arr[%i] == %i  chunk cmd = %s\n", i, data->exe_nfo.cmd_is_valid_arr[i], chunk->argv[0]);
 	if (data->exe_nfo.cmd_is_valid_arr[i] == true)
 	{
 		if (run_builtins(data, &data->exe_nfo, chunk, i) != 1)
@@ -31,32 +112,9 @@ static void	process_command_iteration(t_data *data, t_chunk *chunk, int i, \
 		}
 		(*valid_cmd_i)++;
 	}
+	else
+		process_invalide_cmd(data, &data->exe_nfo, i);
 	close_heredocs_pipes(chunk);
-}
-
-void	exec_cmds(t_data *data, int i)
-{
-	int		valid_cmd_i;
-	t_dlist	*i_node;
-	t_chunk	*chunk;
-
-	i_node = data->cmd_list;
-	valid_cmd_i = 0;
-	while (i < data->exe_nfo.total_cmd_count)
-	{
-		chunk = (t_chunk *)i_node->content;
-		if (((t_chunk *)i_node->content)->type == EMPTY)
-			i++;
-		if (((t_chunk *)i_node->content)->type == EMPTY \
-			|| (i_node && chunk && chunk->type != CMD))
-		{
-			i_node = i_node->next;
-			continue ;
-		}
-		process_command_iteration(data, chunk, i, &valid_cmd_i);
-		i++;
-		i_node = i_node->next;
-	}
 }
 
 /* void	exec_cmds(t_data *data, int i)

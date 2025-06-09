@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirects.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 17:06:53 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/09 10:10:19 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/09 20:38:50 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,25 +125,29 @@ void	redirect_input_file(t_data *data, t_chunk *chunk)
 
 void	redirect_to_output_file(t_data *data, t_chunk *chunk)
 {
-	if (chunk->redir_file_count > 0)
+	int	lst_file;
+
+	if (!data || chunk->redir_file_count == 0)
+		return ;
+	lst_file = chunk->redir_file_count - 1;
+	// if (chunk->file_open[lst_file] == true)
+	// {
+	// 	close(chunk->file_fd[lst_file]);
+	// 	chunk->file_open[lst_file] = false;
+	// 	chunk->file_fd[lst_file] = -1;
+	// }
+	chunk->file_fd[lst_file] = open_redir_file(chunk, lst_file);
+	chunk->file_open[lst_file] = true;
+	if (chunk->file_fd[lst_file] < 0)
 	{
-		chunk->file_fd[chunk->redir_file_count - 1] = \
-				open(chunk->redir_files[chunk->redir_file_count - 1], \
-					O_WRONLY | O_CREAT | O_TRUNC, \
-					S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-		if (chunk->file_fd[chunk->redir_file_count - 1] < 0)
-		{
-			chunk->chunk_exec_return_status_code = errno;
-			printf("minisaasshell: %s: %s\n", \
-				chunk->redir_files[chunk->redir_file_count - 1], \
-				strerror(errno));
-		}
-		if (!data)
-			return ;
-		if (dup2(chunk->file_fd[chunk->redir_file_count - 1], \
-			STDOUT_FILENO) == -1)
-			strerror(errno);
-		close(chunk->file_fd[chunk->redir_file_count - 1]);
-		chunk->file_open[chunk->redir_file_count - 1] = false;
+		chunk->chunk_exec_return_status_code = errno;
+		printf("minishell: %s: %s\n", \
+			chunk->redir_files[lst_file], strerror(errno));
+		return ;
 	}
+	if (dup2(chunk->file_fd[lst_file], STDOUT_FILENO) == -1)
+		perror("dup2");
+	close(chunk->file_fd[lst_file]);
+	chunk->file_open[lst_file] = false;
+	chunk->file_fd[lst_file] = -1;
 }

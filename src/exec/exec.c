@@ -3,53 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:30:25 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/09 10:45:36 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/09 21:29:19 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell.h"
 
-void	run_pipex(t_data *data, t_exe *exe, t_chunk *chunk, int i)
-{
-	close_unecessary_pipes(exe, i - 1);
-	redirect_input_file(data, chunk);
-	redirect_to_output_file(data, chunk);
-	if (i > 0 && !chunk->has_input_redir && dup2(exe->pipe_arr[i - 1][0], \
-		STDIN_FILENO) == -1)
-		perror("dup2 redir");
-	if (i >= 0 && i < exe->total_cmd_count - 1)
-		close(exe->pipe_arr[i][0]);
-	if (i < exe->total_cmd_count - 1 && !chunk->has_redir \
-			&& dup2(exe->pipe_arr[i][1], STDOUT_FILENO) == -1)
-		perror("dup2 redir");
-	if (i < exe->total_cmd_count - 1)
-		close(exe->pipe_arr[i][1]);
-	if (0 != execve_builtin_in_child(data, exe, chunk, i))
-		execve(chunk->argv[0], chunk->argv, data->env);
-	if (exe->total_cmd_count > 1)
-	{
-		free_resources(data, true, true);
-		exit(127);
-	}
-}
-
-/* static void	waiting_childs(t_data *data, t_exe *exe, int *pid_arr)
-{
-	int	i;
-
-	i = 0;
-	while (i < exe->valid_cmd_count)
-	{
-		if (exe->total_cmd_count != 1 \
-				&& exe->cmd_is_valid_arr[i] \
-				&& !is_builtin(((t_chunk *)data->cmd_list->content)->argv[0]))
-			waitpid(pid_arr[i], NULL, 0);
-		i++;
-	}
-} */
 static void	waiting_childs(t_data *data, t_exe *exe, int *pid_arr)
 {
 	int		i;
@@ -85,6 +47,31 @@ void	init_pid_arr(t_data *data, t_exe *exe)
 	exe->pid_arr_malloced = true;
 	while (i < exe->valid_cmd_count)
 		exe->pid_arr[i++] = -2;
+}
+
+void	exec_cmds(t_data *data, int i)
+{
+	int		valid_cmd_i;
+	t_dlist	*i_node;
+	t_chunk	*chunk;
+
+	i_node = data->cmd_list;
+	valid_cmd_i = 0;
+	while (i < data->exe_nfo.total_cmd_count)
+	{
+		chunk = (t_chunk *)i_node->content;
+		if (((t_chunk *)i_node->content)->type == EMPTY)
+			i++;
+		if (((t_chunk *)i_node->content)->type == EMPTY \
+			|| (i_node && chunk && chunk->type != CMD))
+		{
+			i_node = i_node->next;
+			continue ;
+		}
+		process_command_iteration(data, chunk, i, &valid_cmd_i);
+		i++;
+		i_node = i_node->next;
+	}
 }
 
 int	main_exec(t_data *data)

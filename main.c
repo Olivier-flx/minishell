@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:23:22 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/06 22:22:10 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/09 19:52:05 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ void	initialize_data(t_data *data, char **env)
 	data->exe_nfo.env_path = NULL;
 	data->exe_nfo.env_path_found = false;
 	data->exe_nfo.cmd_is_valid_arr = NULL;
+	data->exit_required = false;
+	data->exit_code = 0;
 }
 
 int	main(int ac, char **av, char **env)

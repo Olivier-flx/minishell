@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 17:48:14 by marvin            #+#    #+#             */
-/*   Updated: 2025/06/06 22:38:00 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/09 19:56:53 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,9 @@ void	exit_arg(t_data *data, char **args)
 			write(STDERR_FILENO, \
 				"minishell: exit: numeric argument required\n", 43);
 			free_resources(data, true, true);
-			exit(255);
+			data->exit_code = 255;
+			data->exit_required = true;
+			//exit(255); // @test ID 9
 		}
 		i++;
 	}
@@ -33,8 +35,6 @@ void	exit_arg(t_data *data, char **args)
 
 int	ft_exit(t_data *data, char **args)
 {
-	int	exit_code;
-
 	write(STDERR_FILENO, "exit\n", 5);
 	if (args && args[1])
 	{
@@ -45,10 +45,14 @@ int	ft_exit(t_data *data, char **args)
 			data->exit_status = 1;
 			return (1);
 		}
-		exit_code = ft_atoi(args[1]);
 		free_resources(data, true, true);
-		exit(exit_code % 256);
+		data->exit_code = (ft_atoi(args[1]) % 256);
+		data ->exit_required = true;
+		//exit(ft_atoi(args[1]) % 256); // @test ID 9
 	}
 	free_resources(data, true, true);
-	exit(0);
+	data->exit_code = 0;
+	data ->exit_required = true;
+	//exit(0); // @test ID 9
+	return (0);
 }

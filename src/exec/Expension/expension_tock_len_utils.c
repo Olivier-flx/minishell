@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expension_tock_len_utils.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 20:36:31 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/08 09:08:57 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/09 17:37:51 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	get_len_and_increment_i(t_data *data, char *str, int *i, int *k)
 	var_name = NULL;
 	if (!get_var_name(&var_name, str, *i))
 		*k += handle_empty_var_name(str, *i);
+	printf("get_len_and_increment_i str[(*%i)] = %c\n", (*i), str[(*i)]);
 	if (str[(*i) + 1] && (str[(*i) + 1] == '{'))
 		(*i) += 3;
 	else

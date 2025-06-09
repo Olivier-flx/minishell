@@ -64,6 +64,8 @@ EXEC = ./src/exec/exec.c \
 FILES = ./src/exec/files/init_input_files.c \
 		./src/exec/files/create_files.c \
 		./src/exec/files/close_files.c \
+		./src/exec/files/open_files.c \
+		./src/exec/files/stdin_stdout.c \
 		./src/exec/files/redirects.c
 
 EXPEND = ./src/exec/Expension/expension.c \

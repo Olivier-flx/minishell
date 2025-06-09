@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_builtins.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 16:04:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/09 10:26:17 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/09 21:23:24 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,14 @@ void	execute_builtin_in_parent(t_data *data, t_exe *exe, \
 	int	saved_stdin;
 	int	saved_stdout;
 
-	saved_stdin = dup(STDIN_FILENO);
-	saved_stdout = dup(STDOUT_FILENO);
+	save_stdin_stdout(&saved_stdin, &saved_stdout);
 	close_unecessary_pipes(exe, i - 1);
 	redirect_input_file(data, chunk);
 	redirect_to_output_file(data, chunk);
 	data->exit_status = pick_and_run_builtin(data, chunk->argv);
-	dup2(saved_stdin, STDIN_FILENO);
-	dup2(saved_stdout, STDOUT_FILENO);
-	close(saved_stdin);
-	close(saved_stdout);
+	restor_stdin_stdout(&saved_stdin, &saved_stdout);
+	if (data->exit_required)
+		exit(data->exit_code);
 }
 
 int	run_builtins(t_data *data, t_exe *exe, t_chunk *chunk, int i)
@@ -62,19 +60,4 @@ int	run_builtins(t_data *data, t_exe *exe, t_chunk *chunk, int i)
 			return (0);
 	}
 	return (-1);
-}
-
-int	execve_builtin_in_child(t_data *data, t_exe *exe, t_chunk *chunk, int i)
-{
-	if (chunk && chunk->argv && is_builtin(chunk->argv[0]))
-	{
-		if (exe->total_cmd_count > 1)
-		{
-			if (!data || !exe || !chunk || i < 0)
-				return (EXIT_FAILURE);
-			data->exit_status = pick_and_run_builtin(data, chunk->argv);
-			return (EXIT_SUCCESS);
-		}
-	}
-	return (EXIT_FAILURE);
 }

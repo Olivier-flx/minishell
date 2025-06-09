@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   customs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/09 11:04:32 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/09 22:43:35 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,9 @@ typedef struct s_data
 	t_int_array	ope_char_i;
 	t_int_array	tok_sep_char_i; //index of separators characters in string input
 	int			exit_status;
-
 	int			nb_chunks; //number of commands and argv separated by operators
+	bool		exit_required;
+	int			exit_code;
 }	t_data;
 
 typedef struct s_chunk
@@ -158,6 +159,9 @@ bool	is_builtin(char *cmd);
 int		run_builtins(t_data *data, t_exe *exe, t_chunk *chunk, int i);
 int		execve_builtin_in_child(t_data *data, t_exe *exe, \
 			t_chunk *chunk, int i);
+void	process_command_iteration(t_data *data, t_chunk *chunk, int i, \
+									int *valid_cmd_i);
+int		pick_and_run_builtin(t_data *data, char **argv);
 
 	////// commands ///
 void	check_wrong_commands(t_data *data);
@@ -180,6 +184,7 @@ int		usr_input_got_slash(char *str);
 	////// PIPES ///////
 void	close_unecessary_pipes(t_exe *exe, int i);
 void	close_all_pipes(t_exe *exe, int ***pipe_arr);
+void	close_all_pipes_child(t_exe *exe);
 void	init_pipes_2arr(t_data *data, t_exe *exe);
 void	init_bool_pipes_malloced(t_data *data, t_exe *exe_info);
 void	init_pipes_2arr_for_heredoc(t_data *data, t_chunk *chunk);
@@ -192,8 +197,12 @@ int		init_input_files(t_data *data);
 void	redirect_input_file(t_data *data, t_chunk *chunk);
 void	redirect_to_output_file(t_data *data, t_chunk *chunk);
 	// files management
+int		open_redir_file(t_chunk *chunk, int file);
 void	close_files(t_chunk *chunk);
 void	close_files_if_opened(int *fd_arr, bool *file_open, int len);
+
+void	save_stdin_stdout(int *saved_stdin, int *saved_stdout);
+void	restor_stdin_stdout(int *saved_stdin, int *saved_stdout);
 
 //// EXPENSION /////
 char	*expend_token(t_data *data, char *str);

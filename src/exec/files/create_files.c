@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_files.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 11:26:59 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/08 09:55:32 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/09 20:39:26 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	malloc_fd_arr(t_chunk *chunk)
 {
 	int	i;
 
-	i = 0;
+
 	chunk->file_fd_malloced = false;
 	if (!chunk->redir)
 		return (0);
@@ -38,6 +38,7 @@ static int	malloc_fd_arr(t_chunk *chunk)
 	if (!chunk->file_fd)
 		return (1);
 	chunk->file_fd_malloced = true;
+	i = 0;
 	while (i < chunk->redir_count)
 		chunk->file_fd[i++] = -1;
 	return (0);
@@ -78,17 +79,12 @@ static int	create_files(t_chunk *chunk)
 {
 	int	i;
 
-	i = 0;
 	if (!chunk->redir || !chunk->redir_files)
 		return (0);
+	i = 0;
 	while (chunk->redir[i] && chunk->redir_files[i])
 	{
-		if (ft_strcmp(chunk->redir[i], ">>") == 0)
-			chunk->file_fd[i] = open(chunk->redir_files[i], O_WRONLY | O_CREAT \
-			| O_APPEND, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-		else
-			chunk->file_fd[i] = open(chunk->redir_files[i], O_WRONLY | O_CREAT \
-					| O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+		chunk->file_fd[i] = open_redir_file(chunk, i);
 		if (chunk->file_fd[i] < 0)
 		{
 			chunk->file_open[i] = false;
