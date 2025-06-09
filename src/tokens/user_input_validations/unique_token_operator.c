@@ -6,12 +6,11 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 11:28:48 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/06 10:49:41 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/09 10:57:53 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../header/minishell.h"
-
 
 //check cases where there is only an operator in a chunk
 // for instance `>` or `hello | > | world`

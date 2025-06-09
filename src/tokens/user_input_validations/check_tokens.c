@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 21:34:13 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/09 10:50:05 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/09 10:58:52 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ int	check_redir_pipe(t_dlist **cmd_list)
 
 int	check_pipe_is_first(t_dlist *list)
 {
-
 	if (!list)
 		return (1);
 	if (is_pipe_chunk((t_chunk *)list->content))

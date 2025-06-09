@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/09 10:48:34 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/09 11:04:32 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,12 +139,10 @@ typedef struct s_chunk
 	int			nb_heredocs;
 	//////
 	int			chunk_exec_return_status_code; // Not used yet
-
 	int			index; // util ?
 	int			len; // util ?
 	t_quote		quotes; // util ?
 }	t_chunk;
-
 
 /////////////// SRC //////////////
 /*
@@ -290,9 +288,7 @@ void	init_redir_arr_and_files(t_chunk *chunk);
 void	set_ope_char_i_struc_arr(char *src, t_int_array *arr);
 void	set_ope_char_i_arr(char *src, t_int_array *arr);
 
-
 int		create_input_to_commands(char *src, t_dlist **cmd_list, t_data *data);
-
 
 /////////////// UTILS ///////////////
 /*
@@ -330,7 +326,6 @@ char	*c_strjoin(char *s1, char *s2, char c);
 char	*c_ft_substr(char const *s, unsigned int start, size_t len);
 char	*strjoin_and_free(char *s1, char *s2);
 
-
 /*
  * ==========================
  * 	   dbl List Utils
@@ -345,7 +340,6 @@ t_dlist	*find_last_d_node(t_dlist **lst);
 long	stack_lenght(t_dlist **list);
 void	print_int_arr(t_int_array *arr);
 void	print_pp_char_arr(char **str);
-
 
 /*
  * ==========================

@@ -6,13 +6,12 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:46:36 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/08 09:51:44 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/09 11:02:41 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-
 
 # include <stdio.h> // printf
 # include <unistd.h> // write, read, close
@@ -48,7 +47,7 @@
  * ==========================
  */
 // Variable global PARA SEÑALES (única permitida)
-extern volatile sig_atomic_t g_signal_received;
+extern volatile sig_atomic_t	g_signal_received;
 
 // Prototipos de funciones de señales
 void	handle_signal(int sig);
@@ -58,7 +57,6 @@ void	handle_sub_process_signal(t_data *data, int status, bool *printed);
 void	handle_ctrl_d(t_data *data);
 
 void	signal_handlers_for_readline(t_data *data);
-
 
 #endif
 
@@ -150,7 +148,8 @@ void	signal_handlers_for_readline(t_data *data);
 // signal             : Sets a handler for a signal.
 	// void (*signal(int signum, void (*handler)(int)))(int);
 // sigaction          : Configures actions for a specific signal.
-	// int sigaction(int signum, const struct sigaction *act, struct sigaction *oldact);
+	// int sigaction(int signum, const struct sigaction *act,
+			 struct sigaction *oldact);
 // sigemptyset        : Initializes an empty signal set.
 	// int sigemptyset(sigset_t *set);
 // sigaddset          : Adds a signal to a set.
@@ -173,14 +172,17 @@ void	signal_handlers_for_readline(t_data *data);
  * ==========================
  *  TERMINAL MANAGEMENT FUNCTIONS
  * ==========================
-// isatty             : Checks if a file descriptor is associated with a terminal.
+// isatty             : Checks if a file descriptor is
+		associated with a terminal.
 	// int isatty(int fd);
 // ttyname            : Returns the name of the terminal for a file descriptor.
 	// char *ttyname(int fd);
-// ttyslot            : Identifies the position of the terminal in the terminal table.
+// ttyslot            : Identifies the position of the terminal
+		in the terminal table.
 	// int ttyslot(void);
 // tcsetattr          : Configures terminal attributes.
-	// int tcsetattr(int fd, int optional_actions, const struct termios *termios_p);
+	// int tcsetattr(int fd, int optional_actions,
+			const struct termios *termios_p);
 // tcgetattr          : Retrieves terminal attributes.
 	// int tcgetattr(int fd, struct termios *termios_p);
 // tgetent            : Initializes the terminal database.

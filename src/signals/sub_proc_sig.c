@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 22:17:16 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/06 22:17:46 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/09 10:57:32 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void	handle_sub_process_signal(t_data *data, int status, bool *printed)
 				write(STDOUT_FILENO, "Quit (core dumped)\n", 20);
 				*printed = true;
 			}
-
 			data->exit_status = 128 + SIGQUIT;
 		}
 		else if (sig == SIGINT)

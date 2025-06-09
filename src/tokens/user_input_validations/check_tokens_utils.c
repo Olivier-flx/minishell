@@ -6,10 +6,11 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 10:46:57 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/09 10:48:37 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/09 10:54:48 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../../../header/minishell.h"
 
 bool	chunk_is_empty(t_chunk *chk)
 {

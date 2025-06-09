@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 17:37:47 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/09 10:44:01 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/09 10:53:10 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ void	init_pipes_2arr_for_heredoc(t_data *data, t_chunk *chunk)
 
 	if (!data)
 		return ;
-
 	chunk->heredoc_pipe_arr_malloced = false;
 	chunk->heredoc_pipe_arr = malloc(sizeof(int *) * (chunk->nb_heredocs));
 	if (!chunk->heredoc_pipe_arr)
