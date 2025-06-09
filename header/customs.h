@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/08 09:43:24 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/09 10:48:34 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -243,6 +243,11 @@ bool	is_pipe_chunk(t_chunk *chunk);
 bool	line_finish_by_pipe(char *line);
 int		line_accolade_closed(char *line);
 int		accolade_not_closed(t_dlist **cmd_list);
+	//Utils
+bool	chunk_is_empty(t_chunk *chk);
+bool	unique_empty_node(t_data *data, t_dlist *cmd_list);
+bool	has_bad_var_substitution(char **tks);
+bool	bad_var_substitution(t_data *data, t_dlist *cmd_list);
 
 			//system_input_validation
 void	check_system_input_error(t_data *data, t_dlist **cmd_list); // Unused.

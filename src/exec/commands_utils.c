@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 17:19:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/06 09:25:34 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/09 10:31:33 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,8 @@ int	count_cmd(t_dlist **cmd_list)
 	k = 0;
 	while (i_node)
 	{
-
 		if (((t_chunk *) i_node->content)->type == CMD \
-			|| ((t_chunk *) i_node->content)->type == EMPTY) // @test ID 3
+			|| ((t_chunk *) i_node->content)->type == EMPTY)
 			k++;
 		i_node = i_node->next;
 	}

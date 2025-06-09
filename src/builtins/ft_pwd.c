@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 15:40:44 by laufarin          #+#    #+#             */
-/*   Updated: 2025/06/04 12:03:32 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/09 10:24:20 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_pwd(void)
 {
 	char	*buff;
 
-	buff = malloc(1024); //tamaño arbitrario
+	buff = malloc(1024);
 	if (!buff)
 	{
 		perror("malloc");
@@ -35,6 +35,7 @@ int	ft_pwd(void)
 	free(buff);
 	return (0);
 }
+
 /*
 int	main()
 {

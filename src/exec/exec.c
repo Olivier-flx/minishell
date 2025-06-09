@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:30:25 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/06 21:39:16 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/09 10:45:36 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,14 @@ void	run_pipex(t_data *data, t_exe *exe, t_chunk *chunk, int i)
 	close_unecessary_pipes(exe, i - 1);
 	redirect_input_file(data, chunk);
 	redirect_to_output_file(data, chunk);
-	if (i > 0 && !chunk->has_input_redir && dup2(exe->pipe_arr[i - 1][0], STDIN_FILENO) == -1)
-		strerror(errno); // @optimize
+	if (i > 0 && !chunk->has_input_redir && dup2(exe->pipe_arr[i - 1][0], \
+		STDIN_FILENO) == -1)
+		perror("dup2 redir");
 	if (i >= 0 && i < exe->total_cmd_count - 1)
 		close(exe->pipe_arr[i][0]);
-	if (i < exe->total_cmd_count - 1 && !chunk->has_redir && dup2(exe->pipe_arr[i][1], STDOUT_FILENO) == -1)
-		strerror(errno); // @optimize
+	if (i < exe->total_cmd_count - 1 && !chunk->has_redir \
+			&& dup2(exe->pipe_arr[i][1], STDOUT_FILENO) == -1)
+		perror("dup2 redir");
 	if (i < exe->total_cmd_count - 1)
 		close(exe->pipe_arr[i][1]);
 	if (0 != execve_builtin_in_child(data, exe, chunk, i))

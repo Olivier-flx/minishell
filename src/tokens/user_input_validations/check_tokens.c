@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 21:34:13 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/06 10:09:03 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/09 10:50:05 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,17 @@ int	check_redir_pipe(t_dlist **cmd_list)
 
 	init_quotes(&quotes);
 	i_node = *cmd_list;
-	flag = 0;
-	i = 0;
+	init_i_j(&i, &flag);
 	while (i_node)
 	{
 		if (flag == 1 && ((t_chunk *)i_node->content)->tokens[0][0] == '|')
-			return (printf("bash: syntax error near unexpected token `|'\n"), EXIT_FAILURE);
-		flag = 0;
-		i = 0;
+			return (printf("bash: syntax error near unexpected token `|'\n"), \
+				EXIT_FAILURE);
+		init_i_j(&i, &flag);
 		while (((t_chunk *)i_node->content)->tokens[i])
 			i++;
-		if (i > 0 && is_operator(((t_chunk *)i_node->content)->tokens[i - 1] , 0, &quotes))
+		if (i > 0 && is_operator(((t_chunk *)i_node->content)->tokens[i - 1] \
+			, 0, &quotes))
 			flag = 1;
 		i_node = i_node->next;
 	}
@@ -87,61 +87,6 @@ int	check_consecutive_pipes(t_dlist *cmd_list)
 		cmd_list = cmd_list->next;
 	}
 	return (EXIT_SUCCESS);
-}
-
-bool	has_bad_var_substitution(char **tks)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (tks && tks[i])
-	{
-		j = 0;
-		while (tks[i][j])
-		{
-			if (tks[i][j] == '$' && tks[i][j + 1] && tks[i][j + 1] == '{' \
-				&& tks[i][j + 2] && tks[i][j + 2] == '}')
-				return (true);
-			j++;
-		}
-		i++;
-	}
-	return (false);
-}
-
-bool	bad_var_substitution(t_data *data, t_dlist *cmd_list)
-{
-	while (cmd_list)
-	{
-		if (has_bad_var_substitution(((t_chunk *)cmd_list->content)->tokens))
-		{
-			write (STDERR_FILENO, "-bash: ${}: bad substitution\n", 30);
-			data->exit_status = 1;
-			return (true);
-		}
-		cmd_list = cmd_list->next;
-	}
-	return (false);
-}
-
-bool	chunk_is_empty(t_chunk *chk)
-{
-	return (!(chk->tokens[0]));
-}
-
-bool	unique_empty_node(t_data *data, t_dlist *cmd_list)
-{
-	t_chunk	*chk;
-
-	chk = ((t_chunk *) cmd_list->content);
-	if (!cmd_list->next && chunk_is_empty(chk))
-	{
-		data->exit_status = 0;
-		return (true);
-	}
-	return (false);
 }
 
 // check from the last tocken to the first one

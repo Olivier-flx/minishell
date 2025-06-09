@@ -57,6 +57,7 @@ EXEC = ./src/exec/exec.c \
 	./src/exec/path.c \
 	./src/exec/listen_heredocs.c \
 	./src/exec/pipes.c \
+	./src/exec/pipes_close.c \
 	./src/exec/execute_builtins.c
 
 FILES = ./src/exec/files/init_input_files.c \

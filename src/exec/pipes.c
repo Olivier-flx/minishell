@@ -6,47 +6,13 @@
 /*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 17:37:47 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/05 13:04:46 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/09 10:44:01 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell.h"
 
-void close_unecessary_pipes(t_exe *exe, int i)
-{
-	int j;
-
-	j = 0;
-	while (j < exe->total_cmd_count - 1)
-	{
-		if (j != i && close(exe->pipe_arr[j][0]) == -1){
-			printf("(*pipe_arr)[j][0] --> j == %d\n", j); // @confirm : dois-je gerer ainsi ?
-			//perror("Error closing pipe_arr[j][0]");
-			}
-		if (j != i + 1 && close(exe->pipe_arr[j][1])){
-			printf("(*pipe_arr)[j][1] --> j == %d\n", j);// @confirm : dois-je gerer ainsi ?
-			//perror("Error closing pipe_arr[j][1]");
-			}
-		j++;
-	}
-}
-
-void	close_all_pipes(t_exe *exe, int ***pipe_arr)
-{
-	int	j;
-
-	j = 0;
-	while (j < exe->total_cmd_count - 1)
-	{
-		if (close((*pipe_arr)[j][0]) == -1)
-			perror("Err close_all_pipes [j][0]");
-		if (close((*pipe_arr)[j][1]) == -1)
-			perror("Err close_all_pipes [j][1]");
-		j++;
-	}
-}
-
-void	init_bool_pipes_malloced(t_data * data, t_exe *exe_info)
+void	init_bool_pipes_malloced(t_data *data, t_exe *exe_info)
 {
 	int	i;
 
@@ -58,8 +24,7 @@ void	init_bool_pipes_malloced(t_data * data, t_exe *exe_info)
 	exe_info->pipes_malloced = \
 			malloc(sizeof(bool) * (exe_info->total_cmd_count - 1));
 	if (!exe_info->pipes_malloced)
-		strerror(errno);
-		//clean_exe_nfo(data, EXIT_FAILURE);
+		perror("Pipes Malloc : ");
 	while (i < exe_info->total_cmd_count - 1)
 	{
 		exe_info->pipes_malloced[i] = false;
@@ -75,28 +40,24 @@ void	init_pipes_2arr(t_data *data, t_exe *exe)
 		return ;
 	exe->pipe_arr = malloc(sizeof(int *) * (exe->total_cmd_count - 1));
 	if (!exe->pipe_arr)
-		strerror(errno);
-		//clean_exe_nfo(data, EXIT_FAILURE/* , "Malloc err pipes" */);
+		ft_putstr_fd("pipe_arr Malloc error \n", STDERR_FILENO);
 	exe->pipe_arr_malloced = true;
 	i = 0;
 	while (i < exe->total_cmd_count - 1)
 	{
 		exe->pipe_arr[i] = malloc(sizeof(int) * 2);
 		if (!exe->pipe_arr[i])
-			strerror(errno);
-			// clean_exe_nfo(data, EXIT_FAILURE/* , "Malloc err pipe_arr[i]" */); //@optimize, same as before and // pourrait rendre plus robuste si erreur de malloc
+			ft_putstr_fd("*pipe_arr Malloc error \n", STDERR_FILENO);
 		exe->pipes_malloced[i] = true;
 		if (pipe(exe->pipe_arr[i]) == -1)
-			strerror(errno);
-			// clean_exe_nfo(data, EXIT_FAILURE/* , "Error in pipe : exec_cmds" */); //@optimize, same as before
+			ft_putstr_fd("*pipe_malloced error \n", STDERR_FILENO);
 		i++;
 	}
 }
 
-
 void	init_pipes_2arr_for_heredoc(t_data *data, t_chunk *chunk)
 {
-	int i;
+	int	i;
 
 	if (!data)
 		return ;
@@ -114,14 +75,13 @@ void	init_pipes_2arr_for_heredoc(t_data *data, t_chunk *chunk)
 			strerror(errno);
 		if (pipe(chunk->heredoc_pipe_arr[i]) == -1)
 			strerror(errno);
-		;
 		i++;
 	}
 }
 
-void close_heredocs_pipes(t_chunk * chunk)
+void	close_heredocs_pipes(t_chunk *chunk)
 {
-	int i;
+	int	i;
 
 	if (!chunk->has_here_doc)
 		return ;
@@ -137,5 +97,5 @@ void close_heredocs_pipes(t_chunk * chunk)
 		i++;
 	}
 	if (chunk->heredoc_pipe_arr_malloced)
-	ft_free((void **) &chunk->heredoc_pipe_arr);
+		ft_free((void **) &chunk->heredoc_pipe_arr);
 }
