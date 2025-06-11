@@ -3,28 +3,56 @@
 /*                                                        :::      ::::::::   */
 /*   custom_basics.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:13:36 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/04 18:24:55 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/14 16:47:11 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell.h"
 
+char	*strjoin_and_free(char *s1, char *s2)
+{
+	char	*ptr;
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	ptr = malloc(sizeof(char) * (ft_strlen(s1) + (ft_strlen(s2) + 1)));
+	if (ptr == NULL)
+		return (NULL);
+	while (s1 && s1[i])
+	{
+		ptr[i] = s1[i];
+		i++;
+	}
+	while (s2 && s2[j])
+	{
+		ptr[i + j] = s2[j];
+		j++;
+	}
+	ptr[i + j] = '\0';
+	ft_free ((void **) &s1);
+	ft_free ((void **) &s2);
+	return (ptr);
+}
+
 /**
- * @brief Joins two strings with a specific character and frees the source strings.
+ * @brief Joins 2 strings with a specific char & frees the source strings.
  *
- * Concatenates `s1` and `s2` with `c` in between, allocates memory for the result,
+ * Concatenates `s1` & `s2` with `c` in between, allocates memory for the result,
  * and frees the original strings.
  *
  * @param s1 The first string to join.
  * @param s2 The second string to join.
  * @param c The character to insert between the strings.
- * @return (char *) The newly allocated concatenated string, or NULL if allocation fails.
+ * @return (char *) The newly allocated concatenated string \
+ * , or NULL if allocation fails.
  *
  * @note The caller must free the returned string.
- * @see s_len
+ * @see ft_strlen
  */
 char	*c_strjoin(char *s1, char *s2, char c)
 {
@@ -34,23 +62,23 @@ char	*c_strjoin(char *s1, char *s2, char c)
 
 	i = 0;
 	j = 0;
-	ptr = malloc(sizeof(char) * (s_len(s1) + (s_len(s2) + 2)));
+	ptr = malloc(sizeof(char) * (ft_strlen(s1) + (ft_strlen(s2) + 2)));
 	if (ptr == NULL)
 		return (NULL);
-	while (s1[i])
+	while (s1 && s1[i])
 	{
 		ptr[i] = s1[i];
 		i++;
 	}
 	ptr[i] = c;
-	while (s2[j])
+	while (s2 && s2[j])
 	{
 		ptr[i + 1 + j] = s2[j];
 		j++;
 	}
 	ptr[i + 1 + j] = '\0';
-	free (s1);
-	free (s2);
+	ft_free ((void **) &s1);
+	ft_free ((void **) &s2);
 	return (ptr);
 }
 
@@ -70,32 +98,30 @@ char	*c_ft_substr(char const *s, unsigned int start, size_t len)
 	unsigned int	j;
 	char			*ptr;
 
-	if(len <= 0 || start >= (unsigned int) s_len(s))
+	if (len <= 0 || start >= (unsigned int) ft_strlen(s))
 		return (NULL);
-	i = 0;
-	j = 0;
+	i = -1;
+	j = -1;
 	len = calc_malloc_len(s, start, len);
 	ptr = malloc(sizeof(char) * len + 1);
 	if (ptr == NULL)
 		return (NULL);
-	while (s[i])
+	while (s[++i])
 	{
 		if (start == i)
 		{
-			while (j < len)
-			{
+			while (++j < len)
 				ptr[j] = s[i + j];
-				j++;
-			}
 		}
-		i++;
 	}
 	ptr[j] = '\0';
 	return (ptr);
 }
 
-// cc ./utils/string/custom_basics.c ./utils/string/quotes.c ./utils/string/basics.c -lreadline -g -o test
-// valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=readline.supp -s ./test
+// cc ./utils/string/custom_basics.c ./utils/string/quotes.c
+	// ./utils/string/basics.c -lreadline -g -o test
+// valgrind --leak-check=full --show-leak-kinds=all
+	//--track-origins=yes --suppressions=readline.supp -s ./test
 // int main()
 // {
 // 	char	*line;
@@ -105,7 +131,7 @@ char	*c_ft_substr(char const *s, unsigned int start, size_t len)
 // 	while (true )
 // 	{
 // 		line = readline("minishell> ");
-// 		while (line && !all_quote_closed(line))
+// 		while (line && !tocken_quote_closed(line))
 // 		{
 
 // 			line = c_strjoin(line, readline("dquote> "), '\n');

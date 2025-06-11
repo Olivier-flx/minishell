@@ -1,25 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 18:10:37 by marvin            #+#    #+#             */
-/*   Updated: 2025/04/14 18:10:37 by marvin           ###   ########.fr       */
+/*   Updated: 2025/05/11 16:43:48 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtins.h"
-#include "minishell.h"
+#include "../../header/minishell.h"
 
-int ft_env(t_env *env)
+int	ft_env(t_env *env)
 {
-    while (env)
-    {
-        if (env->value)  // Solo imprime variables con valor
-            printf("%s=%s\n", env->key, env->value);
-        env = env->next;
-    }
-    return (0);
+	while (env)
+	{
+		if (env->value && env->is_exported)  // Solo imprime variables con valor
+			printf("%s=%s\n", env->key, env->value);
+		env = env->next;
+	}
+	return (0);
 }

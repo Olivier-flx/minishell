@@ -3,111 +3,124 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:23:22 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/22 19:59:57 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/14 11:05:00 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./header/minishell.h"
 
-
 // HOW TO RUN //
-// valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=readline.supp -s ./mini
+// valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=readline.supp -s ./minishell
 
-int	process_line(char **line)
-{
-	printf("process line --> %s\n", *line);
-	return (0);
-}
+volatile sig_atomic_t g_signal_received = 0;
 
 int initialize_cmd_list(t_data *data)
 {
 	t_dlist		*cmd_list;
-
 
 	cmd_list = NULL;
 	data->cmd_list = cmd_list;
 	return (0);
 }
 
-
 int	run_minishell(t_data	*data)
 {
-	char		*line;
 	int			control;
 
 	control = 0;
 	while (true && data->env)
 	{
-		line = NULL;
 		initialize_cmd_list(data);
-		line = readline("minishell> ");
-		while (line && !all_quote_closed(line))
-			line = c_strjoin(line, readline("dquote> "), '\n');
-
-		//////////////// To include in process line /////////
-		// while (line && contains_heredoc(line))// structure for the heredoc @ TODO
-		// {
-		// 	line = c_strjoin(line, readline("heredoc> "), '\n');
-		// 	break ; // structure for the heredoc @ TODO
-		// 	// manage cat << EOF | cat << END
-		// 	// manage cat<test.txt << EOF
-		// }
-		////////////////////////////////
-
-		if (line && all_quote_closed(line))
+		data->line = readline("\033[1;32mminishell> \033[0m");
+		signal_handlers_for_readline(data);
+		listen_incomplete_lines(data, &data->line);
+		if (data->line)
 		{
-			//////////// Anadir Validation del input /////////
-			// fonction de validacion de input
-			/////////////////////////////
-			control = create_input_token_v3(line, &data->cmd_list, data);
-			if (control == 3)
-			{
-				free_cmdlist(data->cmd_list);
-				if (data->token_separators_char_i.size > 0)
-					free (data->token_separators_char_i.array);
-				free(line);
-				continue;
-			}
-			// if(check_for_user_input_error(&cmd_list) > 0)
-			// {
-			// 	free_list(&cmd_list);
-			// 	free(line);
-			// 	continue ;
-			// }
-			// process herdocs
-			process_line(&line);
-		//	add_history(line);
-		//	clear_history(); //--> donde ponerlo??
-
-			//free (data->ope_char_i.array); // @TODO, protect free if not malloced
-			if (data->token_separators_char_i.size > 0)
-				free (data->token_separators_char_i.array);
-			free(line);
+			control = create_chunks(data->line, &data->cmd_list, data);
+			if (control == 0)
+				main_exec(data);
+			add_history(data->line);
 		}
-		if (data->cmd_list)
-			free_cmdlist(data->cmd_list);
-		// else
-		// 	continue ;
-		break ; // @debug : to remove when more advanced
+		free_resources(data, false, true);
+		g_signal_received = 0;
 	}
+	rl_clear_history();
 	return (0);
+}
+
+void initialize_data(t_data *data, char **env)
+{
+	data->env = env;
+	data->env_list = ft_init_env(env);
+	data->line = NULL;
+	data->cmd_list = NULL;
+	data->ope_char_i = (t_int_array) {0}; // @util ?
+	//data->token_separators_char_i = (t_int_array) {0};
+	data->token_separators_char_i.array = NULL;
+	data->token_separators_char_i.size = 0;
+	data->nb_chunks = 0;
+	data->exit_status = 0;
+	data->exec_info.last_status_code = 0;
+	data->exec_info.cmd_err_msg = NULL;
+	data->exec_info.env_path = NULL;
+	data->exec_info.env_path_found = false;
+	data->exec_info.cmd_is_valid_arr = NULL;
 }
 
 int	main(int ac, char **av, char **env)
 {
 	t_data	data;
 
-	data.env = env;
-	data.cmd_list = NULL;
-	data.ope_char_i = (t_int_array) {0}; // @util ?
-	data.token_separators_char_i = (t_int_array) {0};
-
-	if (ac == 1 && env && av) // modificcar para arrancar igual si no hay env
-		return (run_minishell(&data));
-	else
+	data = (t_data) {0};
+	if (ac > 1)
 		return (1);
+	if (!env)
+		return(printf("No environment defined\n"), 1);
+	initialize_data(&data, env);
+
+	if (ac == 1 && av) // modificcar para arrancar igual si no hay env
+	{
+		setup_signals();
+		return (run_minishell(&data));
+	}
+	else
+		return (ft_free_env(data.env_list),  EXIT_FAILURE);
 	return (0);
 }
+
+
+/////////////////// LAURA //////////////////////
+
+
+/* void free_resources(t_data *data)
+{
+    if (data->env_list)
+        ft_free_env(data->env_list);
+    if (data->cmd_list)
+        free_cmdlist(data->cmd_list);
+    // Liberar cualquier otro recurso si es necesario
+}
+
+int main(int ac, char **av, char **env)
+{
+    t_data data;
+
+    if (!env)
+        return (printf("No environment defined\n"), 1);
+
+    // Inicialización de la estructura data
+    ft_memset(&data, 0, sizeof(t_data));
+    data.env_list = ft_init_env(env);
+    data.exit_status = 0;
+
+    if (ac == 1)  // Modo interactivo
+
+        run_minishell(&data);
+
+    free_resources(&data);
+    return (data.exit_status);
+}
+ */

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 11:26:31 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/09 19:46:13 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/11 18:48:49 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	add_to_list(t_dlist **list, void *content)
 }
 
 // devuelve el puntero hacia el útlimo nodo de la lista
-t_dlist	*find_last_node(t_dlist **lst)
+t_dlist	*find_last_d_node(t_dlist **lst)
 {
 	t_dlist	*tmp;
 

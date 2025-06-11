@@ -3,5 +3,14 @@
 *.a
 *.out
 mini
+minishell
 utils/string/ft_split_single.c
-test
+test*
+.git
+*.exe
+.gitattributes
+*.exe
+*.sh
+test_exit.sh
+test_signals.c
+*.ods#

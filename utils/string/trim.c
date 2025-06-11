@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   trim.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 18:48:17 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/17 15:52:04 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/14 15:43:41 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,11 @@ int	count_useless_spaces(char *src)
 	return (k);
 }
 
-void	generate_trimed_str(char **new_string, char *src, int ns_len)
+void	generate_trimed_str(char **new_string, char *src, int ns_len, int i)
 {
-	int	i;
 	int	j;
 	int	spc_flg;
 
-	i = 0;
 	j = 0;
 	spc_flg = 0;
 	while (src && src[i] && (src[i] == ' ' || src[i] == '\t' || src[i] == '\n'))
@@ -89,15 +87,15 @@ void	generate_trimed_str(char **new_string, char *src, int ns_len)
 char	*ft_trim(char *src, bool is_malloced)
 {
 	char	*new_string;
-	int		dbl_spaces;
+	int		dbl_quote_spaces;
 	int		src_len;
 
-	dbl_spaces = count_useless_spaces(src);
-	src_len = s_len(src);
-	new_string = malloc ((src_len - dbl_spaces + 1) * sizeof(char));
+	dbl_quote_spaces = count_useless_spaces(src);
+	src_len = ft_strlen(src);
+	new_string = malloc ((src_len - dbl_quote_spaces + 1) * sizeof(char));
 	if (!new_string)
 		return (NULL);
-	generate_trimed_str(&new_string, src, src_len - dbl_spaces);
+	generate_trimed_str(&new_string, src, src_len - dbl_quote_spaces, 0);
 	if (is_malloced)
 		free(src);
 	return (new_string);

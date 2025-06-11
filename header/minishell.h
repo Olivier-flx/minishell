@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:46:36 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/02/13 19:42:22 by laufarin         ###   ########.fr       */
+/*   Updated: 2025/05/12 17:41:40 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 # include <termios.h>    // tcsetattr, tcgetattr
 # include <termcap.h>    // tgetent, tgetflag, tgetnum, tgetstr, tgoto, tputs
 # include <string.h>     // strerror
+#include <errno.h>		 // set errno
 # include <stdio.h>      // perror
 
 # include <stdbool.h>
@@ -38,6 +39,19 @@
 # include "customs.h"
 # include "builtins.h"
 # include "../libs/libft/libft.h"
+
+/*
+ * ==========================
+ *  SIGNAL HANDLING FUNCTIONS
+ * ==========================
+ */
+// Variable global PARA SEÑALES (única permitida)
+extern volatile sig_atomic_t g_signal_received;
+
+// Prototipos de funciones de señales
+void	handle_signal(int sig);
+void	setup_signals(void);
+void 	handle_ctrl_d(t_data *data);
 
 #endif
 
@@ -52,9 +66,6 @@
 	// ssize_t write(int fd, const void *buf, size_t count);
 // read               : Reads directly from a file descriptor.
 	// ssize_t read(int fd, void *buf, size_t count);
-// close              : Closes an open file descriptor.
-	// int close(int fd);
-
 
  * ==========================
  *  MEMORY MANAGEMENT FUNCTIONS
@@ -89,6 +100,8 @@
 	// int access(const char *pathname, int mode);
 // open               : Opens a file or creates a file descriptor.
 	// int open(const char *pathname, int flags, ...);
+// close              : Closes an open file descriptor.
+	// int close(int fd);
 // stat               : Retrieves file information.
 	// int stat(const char *pathname, struct stat *statbuf);
 // lstat              : Like stat, but does not follow symbolic links.

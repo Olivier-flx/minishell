@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unique_token_operator.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 11:28:48 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/04/22 12:26:00 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/05/14 15:06:12 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,51 @@ static char	*unexpected_token(t_dlist *i_node)
 		return ("newline");
 	if(((t_chunk *)(i_node->next->content))->tokens[0])
 		return(((t_chunk *)(i_node->next->content))->tokens[0]);
-	return ("undefined");
+	return (NULL);
 }
 
 int	check_for_simple(t_dlist **cmd_list)
+{
+	t_dlist	*i_node;
+	t_quote	quotes;
+	t_chunk	*chunk;
+	int		i;
+
+	init_quotes(&quotes);
+	i_node = *cmd_list;
+	i = 0;
+	debug_print_cmd_list(cmd_list);
+	while (i_node && (t_chunk *)i_node->content)
+	{
+		chunk = (t_chunk *)i_node->content;
+
+		while (chunk->tokens && chunk->tokens[i])
+		{
+			if (is_operator(chunk->tokens[i], 0, &quotes))
+			{
+				if (pp_char_len(chunk->tokens) == 1)
+					return (printf("bash: syntax error near unexpected token `%s'\n",\
+						unexpected_token(i_node)), EXIT_FAILURE);
+				if (pp_char_len(chunk->tokens) > 1 && i > 0  && is_operator(chunk->tokens[i - 1], 0, &quotes))
+					return (printf("bash: syntax error near unexpected token `%s'\n",\
+						chunk->tokens[i - 1]), EXIT_FAILURE);
+
+
+/* 				if(is_operator(chunk->tokens[i], 0, &quotes) && i > 0 && chunk->tokens[i - 1])
+					return (printf("bash: syntax error near unexpected token `%s'\n",\
+						unexpected_token(i_node)), EXIT_FAILURE); */
+			}
+			/* if (is_operator(chunk->tokens[0], 0, &quotes) && !chunk->tokens[1])
+				return (printf("bash: syntax error near unexpected token `%s'\n",\
+					unexpected_token(i_node, i)), EXIT_FAILURE); */
+			i++;
+		}
+		i_node = i_node->next;
+	}
+	return (0);
+}
+
+/* int	check_for_simple(t_dlist **cmd_list)
 {
 	t_dlist	*i_node;
 	t_quote	quotes;
@@ -37,11 +78,15 @@ int	check_for_simple(t_dlist **cmd_list)
 		chunk = (t_chunk *)i_node->content;
 		if(chunk->tokens && chunk->tokens[0])
 		{
+			if(is_operator(chunk->tokens[0], 0, &quotes) && chunk->tokens[1])
+				return (printf("bash: syntax error near unexpected token `%s'\n",\
+					unexpected_token(i_node)), EXIT_FAILURE);
+
 			if (is_operator(chunk->tokens[0], 0, &quotes) && !chunk->tokens[1])
-				return( printf("bash: syntax error near unexpected token `%s'\n",\
-					unexpected_token(i_node)), ERROR);
+				return (printf("bash: syntax error near unexpected token `%s'\n",\
+					unexpected_token(i_node)), EXIT_FAILURE);
 		}
 		i_node = i_node->next;
 	}
 	return (0);
-}
+} */
