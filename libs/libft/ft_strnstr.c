@@ -1,53 +1,78 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strnstr.c                                       :+:      :+:    :+:   */
+/*   ft_strnstr copy.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: laufarin <laufarin@student.42barcel>       +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/13 17:32:29 by laufarin          #+#    #+#             */
-/*   Updated: 2023/09/25 02:14:30 by laufarin         ###   ########.fr       */
+/*   Created: 2024/01/21 10:31:11 by ofilloux          #+#    #+#             */
+/*   Updated: 2025/06/11 16:07:07 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+//       #include	<string.h>
+//       #include	<stdio.h>
 #include "libft.h"
 
-char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
+/**
+ * @brief Searches for a substring within a limited length of a string.
+ *
+ * Looks for the first occurrence of the null-terminated string little
+ * inside the string big, but only within the first len characters of big.
+ *
+ * @param big The string to search in.
+ * @param little The substring to search for.
+ * @param len The maximum number of characters to search within big.
+ * @return Pointer to the beginning of the found substring in big,
+ *         or NULL if not found.
+ */
+char	*ft_strnstr(const char *big, const char *little, size_t len)
 {
 	size_t	i;
 	size_t	j;
 
+	if (little[0] == 0 || little == NULL)
+		return ((char *)big);
 	i = 0;
-	j = 0;
-	if (!needle[i])
-		return ((char *)haystack);
-	while (needle[i] && haystack[j] && i < len)
+	while (big[i] != '\0' && i < len)
 	{
-		if (haystack[j] == needle[0])
+		j = 0;
+		while (big[i + j] == little[j] && big[i + j] && i + j < len)
 		{
-			while (haystack[j + i] == needle[i] && haystack[i + j] && \
-					needle[i] && i + j < len)
-				i++;
-			if (!needle[i])
-				return ((char *) haystack + j);
+			j++;
+			if (little[j] == 0)
+				return (((char *)big + i));
 		}
-		j++;
-		i = 0;
+		i++;
 	}
 	return (0);
 }
+
 /*
-int	main(void)
+int main ()
 {
-	char	*a;
-	char	*b;
-	char	*ptr;
+        printf("%p\n",ft_strnstr("hola","la" ,4));
+        printf("%p\n\n",strnstr("hola","la",4));
 
-	a = "El gato estaba en el tejado";
-	b = "gato";
-	
-	ptr = ft_strnstr(a, b, 3);
+        printf("%p\n",ft_strnstr("hola","l",3));
+        printf("%p\n\n",strnstr("hola","l",3));
 
-	printf("%s\n", ptr);
-	return (0);
-}*/
+        printf("%p\n",ft_strnstr("hola","h",0));
+        printf("%p\n\n",strnstr("hola","h",0));
+
+        printf("%p\n",ft_strnstr("hola","h",4));
+        printf("%p\n\n",strnstr("hola","h",4));
+
+        printf("%p\n",ft_strnstr("hola bica caca","bi",6));
+        printf("%p\n\n",strnstr("hola bica caca","bi",6));
+
+        printf("%p\n",ft_strnstr("hola caca caca","ca",20));
+        printf("%p\n\n",strnstr("hola caca caca","ca",20));
+
+        printf("%p\n",ft_strnstr("hola","hola",4));
+        printf("%p\n\n",strnstr("hola","hola",4));
+
+        printf("%p\n",ft_strnstr("","hola",4));
+        printf("%p\n\n",strnstr("","hola",4));
+ }
+ */

@@ -12,7 +12,8 @@ CFLAGS = -Wall -Wextra -Werror -g -O0 -I./header
 LDFLAGS = -lreadline
 
 #INC = -I./header
-SIGNALS = ./src/signals/signals.c
+SIGNALS = ./src/signals/signals.c \
+		./src/signals/sub_proc_sig.c
 
 BUILTINS = ./src/builtins/is_builtin.c \
 		./src/builtins/ft_echo.c \
@@ -26,11 +27,16 @@ BUILTINS = ./src/builtins/is_builtin.c \
 ENV = ./src/environment/env_search.c \
 	./src/environment/env_utils.c \
 	./src/environment/enviro.c \
-	./src/environment/more_utils.c
+	./src/environment/env_utils_2.c \
+	./src/environment/sort_env.c
 
 TOKENS = ./src/tokens/user_input_validations/preliminary_checks.c \
 	./src/tokens/user_input_validations/check_line.c \
+	./src/tokens/user_input_validations/incomplete_line.c \
 	./src/tokens/user_input_validations/user_input_validation.c\
+	./src/tokens/user_input_validations/check_tokens.c \
+	./src/tokens/user_input_validations/check_tokens_utils.c \
+	./src/tokens/user_input_validations/check_pipe_utils.c \
 	./src/tokens/user_input_validations/unique_token_operator.c\
 	./src/tokens/user_input_validations/double_operators.c \
 	./src/tokens/create_input_token.c \
@@ -41,6 +47,7 @@ TOKENS = ./src/tokens/user_input_validations/preliminary_checks.c \
 	./src/tokens/init_file_arr.c \
 	./src/tokens/token_separators.c \
 	./src/tokens/create_argv.c \
+	./src/tokens/create_argv_utils.c \
 	./src/tokens/create_chunks.c
 
 EXEC = ./src/exec/exec.c \
@@ -51,22 +58,30 @@ EXEC = ./src/exec/exec.c \
 	./src/exec/path.c \
 	./src/exec/listen_heredocs.c \
 	./src/exec/pipes.c \
+	./src/exec/pipes_close.c \
 	./src/exec/execute_builtins.c
 
 FILES = ./src/exec/files/init_input_files.c \
 		./src/exec/files/create_files.c \
 		./src/exec/files/close_files.c \
+		./src/exec/files/open_files.c \
+		./src/exec/files/stdin_stdout.c \
 		./src/exec/files/redirects.c
 
 EXPEND = ./src/exec/Expension/expension.c \
+		./src/exec/Expension/expension_tock_len_utils.c \
 		./src/exec/Expension/expension_tocken.c \
-		./src/exec/Expension/accolades.c
+		./src/exec/Expension/accolades.c \
+		./src/exec/Expension/expension_quotes.c \
+		./src/exec/Expension/select_from_substring_arr.c \
+		./src/exec/Expension/exp_utils.c
 
-UTILS = ./utils/string/ft_split_s.c \
+UTILS = ./utils/string/split_quoted.c \
+		./utils/string/split_quoted_utils.c \
 		./utils/string/basics.c \
 		./utils/string/custom_basics.c \
-		./utils/string/select_from_substring_arr.c \
 		./utils/string/quotes.c \
+		./utils/string/quotes_2.c \
 		./utils/string/trim.c \
 		./utils/string/ft_split_set_of_char.c \
 		./utils/string/ft_split_sgmt_count.c \
@@ -92,6 +107,8 @@ SRC = main.c \
 	$(ENV)
 
 OBJ = $(SRC:.c=.o)
+
+LIBFT_OBJ := $(patsubst %.c,%.o,$(wildcard ./libs/libft/*.c))
 #MMD = $(SRC:.c=.d)
 
 ###################
@@ -103,7 +120,7 @@ $(NAME) : $(OBJ) $(LIBFT_PATH)
 		@$(CC) $(CFLAGS) $(DEBUG) $(OBJ) $(LIBFT_PATH) -o $@ $(LDFLAGS)
 		@printf "$(GREEN)[minishell] Compiled successfully.$(NC)\n"
 
-$(LIBFT_PATH):
+$(LIBFT_PATH): $(LIBFT_OBJ)
 		@$(MAKE) -C ./libs/libft
 #> /dev/null 2>&1
 		@printf "$(GREEN)[minishell] libft compiled successfully.$(NC)\n" > /dev/null

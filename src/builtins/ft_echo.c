@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 15:40:12 by laufarin          #+#    #+#             */
-/*   Updated: 2025/05/14 16:22:41 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/06 22:27:53 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,9 @@ int	ft_echo(t_env *env, char **args)
 	return (0);
 }
 
-//cc -Wall -Wextra -Wall ./src/builtins/ft_echo.c ./src/enviroment/env.c ./src/enviroment/env_utils.c ./src/enviroment/env_search.c ./libs/libft/libft.a -lreadline -o testEcho
+//cc -Wall -Wextra -Wall ./src/builtins/ft_echo.c
+// ./src/enviroment/env.c ./src/enviroment/env_utils.c
+// ./src/enviroment/env_search.c ./libs/libft/libft.a -lreadline -o testEcho
 // int main(int ac, char **argv, char **env)
 // {
 // 	t_env	*env1;

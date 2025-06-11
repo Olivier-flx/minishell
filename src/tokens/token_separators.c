@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_separators.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:37:48 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/14 16:49:22 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/04 11:54:24 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,18 @@
 // takes in account all redirections or pipes
 int	is_seperator(char *src, int i, t_quote *quote)
 {
-	if (quote_and_acc_are_closed(quote))
+	if (qts_acc_closed(quote))
 	{
 		if (src[i] == '>' && src[i + 1] && src[i + 1] == '>')
-			return(2);
+			return (2);
 		else if (src[i] == '<' && src[i + 1] && src[i + 1] == '<')
-			return(2);
+			return (2);
 		else if (src[i] == 124)
-			return(1);
+			return (1);
 		else if (src[i] == '<')
-			return(1);
+			return (1);
 		else if (src[i] == '>')
-			return(1);
+			return (1);
 		else if (src[i] == ' ')
 			return (1);
 	}

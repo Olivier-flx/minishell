@@ -1,43 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isprint.c                                       :+:      :+:    :+:   */
+/*   ft_isprint copy.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: laufarin <laufarin@student.42barcel>       +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/05 20:47:52 by laufarin          #+#    #+#             */
-/*   Updated: 2023/09/05 21:17:14 by laufarin         ###   ########.fr       */
+/*   Created: 2024/01/16 18:28:53 by ofilloux          #+#    #+#             */
+/*   Updated: 2025/06/11 15:20:04 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+/**
+ * @brief Checks if the character is printable (including space).
+ *
+ * @param c The character to check.
+ * @return 1 if printable, 0 otherwise.
+*/
 int	ft_isprint(int c)
 {
 	if (c >= 32 && c <= 126)
-	{
 		return (1);
-	}
 	return (0);
 }
-
-/*
-int	main(void)
-{
-	int	is_print;
-	int	p;
-	
-	p = 128;
-	is_print = ft_isprint(p);
-
-	if (is_print == 0)
-	{
-		printf("No es correcto\n");
-	}
-	else
-	{
-		printf("Vamos bien\n");
-	}
-	return (0);
-}
-*/

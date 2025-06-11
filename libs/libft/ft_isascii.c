@@ -1,41 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isascii.c                                       :+:      :+:    :+:   */
+/*   ft_isascii copy.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: laufarin <laufarin@student.42barcel>       +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/05 19:45:29 by laufarin          #+#    #+#             */
-/*   Updated: 2023/09/05 20:29:38 by laufarin         ###   ########.fr       */
+/*   Created: 2024/01/16 18:23:50 by ofilloux          #+#    #+#             */
+/*   Updated: 2025/06/11 15:19:17 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
+/**
+ * @brief Checks if the character is an ASCII character.
+ *
+ * @param c int, the character to check.
+ * @return 1 if in ASCII range (0–127), 0 otherwise.
+*/
 int	ft_isascii(int c)
 {
 	if (c >= 0 && c <= 127)
-	{
 		return (1);
-	}
 	return (0);
 }
-/*
-int	main(void)
-{
-	int	is_ascii;
-	int	a;
-
-	a = 210;
-	is_ascii = ft_isascii(a);
-	
-		if (is_ascii == 0)
-	{
-		printf ("No es correcto\n");
-	}
-		else
-		{
-			printf ("Muy bien de momento\n");
-		}
-	return (0);
-}*/

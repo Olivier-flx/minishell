@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 19:30:46 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/12 21:59:31 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/09 20:54:58 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,11 @@ void	close_files(t_chunk *chunk)
 	{
 		if (chunk->file_open[i] && close(chunk->file_fd[i]) > 0)
 		{
-			close(chunk->file_fd[i]);
-			chunk->file_open[i] = false;
+			perror("Close file");
+			chunk->file_open[i] = true;
 		}
+		chunk->file_fd[i] = -1;
+		chunk->file_open[i] = false;
 		i++;
 	}
 	return ;
@@ -39,7 +41,8 @@ void	close_files_if_opened(int *fd_arr, bool *file_open, int len)
 		if (file_open[i])
 		{
 			if (fd_arr[i] > 0 && close (fd_arr[i]) == -1)
-				perror("Error at closing files: ");
+				perror("Error at closing files");
+			fd_arr[i] = -1;
 			file_open[i] = false;
 		}
 		i++;
@@ -56,7 +59,8 @@ void	close_input_files_if_opened(int *fd_arr, bool *file_open)
 		if (file_open[i])
 		{
 			if (fd_arr[i] > 0 && close (fd_arr[i]) == -1)
-				perror("Error at closing files: ");
+				perror("Error at closing files");
+			fd_arr[i] = -1;
 			file_open[i] = false;
 		}
 		i++;

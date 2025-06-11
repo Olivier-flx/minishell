@@ -1,59 +1,118 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_atoi copy.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: laufarin <laufarin@student.42barcel>       +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/14 18:45:51 by laufarin          #+#    #+#             */
-/*   Updated: 2023/09/25 01:54:14 by laufarin         ###   ########.fr       */
+/*   Created: 2024/01/21 10:36:24 by ofilloux          #+#    #+#             */
+/*   Updated: 2025/06/11 15:15:25 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+//#include <stdio.h>
+//#include <stdlib.h>
 
-static int	is_space(char c)
+/**
+* @brief transform a string into and integer
+* @param s : const char *s
+* @return : int
+*/
+int	ft_atoi(const char *s)
 {
-	while (c == ' ' || c == '\t' || c == '\n'
-		|| c == '\v' || c == '\f' || c == '\r')
-	{
-		return (1);
-	}
-	return (0);
-}
-
-//Paso 1: Resultado empieza en 0
-//Paso 2: Me como los espacios
-//Paso 3: Cogemos el signo (1 si positivo, -1 si negativo)
-//Paso 4: HAcer linea magica mientras str[i] >= '0' && str[i] <= '9'
-//Paso 5: Devolvemos resultado * signo
-int	ft_atoi(const char *str)
-{
-	int	resultado;
 	int	i;
-	int	sign;
+	int	n;
+	int	r;
 
-	sign = 1;
 	i = 0;
-	resultado = 0;
-	while (is_space(str[i]))
-		i++;
-	if (str[i] == '-' || str[i] == '+')
+	n = 0;
+	r = 0;
+	while (s[i] == ' ' || (s[i] >= '\t' && s[i] <= '\r'))
 	{
-		if (str[i] == '-')
-			sign = -1;
 		i++;
 	}
-	while (str[i] >= '0' && str[i] <= '9')
+	if (s[i] == '+' || s[i] == '-')
 	{
-		resultado = resultado * 10 + (str[i] - '0');
+		if (s[i] == '-')
+			n++;
 		i++;
 	}
-	return (resultado * sign);
+	while (s[i] >= '0' && s[i] <= '9')
+	{
+		r = r * 10 + (s[i] - '0');
+		i++;
+	}
+	if (n % 2 == 1)
+		r *= -1;
+	return (r);
 }
+
 /*
-   int main()
-   {
-   printf("|%d|\n", ft_atoi("    110"));
-   }
+int main ()
+{
+	printf("%i\n",ft_atoi(" ireu -12"));
+	printf("%i\n\n",atoi(" ireu -12"));
+
+	printf("%i\n",ft_atoi("--+-  213 ireu -12"));
+	printf("%i\n\n",atoi(" --+-  213 ireu -12"));
+
+	printf("%i\n",ft_atoi(" --+3-  213 ireu -12"));
+	printf("%i\n\n",atoi(" --+3-  213 ireu -12"));
+
+	printf("%i\n",ft_atoi(" --+4i2-  213 ireu -12"));
+	printf("%i\n\n",atoi(" --+4i2-  213 ireu -12"));
+
+	printf("%i\n",ft_atoi(" --+5 2- "));
+        printf("%i\n\n",atoi(" --+5 2- "));
+
+	printf("%i\n",ft_atoi(" --+623232323222 2-"));
+        printf("%i\n\n",atoi(" --+623232323222 2-"));
+
+	printf("%i\n",ft_atoi(""));
+        printf("%i\n\n",atoi(""));
+
+	printf("%i\n",ft_atoi("0"));
+        printf("%i\n\n",atoi("0"));
+
+	printf("%i\n",ft_atoi("-0"));
+        printf("%i\n\n",atoi("-0"));
+
+        printf("%i\n",ft_atoi("2"));
+        printf("%i\n\n",atoi("2"));
+
+        printf("%i\n",ft_atoi("-2"));
+        printf("%i\n\n",atoi("-2"));
+
+	printf("%i\n",ft_atoi(" 9"));
+        printf("%i\n\n",atoi(" 9"));
+
+
+        printf("%i\n",ft_atoi(" -+9"));
+        printf("%i\n\n",atoi(" -+9"));
+
+
+        printf("%i\n",ft_atoi("   +9"));
+        printf("%i\n\n",atoi("   +9"));
+
+        printf("%i\n",ft_atoi(" ++9"));
+        printf("%i\n\n",atoi(" ++9"));
+
+
+        printf("%i\n",ft_atoi(" --9"));
+        printf("%i\n\n",atoi(" --9"));
+
+
+        printf("%i\n",ft_atoi("-2147483648"));
+        printf("%i\n\n",atoi("-2147483648"));
+
+        printf("%i\n",ft_atoi("2147483647"));
+        printf("%i\n\n",atoi("2147483647"));
+
+
+        printf("%i\n",ft_atoi("-214748364999"));
+        printf("%i\n\n",atoi("-214748364999"));
+
+        printf("%i\n",ft_atoi("214748364799"));
+        printf("%i\n\n",atoi("214748364799"));
+}
 */

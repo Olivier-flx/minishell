@@ -1,40 +1,51 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memset.c                                        :+:      :+:    :+:   */
+/*   ft_memset copy.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: laufarin <laufarin@student.42barcel>       +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/06 20:33:20 by laufarin          #+#    #+#             */
-/*   Updated: 2023/09/13 17:56:19 by laufarin         ###   ########.fr       */
+/*   Created: 2024/01/21 10:32:10 by ofilloux          #+#    #+#             */
+/*   Updated: 2025/06/11 15:45:40 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+//#include <stdio.h>
+//#include <string.h>
 #include "libft.h"
 
-void	*ft_memset(void *b, int c, size_t len)
+/**
+ * @brief Fills the first n bytes of the memory area pointed
+ *        to by s with the constant byte c.
+ *
+ * @param s Pointer to the memory area to fill.
+ * @param c The byte value to set (converted to unsigned char).
+ * @param n Number of bytes to set.
+ * @return Pointer to the memory area s.
+ */
+void	*ft_memset(void *s, int c, size_t n)
 {
-	size_t			i;
-	unsigned char	*ptr;
-
-	ptr = (unsigned char *)b;
-	i = 0;
-	while (i < len)
+	while (n > 0)
 	{
-		ptr[i] = c;
-		i++;
+		((char *)s)[n - 1] = ((char)c);
+		n--;
 	}
-	return (b);
+	return (s);
 }
 /*
-int	main(void)
+int	main()
 {
-	void *b;
-	unsigned char *ptr;
+	char str[] = "hola";
+	printf("Before memset: %s\n", str);
 
-	b = (void *)malloc(sizeof(char) * 30);
-	ptr = ft_memset(b, 'b', 4);
-	ptr[4] = '\0';
-	printf("tengo en b |%s|", ptr);
+    // Using memset on an array of characters
+	memset(str, 65, 4);
+	printf("After memset: %s\n", str);
 
-}*/
+	ft_memset(str, 66, 4);
+        printf("After memset: %s\n", str);
+
+	//printf("%p\n",ft_memset("hola",2 ,4));
+       // printf("%p\n\n",memset("hola",2,4));
+}
+*/

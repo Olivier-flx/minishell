@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 21:54:28 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/12 16:21:32 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/04 12:05:52 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,32 +14,37 @@
 
 void	quote_increment(char *src, int i, t_quote *quote)
 {
-	if (src[i] == '"' && quote->sgl_quote % 2 == 0 && quote->acc % 2 == 0)
-		quote->dbl_quote++;
-	if (src[i] == '\'' && quote->dbl_quote % 2 == 0 && quote->acc % 2 == 0)
-		quote->sgl_quote++;
-	if (src[i] == '{' && quote->dbl_quote % 2 == 0 && quote->sgl_quote % 2 == 0)
+	if (src[i] == '"' && quote->sgl_qt % 2 == 0 && quote->acc % 2 == 0)
+		quote->dbl_qt++;
+	if (src[i] == '\'' && quote->dbl_qt % 2 == 0 && quote->acc % 2 == 0)
+		quote->sgl_qt++;
+	if (src[i] == '{' && quote->dbl_qt % 2 == 0 && quote->sgl_qt % 2 == 0)
 		quote->acc++;
-	if (src[i] == '}' && quote->dbl_quote % 2 == 0 && quote->sgl_quote % 2 == 0)
+	if (src[i] == '}' && quote->dbl_qt % 2 == 0 && quote->sgl_qt % 2 == 0)
 		quote->acc++;
 }
 
 void	init_quotes(t_quote *parsing_context)
 {
-	parsing_context->dbl_quote = 0;
-	parsing_context->sgl_quote = 0;
+	parsing_context->dbl_qt = 0;
+	parsing_context->sgl_qt = 0;
 	parsing_context->acc = 0;
 }
 
 /**
- * tocken_quote_closed - Checks if all quotes in a given string are properly closed.
+ * tocken_quote_closed - Checks if all quotes in a given string
+ *  are properly closed.
  * @s: The input string to check.
  *
- * This function analyzes a string to determine whether all single (') and double (") quotes
- * are correctly closed. It tracks the state of single and double quotes separately,
- * ensuring that quotes are only considered opened or closed when not inside another quote.
+ * This function analyzes a string to determine whether a
+ * ll single (') and double (") quotes
+ * are correctly closed. It tracks the state
+ * of single and double quotes separately,
+ * ensuring that quotes are only considered opened or
+ * closed when not inside another quote.
  *
- * The function uses a t_quote structure to count quote occurrences and returns true
+ * The function uses a t_quote structure to count
+ * quote occurrences and returns true
  * if all quotes are balanced (i.e., closed), or false if any quote remains open.
  *
  * Returns:
@@ -61,15 +66,14 @@ bool	tocken_quote_closed(char *s)
 	return (quote_are_closed(&quote));
 }
 
-
 bool	quote_are_closed(t_quote *quote)
 {
-	return (quote->dbl_quote % 2 == 0 \
-		&& quote->sgl_quote % 2 == 0);
+	return (quote->dbl_qt % 2 == 0 \
+		&& quote->sgl_qt % 2 == 0);
 }
 
 /**
- * quote_and_acc_are_closed - Checks if all quotes are properly closed.
+ * qts_acc_closed - Checks if all quotes are properly closed.
  * @quote: Pointer to the quote tracking structure.
  *
  * This function returns true if both single and double quotes are closed,
@@ -79,13 +83,11 @@ bool	quote_are_closed(t_quote *quote)
  *   true if all quotes are closed,
  *   false if any quote remains open.
  */
-bool	quote_and_acc_are_closed(t_quote *quote)
+bool	qts_acc_closed(t_quote *quote)
 {
 	return (quote_are_closed(quote)
 		&& quote->acc % 2 == 0);
 }
-
-
 
 // cc ./utils/string/quotes.c ./utils/string/basics.c -g -o test
 // int main()

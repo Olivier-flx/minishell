@@ -1,39 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isalnum.c                                       :+:      :+:    :+:   */
+/*   ft_isalnum copy.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: laufarin <laufarin@student.42barcel>       +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/05 15:21:41 by laufarin          #+#    #+#             */
-/*   Updated: 2023/09/25 02:21:17 by laufarin         ###   ########.fr       */
+/*   Created: 2024/01/16 18:22:08 by ofilloux          #+#    #+#             */
+/*   Updated: 2025/06/11 15:19:22 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "libft.h"
 
-int	ft_isalnum(int c)
+/**
+ * @brief Checks if the character is alphanumeric.
+ *
+ * @param c The character to check.
+ * @return 1 if alphanumeric, 0 otherwise.
+*/
+int	ft_isalnum(char c)
 {
-	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')
-		|| (c >= '0' && c <= '9'))
-	{
+	if ((c >= '0' && c <= '9') || (c >= 'a' && c <= 'z')
+		|| (c >= 'A' && c <= 'Z'))
 		return (1);
-	}
 	return (0);
 }
-/*int	main(void)
-{
-	int	is_alnum;
-	int	a;
-
-	a = '}';
-	is_alnum = ft_isalnum(a);
-	if (is_alnum == 0)
-	{
-		printf("No valido\n");
-	}
-	else
-	{
-		printf("Correcto\n");
-	}
-	return (0);
-}*/

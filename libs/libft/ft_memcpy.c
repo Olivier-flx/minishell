@@ -1,32 +1,76 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memcpy.c                                        :+:      :+:    :+:   */
+/*   ft_memcpy copy.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: laufarin <laufarin@student.42barcel>       +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/07 12:44:19 by laufarin          #+#    #+#             */
-/*   Updated: 2023/09/22 15:27:58 by laufarin         ###   ########.fr       */
+/*   Created: 2024/01/21 10:33:42 by ofilloux          #+#    #+#             */
+/*   Updated: 2025/06/11 15:43:54 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+//#include <stdio.h>
+//#include <string.h>
 #include "libft.h"
 
-void	*ft_memcpy(void *dst, const void *src, size_t n)
+/**
+ * @brief Copies n bytes from memory area src to memory area dest.
+ *
+ * The memory areas must not overlap. If they do, behavior is undefined.
+ * The caller must ensure that dest points to allocated memory of
+ * at least n bytes.
+ * For copying arrays of types larger than a byte (e.g., int[]), n should be
+ * the total size in bytes (count * sizeof(type)).
+ *
+ * @param dest Pointer to the destination memory area.
+ * @param src Pointer to the source memory area.
+ * @param n Number of bytes to copy.
+ * @return Pointer to the destination memory area (dest).
+ *
+ * @note Prefer ft_memmove for safe copying when memory areas might overlap.
+ */
+void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
-	char			*is_src;
-	char			*is_dst;
-	unsigned int	i;
+	size_t	i;
 
-	is_src = (char *) src;
-	is_dst = (char *) dst;
-	if (is_src == NULL && is_dst == NULL)
-		return (NULL);
-	i = 0;
-	while (i < n)
+	if (dest == (void *)0 && src == (void *)0)
+		return (dest);
+	if (dest < src || dest >= (src + n))
 	{
-		is_dst[i] = is_src[i];
-		i++;
+		i = 0;
+		while (i < n)
+		{
+			((char *) dest)[i] = ((char *)src)[i];
+			i++;
+		}
 	}
-	return (dst);
+	else
+	{
+		i = n;
+		while (i > 0)
+		{
+			i--;
+			((char *) dest)[i] = ((char *)src)[i];
+		}
+	}
+	return (dest);
 }
+
+/*
+int main ()
+{
+	 char str[] = "hola";
+	 char sr[] = "bb";
+
+        printf("Before memcpy: %s\n", str);
+        memcpy(str, sr, 4);
+        printf("After memcpy: %s\n", str);
+
+
+	char str2[] = "hola";
+        printf("Before memcpy: %s\n", str2);
+        ft_memcpy(str2, sr,4);
+        printf("After ft_memcpy: %s\n", str2);
+}
+*/

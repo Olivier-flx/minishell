@@ -6,49 +6,50 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 17:38:16 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/14 19:04:09 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/09 17:38:43 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../header/minishell.h"
 
-char	*get_classic_var_name(char *str, int i)
+void	get_classic_var_name(char **var_name, char *str, int i)
 {
 	int	var_name_len;
-	char *var_name;
 
 	var_name_len = 0;
-	var_name = NULL;
 	while (str[i] && (ft_isalnum(str[i]) || str[i] == '_' || str[i] == '?'))
 	{
 		i++;
 		var_name_len ++;
 	}
-	var_name = malloc(sizeof(char) * (var_name_len + 1));
-	if (!var_name)
-		return (NULL);
-	var_name[var_name_len] = '\0';
-	ft_strlcpy(var_name, str + i - var_name_len, var_name_len + 1); // man : Note that a byte for the NUL should be included in size.
-	return (var_name);
+	if (var_name_len == 0)
+		return ;
+	*var_name = malloc(sizeof(char) * (var_name_len + 1));
+	if (!(*var_name))
+		return ;
+	(*var_name)[var_name_len] = '\0';
+	ft_strlcpy(*var_name, str + i - var_name_len, var_name_len + 1);
 }
 
-char	*get_var_name(char *str, int i)
+bool	get_var_name(char **var_name, char *str, int i)
 {
-	char	*var_name;
-
+	*var_name = NULL;
 	if (str[i++] != '$')
-		return (printf("Error : get_var_name not a var input\n"), NULL);
+		return (false);
 	if (str[i] == '{')
-		var_name = get_var_name_in_accolade(str, i + 1);
+		get_var_name_in_accolade(var_name, str, i + 1);
 	else
-		var_name = get_classic_var_name(str, i);
-	return (var_name);
-
+		get_classic_var_name(var_name, str, i);
+	if (var_name)
+		return (true);
+	return (false);
 }
 
-static void	handle_question_mark(t_data *data, char **var_name, \
+void	handle_question_mark_set_k(t_data *data, char **var_name, \
 								char **var_value, int *k)
 {
+	if (!var_name)
+		return ;
 	if (ft_strcmp(*var_name, "?") == 0)
 		*var_value = ft_itoa(data->exit_status);
 	*k += ft_strlen(*var_value);
@@ -56,23 +57,77 @@ static void	handle_question_mark(t_data *data, char **var_name, \
 		ft_free((void **) var_value);
 }
 
-static void	get_len_and_increment_i(t_data *data, char *str, int *i, int *k)
+int	handle_empty_var_name(char *str, int i)
 {
-	char	*var_name;
-	char	*var_value;
+	int	k;
 
-	var_name = get_var_name(str, *i);
-	var_value = ft_getenv(data->env_list, var_name);
-	handle_question_mark(data, &var_name, &var_value, k);
-	if (str[(*i) + 1] && str[(*i) + 1] == '{')
-		(*i) += ft_strlen(var_name) + 3; // +1 pour le $ et les {}
-	else
-		(*i) += ft_strlen(var_name) + 1; // +1 pour le $
-	ft_free((void **) &var_name);
-
+	k = 1;
+	if (str[(i)] && !str[(i) + 1])
+		return (1);
+	if (str[(i)] && str[(i) + 1] && (str[(i) + 1] == '{'))
+		return (3);
+	while (str[i] && str[i] != '$' && !is_quote(str[i]) && !ft_isalnum(str[i]))
+	{
+		k++;
+		i++;
+	}
+	return (k);
 }
 
-int get_expended_tocken_len(t_data *data, char *str)
+//V1
+// int	handle_empty_var_name(char *str, int i)
+// {
+// 	int	k;
+
+// 	k = 1;
+// 	if (str[(i)] && !str[(i) + 1])
+// 	{
+// 		//*var_value = ft_strdup("$");
+// 		return (1);
+// 	}
+// 	if (str[(i)] && str[(i) + 1] && (str[(i) + 1] == '{' /*
+//		|| is_quote(str[(i) + 1]) */))
+// 		return (3);
+// 	while (str[i] && str[i] != '$' && !is_quote(str[i]) && !ft_isalnum(str[i]))
+// 	{
+// 		k++;
+// 		i++;
+// 	}
+// 	return (k);
+// }
+
+//V2
+int	get_expended_tocken_len(t_data *data, char *s)
+{
+	int		i;
+	int		k;
+	t_quote	qts;
+
+	i = 0;
+	k = 0;
+	init_quotes(&qts);
+	while (s[i])
+	{
+		if (skip_quote(&i, &k, &qts, s) || skip_dollar_quote(&i, &k, &qts, s))
+			continue ;
+		if (s[i] == '$' && (qts.dbl_qt % 2 == 1 \
+			|| qts_acc_closed(&qts)) && (ft_isalnum(s[i + 1]) \
+			|| s[i + 1] == '_' || s[i + 1] == '?' || s[i + 1] == '{')
+		)
+		{
+			get_len_and_increment_i(data, s, &i, &k);
+			continue ;
+		}
+		if (handle_invalid_dollar(&i, &k, &qts, s))
+			continue ;
+		i++;
+		k++;
+	}
+	return (k);
+}
+
+//V1
+/* int get_expended_tocken_len(t_data *data, char *str)
 {
 	int	i;
 	int k;
@@ -84,9 +139,15 @@ int get_expended_tocken_len(t_data *data, char *str)
 	while (str[i])
 	{
 		quote_increment(str, i, &quotes);
-		if((quotes.dbl_quote % 2 == 1 || quote_and_acc_are_closed(&quotes)) \
+		if ((quotes.dbl_qt % 2 == 1 || qts_acc_closed(&quotes)) \
 			&& str[i] == '$')
+		{
 			get_len_and_increment_i(data, str, &i, &k);
+			printf("get_expended_tocken_len -> k = %i\n", k);// @debug
+		}
+		else if (is_quote(str[i]) && ( quotes.sgl_qt % 2 == 1
+		|| quote_are_closed(&quotes)))
+			i++;
 		else
 		{
 			i++;
@@ -94,40 +155,78 @@ int get_expended_tocken_len(t_data *data, char *str)
 		}
 	}
 	return (k);
-}
-/// Si le nom de la variable n'est pas correct, on doit retourner le message [-bash: ${world${test}}: bad substitution]
+} */
 
-int	expend_chunk(t_data *data, t_chunk *chunk)
+/* int get_expended_tocken_len(t_data *data, char *str)
 {
-	int	i;
-	char *ret_val;
+	int		i = 0;
+	int		k = 0;
+	t_quote	quotes;
+	bool	was_quotes;
 
-	ret_val = NULL;
-	i = 0;
-	while (chunk->tokens && chunk->tokens[i])
+	init_quotes(&quotes);
+	while (str[i])
 	{
-		ret_val = expend_token(data, chunk->tokens[i]);
-		ft_free((void **) &ret_val);
-		if (!ret_val)
-			return (1); // @confirm : à voir s'il y a un bug d'expension, s'il faut arrêter l'expension du rest ou non
+		was_quotes = bool_quote_increment(str, &i, &quotes);
+		if (was_quotes)
+			continue ;
+		if (str[i] == '$' && quote_are_closed(quotes) && is_quote(str[i + 1]))
+		{
+			i++;
+			bool_quote_increment(str, &i, &quotes);
+			continue ;
+		}
+		if (str[i] == '$'
+			&& (quotes.dbl_qt % 2 == 1 || qts_acc_closed(&quotes)))
+		{
+			get_len_and_increment_i(data, str, &i, &k);
+			continue ;
+		}
+		if (str[i] == '$' && quotes.sgl_qt % 2 == 0)
+		{
+			i++;
+			if (str[i]
+				&& !ft_isalnum(str[i])
+				&& str[i] != '_'
+				&& str[i] != '?')
+				i++;
+			continue ;
+		}
 		i++;
+		k++;
 	}
-	return (0);
-}
+	return (k);
+} */
 
-int	expend_all(t_data *data)
-{
-	int		ret_val;
-	t_dlist	*i_node;
+// int get_expended_tocken_len(t_data *data, char *str)
+// {
+// 	int	i;
+// 	int k;
+// 	t_quote	quotes;
+// 	bool	was_quotes;
 
-	i_node = data->cmd_list;
-	ret_val = 0;
-	while (i_node)
-	{
-		expend_chunk(data, (t_chunk *)i_node->content);
-		if (ret_val != 0)
-			return (ret_val); // @confirm : à voir s'il y a un bug d'expension, s'il faut arrêter l'expension du rest ou non
-		i_node = i_node->next;
-	}
-	return (ret_val);
-}
+// 	init_quotes(&quotes);
+// 	i = 0;
+// 	k = 0;
+// 	was_quotes = false;
+// 	while (str[i])
+// 	{
+// 		was_quotes = bool_quote_increment(str, &i, &quotes);
+// 		if ((quotes.dbl_qt % 2 == 1 || qts_acc_closed(&quotes))
+// 			&& str[i] == '$' && !was_quotes)
+// 		{
+// 			get_len_and_increment_i(data, str, &i, &k);
+// 			printf("get_expended_tocken_len -> k = %i\n", k); // @debug
+// 		}
+// 		else if (was_quotes || (str[i] == '$' && is_quote(str[i + 1])))
+// 			i++;
+// 		else
+// 		{
+// 			i++;
+// 			k++;
+// 		}
+// 	}
+// 	return (k);
+// }
+/// Si le nom de la variable n'est pas correct, on doit retourner
+//le message [-bash: ${world${test}}: bad substitution]

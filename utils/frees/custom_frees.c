@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   custom_frees.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 11:31:40 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/12 19:08:02 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/10 01:08:55 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell.h"
 
-void	ft_free(void ** ptr)
+void	ft_free(void **ptr)
 {
 	if (ptr && *ptr)
 	{
@@ -21,18 +21,19 @@ void	ft_free(void ** ptr)
 	}
 }
 
-void free_pipes_arr(int **pipe_arr, t_exe *exec_info)
+void	free_pipes_arr(int **pipe_arr, t_exe *exe_nfo)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	if (!exec_info || !exec_info->pipes_malloced)
+	if (!exe_nfo || !exe_nfo->pipes_malloced)
 		return ;
-	while (i < exec_info->total_cmd_count - 1 && exec_info->pipes_malloced[i])
+	while (i < exe_nfo->total_cmd_count - 1 && exe_nfo->pipes_malloced[i])
 	{
 		ft_free((void **) &pipe_arr[i]);
 		i++;
 	}
 	ft_free((void **) &pipe_arr);
+	exe_nfo->pipe_arr_malloced = false;
 	pipe_arr = NULL;
 }

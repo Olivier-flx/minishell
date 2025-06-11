@@ -1,45 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_calloc.c                                        :+:      :+:    :+:   */
+/*   ft_calloc copy.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: laufarin <laufarin@student.42barcel>       +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/15 16:08:53 by laufarin          #+#    #+#             */
-/*   Updated: 2023/09/25 00:21:07 by laufarin         ###   ########.fr       */
+/*   Created: 2024/01/21 14:38:18 by ofilloux          #+#    #+#             */
+/*   Updated: 2025/06/11 15:19:27 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <stdlib.h>
 
+/**
+ * @brief Allocates and zero-initializes memory for an array.
+ *
+ * @param count Number of elements.
+ * @param size Size of each element.
+ * @return Pointer to the allocated zero-initialized memory,
+ * or NULL on failure.
+*/
 void	*ft_calloc(size_t count, size_t size)
 {
-	char			*ptr;
-	unsigned int	i;
+	unsigned char	*call;
+	size_t			i;
 
 	i = 0;
-	ptr = malloc (count * size);
-	if (ptr == NULL)
-	{
+	call = malloc(count * size);
+	if (!call)
 		return (NULL);
-	}
-	while (i < (count * size))
+	while (i < count * size)
 	{
-		ptr[i] = '\0';
+		call[i] = 0;
 		i++;
 	}
-	return (ptr);
+	return (call);
 }
+
 /*
-int main (void)
+int main ()
 {
-	
-	char *ptr;
-	ptr = ft_calloc(8, sizeof(char));
-	if(ptr == NULL)
-	{
-		printf("El malloc a fallado!!!!");
-		return 0;
-	}
-	printf("Esta caracter deberia ser null |%c|\n", ptr[3]);
-}*/
+	ft_calloc(3,8);
+}
+*/

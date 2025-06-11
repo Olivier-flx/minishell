@@ -1,33 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   toupper.c                                          :+:      :+:    :+:   */
+/*   ft_toupper copy.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: laufarin <laufarin@student.42barcel>       +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/06 13:52:50 by laufarin          #+#    #+#             */
-/*   Updated: 2023/09/06 16:03:09 by laufarin         ###   ########.fr       */
+/*   Created: 2024/01/16 19:23:10 by ofilloux          #+#    #+#             */
+/*   Updated: 2025/06/11 16:12:53 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+//#include <stdio.h>
+//#include <ctype.h>
 
+/**
+ * @brief Converts a lowercase letter to uppercase.
+ *
+ * If c is a lowercase ASCII letter ('a'-'z'),
+ * converts it to the corresponding uppercase letter.
+ * Otherwise, returns c unchanged.
+ *
+ * @param c Character to convert (as int).
+ * @return Uppercase equivalent if lowercase letter, else c.
+ */
 int	ft_toupper(int c)
 {
 	if (c >= 'a' && c <= 'z')
-	{
-		c = c - 32;
-	}
-	return (c);
+		return (c - 32);
+	else
+		return (c);
 }
 /*
-int	main(void)
+int main ()
 {
-	int	upp;
+	printf("%c\n",ft_toupper(99));
+	printf("%c\n\n",toupper(99));
 
-	upp = ft_toupper('a');
+	printf("%c\n",ft_toupper(65));
+	printf("%c\n\n",toupper(65));
 
-	printf("%c\n", upp);
-	return (0);
+	printf("%c\n",ft_toupper(6888));
+	printf("%c\n\n",toupper(6888));
+
 }
 */

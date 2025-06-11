@@ -1,33 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf_strings.c                                :+:      :+:    :+:   */
+/*   ft_lstsize_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: laufarin <laufarin@student.42barcel>       +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/03 15:07:05 by laufarin          #+#    #+#             */
-/*   Updated: 2024/06/07 13:37:13 by laufarin         ###   ########.fr       */
+/*   Created: 2024/07/22 16:57:32 by ofilloux          #+#    #+#             */
+/*   Updated: 2025/06/11 15:30:53 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_printf_strings(char *s)
+/**
+ * @brief Counts the number of elements in a linked list.
+ *
+ * @param lst Pointer to the first element of the list.
+ * @return The total number of elements.
+ */
+int	ft_lstsize(t_list *lst)
 {
 	int	i;
 
 	i = 0;
-	if (s == NULL)
+	if (lst)
 	{
-		if (write (1, "(null)", 6) == -1)
-			return (-1);
-		return (6);
+		while (lst)
+		{
+			lst = lst->next;
+			i++;
+		}
 	}
-	while (s[i] != '\0')
-	{
-		if (write (1, &s[i], 1) == -1)
-			return (-1);
-		i++;
-	}
+	else
+		return (0);
 	return (i);
 }

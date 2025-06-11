@@ -1,42 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
+/*   ft_putendl_fd copy.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: laufarin <laufarin@student.42barcel>       +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/18 11:37:12 by laufarin          #+#    #+#             */
-/*   Updated: 2023/09/25 02:08:13 by laufarin         ###   ########.fr       */
+/*   Created: 2024/01/28 09:56:58 by ofilloux          #+#    #+#             */
+/*   Updated: 2025/06/11 15:47:05 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <unistd.h>
 #include "libft.h"
 
+/**
+ * @brief Writes the string s to the given file descriptor fd,
+ *        followed by a newline.
+ *
+ * @param s Null-terminated string to write.
+ * @param fd File descriptor where the string will be written.
+ */
 void	ft_putendl_fd(char *s, int fd)
 {
-	while (*s)
+	int	i;
+
+	i = 0;
+	while (s && s[i])
 	{
-		write (fd, &*s, 1);
-		s++;
+		write(fd, &s[i], 1);
+		i++;
 	}
 	write(fd, "\n", 1);
 }
-/*
-#include "fcntl.h"
-
-int	main(void)
-{
-	char	str[] = "Hi Laura";
-	int		fd;
-	int		loop;
-
-	loop = 10;
-	fd = open("test", O_WRONLY);
-	while (loop > 0 )
-	{
-		ft_putendl_fd(str, fd);
-		loop--;
-	}
-	close(fd);
-	return (0);
-}*/

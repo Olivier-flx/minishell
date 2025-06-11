@@ -1,60 +1,87 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memmove.c                                       :+:      :+:    :+:   */
+/*   ft_memmove copy.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/07 15:37:35 by laufarin          #+#    #+#             */
-/*   Updated: 2025/02/07 16:36:15 by ofilloux         ###   ########.fr       */
+/*   Created: 2024/01/16 18:38:37 by ofilloux          #+#    #+#             */
+/*   Updated: 2025/06/11 15:48:47 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+//#include <string.h>
+//#include <stdio.h>
 #include "libft.h"
 
-	//unsigned int	i;
-void	*ft_memmove(void *dst, const void *src, size_t len)
+/**
+ * @brief Copies n bytes from memory area src to memory area dest.
+ *
+ * The memory areas may overlap. Copying is done safely to avoid data
+ * corruption.
+ * If dest > src, copying is performed from the end to the beginning.
+ * Otherwise, copying is from the beginning to the end.
+ * The caller must ensure that dest points to allocated memory of
+ * at least n bytes.
+ * For copying arrays of types larger than a byte (e.g., int[]), n should be
+ * the total size in bytes (count * sizeof(type)).
+ *
+ * @param dest Pointer to the destination memory area.
+ * @param src Pointer to the source memory area.
+ * @param n Number of bytes to copy.
+ * @return Pointer to the destination memory area (dest).
+ */
+void	*ft_memmove(void *dest, const void *src, size_t n)
 {
-	char			*pdst;
-	char			*psrc;
+	size_t	i;
 
-	pdst = (char *)dst;
-	psrc = (char *)src;
-	if (psrc == NULL && pdst == NULL)
-		return (NULL);
-	if (dst > src)
+	if (dest == (void *)0 && src == (void *)0)
+		return (dest);
+	i = 0;
+	if (dest > src)
 	{
-		while (len)
+		i = n;
+		while (i > 0)
 		{
-			pdst[len -1] = psrc[len -1];
-			len--;
+			i--;
+			((char *)dest)[i] = ((char *)src)[i];
 		}
 	}
 	else
-		ft_memcpy(pdst, psrc, len);
-	return (dst);
+	{
+		while (i < n)
+		{
+			((char *)dest)[i] = ((char *)src)[i];
+			i++;
+		}
+	}
+	return (dest);
 }
-//		i = 0;
 /*
-int main(void)
+int main ()
 {
-	char *a;
-	char *b;
+	 char str[] = "hola";
+	 char sr[] = "bb";
 
-	a = malloc(sizeof(char) * 10);
-	b = malloc(sizeof(char) * 10);
-	a[0] = 'h';
-	a[1] = 'o';
-	a[2] = 'l';
-	a[3] = 'a';
-	a[4] = ' ';
-	a[5] = 'c';
-	a[6] = 'o';
-	a[7] = 'm';
-	a[8] = 'o';
-	a[9] = '\0';
-	b[5] = '\0';
-	ft_memmove(b,a,5);
-	printf("En b ahors tengo |%s|\n", b);
+        printf("Before memset: %s\n", str);
+        memmove(str, sr, 2);
+        printf("After memset: %s\n", str);
+
+
+	char str2[] = "hola";
+        printf("Before ft_memmove: %s\n", str2);
+        ft_memmove(str2, sr,2);
+        printf("After ft_memset: %s\n\n", str2);
+
+
+	char str3[] = "hola mundo";
+        printf("Before memmove: %s\n", str3);
+        memmove(str3, sr,7);
+        printf("After memmove: %s\n", str3);
+
+	char str4[] = "hola mundo";
+        printf("Before ft_memmove: %s\n", str4);
+        ft_memmove(str4, sr,7);
+        printf("After ft_memset: %s\n", str4);
 }
 */

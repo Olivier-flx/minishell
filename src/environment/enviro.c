@@ -3,49 +3,47 @@
 /*                                                        :::      ::::::::   */
 /*   enviro.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 18:33:21 by marvin            #+#    #+#             */
-/*   Updated: 2025/05/11 18:07:27 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/06 22:27:28 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../../header/minishell.h"
 
-t_env *ft_new_env_node(char *key, char *value, bool exported)
+t_env	*ft_new_env_node(char *key, char *value, bool exported)
 {
 	t_env	*node;
 
 	node = malloc(sizeof(t_env));
-	if(!node)
-		return(NULL);
-
+	if (!node)
+		return (NULL);
 	node->key = ft_strdup(key);
 	node->value = ft_strdup(value);
 	node->is_exported = exported;
 	node->next = NULL;
-	return(node);
+	return (node);
 }
 
-void ft_env_add_back(t_env **head, t_env *new_node)
+void	ft_env_add_back(t_env **head, t_env *new_node)
 {
 	t_env	*last;
 
-	if(!*head)
+	if (!*head)
 	{
 		*head = new_node;
-		return;
+		return ;
 	}
 	last = *head;
-	while(last->next)
+	while (last->next)
 	{
 		last = last->next;
 	}
 	last->next = new_node;
 }
 
-static void init_eq_key_val(char **eq,char **key, char **val)
+static void	init_eq_key_val(char **eq, char **key, char **val)
 {
 	*eq = NULL;
 	*key = NULL;
@@ -54,13 +52,13 @@ static void init_eq_key_val(char **eq,char **key, char **val)
 
 //#include <unistd.h> // Para 'environ'
 
-t_env *ft_init_env(char **env)
+t_env	*ft_init_env(char **env)
 {
-	int	i;
-	t_env *head;
-	char *equal;
-	char *key;
-	char *value;
+	int		i;
+	t_env	*head;
+	char	*equal;
+	char	*key;
+	char	*value;
 
 	head = NULL;
 	init_eq_key_val(&equal, &key, &value);
@@ -72,13 +70,13 @@ t_env *ft_init_env(char **env)
 		key = ft_substr(env[i], 0, equal - env[i]);
 		value = ft_strdup(equal + 1);
 		ft_env_add_back(&head, ft_new_env_node(key, value, true));
-		free(key);  // Liberamos key temporal (ft_substr usa malloc)
-		free(value);
+		ft_free((void **) &key);
+		ft_free((void **) &value);
 	}
 	return (head);
 }
 
-void ft_print_env(t_env *env)
+void	ft_print_env(t_env *env)
 {
 	while (env)
 	{

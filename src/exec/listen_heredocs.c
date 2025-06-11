@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   listen_heredocs.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 17:41:15 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/14 17:50:59 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/09 10:31:01 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell.h"
 
-int	listen_terminal2(t_chunk * chunk, char *limiter, int i_to_herdoc_index)
+int	listen_terminal2(t_chunk *chunk, char *limiter, int i_to_herdoc_index)
 {
 	char	*line;
 	int		limiter_len;
@@ -27,7 +27,8 @@ int	listen_terminal2(t_chunk * chunk, char *limiter, int i_to_herdoc_index)
 		if (ft_strncmp(line, limiter, limiter_len) == 0 \
 				&& (int) ft_strlen(line) == limiter_len)
 			break ;
-		write (chunk->heredoc_pipe_arr[i_to_herdoc_index][1], line, ft_strlen(line));
+		write (chunk->heredoc_pipe_arr[i_to_herdoc_index][1], \
+			line, ft_strlen(line));
 		write(chunk->heredoc_pipe_arr[i_to_herdoc_index][1], "\n", 1);
 		ft_free ((void **) &line);
 	}
@@ -49,7 +50,8 @@ int	listen_heredocs(t_data *data, t_chunk *chunk)
 	{
 		if (ft_strcmp("<<", chunk->input_redir[i]) == 0)
 		{
-			listen_terminal2(chunk, chunk->input_redir_file[i], i_to_herdoc_index);
+			listen_terminal2(chunk, chunk->input_redir_file[i], \
+				i_to_herdoc_index);
 			close(chunk->heredoc_pipe_arr[i_to_herdoc_index][1]);
 			i_to_herdoc_index++;
 		}

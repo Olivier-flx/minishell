@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   preliminary_checks.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 10:37:33 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/14 11:00:24 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/04 13:30:02 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ bool	line_is_exlamation_point(t_data *data, char *line)
 	return (false);
 }
 
-bool	preliminary_checks_ok(t_data *data, char* line)
+bool	preliminary_checks_ok(t_data *data, char *line)
 {
 	if (!line)
 		return (false);

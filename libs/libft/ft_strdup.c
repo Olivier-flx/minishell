@@ -1,47 +1,52 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_strdup copy.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: laufarin <laufarin@student.42barcel>       +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/17 21:38:46 by laufarin          #+#    #+#             */
-/*   Updated: 2023/09/25 01:55:58 by laufarin         ###   ########.fr       */
+/*   Created: 2024/01/21 15:11:56 by ofilloux          #+#    #+#             */
+/*   Updated: 2025/06/11 15:57:15 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 //#include <string.h>
+//#include <stdio.h>
+#include <stdlib.h>
 
-char	*ft_strdup(char *s1)
+/**
+ * @brief Duplicates the given string by allocating sufficient memory
+ *        and copying its content.
+ *
+ * Allocates memory for a new null-terminated string, copies the
+ * content of s1 into it,and returns a pointer to the new string.
+ *
+ * @param s1 The source null-terminated string to duplicate.
+ * @return A pointer to the duplicated string, or NULL if memory alloc fails.
+ */
+char	*ft_strdup(const char *s1)
 {
-	char	*ptr;
-	size_t	i;
-	size_t	len;
+	char	*cpy;
+	int		i;
 
 	i = 0;
-	len = ft_strlen(s1);
-	ptr = malloc(sizeof(char) * len + 1);
-	if (ptr == NULL)
-		return (NULL);
-	while (i < len)
-	{
-		ptr[i] = s1[i];
+	while (s1[i] != '\0')
 		i++;
+	cpy = malloc ((i + 1) * sizeof (char));
+	if (!cpy)
+		return (NULL);
+	while (i >= 0)
+	{
+		cpy[i] = s1[i];
+		i--;
 	}
-	ptr[i] = '\0';
-	return (ptr);
+	return (cpy);
 }
 /*
-int	main(void)
+int main ()
 {
-
-	char *ptr;
-	char *str;
-	ptr = ft_strdup("");
-	str = strdup("a");
-	
-	printf("ptr: %p\n", ptr);
-	printf("str: %p\n", str);
-	return(0);
-}*/
+	char s1[] = "hola";
+	printf("%p\n", strdup(s1));
+	printf("%p\n", ft_strdup(s1));
+}
+*/

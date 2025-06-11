@@ -6,55 +6,40 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:30:25 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/14 17:58:15 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/09 21:29:19 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell.h"
 
-void	run_cmd(t_data *data, t_exe *exe, t_chunk *chunk, int i)
-{
-	close_unecessary_pipes(exe, i - 1);
-	redirect_input_file(data, chunk);
-	redirect_to_output_file(data, chunk);
-	if (i > 0 && !chunk->has_input_redir && dup2(exe->pipe_arr[i - 1][0], STDIN_FILENO) == -1)
-		strerror(errno); // @optimize
-	if (i >= 0 && i < exe->total_cmd_count - 1)
-		close(exe->pipe_arr[i][0]);
-	if (i < exe->total_cmd_count - 1 && !chunk->has_redir && dup2(exe->pipe_arr[i][1], STDOUT_FILENO) == -1)
-		strerror(errno); // @optimize
-	if (i < exe->total_cmd_count - 1)
-		close(exe->pipe_arr[i][1]);
-	if (0 != execve_builtin_in_child(data, exe, chunk, i))
-		execve(chunk->argv[0], chunk->argv, data->env);
-	if (exe->total_cmd_count > 1)
-	{
-		free_resources(data, true, true);
-		exit(127);
-	}
-}
-
 static void	waiting_childs(t_data *data, t_exe *exe, int *pid_arr)
 {
-	int i;
+	int		i;
+	int		status;
+	bool	printed;
 
+	if (!data)
+		return ;
 	i = 0;
+	printed = false;
 	while (i < exe->valid_cmd_count)
-	 {
-		if (exe->total_cmd_count == 1 \
-				&& exe->cmd_is_valid_arr[i] \
-				&& !is_builtin(((t_chunk *)data->cmd_list->content)->argv[0]))
-			waitpid(pid_arr[i], NULL, 0);
+	{
+		if (exe->cmd_is_valid_arr[i])
+		{
+			status = 0;
+			waitpid(pid_arr[i], &status, 0);
+			handle_sub_process_signal(data, status, &printed);
+		}
 		i++;
-	 }
+	}
 }
 
 void	init_pid_arr(t_data *data, t_exe *exe)
 {
-	int i;
+	int	i;
 
 	if (!data)
-		return;
+		return ;
 	i = 0;
 	exe->pid_arr = malloc(exe->valid_cmd_count * sizeof(int));
 	if (!exe->pid_arr)
@@ -64,22 +49,47 @@ void	init_pid_arr(t_data *data, t_exe *exe)
 		exe->pid_arr[i++] = -2;
 }
 
-int main_exec(t_data *data)
+void	exec_cmds(t_data *data, int i)
+{
+	int		valid_cmd_i;
+	t_dlist	*i_node;
+	t_chunk	*chunk;
+
+	i_node = data->cmd_list;
+	valid_cmd_i = 0;
+	while (i < data->exe_nfo.total_cmd_count)
+	{
+		chunk = (t_chunk *)i_node->content;
+		if (((t_chunk *)i_node->content)->type == EMPTY)
+			i++;
+		if (((t_chunk *)i_node->content)->type == EMPTY \
+			|| (i_node && chunk && chunk->type != CMD))
+		{
+			i_node = i_node->next;
+			continue ;
+		}
+		process_command_iteration(data, chunk, i, &valid_cmd_i);
+		i++;
+		i_node = i_node->next;
+	}
+}
+
+int	main_exec(t_data *data)
 {
 	if (data)
 	{
 		init_files(data);
 		init_input_files(data);
 		init_cmd(data);
-		init_pid_arr(data, &data->exec_info);
-		init_pipes_2arr(data , &data->exec_info);
-		run_pipex(data, 0);
-		close_all_pipes(&data->exec_info, &data->exec_info.pipe_arr);
-		waiting_childs(data, &data->exec_info, data->exec_info.pid_arr);
-		clean_exec_info(data, data->exit_status);
-		if (data->exec_info.cmd_err_msg != NULL && \
-				data->exec_info.command_err_count == data->exec_info.total_cmd_count)
-			printf("%s\n", data->exec_info.cmd_err_msg);
+		init_pid_arr(data, &data->exe_nfo);
+		init_pipes_2arr(data, &data->exe_nfo);
+		exec_cmds(data, 0);
+		close_all_pipes(&data->exe_nfo, &data->exe_nfo.pipe_arr);
+		waiting_childs(data, &data->exe_nfo, data->exe_nfo.pid_arr);
+		clean_exe_nfo(data, data->exit_status);
+		if (data->exe_nfo.cmd_err_msg != NULL && \
+			data->exe_nfo.command_err_count == data->exe_nfo.total_cmd_count)
+			printf("%s\n", data->exe_nfo.cmd_err_msg);
 	}
-	return(EXIT_SUCCESS);
+	return (EXIT_SUCCESS);
 }
