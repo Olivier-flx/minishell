@@ -1,42 +1,58 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   ft_strjoin copy.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: laufarin <laufarin@student.42barcel>       +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/20 17:53:42 by laufarin          #+#    #+#             */
-/*   Updated: 2023/09/25 01:33:36 by laufarin         ###   ########.fr       */
+/*   Created: 2024/01/28 11:35:53 by ofilloux          #+#    #+#             */
+/*   Updated: 2025/06/11 16:01:16 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include "libft.h"
 
-char	*ft_strjoin(const char *s1, const char *s2)
+/**
+ * @brief Concatenates two strings into a newly allocated string.
+ *
+ * Allocates memory for a new string that is the result of
+ * appending s2 to s1. Both strings must be null-terminated.
+ *
+ * @param s1 First string to concatenate.
+ * @param s2 Second string to concatenate.
+ * @return A pointer to the new string, or NULL if allocation fails.
+ */
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	char	*ptr;
-	char	*cpy_1;
-	char	*cpy_2;
-	int		i;
-	int		j;
+	int		l1;
+	int		l2;
+	int		t;
+	char	*nw;
 
-	i = 0;
-	j = 0;
-	cpy_1 = (char *) s1;
-	cpy_2 = (char *) s2;
-	ptr = malloc(sizeof(char) * (ft_strlen(s1) + (ft_strlen(s2) +1)));
-	if (ptr == NULL)
+	l1 = (int)ft_strlen(s1);
+	l2 = (int)ft_strlen(s2);
+	nw = malloc((l1 + l2 + 1) * sizeof(char));
+	if (!nw)
 		return (NULL);
-	while (cpy_1[i])
+	t = 0;
+	while (t <= l1 - 1)
 	{
-		ptr[i] = cpy_1[i];
-		i++;
+		nw[t] = s1[t];
+		t++;
 	}
-	while (cpy_2[j])
+	while (t <= l1 + l2 - 1)
 	{
-		ptr[i + j] = cpy_2[j];
-		j++;
+		nw[t] = s2[t - l1];
+		t++;
 	}
-	ptr[i + j] = '\0';
-	return (ptr);
+	nw[t] = '\0';
+	return (nw);
 }
+/*
+int	main()
+{
+  printf("%s", ft_strjoin("hola","mundo"));
+  return (1);
+}
+*/

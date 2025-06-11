@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/31 14:09:29 by laufarin          #+#    #+#             */
-/*   Updated: 2025/06/06 11:48:39 by ofilloux         ###   ########.fr       */
+/*   Created: 2025/04/11 15:18:48 by ofilloux          #+#    #+#             */
+/*   Updated: 2025/06/11 16:39:23 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,18 +44,18 @@ int ft_strcmp(const char *s1, const char *s2);
 
 int main(void)
 {
-    char *str1 = "hola";
-    char *str2 = "hola";
-    char *str3 = "holb";
-    char *str4 = "hol";
+	char *str1 = "hola";
+	char *str2 = "hola";
+	char *str3 = "holb";
+	char *str4 = "hol";
 
-    printf("Comparando '%s' y '%s': %d\n", str1,
+	printf("Comparando '%s' y '%s': %d\n", str1,
 		str2, ft_strcmp(str1, str2)); // 0
-    printf("Comparando '%s' y '%s': %d\n",
-		str1, str3, ft_strcmp(str1, str3)); // negativo
-    printf("Comparando '%s' y '%s': %d\n", str1, str4,
-		ft_strcmp(str1, str4)); // positivo
+	printf("Comparando '%s' y '%s': %d\n",
+		str1, str3, ft_strcmp(str1, str3));
+	printf("Comparando '%s' y '%s': %d\n", str1, str4,
+		ft_strcmp(str1, str4));
 
-    return 0;
+	return 0;
 }
 */

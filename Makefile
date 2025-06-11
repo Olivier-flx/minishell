@@ -107,6 +107,8 @@ SRC = main.c \
 	$(ENV)
 
 OBJ = $(SRC:.c=.o)
+
+LIBFT_OBJ := $(patsubst %.c,%.o,$(wildcard ./libs/libft/*.c))
 #MMD = $(SRC:.c=.d)
 
 ###################
@@ -118,7 +120,7 @@ $(NAME) : $(OBJ) $(LIBFT_PATH)
 		@$(CC) $(CFLAGS) $(DEBUG) $(OBJ) $(LIBFT_PATH) -o $@ $(LDFLAGS)
 		@printf "$(GREEN)[minishell] Compiled successfully.$(NC)\n"
 
-$(LIBFT_PATH):
+$(LIBFT_PATH): $(LIBFT_OBJ)
 		@$(MAKE) -C ./libs/libft
 #> /dev/null 2>&1
 		@printf "$(GREEN)[minishell] libft compiled successfully.$(NC)\n" > /dev/null

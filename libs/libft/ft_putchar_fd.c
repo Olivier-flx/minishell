@@ -1,37 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
+/*   ft_putchar_fd copy.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: laufarin <laufarin@student.42barcel>       +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/18 00:05:24 by laufarin          #+#    #+#             */
-/*   Updated: 2023/09/25 00:43:08 by laufarin         ###   ########.fr       */
+/*   Created: 2024/01/28 09:39:27 by ofilloux          #+#    #+#             */
+/*   Updated: 2025/06/11 15:44:56 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <unistd.h>
 
+/**
+ * @brief Writes the character c to the given file descriptor fd.
+ *
+ * @param c Character to write.
+ * @param fd File descriptor where the character will be written.
+ */
 void	ft_putchar_fd(char c, int fd)
 {
-	write (fd, &c, 1);
+	write(fd, &c, 1);
 }
-
-/*int main(void)
-{
-
-	char	h;
-	int		fd;
-	char	archivo[] = "hola.tx";
-	int		loop = 10;
-
-	fd = open(archivo, O_WRONLY); 
-	h = 'a';
-	while (loop > 0)
-	{
-		ft_putchar_fd(h, fd);
-		loop--;
-	}
-	close(fd);
-	return (0);
-}*/

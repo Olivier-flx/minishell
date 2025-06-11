@@ -1,39 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isdigit.c                                       :+:      :+:    :+:   */
+/*   ft_isdigit copy.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: laufarin <laufarin@student.42barcel>       +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/04 22:40:07 by laufarin          #+#    #+#             */
-/*   Updated: 2023/09/05 20:01:36 by laufarin         ###   ########.fr       */
+/*   Created: 2024/01/16 18:19:57 by ofilloux          #+#    #+#             */
+/*   Updated: 2025/06/11 15:19:15 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+/**
+ * @brief Checks if the character is a digit (0–9).
+ *
+ * @param c The character to check.
+ * @return The character itself if it's a digit, 0 otherwise.
+*/
 int	ft_isdigit(int c)
 {
 	if (c >= '0' && c <= '9')
-	{
-		return (1);
-	}
+		return (c);
 	return (0);
 }
-/*int	main(void)
-{
-	int	is_digit;
-	int	d;
-
-	d = '3';
-	is_digit = ft_isdigit(d);
-	if (is_digit == 0)
-	{
-		printf("no es un digito\n");
-	}
-	else
-	{
-		printf("es un digito\n");
-	}
-	return (0);
-}*/

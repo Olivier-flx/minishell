@@ -1,51 +1,52 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   ft_bzero copy.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: laufarin <laufarin@student.42barcel>       +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/06 21:24:07 by laufarin          #+#    #+#             */
-/*   Updated: 2023/09/22 15:25:02 by laufarin         ###   ########.fr       */
+/*   Created: 2024/01/21 10:33:01 by ofilloux          #+#    #+#             */
+/*   Updated: 2025/06/11 15:15:41 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+//#include <stdio.h>
+#include <string.h>
 
+/**
+ * @brief Sets the first n bytes of the memory area pointed to by s to zero.
+ *
+ * This function writes null bytes (`'\0'`) to the first `n` bytes of the memory
+ * area pointed to by `s`. It is typically used to clear memory.
+ *
+ * @param s void pointer to the memory area to be zeroed.
+ * @param n Number of bytes to set to zero.
+ */
 void	ft_bzero(void *s, size_t n)
 {
-	size_t			i;
-	unsigned char	*ptr;
+	size_t	i;
 
-	ptr = s;
 	i = 0;
 	while (i < n)
 	{
-		ptr[i] = '\0';
+		((char *)s)[i] = '\0';
 		i++;
 	}
 }
 
-/*int main()*/
-/*{
-  void *s;
-  unsigned char *ptr;
+/*
+int main ()
+{
+	char str[] = "hola";
+        printf("Before bzero: %s\n", str);
+	bzero(str, 2);
 
-  int i;
-  i = 0;
-  s = malloc(sizeof(char) * 30);
-  ptr = s;
-  while (i < 30)
-  {
-  ptr[i] = 'b';
-  i++;
-  }
-  ft_bzero(s, 10);*/
-/*printf("aqui no priuntara nada porque tengo
-  10 caracter nulos  |%s|\n", ptr);*/
-/*printf("Pero en la posicion 11 
-  si que tengo mis b, |%c|\n", ptr[11]);
-  ptr[29] = '\0';*/
-/*printf("Aqui esta lo que hay detras de los 10
-  caracter nulos |%s|\n", &ptr[11]);
-  }*/
+	printf("After memset: %s\n", str);
+
+	        char str2[] = "hola";
+        printf("Before bzero: %s\n", str2);
+        ft_bzero(str2, 2);
+
+        printf("After memset: %s\n", str2);
+}
+*/

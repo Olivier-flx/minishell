@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipex.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 17:55:52 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/10 01:10:42 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/11 17:43:54 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	run_pipex(t_data *data, t_exe *exe, t_chunk *chunk, int i)
 	if (i < exe->total_cmd_count - 1)
 		close(exe->pipe_arr[i][1]);
 	if (0 != execve_builtin_in_child(data, exe, chunk, i))
-		execve(chunk->argv[0], chunk->argv, data->env);
+		execve(chunk->argv[0], chunk->argv, data->env); // @optimize:  envoyer une copie de la liste d'env
 	if (exe->total_cmd_count > 1)
 	{
 		execve("/bin/true", (char *[]){"true", NULL}, NULL);
