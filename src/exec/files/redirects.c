@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 17:06:53 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/09 20:38:50 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/14 15:32:17 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,12 +130,6 @@ void	redirect_to_output_file(t_data *data, t_chunk *chunk)
 	if (!data || chunk->redir_file_count == 0)
 		return ;
 	lst_file = chunk->redir_file_count - 1;
-	// if (chunk->file_open[lst_file] == true)
-	// {
-	// 	close(chunk->file_fd[lst_file]);
-	// 	chunk->file_open[lst_file] = false;
-	// 	chunk->file_fd[lst_file] = -1;
-	// }
 	chunk->file_fd[lst_file] = open_redir_file(chunk, lst_file);
 	chunk->file_open[lst_file] = true;
 	if (chunk->file_fd[lst_file] < 0)

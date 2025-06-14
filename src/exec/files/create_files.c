@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 11:26:59 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/09 20:39:26 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/14 15:32:41 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@
 static int	malloc_fd_arr(t_chunk *chunk)
 {
 	int	i;
-
 
 	chunk->file_fd_malloced = false;
 	if (!chunk->redir)

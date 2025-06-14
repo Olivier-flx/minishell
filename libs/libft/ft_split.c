@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split copy.c                                    :+:      :+:    :+:   */
+/*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 09:49:21 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/11 15:50:14 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/14 15:24:59 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ static char	**ft_new(char const *s, char c, char **ns_ar, int nb_words)
 	ns_ar[word_i] = 0;
 	return (ns_ar);
 }
-
 
 /**
  * @brief Splits the string s into an array of strings using the delimiter c.

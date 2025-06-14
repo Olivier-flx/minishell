@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 17:48:14 by marvin            #+#    #+#             */
-/*   Updated: 2025/06/09 19:56:53 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/14 15:25:27 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	exit_arg(t_data *data, char **args)
 			free_resources(data, true, true);
 			data->exit_code = 255;
 			data->exit_required = true;
-			//exit(255); // @test ID 9
 		}
 		i++;
 	}
@@ -48,11 +47,9 @@ int	ft_exit(t_data *data, char **args)
 		free_resources(data, true, true);
 		data->exit_code = (ft_atoi(args[1]) % 256);
 		data ->exit_required = true;
-		//exit(ft_atoi(args[1]) % 256); // @test ID 9
 	}
 	free_resources(data, true, true);
 	data->exit_code = 0;
 	data ->exit_required = true;
-	//exit(0); // @test ID 9
 	return (0);
 }
