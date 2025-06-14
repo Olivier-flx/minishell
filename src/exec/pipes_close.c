@@ -6,41 +6,40 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 10:41:01 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/14 15:31:10 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/14 16:21:49 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell.h"
 
+/**
+ * @brief Closes all pipe fd that are not needed by the current process.
+ *
+ * This function iterates through all pipes and closes:
+ *   - the read end (`pipe_arr[j][0]`) if the index `j` is not equal to `i`
+ *     (ie. let open the read end only for the i command)
+ *   - the write end (`pipe_arr[j][1]`) if the index `j` is not equal to `i + 1`
+ *     (ie. let open the write end only for the i command)
+ *
+ * @param exe Pointer to a `t_exe` structure containing:
+ *            - `pipe_arr`: an array of pipes (each a pair of file descriptors),
+ *            - `total_cmd_count`: the total number of commands in the pipeline.
+ * @param i   Index of the current command in the pipeline.
+ */
 void	close_unecessary_pipes(t_exe *exe, int i)
 {
-	int	j;
+	int	pipe_i;
 
-	j = 0;
-	while (j < exe->total_cmd_count - 1)
+	pipe_i = 0;
+	while (pipe_i < exe->total_cmd_count - 1)
 	{
-		if (j != i && close(exe->pipe_arr[j][0]) == -1)
-			perror("Error : close pipe_arr[j][0] :");
-		if (j != i + 1 && close(exe->pipe_arr[j][1]))
-			perror("Error : close pipe_arr[j][1] :");
-		j++;
+		if (pipe_i != i && close(exe->pipe_arr[pipe_i][0]) == -1)
+			perror("Error : close pipe_arr[pipe_i][0] :");
+		if (pipe_i != i + 1 && close(exe->pipe_arr[pipe_i][1]) == -1)
+			perror("Error : close pipe_arr[pipe_i][1] :");
+		pipe_i++;
 	}
 }
-
-// void	close_unecessary_pipes(t_exe *exe, int i)
-// {
-// 	int	j;
-
-// 	j = 0;
-// 	while (j < exe->total_cmd_count - 1)
-// 	{
-// 		if (j != i && close(exe->pipe_arr[j][0]) == -1)
-// 			perror("Error : close pipe_arr[j][0] :");
-// 		if (j != i + 1 && close(exe->pipe_arr[j][1]))
-// 			perror("Error : close pipe_arr[j][1] :");
-// 		j++;
-// 	}
-// }
 
 /**
  * @brief Closes all pipe file descriptors in a child process.
