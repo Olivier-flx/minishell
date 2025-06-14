@@ -6,14 +6,14 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:23:22 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/09 19:52:05 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/14 16:30:58 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./header/minishell.h"
 
 // HOW TO RUN //
-/* valgrind --leak-check=full --show-leak-kinds=all
+/* valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes
 	--track-origins=yes --suppressions=readline.supp -s ./minishell
 */
 
