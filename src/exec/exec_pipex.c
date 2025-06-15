@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 17:55:52 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/11 17:43:54 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/15 11:07:17 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,9 +95,10 @@ void	process_command_iteration(t_data *data, t_chunk *chunk, int i, \
 		{
 			data->exe_nfo.pid_arr[*valid_cmd_i] = fork();
 			if (data->exe_nfo.pid_arr[*valid_cmd_i] == -1)
-				strerror(errno);
+				perror("Fork");
 			if (data->exe_nfo.pid_arr[*valid_cmd_i] == 0)
 			{
+				printf("[pid %i]\n", getpid()); // @debug
 				reset_signals_to_default();
 				run_pipex(data, &data->exe_nfo, chunk, i);
 			}

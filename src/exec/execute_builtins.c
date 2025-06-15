@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 16:04:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/09 21:23:24 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/15 11:44:22 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,18 +31,22 @@ int	pick_and_run_builtin(t_data *data, char **argv)
 	return (EXIT_FAILURE);
 }
 
+
 void	execute_builtin_in_parent(t_data *data, t_exe *exe, \
 		t_chunk *chunk, int i)
 {
 	int	saved_stdin;
 	int	saved_stdout;
 
+	(void)exe;
+	(void) i;
 	save_stdin_stdout(&saved_stdin, &saved_stdout);
-	close_unecessary_pipes(exe, i - 1);
+	//close_unecessary_pipes(exe, i - 1); //@ seems to be not util has it's executed in parent and therefore don't have pipes
 	redirect_input_file(data, chunk);
 	redirect_to_output_file(data, chunk);
 	data->exit_status = pick_and_run_builtin(data, chunk->argv);
 	restor_stdin_stdout(&saved_stdin, &saved_stdout);
+
 	if (data->exit_required)
 		exit(data->exit_code);
 }
