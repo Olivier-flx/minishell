@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 10:41:01 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/15 11:06:17 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/15 11:48:48 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	close_unecessary_pipes(t_exe *exe, int i)
 	int	pipe_i;
 
 	pipe_i = 0;
-	printf("close_unecessary_pipes i = %i. pipe_i = %i\n", i, pipe_i); // @debug
 	while (pipe_i < exe->total_cmd_count - 1)
 	{
 		if (pipe_i != i && close(exe->pipe_arr[pipe_i][0]) == -1)
