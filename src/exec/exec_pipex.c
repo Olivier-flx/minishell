@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 17:55:52 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/16 17:58:41 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/16 21:04:56 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	execve_builtin_in_child(t_data *data, t_exe *exe, t_chunk *chunk, int i)
 
 void	run_pipex(t_data *data, t_exe *exe, t_chunk *chunk, int i)
 {
-	close_unecessary_pipes(exe, i - 1);
+	close_unecessary_pipes(exe, i);
 	redirect_input_file(data, chunk);
 	redirect_to_output_file(data, chunk);
 	if (i > 0 && !chunk->has_input_redir && dup2(exe->pipe_arr[i - 1][0], \
@@ -89,7 +89,7 @@ void	process_command_iteration(t_data *data, t_chunk *chunk, int i, \
 									int *valid_cmd_i)
 {
 	listen_heredocs(data, chunk);
-	if (data->exe_nfo.cmd_is_valid_arr[i] == true)
+	if (data->exe_nfo.cmd_is_valid_arr[i] == true /*|| status == OK*/)
 	{
 		if (run_builtins(data, &data->exe_nfo, chunk, i) != 1)
 		{
@@ -101,10 +101,14 @@ void	process_command_iteration(t_data *data, t_chunk *chunk, int i, \
 				reset_signals_to_default();
 				run_pipex(data, &data->exe_nfo, chunk, i);
 			}
+			/*
+			if ( && or || then )
+				waitpid(pid_arr, &status, 0)
+			*/
 		}
 		(*valid_cmd_i)++;
 	}
-	else
+	else /*if (status == OK)*/
 		process_invalide_cmd(data, &data->exe_nfo, i);
 	close_heredocs_pipes(chunk);
 }

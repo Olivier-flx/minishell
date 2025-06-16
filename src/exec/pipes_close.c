@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes_close.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sarodrig <sarodrig@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 10:41:01 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/15 11:48:48 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/15 12:03:09 by sarodrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	close_unecessary_pipes(t_exe *exe, int i)
 	int	pipe_i;
 
 	pipe_i = 0;
+	i -= 1;
 	while (pipe_i < exe->total_cmd_count - 1)
 	{
 		if (pipe_i != i && close(exe->pipe_arr[pipe_i][0]) == -1)
