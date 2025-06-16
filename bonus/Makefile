@@ -8,16 +8,16 @@ ASTERISK = asterisk/root.c \
 
 
 BONUS_SRC = $(ASTERISK)
-
 HEADER = ./bonus.h
 
 BUILD_DIR = build
 
-BONUS_OBJ = $(patsubst ./%.c, $(BUILD_DIR)/%.o, $(BONUS_SRC))
+BONUS_OBJ = $(BONUS_SRC:.c=.o)
+BONUS_OBJ := $(addprefix $(BUILD_DIR)/, $(BONUS_OBJ))
 
 all : $(BONUS_OBJ)
 
-$(BUILD_DIR)/%.o : ./%.c makefile  $(HEADER)
+$(BUILD_DIR)/%.o : %.c makefile  $(HEADER)
 	mkdir -p $(dir $@)
 	@$(COMP) $(CFLAGS) -c $< -o $@
 
