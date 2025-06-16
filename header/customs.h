@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   customs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sarodrig <sarodrig@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/09 22:43:35 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/11 17:15:36 by sarodrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ typedef struct s_exec_data
 	bool	env_path_found;
 	bool	*cmd_is_valid_arr;
 	bool	cmd_is_valid_arr_malloced;
-	int		*pid_arr; // USED ??
+	int		*pid_arr;
 	bool	pid_arr_malloced;
 	int		**pipe_arr;
 	bool	pipe_arr_malloced;

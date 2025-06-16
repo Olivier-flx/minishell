@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_chunks.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: sarodrig <sarodrig@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:49:47 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/06 10:49:02 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/16 18:39:43 by sarodrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,8 +109,9 @@ int	create_chunks(char *line, t_dlist **cmd_list, t_data *data)
 		return (printf("Error : create_main_chunks"));
 	if (check_for_user_input_error(data, cmd_list) != 0)
 		return (3);
-	if (create_argvs(cmd_list) == 1)
+	if (create_argvs(cmd_list) != 0)
 		return (2);
+	debug_print_cmd_list(cmd_list); //@debug
 	data->nb_chunks = (int) stack_lenght(cmd_list);
 	return (EXIT_SUCCESS);
 }
