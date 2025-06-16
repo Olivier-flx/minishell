@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:46:36 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/09 11:02:41 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/16 16:20:39 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@
 # include "customs.h"
 # include "builtins.h"
 # include "../libs/libft/libft.h"
+# include "../_bonus/_bonus.h"
 
 /*
  * ==========================

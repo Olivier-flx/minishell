@@ -1,9 +1,23 @@
-#COLORS#
+#     _____    ____    _         ____     _____     _____
+#    / ____|  / __ \  | |       / __ \   |  __ \   / ____|
+#   | |      | |  | | | |      | |  | |  | |__) | | (___
+#   | |      | |  | | | |      | |  | |  |  _  /   \___ \
+#   | |____  | |__| | | |____  | |__| |  | | \ \   ____) |
+#    \_____|  \____/  |______|  \____/   |_|  \_\ |_____/
+#
+
 GREEN = \033[1;92m
 RED = \033[1;91m
 NC = \033[0m
 YELLOW=\033[1;33m
 
+#     _____    ____    __  __   _____    _____    _
+#    / ____|  / __ \  |  \/  | |  __ \  |_   _|  | |
+#   | |      | |  | | | \  / | | |__) |   | |    | |
+#   | |      | |  | | | |\/| | |  ___/    | |    | |
+#   | |____  | |__| | | |  | | | |       _| |_   | |____
+#    \_____|  \____/  |_|  |_| |_|      |_____|  |______|
+#
 
 NAME = minishell
 CC = cc
@@ -12,6 +26,15 @@ CFLAGS = -Wall -Wextra -Werror -g -O0 -I./header
 LDFLAGS = -lreadline
 
 #INC = -I./header
+
+#    ______   _____   _        ______    _____
+#   |  ____| |_   _| | |      |  ____|  / ____|
+#   | |__      | |   | |      | |__    | (___
+#   |  __|     | |   | |      |  __|    \___ \
+#   | |       _| |_  | |____  | |____   ____) |
+#   |_|      |_____| |______| |______| |_____/
+#
+
 SIGNALS = ./src/signals/signals.c \
 		./src/signals/sub_proc_sig.c
 
@@ -25,41 +48,41 @@ BUILTINS = ./src/builtins/is_builtin.c \
 		./src/builtins/ft_unset.c
 
 ENV = ./src/environment/env_search.c \
-	./src/environment/env_utils.c \
-	./src/environment/enviro.c \
-	./src/environment/env_utils_2.c \
-	./src/environment/sort_env.c
+		./src/environment/env_utils.c \
+		./src/environment/enviro.c \
+		./src/environment/env_utils_2.c \
+		./src/environment/sort_env.c
 
 TOKENS = ./src/tokens/user_input_validations/preliminary_checks.c \
-	./src/tokens/user_input_validations/check_line.c \
-	./src/tokens/user_input_validations/incomplete_line.c \
-	./src/tokens/user_input_validations/user_input_validation.c\
-	./src/tokens/user_input_validations/check_tokens.c \
-	./src/tokens/user_input_validations/check_tokens_utils.c \
-	./src/tokens/user_input_validations/check_pipe_utils.c \
-	./src/tokens/user_input_validations/unique_token_operator.c\
-	./src/tokens/user_input_validations/double_operators.c \
-	./src/tokens/create_input_token.c \
-	./src/tokens/operator.c \
-	./src/tokens/operator_arr.c \
-	./src/tokens/operator_utils.c \
-	./src/tokens/count_files_in_chunks.c \
-	./src/tokens/init_file_arr.c \
-	./src/tokens/token_separators.c \
-	./src/tokens/create_argv.c \
-	./src/tokens/create_argv_utils.c \
-	./src/tokens/create_chunks.c
+		./src/tokens/user_input_validations/check_line.c \
+		./src/tokens/user_input_validations/incomplete_line.c \
+		./src/tokens/user_input_validations/user_input_validation.c\
+		./src/tokens/user_input_validations/check_tokens.c \
+		./src/tokens/user_input_validations/check_tokens_utils.c \
+		./src/tokens/user_input_validations/check_pipe_utils.c \
+		./src/tokens/user_input_validations/unique_token_operator.c\
+		./src/tokens/user_input_validations/double_operators.c \
+		./src/tokens/create_input_token.c \
+		./src/tokens/operator.c \
+		./src/tokens/operator_arr.c \
+		./src/tokens/operator_utils.c \
+		./src/tokens/count_files_in_chunks.c \
+		./src/tokens/init_file_arr.c \
+		./src/tokens/token_separators.c \
+		./src/tokens/create_argv.c \
+		./src/tokens/create_argv_utils.c \
+		./src/tokens/create_chunks.c
 
 EXEC = ./src/exec/exec.c \
-	./src/exec/exec_pipex.c \
-	./src/exec/commands.c \
-	./src/exec/commands_utils.c \
-	./src/exec/commands_check_wrong.c \
-	./src/exec/path.c \
-	./src/exec/listen_heredocs.c \
-	./src/exec/pipes.c \
-	./src/exec/pipes_close.c \
-	./src/exec/execute_builtins.c
+		./src/exec/exec_pipex.c \
+		./src/exec/commands.c \
+		./src/exec/commands_utils.c \
+		./src/exec/commands_check_wrong.c \
+		./src/exec/path.c \
+		./src/exec/listen_heredocs.c \
+		./src/exec/pipes.c \
+		./src/exec/pipes_close.c \
+		./src/exec/execute_builtins.c
 
 FILES = ./src/exec/files/init_input_files.c \
 		./src/exec/files/create_files.c \
@@ -106,6 +129,14 @@ SRC = main.c \
 	$(EXPEND) \
 	$(ENV)
 
+#     ____    ____         _         __    _        _____   ____     _____
+#    / __ \  |  _ \       | |       / /   | |      |_   _| |  _ \   / ____|
+#   | |  | | | |_) |      | |      / /    | |        | |   | |_) | | (___
+#   | |  | | |  _ <   _   | |     / /     | |        | |   |  _ <   \___ \
+#   | |__| | | |_) | | |__| |    / /      | |____   _| |_  | |_) |  ____) |
+#    \____/  |____/   \____/    /_/       |______| |_____| |____/  |_____/
+#
+
 OBJ = $(SRC:.c=.o)
 
 LIBFT_OBJ := $(patsubst %.c,%.o,$(wildcard ./libs/libft/*.c))
@@ -113,6 +144,30 @@ LIBFT_OBJ := $(patsubst %.c,%.o,$(wildcard ./libs/libft/*.c))
 
 ###################
 LIBFT_PATH = ./libs/libft/libft.a
+
+#    ____     ____    _   _   _    _    _____
+#   |  _ \   / __ \  | \ | | | |  | |  / ____|
+#   | |_) | | |  | | |  \| | | |  | | | (___
+#   |  _ <  | |  | | | . ` | | |  | |  \___ \
+#   | |_) | | |__| | | |\  | | |__| |  ____) |
+#   |____/   \____/  |_| \_|  \____/  |_____/
+#
+
+BONUS_PATH = ./_bonus
+
+B_HEADER = $(BONUS_PATH)/_bonus.h
+
+B_MAKEFILE = $(BONUS_PATH)/Makefile
+
+B_OBJ := $(patsubst %.c,%.o,$(wildcard $(BONUS_PATH)/))
+
+#     _____   __  __   _____         __   _____    ______   _____     _____
+#    / ____| |  \/  | |  __ \       / /  |  __ \  |  ____| |  __ \   / ____|
+#   | |      | \  / | | |  | |     / /   | |  | | | |__    | |__) | | (___
+#   | |      | |\/| | | |  | |    / /    | |  | | |  __|   |  ___/   \___ \
+#   | |____  | |  | | | |__| |   / /     | |__| | | |____  | |       ____) |
+#    \_____| |_|  |_| |_____/   /_/      |_____/  |______| |_|      |_____/
+#
 
 all : $(NAME)
 
@@ -141,14 +196,27 @@ $(LIBFT_PATH): $(LIBFT_OBJ)
 
 clean :
 		@make -s clean -C ./libs/libft
+		@make -s clean -C ./_bonus
 		@rm -f $(OBJ)
 		@printf "$(RED)[minishell] Object files cleaned.$(NC)\n"
 
 fclean : clean
 		@make -s fclean -C ./libs/libft
+		@make -s fclean -C ./_bonus
 		@rm -f $(NAME)
 		@printf "$(RED)[minishell] Cleaned successfully.$(NC)\n"
 
 re: fclean all
 
-.PHONY: all clean fclean re
+bonus : ${NAME} $(B_HEADER) $(B_MAKEFILE) $(B_OBJ) $(OBJ) $(LIBFT_PATH)
+	make -C ./_bonus
+	@$(CC) $(CFLAGS) $(DEBUG) $(OBJ) $(B_OBJ) $(LIBFT_PATH) -o $@ $(LDFLAGS)
+	@printf "$(GREEN)[minishell] Bonus compiled successfully.$(NC)\n"
+
+.PHONY: all clean fclean re bonus
+
+#
+##
+#### Text ART : https://patorjk.com/software/taag/#p=display&c=bash&f=Big
+##
+#
