@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_to_msg.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: sarodrig <sarodrig@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 16:51:49 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/06 22:24:50 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/11 18:14:24 by sarodrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	print_env_list(t_env *env)
 
 // @debug : Funccion que imprime la lista de comandos
 // entera y imprime el contenido de cada nodo
-	/* void debug_print_cmd_list(t_dlist **cmd_list_ptr)
+	void debug_print_cmd_list(t_dlist **cmd_list_ptr)
 	{
 		t_dlist *current = *cmd_list_ptr;
 		int index = 0;
@@ -108,4 +108,3 @@ void	print_env_list(t_env *env)
 		}
 		printf("--- Fin de la impresión de cmd_list ---\n\n");
 	}
- */
