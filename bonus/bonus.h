@@ -2,6 +2,6 @@
 #ifndef _BONUS_H
 # define _BONUS_H
 
-void	expend_asterisk(void);
+void	expend_asterisk(char *str);
 
 #endif

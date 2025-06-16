@@ -153,13 +153,13 @@ LIBFT_PATH = ./libs/libft/libft.a
 #   |____/   \____/  |_| \_|  \____/  |_____/
 #
 
-BONUS_PATH = ./_bonus
+BONUS_PATH = ./bonus
 
-B_HEADER = $(BONUS_PATH)/_bonus.h
+B_HEADER = $(BONUS_PATH)/bonus.h
 
 B_MAKEFILE = $(BONUS_PATH)/Makefile
 
-B_OBJ := $(patsubst %.c,%.o,$(wildcard $(BONUS_PATH)/))
+B_OBJ := $(patsubst %.c,%.o,$(wildcard $(BONUS_PATH)/**/*.c))
 
 #     _____   __  __   _____         __   _____    ______   _____     _____
 #    / ____| |  \/  | |  __ \       / /  |  __ \  |  ____| |  __ \   / ____|
@@ -190,30 +190,35 @@ $(LIBFT_PATH): $(LIBFT_OBJ)
 # └────────────────────────────────────────────┴─────────────────────┴─────────────────┴─────────────────┘
 
 
-
 %.o : %.c $(INC) Makefile
 		@$(CC) $(CFLAGS) $(DEBUG) -c $< -o $@
 
 clean :
 		@make -s clean -C ./libs/libft
-		@make -s clean -C ./_bonus
+		@make -s clean -C ./bonus
 		@rm -f $(OBJ)
 		@printf "$(RED)[minishell] Object files cleaned.$(NC)\n"
 
 fclean : clean
 		@make -s fclean -C ./libs/libft
-		@make -s fclean -C ./_bonus
+		@make -s fclean -C ./bonus
 		@rm -f $(NAME)
 		@printf "$(RED)[minishell] Cleaned successfully.$(NC)\n"
 
 re: fclean all
 
 bonus : ${NAME} $(B_HEADER) $(B_MAKEFILE) $(B_OBJ) $(OBJ) $(LIBFT_PATH)
-	make -C ./_bonus
+	make all -C ./bonus
 	@$(CC) $(CFLAGS) $(DEBUG) $(OBJ) $(B_OBJ) $(LIBFT_PATH) -o $@ $(LDFLAGS)
 	@printf "$(GREEN)[minishell] Bonus compiled successfully.$(NC)\n"
 
-.PHONY: all clean fclean re bonus
+bonus_clean :
+	@make -s clean -C ./bonus
+
+bonus_fclean :
+	@make -s fclean -C ./bonus
+
+.PHONY: all clean fclean re bonus bonus_clean bonus_fclean
 
 #
 ##

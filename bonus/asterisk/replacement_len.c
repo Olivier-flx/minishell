@@ -1,18 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   root.c                                             :+:      :+:    :+:   */
+/*   replacement_len.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/16 16:27:29 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/16 17:14:51 by ofilloux         ###   ########.fr       */
+/*   Created: 2025/06/16 19:07:04 by ofilloux          #+#    #+#             */
+/*   Updated: 2025/06/16 19:08:19 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header/minishell.h"
+#include "../../header/minishell.h"
 
-void	expend_asterisk(void)
-{
-	printf("Desde bonus\n");
-}
+

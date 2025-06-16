@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 17:55:52 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/16 17:53:35 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/16 17:58:41 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	run_pipex(t_data *data, t_exe *exe, t_chunk *chunk, int i)
 	if (i < exe->total_cmd_count - 1)
 		close(exe->pipe_arr[i][1]);
 	if (0 != execve_builtin_in_child(data, exe, chunk, i))
-		execve(chunk->argv[0], chunk->argv, ft_env_to_array(data->env_list)); // @optimize:  enviar una copia de list env en vez de la copia de env
+		execve(chunk->argv[0], chunk->argv, ft_env_to_array(data->env_list));
 	if (exe->total_cmd_count > 1)
 	{
 		execve("/bin/true", (char *[]){"true", NULL}, NULL);
