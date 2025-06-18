@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sarodrig <sarodrig@student.42barcelona.    +#+  +:+       +#+         #
+#    By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/14 18:09:50 by sarodrig          #+#    #+#              #
-#    Updated: 2025/06/14 18:58:28 by sarodrig         ###   ########.fr        #
+#    Updated: 2025/06/18 17:17:36 by ofilloux         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -120,7 +120,7 @@ BUILD_DIR	=	./build
 OBJ			=	$(SRC:%.c=$(BUILD_DIR)/%.o)
 
 LIBFT_PATH	=	./libs/libft/libft.a
-LIBFT_OBJ	:=	$(patsubst %.c,%.o,$(wildcard ./libs/libft/*.c))
+LIBFT_OBJ	:=	$(patsubst %.c,%.o,$(wildcard ./libs/libft/build/*.c))
 #MMD = $(SRC:.c=.d)
 
 # ####### FILE TARGETS #########
@@ -134,7 +134,7 @@ $(NAME) 			:	$(OBJ) $(LIBFT_PATH)
 						@printf "\n$(GREEN)[minishell] Compiled successfully.$(DEFAULT)\n"
 
 $(LIBFT_PATH)		:	$(LIBFT_OBJ)
-						@$(MAKE) -C ./libs/libft 
+						@$(MAKE) -C ./libs/libft
 # > /dev/null 2>&1
 						@printf "\n$(GREEN)[minishell] libft compiled successfully.$(DEFAULT)\n" > /dev/null
 ##
