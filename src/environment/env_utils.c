@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 20:56:46 by marvin            #+#    #+#             */
-/*   Updated: 2025/06/06 22:26:34 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/18 16:43:38 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	ft_free_env(t_env *env)
 	while (env)
 	{
 		tmp = env;
-		env = env->next;
+		env = (env)->next;
 		ft_free((void **)&tmp->key);
 		ft_free((void **)&tmp->value);
 		ft_free((void **)&tmp);

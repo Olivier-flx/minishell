@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils_2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 17:20:12 by marvin            #+#    #+#             */
-/*   Updated: 2025/06/06 22:26:18 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/18 16:46:38 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,7 @@ void	update_or_add_env(t_env **env, char *key, char *value)
 		}
 		current = current->next;
 	}
-	ft_env_add_back(env, ft_new_env_node(ft_strdup(key), \
-		ft_strdup(value), true));
+	ft_env_add_back(env, ft_new_env_node(key, value, true));
 }
 
 int	is_valid_env_key(char *key)
