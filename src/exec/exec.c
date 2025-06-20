@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:30:25 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/09 21:29:19 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/20 16:51:59 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,12 @@ int	main_exec(t_data *data)
 		init_cmd(data);
 		init_pid_arr(data, &data->exe_nfo);
 		init_pipes_2arr(data, &data->exe_nfo);
-		exec_cmds(data, 0);
-		close_all_pipes(&data->exe_nfo, &data->exe_nfo.pipe_arr);
-		waiting_childs(data, &data->exe_nfo, data->exe_nfo.pid_arr);
+		//@BONUS CHUNKS  && and ||
+		while ()
+			exec_cmds(data, 0); //@BONUS CHUNKS  && and ||
+			close_all_pipes(&data->exe_nfo, &data->exe_nfo.pipe_arr);
+			waiting_childs(data, &data->exe_nfo, data->exe_nfo.pid_arr);
+		//@BONUS CHUNKS  && and ||
 		clean_exe_nfo(data, data->exit_status);
 		if (data->exe_nfo.cmd_err_msg != NULL && \
 			data->exe_nfo.command_err_count == data->exe_nfo.total_cmd_count)

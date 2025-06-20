@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_tokens.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 21:34:13 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/09 10:58:52 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/20 16:48:05 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,13 +90,15 @@ int	check_consecutive_pipes(t_dlist *cmd_list)
 
 // check from the last tocken to the first one
 //check for redir puis pipe (check_redir_pipe)
-int	check_for_user_input_error(t_data *data, t_dlist **cmd_list)
+int	check_for_user_input_error(t_data *data, t_dlist **cmd_list) //@BONUS CHUNKS  && and ||
 {
 	if (unique_empty_node(data, *cmd_list))
 		return (3);
 	if (check_for_simple(*cmd_list) > 0 \
 	|| check_for_triple(cmd_list) > 0 \
+	 //@BONUS CHUNKS  && and ||
 	|| check_redir_pipe(cmd_list) > 0 \
+	//@BONUS CHUNKS  && and ||
 	|| check_consecutive_pipes(*cmd_list) > 0 \
 	|| check_pipe_is_first(*cmd_list) > 0)
 	{

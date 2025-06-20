@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:49:47 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/18 16:37:11 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/20 16:52:01 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ static int	create_pipe_chunk(int i, t_dlist **cmd_list)
 	t_chunk			*token;
 
 	token = NULL;
-	pipe = ft_strdup("|");
+	pipe = ft_strdup("|");  //@BONUS CHUNKS  && and ||
 	if (pipe != NULL)
 	{
-		pipe_to_arr = malloc (2 * sizeof (char *));
+		pipe_to_arr = malloc (2 * sizeof (char *)); //@BONUS CHUNKS  && and ||
 		if (!pipe_to_arr)
 			return (free(pipe), EXIT_FAILURE);
 		pipe_to_arr[0] = pipe;
@@ -86,10 +86,10 @@ int	create_main_chunks(char *src, t_dlist **cmd_list, t_data *data)
 	all_tokens = split_quoted2(src, data);
 	while (all_tokens && all_tokens[i] && all_tokens[i][0])
 	{
-		if (i > 0 && all_tokens[i][0] == '|')
+		if (i > 0 && all_tokens[i][0] == '|') //@BONUS CHUNKS  && and ||
 		{
 			handle_chunk_before_pipe(data, all_tokens, flag_last_pipe, i - 1);
-			create_pipe_chunk(i, cmd_list);
+			create_pipe_chunk(i, cmd_list);  //@BONUS CHUNKS  && and ||
 			flag_last_pipe = i + 1;
 		}
 		i++;
