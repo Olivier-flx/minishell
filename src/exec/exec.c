@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:30:25 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/20 16:51:59 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/20 16:59:04 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,10 @@ int	main_exec(t_data *data)
 		init_files(data);
 		init_input_files(data);
 		init_cmd(data);
-		init_pid_arr(data, &data->exe_nfo);
-		init_pipes_2arr(data, &data->exe_nfo);
 		//@BONUS CHUNKS  && and ||
 		while ()
+			init_pid_arr(data, &data->exe_nfo);
+			init_pipes_2arr(data, &data->exe_nfo);
 			exec_cmds(data, 0); //@BONUS CHUNKS  && and ||
 			close_all_pipes(&data->exe_nfo, &data->exe_nfo.pipe_arr);
 			waiting_childs(data, &data->exe_nfo, data->exe_nfo.pid_arr);
