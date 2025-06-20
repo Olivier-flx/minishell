@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:30:25 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/20 16:59:04 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/20 17:55:27 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ int	main_exec(t_data *data)
 		init_files(data);
 		init_input_files(data);
 		init_cmd(data);
+		//@ BONUS Here to do the asterisk extention
+
 		//@BONUS CHUNKS  && and ||
 		while ()
 			init_pid_arr(data, &data->exe_nfo);

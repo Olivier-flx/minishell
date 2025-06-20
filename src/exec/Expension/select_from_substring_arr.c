@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 17:29:54 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/20 17:41:51 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/20 17:55:31 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,8 +113,6 @@ void	retocken_after_expension(char ***chunk_tokens)
 
 	tmp = *chunk_tokens;
 	tmp2 = concat_substrs_sep(*chunk_tokens, ' ');
-	//@ BONUS Here to do the asterisk extention
-
 	*chunk_tokens = split_quoted(tmp2, ' ');
 	ft_free((void **) &tmp2);
 	free_av(&tmp);
