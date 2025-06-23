@@ -6,11 +6,11 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 15:14:36 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/23 15:58:31 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/23 16:39:35 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../header/minishell.h"
+#include "../../../../header/minishell.h"
 
 int	line_accolade_closed(char *line)
 {

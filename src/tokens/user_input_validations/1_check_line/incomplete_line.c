@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   incomplete_line.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 13:27:40 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/04 13:28:25 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/23 16:25:15 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../header/minishell.h"
+#include "../../../../header/minishell.h"
 
 void	listen_incomplete_lines(t_data *data, char **line)
 {

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   preliminary_checks.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 10:37:33 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/04 13:30:02 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/23 16:25:11 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../header/minishell.h"
+#include "../../../../header/minishell.h"
 
 bool	line_is_colon(t_data *data, char *line)
 {

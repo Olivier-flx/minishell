@@ -6,11 +6,11 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 11:28:48 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/23 15:44:10 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/23 16:39:30 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../header/minishell.h"
+#include "../../../../header/minishell.h"
 
 //check cases where there is only an operator in a chunk
 // for instance `>` or `hello | > | world`
@@ -39,6 +39,11 @@ static int	print_err_msg(t_dlist *list, char **tokens, int i, t_quote *qts)
 	return (0);
 }
 
+/**
+ * @brief check either or not a chunk is only composed by operators
+ *
+ * @param list	pointer to t_dlist
+ */
 int	check_for_simple(t_dlist *list)
 {
 	t_quote	quotes;

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   double_operators.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 11:30:14 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/04 13:30:22 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/23 16:39:23 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../header/minishell.h"
+#include "../../../../header/minishell.h"
 
 // ignore <> that is working in bash
 /* static int check_tokens(t_chunk *chunk, t_quote *qts)

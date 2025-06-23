@@ -6,7 +6,7 @@
 #    By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/14 18:09:50 by sarodrig          #+#    #+#              #
-#    Updated: 2025/06/23 16:08:40 by ofilloux         ###   ########.fr        #
+#    Updated: 2025/06/23 16:38:55 by ofilloux         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,15 +55,18 @@ ENV		=	./src/environment/env_search.c \
 			./src/environment/env_utils_2.c \
 			./src/environment/sort_env.c
 
-TOKENS	=	./src/tokens/user_input_validations/preliminary_checks.c \
-			./src/tokens/user_input_validations/incomplete_line.c \
-			./src/tokens/user_input_validations/incomplete_line_utils.c \
-			./src/tokens/user_input_validations/user_input_validation.c\
-			./src/tokens/user_input_validations/check_tokens_utils.c \
-			./src/tokens/user_input_validations/check_pipe_utils.c \
-			./src/tokens/user_input_validations/unique_token_operator.c\
-			./src/tokens/user_input_validations/double_operators.c \
-			./src/tokens/create_input_token.c \
+VALIDATION_PATH = ./src/tokens/user_input_validations
+
+VALIDATION = $(VALIDATION_PATH)/1_check_line/preliminary_checks.c \
+			$(VALIDATION_PATH)/1_check_line/incomplete_line.c \
+			$(VALIDATION_PATH)/1_check_line/incomplete_line_utils.c \
+			$(VALIDATION_PATH)/2_check_tokens/user_input_validation.c \
+			$(VALIDATION_PATH)/2_check_tokens/check_tokens_utils.c \
+			$(VALIDATION_PATH)/2_check_tokens/check_pipe_utils.c \
+			$(VALIDATION_PATH)/2_check_tokens/unique_token_operator.c \
+			$(VALIDATION_PATH)/2_check_tokens/double_operators.c \
+
+TOKENS	=	./src/tokens/create_input_token.c \
 			./src/tokens/operator.c \
 			./src/tokens/operator_arr.c \
 			./src/tokens/operator_utils.c \
@@ -124,6 +127,7 @@ SRC		=	main.c \
 			$(UTILS) \
 			$(BUILTINS) \
 			$(TOKENS) \
+			$(VALIDATION) \
 			$(EXEC) \
 			$(FILES) \
 			$(EXPEND) \

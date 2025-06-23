@@ -6,11 +6,11 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 13:32:44 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/23 16:03:07 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/23 16:39:19 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../header/minishell.h"
+#include "../../../../header/minishell.h"
 
 bool	is_pipe_chunk(t_chunk *chunk)
 {
