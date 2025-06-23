@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 15:59:08 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/18 16:32:31 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/23 17:53:05 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,10 @@ int	print_sorted_env(t_env *env)
 		return (1);
 	while (env_cpy)
 	{
-		printf("declare -x %s=%s\n", env_cpy->key, env_cpy->value);
+		if (env_cpy->value)
+			printf("declare -x %s=\"%s\"\n", env_cpy->key, env_cpy->value);
+		else
+			printf("declare -x %s\n", env_cpy->key);
 		env_cpy = env_cpy->next;
 	}
 	ft_free_env(head);
