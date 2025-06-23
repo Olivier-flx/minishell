@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 15:40:12 by laufarin          #+#    #+#             */
-/*   Updated: 2025/06/06 22:27:53 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/23 15:07:17 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,34 @@
 //#include <stdlib.h>
 #include "../../header/minishell.h"
 
+// int	check_for_n(char **args, bool *new_line, int *i)
+// {
+// 	*i = 1;
+// 	if (args[1] && ft_strcmp(args[1], "-n") == 0)
+// 	{
+// 		*new_line = false;
+// 		*i = 2;
+// 		if (args[*i] && ft_strcmp(args[*i], "-n") == 0)
+// 		{
+// 			write(STDERR_FILENO, "minishell: echo: ", 17);
+// 			write(STDERR_FILENO, "cannot be repeated '-n'\n", 23);
+// 			return (EXIT_FAILURE);
+// 		}
+// 	}
+// 	return (EXIT_SUCCESS);
+// }
+
 int	check_for_n(char **args, bool *new_line, int *i)
 {
 	*i = 1;
-	if (args[1] && ft_strcmp(args[1], "-n") == 0)
+	while (args[*i] && ft_strncmp(args[*i], "-n", 2) == 0)
 	{
 		*new_line = false;
-		*i = 2;
-		if (args[*i] && ft_strcmp(args[*i], "-n") == 0)
-		{
-			write(STDERR_FILENO, "minishell: echo: ", 17);
-			write(STDERR_FILENO, "cannot be repeated '-n'\n", 23);
-			return (EXIT_FAILURE);
-		}
+		(*i)++;
 	}
 	return (EXIT_SUCCESS);
 }
+
 
 int	ft_echo(t_env *env, char **args)
 {
