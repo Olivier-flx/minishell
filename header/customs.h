@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   customs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sarodrig <sarodrig@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/11 17:15:36 by sarodrig         ###   ########.fr       */
+/*   Updated: 2025/06/23 16:05:32 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -256,8 +256,10 @@ bool	unique_empty_node(t_data *data, t_dlist *cmd_list);
 bool	has_bad_var_substitution(char **tks);
 bool	bad_var_substitution(t_data *data, t_dlist *cmd_list);
 
-			//system_input_validation
-void	check_system_input_error(t_data *data, t_dlist **cmd_list); // Unused.
+int		check_consecutive_pipes(t_dlist *cmd_list);
+int		check_pipe_is_first(t_dlist *list);
+int		check_redir_pipe(t_dlist **cmd_list);
+
 
 /// Chunks & segments
 int		create_chunks(char *line, t_dlist **cmd_list, t_data *data);

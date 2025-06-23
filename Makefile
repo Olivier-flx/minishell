@@ -6,7 +6,7 @@
 #    By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/14 18:09:50 by sarodrig          #+#    #+#              #
-#    Updated: 2025/06/18 17:43:52 by ofilloux         ###   ########.fr        #
+#    Updated: 2025/06/23 16:08:40 by ofilloux         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,10 +56,9 @@ ENV		=	./src/environment/env_search.c \
 			./src/environment/sort_env.c
 
 TOKENS	=	./src/tokens/user_input_validations/preliminary_checks.c \
-			./src/tokens/user_input_validations/check_line.c \
 			./src/tokens/user_input_validations/incomplete_line.c \
+			./src/tokens/user_input_validations/incomplete_line_utils.c \
 			./src/tokens/user_input_validations/user_input_validation.c\
-			./src/tokens/user_input_validations/check_tokens.c \
 			./src/tokens/user_input_validations/check_tokens_utils.c \
 			./src/tokens/user_input_validations/check_pipe_utils.c \
 			./src/tokens/user_input_validations/unique_token_operator.c\
