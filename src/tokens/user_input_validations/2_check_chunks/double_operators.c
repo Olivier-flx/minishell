@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 11:30:14 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/23 16:39:23 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/23 17:18:59 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,14 @@
 	}
 	return (EXIT_SUCCESS);
 } */
+
+bool	is_operator_token(char *str)
+{
+	return (0 == ft_strcmp(str, ">>") \
+			|| 0 == ft_strcmp(str, "<<") \
+			|| 0 == ft_strcmp(str, ">") \
+			|| 0 == ft_strcmp(str, "<"));
+}
 
 static int	check_invalid_sequences(char *current, char *previous, int flag)
 {

@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/23 16:05:32 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/23 17:30:41 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -250,9 +250,10 @@ bool	is_pipe_chunk(t_chunk *chunk);
 bool	line_finish_by_pipe(char *line);
 int		line_accolade_closed(char *line);
 int		accolade_not_closed(t_dlist **cmd_list);
+int		operator_finishes_chunk(t_dlist *cmd_list);
 	//Utils
 bool	chunk_is_empty(t_chunk *chk);
-bool	unique_empty_node(t_data *data, t_dlist *cmd_list);
+bool	unique_empty_chunk(t_data *data, t_dlist *cmd_list);
 bool	has_bad_var_substitution(char **tks);
 bool	bad_var_substitution(t_data *data, t_dlist *cmd_list);
 
@@ -275,7 +276,8 @@ int		handle_input_redir(t_chunk *chunk, int *i, int *i_redir);
 int		handle_redir(t_chunk *chunk, int *i, int *i_redir);
 void	set_i_redir_and_bool(int *i_redir, bool *has_redir);
 
-		// operators.c
+		// operators
+bool	is_operator_token(char *str);
 int		is_operator(char *src, int i, t_quote *quote);
 int		count_operador_from_pp_char(char **content);
 int		count_operador(char *src);

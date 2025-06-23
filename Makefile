@@ -6,7 +6,7 @@
 #    By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/14 18:09:50 by sarodrig          #+#    #+#              #
-#    Updated: 2025/06/23 17:01:57 by ofilloux         ###   ########.fr        #
+#    Updated: 2025/06/23 17:06:53 by ofilloux         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,7 +61,7 @@ VALIDATION = $(VALIDATION_PATH)/1_check_line/preliminary_checks.c \
 			$(VALIDATION_PATH)/1_check_line/incomplete_line.c \
 			$(VALIDATION_PATH)/1_check_line/incomplete_line_utils.c \
 			$(VALIDATION_PATH)/2_check_chunks/user_input_validation.c \
-			$(VALIDATION_PATH)/2_check_chunks/empty_chunks.c \
+			$(VALIDATION_PATH)/2_check_chunks/invalid_chunks.c \
 			$(VALIDATION_PATH)/2_check_chunks/check_pipe_utils.c \
 			$(VALIDATION_PATH)/2_check_chunks/unique_token_operator.c \
 			$(VALIDATION_PATH)/2_check_chunks/double_operators.c \
