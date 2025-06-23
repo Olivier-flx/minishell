@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 11:53:38 by marvin            #+#    #+#             */
-/*   Updated: 2025/06/23 18:03:04 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/23 18:12:51 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int	process_export_arg(t_env **env, char *arg)
 	equal_sign = ft_strchr(key_value, '=');
 	key = key_value;
 	value = NULL;
-	if (equal_sign)
+	if (equal_sign && ft_strlen(key_value) > 1)
 	{
 		*equal_sign = '\0';
 		value = equal_sign + 1;
