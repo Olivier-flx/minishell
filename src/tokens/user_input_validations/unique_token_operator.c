@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unique_token_operator.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 11:28:48 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/09 10:57:53 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/23 15:44:10 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,22 @@ static char	*unexpected_token(t_dlist *i_node)
 	return (NULL);
 }
 
+static int	print_err_msg(t_dlist *list, char **tokens, int i, t_quote *qts)
+{
+	if (pp_char_len(tokens) == 1)
+	{
+		return (printf("bash: syntax error near unexpected token `%s'\n", \
+						unexpected_token(list)), EXIT_FAILURE);
+	}
+	if (pp_char_len(tokens) > 1 && i > 0 \
+			&& is_operator(tokens[i - 1], 0, qts))
+	{
+		return (printf("bash: syntax error near unexpected token `%s'\n", \
+						tokens[i - 1]), EXIT_FAILURE);
+	}
+	return (0);
+}
+
 int	check_for_simple(t_dlist *list)
 {
 	t_quote	quotes;
@@ -37,17 +53,7 @@ int	check_for_simple(t_dlist *list)
 		while (chunk->tokens && chunk->tokens[++i])
 		{
 			if (is_operator(chunk->tokens[i], 0, &quotes))
-			{
-				if (pp_char_len(chunk->tokens) == 1)
-					return (printf("bash: syntax error near \
-						unexpected token `%s'\n", \
-						unexpected_token(list)), EXIT_FAILURE);
-				if (pp_char_len(chunk->tokens) > 1 && i > 0 \
-					&& is_operator(chunk->tokens[i - 1], 0, &quotes))
-					return (printf("bash: syntax error near \
-						unexpected token `%s'\n", \
-						chunk->tokens[i - 1]), EXIT_FAILURE);
-			}
+				return (print_err_msg(list, chunk->tokens, i, &quotes));
 		}
 		list = list->next;
 	}

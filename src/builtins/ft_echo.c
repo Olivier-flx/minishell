@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 15:40:12 by laufarin          #+#    #+#             */
-/*   Updated: 2025/06/23 15:07:17 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/23 15:29:58 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,20 @@
 
 int	check_for_n(char **args, bool *new_line, int *i)
 {
+	int	arg_len;
+	int	j;
+
 	*i = 1;
 	while (args[*i] && ft_strncmp(args[*i], "-n", 2) == 0)
 	{
+		j = 1;
+		arg_len = ft_strlen(args[*i]);
+		while (args[*i][j] && j < arg_len - 1)
+		{
+			if (!ft_isalpha(args[*i][j]))
+				return (EXIT_FAILURE);
+			j++;
+		}
 		*new_line = false;
 		(*i)++;
 	}
