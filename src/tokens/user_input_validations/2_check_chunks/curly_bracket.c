@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   user_input_validation.c                            :+:      :+:    :+:   */
+/*   curly_bracket.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/26 15:14:36 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/23 16:39:35 by ofilloux         ###   ########.fr       */
+/*   Created: 2025/06/23 16:50:22 by ofilloux          #+#    #+#             */
+/*   Updated: 2025/06/23 16:54:38 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,24 +90,39 @@ int	accolade_not_closed(t_dlist **cmd_list)
 	return (EXIT_SUCCESS);
 }
 
-// check from the last tocken to the first one
-//check for redir puis pipe (check_redir_pipe)
-int	check_for_user_input_error(t_data *data, t_dlist **cmd_list)
+bool	has_bad_var_substitution(char **tks)
 {
-	if (unique_empty_node(data, *cmd_list))
-		return (3);
-	if (check_for_simple(*cmd_list) > 0 \
-	|| check_for_triple(cmd_list) > 0 \
-	|| check_redir_pipe(cmd_list) > 0 \
-	|| check_consecutive_pipes(*cmd_list) > 0 \
-	|| check_pipe_is_first(*cmd_list) > 0)
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (tks && tks[i])
 	{
-		data->exit_status = 2;
-		return (2);
+		j = 0;
+		while (tks[i][j])
+		{
+			if (tks[i][j] == '$' && tks[i][j + 1] && tks[i][j + 1] == '{' \
+				&& tks[i][j + 2] && tks[i][j + 2] == '}')
+				return (true);
+			j++;
+		}
+		i++;
 	}
-	if (bad_var_substitution(data, *cmd_list))
-		return (1);
-	if (accolade_not_closed(cmd_list) > 0)
-		return (1);
-	return (0);
+	return (false);
+}
+
+bool	bad_var_substitution(t_data *data, t_dlist *cmd_list)
+{
+	while (cmd_list)
+	{
+		if (has_bad_var_substitution(((t_chunk *)cmd_list->content)->tokens))
+		{
+			write (STDERR_FILENO, "-bash: ${}: bad substitution\n", 30);
+			data->exit_status = 1;
+			return (true);
+		}
+		cmd_list = cmd_list->next;
+	}
+	return (false);
 }

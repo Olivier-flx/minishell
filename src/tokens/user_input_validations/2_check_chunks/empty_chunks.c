@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_tokens_utils.c                               :+:      :+:    :+:   */
+/*   chunks_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 10:46:57 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/23 16:39:17 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/23 16:54:23 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,39 +30,3 @@ bool	unique_empty_node(t_data *data, t_dlist *cmd_list)
 	return (false);
 }
 
-bool	has_bad_var_substitution(char **tks)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (tks && tks[i])
-	{
-		j = 0;
-		while (tks[i][j])
-		{
-			if (tks[i][j] == '$' && tks[i][j + 1] && tks[i][j + 1] == '{' \
-				&& tks[i][j + 2] && tks[i][j + 2] == '}')
-				return (true);
-			j++;
-		}
-		i++;
-	}
-	return (false);
-}
-
-bool	bad_var_substitution(t_data *data, t_dlist *cmd_list)
-{
-	while (cmd_list)
-	{
-		if (has_bad_var_substitution(((t_chunk *)cmd_list->content)->tokens))
-		{
-			write (STDERR_FILENO, "-bash: ${}: bad substitution\n", 30);
-			data->exit_status = 1;
-			return (true);
-		}
-		cmd_list = cmd_list->next;
-	}
-	return (false);
-}
