@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/23 17:30:41 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/25 16:34:00 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -260,7 +260,6 @@ bool	bad_var_substitution(t_data *data, t_dlist *cmd_list);
 int		check_consecutive_pipes(t_dlist *cmd_list);
 int		check_pipe_is_first(t_dlist *list);
 int		check_redir_pipe(t_dlist **cmd_list);
-
 
 /// Chunks & segments
 int		create_chunks(char *line, t_dlist **cmd_list, t_data *data);

@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 10:46:57 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/23 17:33:51 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/25 16:59:42 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,12 @@ int	operator_finishes_chunk(t_dlist *cmd_list)
 	t_dlist	*i_node;
 	t_chunk	*chk;
 
-	i = 0;
 	i_node = cmd_list;
 	while (i_node)
 	{
+		i = 0;
 		chk = ((t_chunk *) i_node->content);
-		while (chk->tokens[i])
+		while (chk->tokens && chk->tokens[i])
 			i++;
 		if (i > 0 && is_operator_token(chk->tokens[i - 1]))
 		{
