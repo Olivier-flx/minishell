@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:49:47 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/18 16:37:11 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/25 17:47:39 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	handle_chunk_before_pipe(t_data *data, char **tokens, \
 	type = CMD;
 	if (start > end)
 		return ;
-	sub_tokens = dup_pp_char(data, tokens, start, end);
+	sub_tokens = expension_root(data, tokens, start, end);
 	retocken_after_expension(&sub_tokens);
 	if (!sub_tokens)
 		return ;
@@ -63,7 +63,7 @@ void	handle_chunk_after_last_pipe(t_data *data, char **tokens, \
 	type = CMD;
 	if (start > end)
 		return ;
-	sub_tokens = dup_pp_char(data, tokens, start, end);
+	sub_tokens = expension_root(data, tokens, start, end);
 	retocken_after_expension(&sub_tokens);
 	if (!sub_tokens)
 		return ;

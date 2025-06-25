@@ -6,7 +6,7 @@
 #    By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/14 18:09:50 by sarodrig          #+#    #+#              #
-#    Updated: 2025/06/25 17:42:00 by ofilloux         ###   ########.fr        #
+#    Updated: 2025/06/25 17:47:05 by ofilloux         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -78,12 +78,12 @@ TOKENS	=	./src/tokens/create_input_token.c \
 			./src/tokens/create_argv_utils.c \
 			./src/tokens/create_chunks.c
 
-EXPEND	=	./src/tokens/Expension/expension.c \
+EXPEND	=	./src/tokens/Expension/expension_root.c \
+			./src/tokens/Expension/expension.c \
 			./src/tokens/Expension/expension_tock_len_utils.c \
 			./src/tokens/Expension/expension_tocken.c \
 			./src/tokens/Expension/accolades.c \
 			./src/tokens/Expension/expension_quotes.c \
-			./src/tokens/Expension/select_from_substring_arr.c \
 			./src/tokens/Expension/exp_utils.c
 
 EXEC	=	./src/exec/exec.c \

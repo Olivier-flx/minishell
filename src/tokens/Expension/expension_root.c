@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   select_from_substring_arr.c                        :+:      :+:    :+:   */
+/*   expension_root.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 17:29:54 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/08 09:30:24 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/25 17:48:04 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,11 +77,13 @@ char	*concat_substrs_sep(char **argv, char sep)
 	return (result);
 }
 
-// @info : duplicate a segmented substring, in a char **;
-// from a start point included to a end point included.
-//@info chunk malloc :
-//    end - start +1 to include the starst and the end ;  +1 for the null
-char	**dup_pp_char(t_data *data, char **substring_arr, int start, int end)
+/**
+* @brief : duplicate a segmented substring, in a char **; and expend the tockens
+* from a start point included to a end point included.
+* @info chunk malloc :
+*    end - start +1 to include the starst and the end ;  +1 for the null
+*/
+char	**expension_root(t_data *data, char **substring_arr, int start, int end)
 {
 	char	**chunk;
 	int		i;
@@ -104,7 +106,7 @@ char	**dup_pp_char(t_data *data, char **substring_arr, int start, int end)
 	chunk[j] = NULL;
 	return (chunk);
 }
-//printf("dup_pp_char After chunk[%i] = `%s`\n\n", j, chunk[j]); // @debug
+//printf("expension_root After chunk[%i] = `%s`\n\n", j, chunk[j]); // @debug
 
 void	retocken_after_expension(char ***chunk_tokens)
 {
