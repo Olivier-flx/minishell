@@ -6,7 +6,7 @@
 #    By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/14 18:09:50 by sarodrig          #+#    #+#              #
-#    Updated: 2025/06/23 17:06:53 by ofilloux         ###   ########.fr        #
+#    Updated: 2025/06/25 17:42:00 by ofilloux         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -78,6 +78,14 @@ TOKENS	=	./src/tokens/create_input_token.c \
 			./src/tokens/create_argv_utils.c \
 			./src/tokens/create_chunks.c
 
+EXPEND	=	./src/tokens/Expension/expension.c \
+			./src/tokens/Expension/expension_tock_len_utils.c \
+			./src/tokens/Expension/expension_tocken.c \
+			./src/tokens/Expension/accolades.c \
+			./src/tokens/Expension/expension_quotes.c \
+			./src/tokens/Expension/select_from_substring_arr.c \
+			./src/tokens/Expension/exp_utils.c
+
 EXEC	=	./src/exec/exec.c \
 			./src/exec/exec_pipex.c \
 			./src/exec/commands.c \
@@ -95,14 +103,6 @@ FILES	=	./src/exec/files/init_input_files.c \
 			./src/exec/files/open_files.c \
 			./src/exec/files/stdin_stdout.c \
 			./src/exec/files/redirects.c
-
-EXPEND	=	./src/exec/Expension/expension.c \
-			./src/exec/Expension/expension_tock_len_utils.c \
-			./src/exec/Expension/expension_tocken.c \
-			./src/exec/Expension/accolades.c \
-			./src/exec/Expension/expension_quotes.c \
-			./src/exec/Expension/select_from_substring_arr.c \
-			./src/exec/Expension/exp_utils.c
 
 UTILS	=	./utils/string/split_quoted.c \
 			./utils/string/split_quoted_utils.c \
