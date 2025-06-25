@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:23:22 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/15 11:45:08 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/25 19:59:29 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,13 @@ int	initialize_cmd_list(t_data *data)
 	return (0);
 }
 
+
+/**
+ * @note readline gnu full documentation
+ * https://tiswww.case.edu/php/chet/readline/readline.html
+ * \001 : start of a non-visible character sequence (SOH, ASCII 1)
+ * \002 : end of a non-visible character sequence (STX, ASCII 2)
+ */
 int	run_minishell(t_data	*data)
 {
 	int			control;
@@ -36,15 +43,16 @@ int	run_minishell(t_data	*data)
 	while (true && data->env)
 	{
 		initialize_cmd_list(data);
-		data->line = readline("\033[1;32mminishell> \033[0m");
+		data->line = readline("\001\033[1;32m\002minishell> \001\033[0m\002");
+
 		signal_handlers_for_readline(data);
 		listen_incomplete_lines(data, &data->line);
-		if (data->line)
+		if (data->line && *data->line)
 		{
+			add_history(data->line);
 			control = create_chunks(data->line, &data->cmd_list, data);
 			if (control == 0)
 				main_exec(data);
-			add_history(data->line);
 		}
 		free_resources(data, false, true);
 		g_signal_received = 0;
