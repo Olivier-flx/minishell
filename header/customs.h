@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/25 17:47:39 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/27 17:57:56 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,7 +216,7 @@ bool	unsuported_accolade_operator(char *str, int i);
 
 	/// Expension Utils
 bool	skip_quote(int *i, int *k, t_quote *quotes, char *str);
-bool	skip_dollar_quote(int *i, int *k, t_quote *quotes, char *str);
+bool	skip_dollar_quote(int *i, t_quote *quotes, char *str);
 bool	skip_quote2(int *i, int *k, t_quote *quotes, char *str);
 bool	skip_dollar_quote2(int *i, int *k, t_quote *quotes, char *str);
 

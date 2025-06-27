@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 18:03:45 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/09 17:41:41 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/27 17:58:00 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static char	*process_exp_loop(t_data *data, char *str, char **expd_token, \
 	while (str && str[i])
 	{
 		if (skip_quote2(&i, NULL, qts, str) || \
-			skip_dollar_quote(&i, NULL, qts, str))
+			skip_dollar_quote(&i, qts, str))
 		{
 			(*expd_token)[j++] = str[i++];
 			continue ;

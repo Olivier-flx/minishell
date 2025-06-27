@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 17:38:16 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/09 17:38:43 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/27 17:57:59 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ int	get_expended_tocken_len(t_data *data, char *s)
 	init_quotes(&qts);
 	while (s[i])
 	{
-		if (skip_quote(&i, &k, &qts, s) || skip_dollar_quote(&i, &k, &qts, s))
+		if (skip_quote(&i, &k, &qts, s) || skip_dollar_quote(&i, &qts, s))
 			continue ;
 		if (s[i] == '$' && (qts.dbl_qt % 2 == 1 \
 			|| qts_acc_closed(&qts)) && (ft_isalnum(s[i + 1]) \

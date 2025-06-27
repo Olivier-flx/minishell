@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 20:36:31 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/16 19:39:27 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/27 17:58:14 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,15 +54,13 @@ bool	skip_quote(int *i, int *k, t_quote *quotes, char *str)
 // }
 
 //Cas `$` suivi de quote hors contexte de quote fermée
-bool	skip_dollar_quote(int *i, int *k, t_quote *quotes, char *str)
+bool	skip_dollar_quote(int *i, t_quote *quotes, char *str)
 {
 	if (str[*i] == '$' && quote_are_closed(quotes) \
 		&& is_quote(str[*i + 1]))
 	{
 		(*i)++;
 		bool_quote_increment(str, i, quotes, true);
-		if (k)
-			(*k)++;
 		return (true);
 	}
 	return (false);
