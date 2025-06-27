@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_quoted_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 09:50:17 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/27 16:46:18 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/04 12:05:00 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,20 +29,17 @@ bool	should_break(char *s, int *i, char c, t_quote *qts)
 
 bool	qts_en_seguida_ignore(char *s, int i, t_quote *qts)
 {
-	if ((qts->sgl_qt % 2 == 1 && s[i] == '\'' && s[i + 1] == '\'') \
-			|| (qts->dbl_qt % 2 == 1 && s[i] == '"' && s[i + 1] == '"'))
-	{
-		quote_increment(s, i, qts);
-		return (true);
-	}
-	return (false);
+	return ((qts->sgl_qt % 2 == 1 && s[i] == '\'' && s[i + 1] == '\'') \
+			|| (qts->dbl_qt % 2 == 1 && s[i] == '"' && s[i + 1] == '"'));
 }
 
 bool	should_skip_quote(char *s, char c, t_quote *qts, int *i)
 {
 	if (qts_en_seguida_ignore(s, *i, qts))
 	{
-		(*i) += 2;
+		(*i)++;
+		quote_increment(s, *i, qts);
+		(*i)++;
 		return (true);
 	}
 	else if ((c == '"' && qts->sgl_qt % 2 == 0) \
@@ -63,6 +60,10 @@ void	ignore_unecesary_char(char *s, int *i, char c, t_quote *qts)
 		ignore_sep(s, i, c, qts);
 		quote_increment(s, *i, qts);
 		if (qts_en_seguida_ignore(s, *i, qts))
-			(*i) += 2;
+		{
+			(*i)++;
+			quote_increment(s, *i, qts);
+			(*i)++;
+		}
 	}
 }
