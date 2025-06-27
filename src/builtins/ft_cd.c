@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/08 09:32:58 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/08 09:40:45 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/06/27 18:34:09 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell.h"
 
+//PATH_MAX from limits.h
 static int	update_pwds(t_env **env)
 {
 	char	cwd[PATH_MAX];
