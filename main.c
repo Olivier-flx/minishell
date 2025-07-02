@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:23:22 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/25 19:59:29 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/02 17:13:10 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,22 +29,39 @@ int	initialize_cmd_list(t_data *data)
 }
 
 
+static void	get_prompt(t_data *data, char **prompt)
+{
+	char	path[PATH_MAX];
+	char	*f_path;
+
+	if (getcwd(path, PATH_MAX) == NULL)
+	{
+		perror("getcwd");
+		return ;
+	}
+	f_path = path + ft_strlen(ft_getenv(data->env_list, "HOME"));
+	*prompt = ft_strjoin3("\001\033[1;32m\002minishell ~", \
+		f_path, "> \001\033[0m\002");
+}
+
 /**
  * @note readline gnu full documentation
  * https://tiswww.case.edu/php/chet/readline/readline.html
  * \001 : start of a non-visible character sequence (SOH, ASCII 1)
  * \002 : end of a non-visible character sequence (STX, ASCII 2)
  */
-int	run_minishell(t_data	*data)
+int	run_minishell(t_data *data)
 {
 	int			control;
+	char		*prompt;
 
 	control = 0;
 	while (true && data->env)
 	{
 		initialize_cmd_list(data);
-		data->line = readline("\001\033[1;32m\002minishell> \001\033[0m\002");
-
+		get_prompt(data, &prompt);
+		data->line = readline(prompt);
+		ft_free((void **) &prompt);
 		signal_handlers_for_readline(data);
 		listen_incomplete_lines(data, &data->line);
 		if (data->line && *data->line)
