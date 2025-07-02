@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/08 09:32:58 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/27 18:34:09 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/02 17:39:40 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	ft_cd(t_env **env, char **args)
 	if (chdir(path) == -1)
 		return (perror("minishell: cd"), 1);
 	ret = update_pwds(env);
-	if (ft_strcmp(args[1], "-") == 0 && !ret)
+	if (args[1] && ft_strcmp(args[1], "-") == 0 && !ret)
 		printf("%s\n", ft_getenv(*env, "PWD"));
 	return (ret);
 }
