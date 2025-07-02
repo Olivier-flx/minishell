@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 20:56:46 by marvin            #+#    #+#             */
-/*   Updated: 2025/06/18 16:43:38 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/02 17:23:29 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,11 @@ void	ft_setenv(t_env **env, char *key, char *value)
 		}
 		current = current->next;
 	}
+	// ft_env_add_back(env, \
+	// 	ft_new_env_node(ft_strdup(key), ft_strdup(value), true));
 	ft_env_add_back(env, \
-		ft_new_env_node(ft_strdup(key), ft_strdup(value), true));
+		ft_new_env_node(key, value, true));
+
 }
 
 void	ft_unsetenv(t_env **env, char *key)
