@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands_check_wrong.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 17:11:08 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/09 10:31:54 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/07 18:43:50 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,17 @@ static void	append_error_message(t_data *data, char *msg)
 	}
 }
 
+/**
+ * @brief Handles the case where the command is a directory.
+ *
+ * Marks the command as invalid and appends an appropriate error message.
+ * If it's the last command in the pipeline, sets the exit status to 126
+ * (indicating a permission problem or non-executable).
+ *
+ * @param data	Structure containing the shell's global data.
+ * @param chunk	Chunk representing the command.
+ * @param i		Index of the command in the execution array.
+ */
 static void	handle_invalid_command(t_data *data, t_chunk *chunk, int i)
 {
 	char	*msg;
@@ -46,6 +57,17 @@ static void	handle_invalid_command(t_data *data, t_chunk *chunk, int i)
 	append_error_message(data, msg);
 }
 
+/**
+ * @brief Handles the case where the command is a directory.
+ *
+ * Marks the command as invalid and appends an appropriate error message.
+ * If it's the last command in the pipeline, sets the exit status to 126
+ * (indicating a permission problem or non-executable).
+ *
+ * @param data	Structure containing the shell's global data.
+ * @param chunk	Chunk representing the command.
+ * @param i		Index of the command in the execution array.
+ */
 void	cmd_is_dir(t_data *data, t_chunk *chunk, int i)
 {
 	data->exe_nfo.cmd_is_valid_arr[i] = false;
@@ -59,6 +81,21 @@ void	cmd_is_dir(t_data *data, t_chunk *chunk, int i)
 		data->exe_nfo.last_status_code = 0;
 }
 
+/**
+ * @brief Checks and validates a single command chunk.
+ *
+ * - If the command is a builtin, it is marked as valid.
+ * - If the command doesn't exist (stat fails), it's marked invalid.
+ * - If the command is a directory, it's marked invalid.
+ * - If it's a regular file without execute permission, it's marked invalid.
+ * Otherwise, the command is marked valid.
+ *
+ * @param data	Structure containing the shell's global data.
+ * @param chunk	Chunk representing the command.
+ * @param i		Index of the command in the execution array.
+ *
+ * @see	<sys/stat.h> & man 2 stat
+ */
 static void	handle_chunk_command(t_data *data, t_chunk *chunk, int i)
 {
 	struct stat	s;
@@ -84,17 +121,17 @@ static void	handle_chunk_command(t_data *data, t_chunk *chunk, int i)
 		command_is_valid(data, i);
 }
 
-// static void	handle_chunk_command(t_data *data, t_chunk *chunk, int i)
-// {
-// 	printf("handle_chunk_command chunk->argv[0] = %s\n", chunk->argv[0]);
-// 	if (chunk->argv[0])
-// 		stat(const char *pathname, struct stat *statbuf);
-// 	if (access(chunk->argv[0], X_OK) != 0 && !is_builtin(chunk->argv[0]))
-// 		handle_invalid_command(data, chunk, i);
-// 	else
-// 		command_is_valid(data, i);
-// }
-
+/**
+ * @brief Iterates over all command chunks to detect and flag invalid commands.
+ *
+ * Goes through each command chunk, skipping EMPTY types
+ * or those without arguments.
+ * For each valid command, it invokes handle_chunk_command to perform
+ * validation and path checks.
+ *
+ * @param data	Structure containing the shell's global data,
+ * 				including the command list.
+ */
 void	check_wrong_commands(t_data *data)
 {
 	int		i;

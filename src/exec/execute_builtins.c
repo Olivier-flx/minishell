@@ -6,28 +6,33 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 16:04:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/15 11:49:02 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/07 18:09:54 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell.h"
 
-int	pick_and_run_builtin(t_data *data, char **argv)
+int	pick_and_run_builtin(t_data *data,  char **argv)
 {
-	if (ft_strcmp(argv[0], "cd") == 0)
-		return (ft_cd(&data->env_list, argv));
-	else if (ft_strcmp(argv[0], "export") == 0)
-		return (ft_export(&data->env_list, argv));
-	else if (ft_strcmp(argv[0], "unset") == 0)
-		return (ft_unset(&data->env_list, argv));
-	else if (ft_strcmp(argv[0], "exit") == 0)
-		return (ft_exit(data, argv));
-	else if (ft_strcmp(argv[0], "pwd") == 0)
-		return (ft_pwd());
-	else if (ft_strcmp(argv[0], "env") == 0)
-		return (ft_env(data->env_list));
-	else if (ft_strcmp(argv[0], "echo") == 0)
+	int	built_num;
+
+	built_num = get_builtin_int(argv[0]);
+	if (built_num == 0)
 		return (ft_echo(data->env_list, argv));
+	else if (built_num == 1)
+		return (ft_cd(&data->env_list, argv));
+	else if (built_num == 2)
+		return (ft_pwd());
+	else if (built_num == 3)
+		return (ft_export(&data->env_list, argv));
+	else if (built_num == 4)
+		return (ft_unset(&data->env_list, argv));
+	else if (built_num == 5)
+		return (ft_env(data->env_list));
+	else if (built_num == 6)
+		return (ft_exit(data, argv));
+
+
 	return (EXIT_FAILURE);
 }
 

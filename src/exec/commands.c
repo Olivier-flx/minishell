@@ -3,18 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   commands.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 18:10:10 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/06 20:01:07 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/07 18:24:45 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell.h"
 
+/**
+ * @brief Checks and prepares the path for a non-builtin command.
+ *
+ * If the command does not contain a slash and is not a builtin,
+ * this function attempts to resolve its path using the environment variables.
+ * If the path is found, it updates the chunk's argv[0] with the full path,
+ * constructed from the environment path and the original command name.
+ *
+ * @param data		Structure containing global shell data.
+ * @param exe_nfo	Structure containing execution-related information.
+ * @param chnk		Chunk containing the command and its arguments.
+ */
 static void	handle_path_and_builtin(t_data *data, \
 									t_exe *exe_nfo, t_chunk *chnk)
 {
+	char	**c_path;
+
+	c_path = NULL;
 	if (usr_input_got_slash(chnk->argv[0]) == 0 && !is_builtin(chnk->argv[0]))
 	{
 		if (exe_nfo->env_path_found == false)
@@ -28,6 +43,17 @@ static void	handle_path_and_builtin(t_data *data, \
 	}
 }
 
+/**
+ * @brief Initializes the command vector from a linked list of command chunks.
+ *
+ * Iterates through each node in the command list. For each valid command chunk,
+ * it sets its execution validity to false and calls handle_path_and_builtin
+ * to manage path resolution and builtin checking.
+ *
+ * @param data		Structure containing global shell data.
+ * @param cmd_list	Doubly linked list containing command chunks.
+ * @param exe_nfo	Structure containing execution-related information.
+ */
 void	init_cmd_vect(t_data *data, t_dlist **cmd_list, t_exe *exe_nfo)
 {
 	t_dlist	*i_node;
