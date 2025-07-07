@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:23:22 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/07/07 17:40:52 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/07 19:49:19 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,18 @@ static void	get_prompt(t_data *data, char **prompt)
 	char	path[PATH_MAX];
 	char	*f_path;
 
+	ft_memset(path, 0, PATH_MAX * sizeof(char));
 	if (getcwd(path, PATH_MAX) == NULL)
 	{
 		perror("getcwd");
 		return ;
 	}
 	f_path = path + ft_strlen(ft_getenv(data->env_list, "HOME"));
-	*prompt = ft_strjoin3("\001\033[1;32m\002minishell ~", \
-		f_path, "> \001\033[0m\002");
+	if (*f_path != '\0')
+		*prompt = ft_strjoin3("\001\033[1;32m\002minishell ~", \
+			f_path, "> \001\033[0m\002");
+	else
+		*prompt = ft_strdup("\001\033[1;32m\002minishell ~> \001\033[0m\002");
 }
 
 /**
