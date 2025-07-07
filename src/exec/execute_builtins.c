@@ -6,13 +6,13 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 16:04:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/07/07 18:09:54 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/07 19:27:15 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell.h"
 
-int	pick_and_run_builtin(t_data *data,  char **argv)
+int	pick_and_run_builtin(t_data *data, char **argv)
 {
 	int	built_num;
 
