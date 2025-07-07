@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 17:11:08 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/07/07 18:43:50 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/07 18:53:26 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	append_error_message(t_data *data, char *msg)
  * @param chunk	Chunk representing the command.
  * @param i		Index of the command in the execution array.
  */
-static void	handle_invalid_command(t_data *data, t_chunk *chunk, int i)
+void	handle_invalid_command(t_data *data, t_chunk *chunk, int i)
 {
 	char	*msg;
 	int		flag;
@@ -103,7 +103,7 @@ static void	handle_chunk_command(t_data *data, t_chunk *chunk, int i)
 
 	if (is_builtin(chunk->argv[0]))
 	{
-		command_is_valid(data, i);
+		command_is_valid(data, chunk, i);
 		return ;
 	}
 	s_ret = stat(chunk->argv[0], &s);
@@ -118,7 +118,7 @@ static void	handle_chunk_command(t_data *data, t_chunk *chunk, int i)
 			&& access(chunk->argv[0], X_OK) != 0 && !is_builtin(chunk->argv[0]))
 		handle_invalid_command(data, chunk, i);
 	else
-		command_is_valid(data, i);
+		command_is_valid(data, chunk, i);
 }
 
 /**

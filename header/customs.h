@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/07/07 18:10:20 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/07 18:53:03 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,14 +167,14 @@ int		get_builtin_int(char *cmd);
 	////// commands ///
 void	check_wrong_commands(t_data *data);
 char	*get_msg(t_data *data, int flag, char *arg);
-void	command_is_valid(t_data *data, int i);
 	////// commands init ///
 void	init_cmd(t_data *data);
 void	clean_exe_nfo(t_data *data, int exit_val);
 void	cmd_error_msg(t_data *data, int failure);
 	////// commands utils ///
 int		count_cmd(t_dlist **cmd_list);
-void	command_is_valid(t_data *data, int i);
+void	command_is_valid(t_data *data, t_chunk *chunk, int i);
+void	handle_invalid_command(t_data *data, t_chunk *chunk, int i);
 int		usr_input_got_slash(char *str);
 char	*get_msg(t_data *data, int flag, char *arg);
 

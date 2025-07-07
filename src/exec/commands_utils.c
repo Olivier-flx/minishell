@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 17:19:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/09 10:31:33 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/07 19:01:10 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,15 @@ int	usr_input_got_slash(char *str)
 	return (flag);
 }
 
-void	command_is_valid(t_data *data, int i)
+void	command_is_valid(t_data *data, t_chunk *chunk, int i)
 {
+	if (get_builtin_int(chunk->argv[0]) == 1 \
+		&& usr_input_got_slash(chunk->argv[0]))
+	{
+		handle_invalid_command(data, chunk, i);
+		data->exit_status = 127;
+		return ;
+	}
 	data->exe_nfo.cmd_is_valid_arr[i] = true;
 	data->exe_nfo.valid_cmd_count++;
 }
