@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 17:55:52 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/07/09 17:57:06 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/09 20:29:25 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,15 @@ int	execve_builtin_in_child(t_data *data, t_exe *exe, t_chunk *chunk, int i)
 		{
 			if (!data || !exe || !chunk || i < 0)
 				return (EXIT_FAILURE);
+			if (get_builtin_int(chunk->argv[0]) == 6)
+				close_all_pipes_child(exe);
 			data->exit_status = pick_and_run_builtin(data, chunk->argv);
-			close_all_pipes_child(exe);
 			if (data->exit_required)
 			{
 				write(STDERR_FILENO, "exit\n", 5);
 				exit(data->exit_code);
 			}
+			close_all_pipes_child(exe);
 			return (EXIT_SUCCESS);
 		}
 	}

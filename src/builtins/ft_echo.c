@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 15:40:12 by laufarin          #+#    #+#             */
-/*   Updated: 2025/06/23 15:29:58 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/09 20:31:43 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ int	check_for_n(char **args, bool *new_line, int *i)
 	}
 	return (EXIT_SUCCESS);
 }
-
 
 int	ft_echo(t_env *env, char **args)
 {

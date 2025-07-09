@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 13:32:44 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/23 16:39:19 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/09 20:32:20 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,5 +95,4 @@ int	check_consecutive_pipes(t_dlist *cmd_list)
 	}
 	return (EXIT_SUCCESS);
 }
-
 
