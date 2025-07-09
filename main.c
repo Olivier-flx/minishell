@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:23:22 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/07/07 19:49:19 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/09 14:53:52 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,21 @@ static void	get_prompt(t_data *data, char **prompt)
 {
 	char	path[PATH_MAX];
 	char	*f_path;
+	char	*pwd;
 
+	pwd = NULL;
+	f_path = NULL;
 	ft_memset(path, 0, PATH_MAX * sizeof(char));
 	if (getcwd(path, PATH_MAX) == NULL)
 	{
-		perror("getcwd");
-		return ;
+		pwd = ft_getenv(data->env_list, "PWD");
+		if (!pwd)
+			pwd = ft_getenv(data->env_list, "OLDPWD");
+		if (pwd)
+			f_path = pwd + ft_strlen(ft_getenv(data->env_list, "HOME"));
 	}
-	f_path = path + ft_strlen(ft_getenv(data->env_list, "HOME"));
+	else
+		f_path = path + ft_strlen(ft_getenv(data->env_list, "HOME"));
 	if (*f_path != '\0')
 		*prompt = ft_strjoin3("\001\033[1;32m\002minishell ~", \
 			f_path, "> \001\033[0m\002");

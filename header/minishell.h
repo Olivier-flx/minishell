@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:46:36 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/09 11:02:41 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/09 14:35:02 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,32 +101,33 @@ void	signal_handlers_for_readline(t_data *data);
  * ==========================
  *  FILE MANAGEMENT FUNCTIONS
  * ==========================
-// access             : Checks a file's access permissions.
+// access		: Checks a file's access permissions.
 	// int access(const char *pathname, int mode);
-// open               : Opens a file or creates a file descriptor.
+// open			: Opens a file or creates a file descriptor.
 	// int open(const char *pathname, int flags, ...);
-// close              : Closes an open file descriptor.
+// close		 : Closes an open file descriptor.
 	// int close(int fd);
-// stat               : Retrieves file information.
+// stat		  : Retrieves file information.
 	// int stat(const char *pathname, struct stat *statbuf);
-// lstat              : Like stat, but does not follow symbolic links.
+// lstat		 : Like stat, but does not follow symbolic links.
 	// int lstat(const char *pathname, struct stat *statbuf);
-// fstat              : Retrieves file information from a file descriptor.
+// fstat		 : Retrieves file information from a file descriptor.
 	// int fstat(int fd, struct stat *statbuf);
-// unlink             : Deletes a file.
+// unlink		: Deletes a file.
 	// int unlink(const char *pathname);
-// opendir            : Opens a directory.
+// opendir		: Opens a directory.
 	// DIR *opendir(const char *name);
-// readdir            : Reads an entry from a directory.
+// readdir		: Reads an entry from a directory.
 	// struct dirent *readdir(DIR *dirp);
-// closedir           : Closes an open directory.
+// closedir		: Closes an open directory.
 	// int closedir(DIR *dirp);
+// chdir		:
 
 
  * ==========================
  *  PROCESS MANAGEMENT FUNCTIONS
  * ==========================
-// fork               : Creates a new child process.
+// fork				   : Creates a new child process.
 	// pid_t fork(void);
 // execve             : Replaces the current process with another program.
 	// int execve(const char *pathname, char *const argv[], char *const envp[]);
