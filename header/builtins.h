@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 18:13:34 by laufarin          #+#    #+#             */
-/*   Updated: 2025/07/09 18:51:24 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/09 20:51:26 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ int		ft_unset(t_env **env, char **args);
 int		ft_env(t_env *env);
 int		ft_exit(t_data *data, char **args);
 int		ft_exit_child(t_data *data, char **args);
-void	free_exit_child_resces(t_data *data, bool clear_env, bool free_line);
 
 // int  update_pwds(t_env **env);
 
