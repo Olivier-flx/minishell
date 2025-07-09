@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/07/09 20:28:37 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/09 20:41:49 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,7 +161,7 @@ int		execve_builtin_in_child(t_data *data, t_exe *exe, \
 			t_chunk *chunk, int i);
 void	process_command_iteration(t_data *data, t_chunk *chunk, int i, \
 									int *valid_cmd_i);
-int		pick_and_run_builtin(t_data *data, char **argv);
+int		pick_and_run_builtin(t_data *data, char **argv, bool child);
 int		get_builtin_int(char *cmd);
 
 	////// commands ///

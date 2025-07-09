@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 17:48:14 by marvin            #+#    #+#             */
-/*   Updated: 2025/07/09 20:25:13 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/09 20:41:47 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ int	ft_exit_child(t_data *data, char **args)
 			return (0);
 		if (args[2])
 		{
-			write(STDERR_FILENO, "exit\n", 5);
 			write(STDERR_FILENO, "minishell: exit: too many arguments\n", 36);
 			data->exit_status = 1;
 			return (1);

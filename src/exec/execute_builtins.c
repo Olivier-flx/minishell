@@ -6,13 +6,13 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 16:04:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/07/09 20:29:38 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/09 20:41:45 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell.h"
 
-int	pick_and_run_builtin(t_data *data, char **argv)
+int	pick_and_run_builtin(t_data *data, char **argv, bool child)
 {
 	int	built_num;
 
@@ -29,8 +29,10 @@ int	pick_and_run_builtin(t_data *data, char **argv)
 		return (ft_unset(&data->env_list, argv));
 	else if (built_num == 5)
 		return (ft_env(data->env_list));
-	else if (built_num == 6)
+	else if (built_num == 6 && !child)
 		return (ft_exit(data, argv));
+	else if (built_num == 6 && child)
+		return (ft_exit_child(data, argv));
 	return (EXIT_FAILURE);
 }
 
@@ -45,7 +47,7 @@ void	execute_builtin_in_parent(t_data *data, t_exe *exe, \
 	save_stdin_stdout(&saved_stdin, &saved_stdout);
 	redirect_input_file(data, chunk);
 	redirect_to_output_file(data, chunk);
-	data->exit_status = pick_and_run_builtin(data, chunk->argv);
+	data->exit_status = pick_and_run_builtin(data, chunk->argv, false);
 	restor_stdin_stdout(&saved_stdin, &saved_stdout);
 	if (data->exit_required)
 	{
