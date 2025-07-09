@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/07/07 18:53:03 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/09 15:50:58 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,6 +177,7 @@ void	command_is_valid(t_data *data, t_chunk *chunk, int i);
 void	handle_invalid_command(t_data *data, t_chunk *chunk, int i);
 int		usr_input_got_slash(char *str);
 char	*get_msg(t_data *data, int flag, char *arg);
+char	*get_error_access_msg(t_data *data, char *arg);
 
 	////// path exec ////
 void	get_path(char *usr_cmd_input, t_exe *exe_nfo, t_env *env);

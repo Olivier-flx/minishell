@@ -6,11 +6,25 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 17:19:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/07/07 19:01:10 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/09 16:00:33 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell.h"
+
+char	*get_error_access_msg(t_data *data, char *arg)
+{
+	char	*msg;
+	char	*tmp;
+
+	msg = NULL;
+	tmp = NULL;
+	tmp = ft_strjoin3("minishell: ", arg, ": ");
+	msg = ft_strjoin3(tmp, strerror(errno), "\n");
+	ft_free ((void **)&tmp);
+	data->exit_status = 126;
+	return (msg);
+}
 
 char	*get_msg(t_data *data, int flag, char *arg)
 {

@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 17:11:08 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/07/07 18:53:26 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/09 16:08:12 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,13 @@ void	handle_invalid_command(t_data *data, t_chunk *chunk, int i)
 		data->exe_nfo.last_status_code = 127;
 	else
 		data->exe_nfo.last_status_code = 0;
-	flag = usr_input_got_slash(chunk->argv[0]);
-	msg = get_msg(data, flag, chunk->argv[0]);
+	if (access(chunk->argv[0], X_OK) == -1 && errno != 2)
+		msg = get_error_access_msg(data, chunk->argv[0]);
+	else
+	{
+		flag = usr_input_got_slash(chunk->argv[0]);
+		msg = get_msg(data, flag, chunk->argv[0]);
+	}
 	append_error_message(data, msg);
 }
 
