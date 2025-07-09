@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:23:22 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/07/09 16:28:58 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/09 17:01:46 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ int	main(int ac, char **av, char **env)
 	data = (t_data){0};
 	if (ac > 1)
 		return (1);
-	if (!env)
+	if (!env || !*env)
 		return (printf("No environment defined\n"), 1);
 	initialize_data(&data, env);
 	if (ac == 1 && av)
