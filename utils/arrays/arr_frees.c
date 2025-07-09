@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   arr_frees.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 18:19:29 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/05/14 23:45:13 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/09 18:11:25 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ void	free_av(char ***av)
 		ft_free((void **) &(*av)[i]);
 		i++;
 	}
-	ft_free((void **) av);
+	ft_free((void **) av);// test id2
+	av = NULL;
 }
 
 // free an av that is incomplete due to a bug

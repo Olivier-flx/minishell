@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 18:10:10 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/07/07 18:24:45 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/09 17:40:20 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ static void	handle_path_and_builtin(t_data *data, \
 			get_path(chnk->argv[0], exe_nfo, data->env_list);
 		if (exe_nfo->env_path_found == true)
 		{
-			chnk->argv_0_nopath = ft_strdup(chnk->argv[0]);
+			chnk->av_0_nopath = ft_strdup(chnk->argv[0]);
 			ft_free((void **) &chnk->argv[0]);
-			chnk->argv[0] = ft_strjoin(exe_nfo->env_path, chnk->argv_0_nopath);
+			chnk->argv[0] = ft_strjoin(exe_nfo->env_path, chnk->av_0_nopath);
 		}
 	}
 }

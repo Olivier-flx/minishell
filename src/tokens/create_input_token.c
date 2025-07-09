@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_input_token.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 17:57:45 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/09 10:45:59 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/09 17:40:20 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ t_chunk	*initialize_t_chunk1(void)
 		return (NULL);
 	tok->tokens = NULL;
 	tok->argv = NULL;
-	tok->argv_0_nopath = NULL;
+	tok->av_0_nopath = NULL;
 	tok->type = CMD;
 	tok->nb_heredocs = 0;
 	tok->heredoc_pipe_arr_malloced = false;

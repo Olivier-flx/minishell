@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/07/09 15:50:58 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/09 17:40:20 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ typedef struct s_chunk
 {
 	char		**tokens;
 	char		**argv;
-	char		*argv_0_nopath; // store the cmd as it was written by the user
+	char		*av_0_nopath; // store the cmd as it was written by the user
 	t_chk_type	type;
 	////// REDIR FILES //////
 	bool		has_redir;

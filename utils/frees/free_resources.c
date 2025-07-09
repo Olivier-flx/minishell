@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 19:22:36 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/18 16:32:58 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/09 17:41:11 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,24 +44,24 @@ static void	free_redir(t_chunk *chunk)
 
 void	free_cmdlist(t_dlist *cmd_list)
 {
-	t_dlist	*i_node;
+	t_dlist	*i_n;
 
-	i_node = cmd_list;
-	while (i_node)
+	i_n = cmd_list;
+	while (i_n)
 	{
-		if ((t_chunk *)(i_node->content))
+		if ((t_chunk *)(i_n->content))
 		{
-			if (((t_chunk *)(i_node->content))->tokens)
-				free_av(&((t_chunk *)(i_node->content))->tokens);
-			if (((t_chunk *)(i_node->content))->argv)
-				free_av(&((t_chunk *)(i_node->content))->argv);
-			if (((t_chunk *)(i_node->content))->argv_0_nopath)
-				free(((t_chunk *)(i_node->content))->argv_0_nopath);
-			free_redir((t_chunk *)(i_node->content));
-			free_input_redir((t_chunk *)(i_node->content));
-			free((t_chunk *)(i_node->content));
+			if (((t_chunk *)(i_n->content))->tokens)
+				free_av(&((t_chunk *)(i_n->content))->tokens);
+			if (((t_chunk *)(i_n->content))->argv)
+				free_av(&((t_chunk *)(i_n->content))->argv);
+			if (((t_chunk *)(i_n->content))->av_0_nopath)
+				ft_free((void **) &(((t_chunk *) i_n->content)->av_0_nopath));
+			free_redir((t_chunk *)(i_n->content));
+			free_input_redir((t_chunk *)(i_n->content));
+			ft_free((void **) &(i_n->content));
 		}
-		i_node = i_node->next;
+		i_n = i_n->next;
 	}
 	free_list(cmd_list);
 }

@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 16:04:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/07/09 14:04:41 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/09 17:57:10 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,11 @@ void	execute_builtin_in_parent(t_data *data, t_exe *exe, \
 	data->exit_status = pick_and_run_builtin(data, chunk->argv);
 	restor_stdin_stdout(&saved_stdin, &saved_stdout);
 	if (data->exit_required)
+	{
+		write(STDERR_FILENO, "exit\n", 5);
 		exit(data->exit_code);
+	}
+
 }
 
 int	run_builtins(t_data *data, t_exe *exe, t_chunk *chunk, int i)
