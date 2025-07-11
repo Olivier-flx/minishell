@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 17:55:52 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/07/09 20:42:35 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/11 19:01:15 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,8 @@ void	process_command_iteration(t_data *data, t_chunk *chunk, int i, \
 			data->exe_nfo.pid_arr[*valid_cmd_i] = fork();
 			if (data->exe_nfo.pid_arr[*valid_cmd_i] == -1)
 				perror("Fork");
-			data->exit_status = 0;
+			if (data->exe_nfo.last_status_code == 0)
+				data->exit_status = 0;
 			if (data->exe_nfo.pid_arr[*valid_cmd_i] == 0)
 			{
 				reset_signals_to_default();
