@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/07/11 17:45:13 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/11 18:13:47 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ typedef struct s_chunk
 	char		**tokens;
 	char		**argv;
 	char		*av_0_nopath; // store the cmd as it was written by the user
+	char		*bin_path;
 	t_chk_type	type;
 	////// REDIR FILES //////
 	bool		has_redir;
@@ -180,7 +181,8 @@ char	*get_msg(t_data *data, int flag, char *arg);
 char	*get_error_access_msg(t_data *data, char *arg);
 
 	////// path exec ////
-void	get_path(char *usr_cmd_input, t_exe *exe_nfo, t_env *env);
+// void	get_path(char *usr_cmd_input, t_exe *exe_nfo, t_env *env);
+void	get_path(char *usr_cmd_input, t_chunk *chnk, t_env *env);
 int		usr_input_got_slash(char *str);
 
 	////// PIPES ///////

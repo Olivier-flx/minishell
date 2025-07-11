@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 18:10:10 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/07/09 17:40:20 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/11 18:31:42 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,24 +24,43 @@
  * @param exe_nfo	Structure containing execution-related information.
  * @param chnk		Chunk containing the command and its arguments.
  */
-static void	handle_path_and_builtin(t_data *data, \
-									t_exe *exe_nfo, t_chunk *chnk)
+static void	handle_path_and_builtin(t_data *data, t_chunk *chnk)
 {
 	char	**c_path;
 
 	c_path = NULL;
+	chnk->bin_path = NULL;
 	if (usr_input_got_slash(chnk->argv[0]) == 0 && !is_builtin(chnk->argv[0]))
 	{
-		if (exe_nfo->env_path_found == false)
-			get_path(chnk->argv[0], exe_nfo, data->env_list);
-		if (exe_nfo->env_path_found == true)
+		get_path(chnk->argv[0], chnk, data->env_list);
+		if (chnk->bin_path != NULL)
 		{
 			chnk->av_0_nopath = ft_strdup(chnk->argv[0]);
 			ft_free((void **) &chnk->argv[0]);
-			chnk->argv[0] = ft_strjoin(exe_nfo->env_path, chnk->av_0_nopath);
+			chnk->argv[0] = ft_strjoin(chnk->bin_path, chnk->av_0_nopath);
 		}
 	}
 }
+// static void	handle_path_and_builtin(t_data *data, \
+// 									t_exe *exe_nfo, t_chunk *chnk)
+// {
+// 	char	**c_path;
+
+// 	c_path = NULL;
+// 	if (usr_input_got_slash(chnk->argv[0]) == 0 && !is_builtin(chnk->argv[0]))
+// 	{
+// 		if (exe_nfo->env_path_found == false)
+// 			get_path(chnk->argv[0], exe_nfo, data->env_list);
+// 		if (exe_nfo->env_path_found == true)
+// 		{
+// 			chnk->av_0_nopath = ft_strdup(chnk->argv[0]);
+// 			ft_free((void **) &chnk->argv[0]);
+// 			chnk->argv[0] = ft_strjoin(exe_nfo->env_path, chnk->av_0_nopath);
+// 		}
+// 	}
+// }
+
+
 
 /**
  * @brief Initializes the command vector from a linked list of command chunks.
@@ -68,7 +87,8 @@ void	init_cmd_vect(t_data *data, t_dlist **cmd_list, t_exe *exe_nfo)
 		if (chunk->type == CMD && chunk->argv && chunk->argv[0])
 		{
 			exe_nfo->cmd_is_valid_arr[i] = false;
-			handle_path_and_builtin(data, exe_nfo, chunk);
+			handle_path_and_builtin(data, chunk);
+			// handle_path_and_builtin(data, exe_nfo, chunk);
 			i++;
 		}
 		i_node = i_node->next;
