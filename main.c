@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:23:22 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/07/09 17:01:46 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/11 17:43:09 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int	initialize_cmd_list(t_data *data)
 	data->cmd_list = cmd_list;
 	return (0);
 }
-
 
 static void	get_prompt(t_data *data, char **prompt)
 {

@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/07/09 20:41:49 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/11 17:45:13 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -323,7 +323,8 @@ void	ignore_unecesary_char(char *s, int *i, char c, t_quote *qts);
 char	**split_quoted2(char *s, t_data *data);
 int		ft_segment_len(int i, char *s, t_quote *quote, t_int_array *separators);
 int		ft_segment_count(char *s, int i, int count, t_quote *quote);
-char	**expension_root(t_data *data, char **substring_arr, int start, int end);
+char	**expension_root(t_data *data, char **substring_arr, \
+						int start, int end);
 char	*ft_trim(char *src, bool is_malloced);
 bool	ft_isspace(char c);
 bool	line_is_only_spaces(char *line);

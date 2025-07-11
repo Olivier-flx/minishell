@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 17:29:54 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/25 17:48:04 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/11 17:44:16 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,8 @@ char	*concat_substrs_sep(char **argv, char sep)
 /**
 * @brief : duplicate a segmented substring, in a char **; and expend the tockens
 * from a start point included to a end point included.
-* @info chunk malloc :
+*
+*	@note chunk malloc :
 *    end - start +1 to include the starst and the end ;  +1 for the null
 */
 char	**expension_root(t_data *data, char **substring_arr, int start, int end)
@@ -106,7 +107,6 @@ char	**expension_root(t_data *data, char **substring_arr, int start, int end)
 	chunk[j] = NULL;
 	return (chunk);
 }
-//printf("expension_root After chunk[%i] = `%s`\n\n", j, chunk[j]); // @debug
 
 void	retocken_after_expension(char ***chunk_tokens)
 {

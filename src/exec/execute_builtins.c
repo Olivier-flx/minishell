@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 16:04:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/07/09 20:41:45 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/11 17:46:32 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ void	execute_builtin_in_parent(t_data *data, t_exe *exe, \
 		write(STDERR_FILENO, "exit\n", 5);
 		exit(data->exit_code);
 	}
-
 }
 
 int	run_builtins(t_data *data, t_exe *exe, t_chunk *chunk, int i)

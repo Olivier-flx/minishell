@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:46:36 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/07/09 14:35:02 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/11 17:42:45 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ void	signal_handlers_for_readline(t_data *data);
 #endif
 
 /*
-
  * ==========================
  *  INPUT/OUTPUT FUNCTIONS
  * ==========================
