@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/07/11 18:13:47 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/11 18:54:59 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,6 @@ typedef struct s_dlist
 // struc to store the good path for commands.
 typedef struct s_exec_data
 {
-	char	*env_path;
-	bool	env_path_found;
 	bool	*cmd_is_valid_arr;
 	bool	cmd_is_valid_arr_malloced;
 	int		*pid_arr;
@@ -181,7 +179,6 @@ char	*get_msg(t_data *data, int flag, char *arg);
 char	*get_error_access_msg(t_data *data, char *arg);
 
 	////// path exec ////
-// void	get_path(char *usr_cmd_input, t_exe *exe_nfo, t_env *env);
 void	get_path(char *usr_cmd_input, t_chunk *chnk, t_env *env);
 int		usr_input_got_slash(char *str);
 

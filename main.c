@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:23:22 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/07/11 17:43:09 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/11 18:54:10 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,6 @@ void	initialize_data(t_data *data, char **env)
 	data->exit_status = 0;
 	data->exe_nfo.last_status_code = 0;
 	data->exe_nfo.cmd_err_msg = NULL;
-	data->exe_nfo.env_path = NULL;
-	data->exe_nfo.env_path_found = false;
 	data->exe_nfo.cmd_is_valid_arr = NULL;
 	data->exit_required = false;
 	data->exit_code = 0;

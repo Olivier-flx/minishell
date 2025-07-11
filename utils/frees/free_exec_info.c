@@ -29,8 +29,6 @@ void	clean_exe_nfo(t_data *data, int exit_val)
 	(void) exit_val;
 	if (data && data->cmd_list)
 	{
-		if (data->exe_nfo.env_path && data->exe_nfo.env_path[0])
-			ft_free((void **) &data->exe_nfo.env_path);
 		if (data->exe_nfo.cmd_is_valid_arr)
 			ft_free((void **) &data->exe_nfo.cmd_is_valid_arr);
 		if (data->exe_nfo.pid_arr_malloced == true)
