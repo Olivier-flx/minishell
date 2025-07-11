@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/07/11 18:54:59 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/11 19:23:20 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,6 @@ int		get_builtin_int(char *cmd);
 
 	////// commands ///
 void	check_wrong_commands(t_data *data);
-char	*get_msg(t_data *data, int flag, char *arg);
 	////// commands init ///
 void	init_cmd(t_data *data);
 void	clean_exe_nfo(t_data *data, int exit_val);
