@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 17:19:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/07/11 19:17:16 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/12 10:50:45 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,10 @@ char	*get_msg(t_data *data, int flag, char *arg)
 	return (msg);
 }
 
+/**
+ * @return 1 if a slash is present;
+ * @return 0 if no slash is in the string
+ */
 int	usr_input_got_slash(char *str)
 {
 	int	i;

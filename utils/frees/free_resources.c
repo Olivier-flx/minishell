@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 19:22:36 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/07/11 18:13:42 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/12 10:39:34 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void	free_cmdlist(t_dlist *cmd_list)
 			if (((t_chunk *)(i_n->content))->av_0_nopath)
 				ft_free((void **) &(((t_chunk *) i_n->content)->av_0_nopath));
 			ft_free((void **) &(((t_chunk *) i_n->content)->bin_path));
+			ft_free((void **) &(((t_chunk *) i_n->content)->exec));
 			free_redir((t_chunk *)(i_n->content));
 			free_input_redir((t_chunk *)(i_n->content));
 			ft_free((void **) &(i_n->content));

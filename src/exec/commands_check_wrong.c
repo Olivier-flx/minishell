@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 17:11:08 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/07/11 19:16:55 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/12 11:30:39 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,6 @@ static void	append_error_message(t_data *data, char *msg)
 /**
  * @brief Handles the case where the command is a directory.
  *
- * Marks the command as invalid and appends an appropriate error message.
- * If it's the last command in the pipeline, sets the exit status to 126
- * (indicating a permission problem or non-executable).
- *
  * @param data	Structure containing the shell's global data.
  * @param chunk	Chunk representing the command.
  * @param i		Index of the command in the execution array.
@@ -48,11 +44,9 @@ void	handle_invalid_command(t_data *data, t_chunk *chunk, int i)
 
 	data->exe_nfo.command_err_count++;
 	data->exe_nfo.cmd_is_valid_arr[i] = false;
-	if (i == data->exe_nfo.total_cmd_count - 1)
-		data->exe_nfo.last_status_code = 127;
-	else
-		data->exe_nfo.last_status_code = 0;
-	if (access(chunk->argv[0], X_OK) == -1 && errno != 2)
+	set_exec_last_status_code (data, i);
+	if (usr_input_got_slash(chunk->argv[0]) \
+			&& access(chunk->exec, X_OK) == -1 && errno != 2)
 		msg = get_error_access_msg(data, chunk->argv[0]);
 	else
 	{
@@ -111,7 +105,7 @@ static void	handle_chunk_command(t_data *data, t_chunk *chunk, int i)
 		command_is_valid(data, chunk, i);
 		return ;
 	}
-	s_ret = stat(chunk->argv[0], &s);
+	s_ret = stat(chunk->exec, &s);
 	if (s_ret != 0)
 	{
 		handle_invalid_command(data, chunk, i);
@@ -120,7 +114,7 @@ static void	handle_chunk_command(t_data *data, t_chunk *chunk, int i)
 	if (s_ret == 0 && (s.st_mode & S_IFMT) == S_IFDIR)
 		cmd_is_dir(data, chunk, i);
 	else if (s_ret == 0 && (s.st_mode & S_IFMT) == S_IFREG \
-			&& access(chunk->argv[0], X_OK) != 0 && !is_builtin(chunk->argv[0]))
+			&& access(chunk->exec, X_OK) != 0 && !is_builtin(chunk->argv[0]))
 		handle_invalid_command(data, chunk, i);
 	else
 		command_is_valid(data, chunk, i);

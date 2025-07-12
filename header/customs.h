@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/07/11 19:23:20 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/12 11:26:16 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ typedef struct s_chunk
 	char		**tokens;
 	char		**argv;
 	char		*av_0_nopath; // store the cmd as it was written by the user
+	char		*exec;		// the first argument to transmit to execve()
 	char		*bin_path;
 	t_chk_type	type;
 	////// REDIR FILES //////
@@ -165,6 +166,7 @@ int		get_builtin_int(char *cmd);
 
 	////// commands ///
 void	check_wrong_commands(t_data *data);
+void	set_exec_last_status_code(t_data *data, int i);
 	////// commands init ///
 void	init_cmd(t_data *data);
 void	clean_exe_nfo(t_data *data, int exit_val);

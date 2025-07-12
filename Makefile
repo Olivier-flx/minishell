@@ -6,7 +6,7 @@
 #    By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/14 18:09:50 by sarodrig          #+#    #+#              #
-#    Updated: 2025/06/25 17:47:05 by ofilloux         ###   ########.fr        #
+#    Updated: 2025/07/12 11:26:41 by ofilloux         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -91,6 +91,7 @@ EXEC	=	./src/exec/exec.c \
 			./src/exec/commands.c \
 			./src/exec/commands_utils.c \
 			./src/exec/commands_check_wrong.c \
+			./src/exec/commands_check_wrong_utils.c \
 			./src/exec/path.c \
 			./src/exec/listen_heredocs.c \
 			./src/exec/pipes.c \
