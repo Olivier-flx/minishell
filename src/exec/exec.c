@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:30:25 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/07/12 15:31:21 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/12 15:57:28 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,11 +157,9 @@ int	main_exec(t_data *data)
 		init_pipes_2arr(data, &data->exe_nfo);
 		exec_cmds(data, 0);
 		close_all_pipes(&data->exe_nfo, &data->exe_nfo.pipe_arr);
+		cmd_error_msg(data);
 		waiting_childs(data, &data->exe_nfo, data->exe_nfo.pid_arr);
-		clean_exe_nfo(data, data->exit_status);
-		if (data->exe_nfo.cmd_err_msg != NULL && \
-			data->exe_nfo.command_err_count == data->exe_nfo.total_cmd_count)
-			printf("%s\n", data->exe_nfo.cmd_err_msg);
+		clean_exe_nfo(data);
 	}
 	return (EXIT_SUCCESS);
 }

@@ -12,21 +12,19 @@
 
 #include "../../header/minishell.h"
 
-void	cmd_error_msg(t_data *data, int failure)
+void	cmd_error_msg(t_data *data)
 {
 	char	*msg;
 
 	msg = data->exe_nfo.cmd_err_msg;
-	data->exe_nfo.last_status_code = failure;
 	if (msg)
 		write(STDERR_FILENO, msg, ft_strlen(msg));
 	if (data->cmd_list && data->exe_nfo.has_msg && msg)
 		ft_free((void **) &data->exe_nfo.cmd_err_msg);
 }
 
-void	clean_exe_nfo(t_data *data, int exit_val)
+void	clean_exe_nfo(t_data *data)
 {
-	(void) exit_val;
 	if (data && data->cmd_list)
 	{
 		if (data->exe_nfo.cmd_is_valid_arr)
@@ -38,5 +36,4 @@ void	clean_exe_nfo(t_data *data, int exit_val)
 		if (data->exe_nfo.pipes_malloced)
 			ft_free((void **) &data->exe_nfo.pipes_malloced);
 	}
-	cmd_error_msg(data, exit_val);
 }

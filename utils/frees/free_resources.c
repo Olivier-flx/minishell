@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 19:22:36 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/07/12 10:39:34 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/12 15:58:11 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	free_resources(t_data *data, bool clear_env, bool free_line)
 	if (data && data->cmd_list)
 	{
 		free_cmdlist(data->cmd_list);
-		clean_exe_nfo(data, EXIT_SUCCESS);
+		clean_exe_nfo(data);
 	}
 	if (clear_env)
 	{

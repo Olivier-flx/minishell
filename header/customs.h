@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/07/12 11:26:16 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/12 15:57:33 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,8 +169,8 @@ void	check_wrong_commands(t_data *data);
 void	set_exec_last_status_code(t_data *data, int i);
 	////// commands init ///
 void	init_cmd(t_data *data);
-void	clean_exe_nfo(t_data *data, int exit_val);
-void	cmd_error_msg(t_data *data, int failure);
+void	clean_exe_nfo(t_data *data);
+void	cmd_error_msg(t_data *data);
 	////// commands utils ///
 int		count_cmd(t_dlist **cmd_list);
 void	command_is_valid(t_data *data, t_chunk *chunk, int i);
