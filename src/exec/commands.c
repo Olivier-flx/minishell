@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 18:10:10 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/07/12 10:54:27 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/12 17:37:54 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,6 @@
  */
 static void	handle_path_and_builtin(t_data *data, t_chunk *chnk)
 {
-	char	**c_path;
-
-	c_path = NULL;
 	chnk->bin_path = NULL;
 	if (usr_input_got_slash(chnk->argv[0]) == 0 && !is_builtin(chnk->argv[0]))
 	{
@@ -36,14 +33,12 @@ static void	handle_path_and_builtin(t_data *data, t_chunk *chnk)
 		if (chnk->bin_path != NULL)
 		{
 			chnk->av_0_nopath = ft_strdup(chnk->argv[0]);
-			//ft_free((void **) &chnk->argv[0]);
-			//chnk->argv[0] = ft_strjoin(chnk->bin_path, chnk->av_0_nopath);
 			chnk->exec = ft_strjoin(chnk->bin_path, chnk->av_0_nopath);
 		}
 		else
 			chnk->exec = ft_strdup(chnk->argv[0]);
 	}
-	else if (usr_input_got_slash(chnk->argv[0]) && !is_builtin(chnk->argv[0]))
+	else if (usr_input_got_slash(chnk->argv[0]))
 		chnk->exec = ft_strdup(chnk->argv[0]);
 }
 

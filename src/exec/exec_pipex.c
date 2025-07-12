@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipex.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 17:55:52 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/07/12 14:58:13 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/12 18:12:20 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	execve_builtin_in_child(t_data *data, t_exe *exe, t_chunk *chunk, int i)
 			if (data->exit_required)
 				exit(data->exit_code);
 			close_all_pipes_child(exe);
+			//exit (data->exit_status);
 			return (EXIT_SUCCESS);
 		}
 	}
