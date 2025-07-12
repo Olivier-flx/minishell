@@ -6,7 +6,7 @@
 #    By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/14 18:09:50 by sarodrig          #+#    #+#              #
-#    Updated: 2025/07/12 11:26:41 by ofilloux         ###   ########.fr        #
+#    Updated: 2025/07/12 12:41:34 by ofilloux         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -203,3 +203,8 @@ fclean	:	clean
 			@printf "$(RED)[minishell] Cleaned successfully.$(DEFAULT)\n"
 
 re		:	fclean all
+
+test	:	$(NAME)
+			valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=yes \
+			--suppressions=readline.supp -s ./minishell
+
