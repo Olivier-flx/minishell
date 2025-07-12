@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 17:55:52 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/07/12 10:41:10 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/12 14:58:13 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,15 +60,14 @@ void	run_pipex(t_data *data, t_exe *exe, t_chunk *chunk, int i)
 
 void	process_invalide_cmd(t_data *data, t_exe *exe, int i)
 {
-	int		pid;
 	char	buf[10];
 	int		j;
 
 	(void) data;
 	if (i > 0 && i < exe->total_cmd_count)
 	{
-		pid = fork();
-		if (pid == 0)
+		data->exe_nfo.pid_arr[i] = fork();
+		if (data->exe_nfo.pid_arr[i] == 0)
 		{
 			j = 0;
 			while (j < exe->total_cmd_count - 1)
@@ -81,6 +80,7 @@ void	process_invalide_cmd(t_data *data, t_exe *exe, int i)
 			while (read(exe->pipe_arr[i - 1][0], buf, sizeof(buf)) > 0)
 				continue ;
 			close(exe->pipe_arr[i - 1][0]);
+			data->exit_status = 127;
 			execve("/bin/true", (char *[]){"true", NULL}, NULL);
 			exit(127);
 		}
@@ -95,12 +95,12 @@ void	process_command_iteration(t_data *data, t_chunk *chunk, int i, \
 	{
 		if (run_builtins(data, &data->exe_nfo, chunk, i) != 1)
 		{
-			data->exe_nfo.pid_arr[*valid_cmd_i] = fork();
-			if (data->exe_nfo.pid_arr[*valid_cmd_i] == -1)
+			data->exe_nfo.pid_arr[i] = fork(); // @ti3
+			if (data->exe_nfo.pid_arr[i] == -1)
 				perror("Fork");
 			if (data->exe_nfo.last_status_code == 0)
 				data->exit_status = 0;
-			if (data->exe_nfo.pid_arr[*valid_cmd_i] == 0)
+			if (data->exe_nfo.pid_arr[i] == 0)// @ti3
 			{
 				reset_signals_to_default();
 				run_pipex(data, &data->exe_nfo, chunk, i);

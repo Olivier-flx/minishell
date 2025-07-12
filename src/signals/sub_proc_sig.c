@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 22:17:16 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/18 19:15:13 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/12 15:08:58 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,8 @@ void	handle_sub_process_signal(t_data *data, int status, bool *printed)
 			data->exit_status = 128 + sig;
 	}
 	else
+	{
 		data->exit_status = (status >> 8) & 0xFF;
+		fprintf(stderr, "handle_sub_process_signal   data->exit_status %i", data->exit_status); // debug
+	}
 }
