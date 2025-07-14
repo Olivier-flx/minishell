@@ -6,7 +6,7 @@
 #    By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/14 18:09:50 by sarodrig          #+#    #+#              #
-#    Updated: 2025/07/14 11:10:54 by ofilloux         ###   ########.fr        #
+#    Updated: 2025/07/14 14:17:05 by ofilloux         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -207,5 +207,5 @@ re		:	fclean all
 
 test	:	$(NAME)
 			valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=yes \
-			--child-silent-after-fork=yes --suppressions=readline.supp -s ./minishell
+			--child-silent-after-fork=no --suppressions=readline.supp -s ./minishell
 

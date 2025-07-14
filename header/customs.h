@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/07/14 11:11:16 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/14 14:25:04 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,7 @@ typedef struct s_chunk
  */
 int		main_exec(t_data *data);
 void	exec_cmds(t_data *data, int i);
-void	run_pipex(t_data *data, t_exe *exe, t_chunk *chunk, int i);
+int		run_pipex(t_data *data, t_exe *exe, t_chunk *chunk, int i);
 int		listen_heredocs(t_data *data, t_chunk *chunk);
 bool	is_builtin(char *cmd);
 int		run_builtins(t_data *data, t_exe *exe, t_chunk *chunk, int i);

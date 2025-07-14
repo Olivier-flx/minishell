@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:30:25 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/07/14 12:56:13 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/14 15:56:07 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,20 +53,6 @@ void	init_pid_arr(t_data *data, t_exe *exe)
 	while (i < exe->total_cmd_count)
 		exe->pid_arr[i++] = -2;
 }
-// void	init_pid_arr(t_data *data, t_exe *exe)
-// {
-// 	int	i;
-
-// 	if (!data)
-// 		return ;
-// 	i = 0;
-// 	exe->pid_arr = malloc(exe->valid_cmd_count * sizeof(int));
-// 	if (!exe->pid_arr)
-// 		strerror(errno);
-// 	exe->pid_arr_malloced = true;
-// 	while (i < exe->valid_cmd_count)
-// 		exe->pid_arr[i++] = -2;
-// }
 
 void	exec_cmds(t_data *data, int i)
 {

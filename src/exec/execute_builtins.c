@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 16:04:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/07/14 12:52:14 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/14 14:35:16 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,44 @@ int	pick_and_run_builtin(t_data *data, char **argv, bool child)
 		return (ft_exit(data, argv));
 	else if (built_num == 6 && child)
 		return (ft_exit_child(data, argv));
+	return (EXIT_FAILURE);
+}
+
+static void	builtin_exit_handler(t_data *data, t_exe *exe, int cpy_status_code)
+{
+	if (data->exit_required)
+	{
+		free_resources(data, true, true);
+		exit(cpy_status_code);
+	}
+	close_all_pipes_child(exe);
+	free_resources(data, true, true);
+	exit (cpy_status_code);
+}
+
+int	execve_builtin_in_child(t_data *data, t_exe *exe, t_chunk *chunk, int i)
+{
+	int	cpy_status_code;
+
+	cpy_status_code = 0;
+	if (chunk && chunk->argv && is_builtin(chunk->argv[0]))
+	{
+		if (exe->total_cmd_count > 1)
+		{
+			if (!data || !exe || !chunk || i < 0)
+				return (EXIT_FAILURE);
+			if (get_builtin_int(chunk->argv[0]) == 6)
+				close_all_pipes_child(exe);
+			if (0 == chunk->chunk_exec_return_status_code)
+				cpy_status_code = pick_and_run_builtin(data, chunk->argv, 1);
+			else
+				cpy_status_code = chunk->chunk_exec_return_status_code;
+			builtin_exit_handler(data, exe, cpy_status_code);
+			return (EXIT_SUCCESS);
+		}
+	}
+	else
+		close_all_pipes_child(exe);
 	return (EXIT_FAILURE);
 }
 
