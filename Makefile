@@ -6,7 +6,7 @@
 #    By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/14 18:09:50 by sarodrig          #+#    #+#              #
-#    Updated: 2025/07/14 10:36:21 by ofilloux         ###   ########.fr        #
+#    Updated: 2025/07/14 11:10:54 by ofilloux         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -104,8 +104,7 @@ FILES	=	./src/exec/files/init_input_files.c \
 			./src/exec/files/open_files.c \
 			./src/exec/files/stdin_stdout.c \
 			./src/exec/files/redirects.c \
-			./src/exec/files/input_redirects.c \
-			./src/exec/files/file_check_access.c
+			./src/exec/files/input_redirect.c
 
 UTILS	=	./utils/string/split_quoted.c \
 			./utils/string/split_quoted_utils.c \

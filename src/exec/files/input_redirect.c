@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 10:35:56 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/07/14 10:37:12 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/14 12:04:21 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,31 @@ static void	heredoc_handler(t_chunk *chunk, int i, int *herdoc_i, int lst_redir)
 	}
 }
 
+int	check_i_file_rights(t_chunk *chunk, int i)
+{
+
+	if (-1 == access(chunk->input_redir_file[i], R_OK))
+	{
+		chunk->chunk_exec_return_status_code = 1;
+		printf("minishell: %s: %s\n", \
+		chunk->input_redir_file[i], strerror(errno));
+		return (1);
+	}
+	return (0);
+}
+
 static void	redirect_handler(t_chunk *chunk, int i, int lst_redir)
 {
 	if (ft_strcmp(chunk->input_redir[i], "<") == 0)
 	{
+		if (chunk->chunk_exec_return_status_code > 0 \
+		|| check_i_file_rights(chunk, i) == 1)
+			return ;
 		chunk->input_file_fd[i] = open(chunk->input_redir_file[i], O_RDONLY);
 		if (chunk->input_file_fd[i] < 0)
 		{
-			chunk->chunk_exec_return_status_code = errno;
-			printf("minishell: %s: %s\n", chunk->input_redir_file[i], \
-				strerror(errno));
+			ft_putstr_fd("Error open() ir, last file\n", STDERR_FILENO);
+			return ;
 		}
 		chunk->input_file_open[i] = true;
 		if (i == lst_redir && dup2(chunk->input_file_fd[i], STDIN_FILENO) == -1)

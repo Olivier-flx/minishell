@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 17:55:52 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/07/14 09:58:04 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/14 11:56:19 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@ int	execve_builtin_in_child(t_data *data, t_exe *exe, t_chunk *chunk, int i)
 				return (EXIT_FAILURE);
 			if (get_builtin_int(chunk->argv[0]) == 6)
 				close_all_pipes_child(exe);
-			data->exit_status = pick_and_run_builtin(data, chunk->argv, true);
+			if (0 == chunk->chunk_exec_return_status_code)
+				data->exit_status = pick_and_run_builtin(data, chunk->argv, 1);
+			else
+				data->exit_status = chunk->chunk_exec_return_status_code;
 			if (data->exit_required)
 				exit(data->exit_code);
 			close_all_pipes_child(exe);
@@ -50,12 +53,15 @@ void	run_pipex(t_data *data, t_exe *exe, t_chunk *chunk, int i)
 		perror("dup2 redir");
 	if (i < exe->total_cmd_count - 1)
 		close(exe->pipe_arr[i][1]);
-	if (0 != execve_builtin_in_child(data, exe, chunk, i))
+	if (0 != execve_builtin_in_child(data, exe, chunk, i) && \
+			0 == chunk->chunk_exec_return_status_code)
 		execve(chunk->exec, chunk->argv, ft_env_to_array(data->env_list));
+	else
+		exit(chunk->chunk_exec_return_status_code);
 	if (exe->total_cmd_count > 1)
 	{
+		exit (data->exit_status);
 		execve("/bin/true", (char *[]){"true", NULL}, NULL);
-		exit (127);
 	}
 }
 
