@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 10:35:56 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/07/14 12:29:35 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/14 12:58:00 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ static void	heredoc_handler(t_chunk *chunk, int i, int *herdoc_i, int lst_redir)
 
 int	check_i_file_rights(t_chunk *chunk, int i)
 {
-
 	if (-1 == access(chunk->input_redir_file[i], R_OK))
 	{
 		chunk->chunk_exec_return_status_code = 1;
