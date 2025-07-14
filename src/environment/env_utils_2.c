@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 17:20:12 by marvin            #+#    #+#             */
-/*   Updated: 2025/06/18 16:46:38 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/14 20:42:39 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,3 +42,38 @@ int	is_valid_env_key(char *key)
 	}
 	return (1);
 }
+
+
+static void	update_env(t_env *env_list)
+{
+	int		tmp;
+	char	*str;
+
+	tmp = 0;
+	tmp = ft_atoi(ft_getenv(env_list, "SHLVL"));
+	tmp++;
+	str = ft_itoa(tmp);
+	update_or_add_env(&env_list, "SHLVL", str);
+	ft_free((void **) &str);
+}
+
+void	is_minishell(t_data *data, char *arg_0)
+{
+	char	**av;
+	char	*tmp;
+
+	if (!arg_0)
+		return ;
+	//if (usr_input_got_slash(arg_0) == 0)
+	//{
+	av = ft_split(arg_0, '/');
+	if (av && av[0])
+	{
+		tmp = av[pp_char_len(av) - 1];
+		if (ft_strcmp(tmp, "minishell") == 0)
+			update_env(data->env_list);
+	}
+	free_av(&av);
+	//}
+}
+

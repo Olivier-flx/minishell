@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 18:13:34 by laufarin          #+#    #+#             */
-/*   Updated: 2025/07/09 20:51:26 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/14 20:30:41 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	ft_env_add_back(t_env **head, t_env *new_node);
 t_env	*ft_init_env(char **env);
 char	*ft_getenv(t_env *env, char *key);
 int		ft_env_exists(t_env *env, char *key);
+void	is_minishell(t_data *data, char *arg_0);
 
 //env_utils
 void	ft_free_env(t_env *env);
