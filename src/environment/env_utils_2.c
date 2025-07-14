@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 17:20:12 by marvin            #+#    #+#             */
-/*   Updated: 2025/07/14 20:46:18 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/14 21:39:09 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,3 @@ void	is_minishell(t_data *data, char *arg_0)
 	}
 	free_av(&av);
 }
-

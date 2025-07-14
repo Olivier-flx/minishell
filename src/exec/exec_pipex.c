@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 17:55:52 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/07/14 20:05:09 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/14 21:40:06 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@ static void	handle_pipex_exec(t_data *data, t_exe *exe, t_chunk *chunk, int i)
 		execve(chunk->exec, chunk->argv, ft_env_to_array(data->env_list));
 	else
 	{
-		close_heredocs_pipes(chunk); // @ti 6
+		close_heredocs_pipes(chunk);
 		status_code_cpy = chunk->chunk_exec_return_status_code;
 		free_resources(data, true, true);
 		exit(status_code_cpy);
 	}
 	if (exe->total_cmd_count > 1)
 	{
-		close_heredocs_pipes(chunk); // @ti 6
+		close_heredocs_pipes(chunk);
 		status_code_cpy = data->exit_status;
 		free_resources(data, true, true);
 		exit (status_code_cpy);
@@ -96,7 +96,8 @@ void	process_command_iteration(t_data *data, t_chunk *chunk, int i, \
 			data->exe_nfo.pid_arr[i] = fork();
 			if (data->exe_nfo.pid_arr[i] == -1)
 				perror("Fork");
-			if (ft_strcmp(chunk->argv[0], "exit") == 0 && data->exe_nfo.last_status_code == 0)
+			if (ft_strcmp(chunk->argv[0], "exit") == 0 \
+			&& data->exe_nfo.last_status_code == 0)
 				data->exit_status = 0;
 			if (data->exe_nfo.pid_arr[i] == 0)
 			{

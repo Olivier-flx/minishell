@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 10:35:56 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/07/14 19:56:55 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/14 21:40:33 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,4 @@ void	redirect_input_file(t_data *data, t_chunk *chunk)
 		heredoc_handler(chunk, i, &herdoc_i, lst_redir);
 		i++;
 	}
-	// if (chunk->heredoc_pipe_arr_malloced)
-	// 	ft_free((void **) &chunk->heredoc_pipe_arr);
 }
