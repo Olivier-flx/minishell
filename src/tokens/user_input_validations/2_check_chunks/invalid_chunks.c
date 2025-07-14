@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 10:46:57 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/07/14 19:01:25 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/14 21:36:53 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ bool	unique_empty_chunk(t_data *data, t_dlist *cmd_list)
 {
 	t_chunk	*chk;
 
+	chk = NULL;
 	if (cmd_list && (t_chunk *) cmd_list->content)
 		chk = ((t_chunk *) cmd_list->content);
 	if (cmd_list && !cmd_list->next && chunk_is_empty(chk))

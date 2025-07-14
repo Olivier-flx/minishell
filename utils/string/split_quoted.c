@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_quoted.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 11:18:50 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/04 12:06:34 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/14 21:36:33 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,8 +146,6 @@ static char	**ft_new_string_arr(char *s, char c, char **ns_ar, int nb_segment)
 	while (s[i] && segment_i < nb_segment)
 	{
 		ns_ar[segment_i] = process_segment(s, &i, c, &qts);
-		if (ns_ar[segment_i] == NULL)
-			return (free_uncomplete_av(&ns_ar, segment_i));
 		segment_i++;
 	}
 	ns_ar[segment_i] = 0;
