@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+         #
+#    By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/14 18:09:50 by sarodrig          #+#    #+#              #
-#    Updated: 2025/07/12 12:41:34 by ofilloux         ###   ########.fr        #
+#    Updated: 2025/07/13 21:28:36 by ofilloux         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -206,5 +206,5 @@ re		:	fclean all
 
 test	:	$(NAME)
 			valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=yes \
-			--suppressions=readline.supp -s ./minishell
+			--child-silent-after-fork=no --suppressions=readline.supp -s ./minishell
 
