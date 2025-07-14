@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 17:55:52 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/07/14 16:09:39 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/14 16:11:31 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ static void	handle_pipex_exec(t_data *data, t_exe *exe, t_chunk *chunk, int i)
 		status_code_cpy = chunk->chunk_exec_return_status_code;
 		free_resources(data, true, true);
 		exit(status_code_cpy);
-
 	}
 	if (exe->total_cmd_count > 1)
 	{
