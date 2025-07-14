@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 16:04:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/07/14 14:35:16 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/14 20:05:04 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ int	execve_builtin_in_child(t_data *data, t_exe *exe, t_chunk *chunk, int i)
 				cpy_status_code = pick_and_run_builtin(data, chunk->argv, 1);
 			else
 				cpy_status_code = chunk->chunk_exec_return_status_code;
+			close_heredocs_pipes(chunk); // @ti 6
 			builtin_exit_handler(data, exe, cpy_status_code);
 			return (EXIT_SUCCESS);
 		}

@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 17:55:52 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/07/14 19:10:24 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/14 20:05:09 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,14 @@ static void	handle_pipex_exec(t_data *data, t_exe *exe, t_chunk *chunk, int i)
 		execve(chunk->exec, chunk->argv, ft_env_to_array(data->env_list));
 	else
 	{
+		close_heredocs_pipes(chunk); // @ti 6
 		status_code_cpy = chunk->chunk_exec_return_status_code;
 		free_resources(data, true, true);
 		exit(status_code_cpy);
 	}
 	if (exe->total_cmd_count > 1)
 	{
+		close_heredocs_pipes(chunk); // @ti 6
 		status_code_cpy = data->exit_status;
 		free_resources(data, true, true);
 		exit (status_code_cpy);

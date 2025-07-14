@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 17:37:47 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/09 22:26:20 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/14 20:08:57 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,11 @@ void	close_heredocs_pipes(t_chunk *chunk)
 		}
 		i++;
 	}
+	i = 0;
 	if (chunk->heredoc_pipe_arr_malloced)
-		ft_free((void **) &chunk->heredoc_pipe_arr);
+	{
+		while (i < chunk->nb_heredocs)
+			ft_free((void **) &(chunk->heredoc_pipe_arr[i++]));
+		ft_free((void **) &(chunk->heredoc_pipe_arr));
+	}
 }
