@@ -14,3 +14,4 @@ test*
 test_exit.sh
 test_signals.c
 *.ods#
+*.ods
