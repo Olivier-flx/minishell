@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 17:06:53 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/14 15:32:17 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/14 10:29:14 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,70 +75,22 @@ void	redirect_input_file(t_data *data, t_chunk *chunk)
 		ft_free((void **) &chunk->heredoc_pipe_arr);
 }
 
-// V OK mais trop long
-/* void	redirect_input_file(t_data *data, t_chunk *chunk)
-{
-	int	i;
-	int	lst_redir;
-	int	herdoc_i;
-
-	if (!data || !chunk || !chunk->input_redir)
-		return ;
-	i = 0;
-	herdoc_i = 0;
-	lst_redir = -1;
-	while (chunk->input_redir[lst_redir + 1])
-		lst_redir++;
-	while (chunk->input_redir[i])
-	{
-		if (ft_strcmp(chunk->input_redir[i], "<") == 0)
-		{
-			chunk->input_file_fd[i] = open(chunk->input_redir_file[i],
-				O_RDONLY);
-			if (chunk->input_file_fd[i] < 0)
-			{
-				chunk->chunk_exec_return_status_code = errno;
-				printf("minishell: %s: %s\n", chunk->input_redir_file[i],
-					strerror(errno)); // @optimize
-			}
-			chunk->input_file_open[i] = true;
-			if (i == lst_redir && dup2(chunk->input_file_fd[i],
-					STDIN_FILENO) == -1)
-				strerror(errno);
-			if (chunk->input_file_fd[i] >= 0 &&
-					close(chunk->input_file_fd[i]) == 0)
-				chunk->input_file_open[i] = false;
-		}
-		if (ft_strcmp(chunk->input_redir[i], "<<") == 0)
-		{
-			if (i == lst_redir && dup2(chunk->heredoc_pipe_arr[herdoc_i][0],
-					STDIN_FILENO) == -1)
-				strerror(errno);
-			close(chunk->heredoc_pipe_arr[herdoc_i][0]);
-			herdoc_i++;
-		}
-		i++;
-	}
-	if (chunk->heredoc_pipe_arr_malloced)
-		ft_free((void **) &chunk->heredoc_pipe_arr);
-} */
-
 void	redirect_to_output_file(t_data *data, t_chunk *chunk)
 {
 	int	lst_file;
 
 	if (!data || chunk->redir_file_count == 0)
 		return ;
+	if (check_r_file_rights(chunk) == 1)
+		return ;
 	lst_file = chunk->redir_file_count - 1;
 	chunk->file_fd[lst_file] = open_redir_file(chunk, lst_file);
-	chunk->file_open[lst_file] = true;
 	if (chunk->file_fd[lst_file] < 0)
 	{
-		chunk->chunk_exec_return_status_code = errno;
-		printf("minishell: %s: %s\n", \
-			chunk->redir_files[lst_file], strerror(errno));
+		ft_putstr_fd("Error open(), last file\n", STDERR_FILENO);
 		return ;
 	}
+	chunk->file_open[lst_file] = true;
 	if (dup2(chunk->file_fd[lst_file], STDOUT_FILENO) == -1)
 		perror("dup2");
 	close(chunk->file_fd[lst_file]);

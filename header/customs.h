@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 17:26:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/07/12 15:57:33 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/14 10:28:24 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ typedef struct s_chunk
 	int			redir_count;
 	char		**redir;// list of redir in a chunk ex: > >> >
 	int			redir_file_count;
-	char		**redir_files;// ex:test ; test1; test2
+	char		**redir_files;// Names ex:test ; test1; test2
 	int			*file_fd;
 	bool		file_fd_malloced;
 	bool		*file_open;
@@ -199,6 +199,7 @@ int		init_input_files(t_data *data);
 void	redirect_input_file(t_data *data, t_chunk *chunk);
 void	redirect_to_output_file(t_data *data, t_chunk *chunk);
 	// files management
+int		check_r_file_rights(t_chunk *chunk);
 int		open_redir_file(t_chunk *chunk, int file);
 void	close_files(t_chunk *chunk);
 void	close_files_if_opened(int *fd_arr, bool *file_open, int len);

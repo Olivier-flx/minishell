@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+         #
+#    By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/14 18:09:50 by sarodrig          #+#    #+#              #
-#    Updated: 2025/07/13 21:28:36 by ofilloux         ###   ########.fr        #
+#    Updated: 2025/07/14 10:30:07 by ofilloux         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -103,7 +103,8 @@ FILES	=	./src/exec/files/init_input_files.c \
 			./src/exec/files/close_files.c \
 			./src/exec/files/open_files.c \
 			./src/exec/files/stdin_stdout.c \
-			./src/exec/files/redirects.c
+			./src/exec/files/redirects.c \
+			./src/exec/files/file_check_access.c
 
 UTILS	=	./utils/string/split_quoted.c \
 			./utils/string/split_quoted_utils.c \
@@ -206,5 +207,5 @@ re		:	fclean all
 
 test	:	$(NAME)
 			valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=yes \
-			--child-silent-after-fork=no --suppressions=readline.supp -s ./minishell
+			--child-silent-after-fork=yes --suppressions=readline.supp -s ./minishell
 

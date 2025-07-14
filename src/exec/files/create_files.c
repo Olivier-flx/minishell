@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 11:26:59 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/06/14 15:32:41 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/14 09:44:32 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,7 @@ static int	create_files(t_chunk *chunk)
 		if (chunk->file_fd[i] < 0)
 		{
 			chunk->file_open[i] = false;
-			return (close_files(chunk), perror("Error : file couldn't open"), \
-				EXIT_FAILURE);
+			return (close_files(chunk), EXIT_FAILURE);
 		}
 		chunk->file_open[i] = true;
 		i++;

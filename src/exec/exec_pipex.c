@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipex.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 17:55:52 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/07/13 21:28:27 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/14 09:58:04 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ void	process_invalide_cmd(t_data *data, t_exe *exe, int i)
 void	process_command_iteration(t_data *data, t_chunk *chunk, int i, \
 									int *valid_cmd_i)
 {
+	chunk->chunk_exec_return_status_code = 0;
 	listen_heredocs(data, chunk);
 	if (data->exe_nfo.cmd_is_valid_arr[i] == true /*|| status == OK*/)
 	{

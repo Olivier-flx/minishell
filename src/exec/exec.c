@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:30:25 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/07/13 21:29:40 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/14 09:28:46 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,10 @@ int	handle_sub_process_signal2(t_data *data, int status, bool *printed)
 	else
 	{
 		return ((status >> 8) & 0xFF);
-		//fprintf(stderr, "handle_sub_process_signal  cmd %i ,  data->exit_status %i",i, data->exit_status); // debug
 	}
 }
+//fprintf(stderr, "handle_sub_process_signal  cmd %i ,
+// data->exit_status %i",i, data->exit_status); // debug
 
 
 // static void	waiting_childs(t_data *data, t_exe *exe, int *pid_arr)
@@ -81,11 +82,11 @@ static void	waiting_childs(t_data *data, t_exe *exe, int *pid_arr)
 	printed = false;
 	while (i < exe->total_cmd_count) // @ti3
 	{
-			status = 0;
-			waitpid(pid_arr[i], &status, 0);
-			exit_code = handle_sub_process_signal2(data, status, &printed);
-			if (i + 1 == exe->total_cmd_count && exit_code >= 0)
-				final_exit_status = exit_code;
+		status = 0;
+		waitpid(pid_arr[i], &status, 0);
+		exit_code = handle_sub_process_signal2(data, status, &printed);
+		if (i + 1 == exe->total_cmd_count && exit_code >= 0)
+			final_exit_status = exit_code;
 		i++;
 	}
 	if (exit_code >= 0)
