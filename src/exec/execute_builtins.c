@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 16:04:38 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/07/14 09:58:52 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/14 12:52:14 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	execute_builtin_in_parent(t_data *data, t_exe *exe, \
 	save_stdin_stdout(&saved_stdin, &saved_stdout);
 	redirect_input_file(data, chunk);
 	redirect_to_output_file(data, chunk);
-	if (0 == chunk->chunk_exec_return_status_code) // ti4
+	if (0 == chunk->chunk_exec_return_status_code)
 		data->exit_status = pick_and_run_builtin(data, chunk->argv, false);
 	else
 		data->exit_status = chunk->chunk_exec_return_status_code;

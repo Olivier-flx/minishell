@@ -6,66 +6,12 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:30:25 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/07/14 09:28:46 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/14 12:56:13 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell.h"
 
-int	handle_sub_process_signal2(t_data *data, int status, bool *printed)
-{
-	int		sig;
-
-	(void) data;
-	if (!status)
-		return (-1);
-	if ((status & 0x7F) != 0)
-	{
-		sig = status & 0x7F;
-		if (sig == SIGQUIT)
-		{
-			if (!(*printed))
-			{
-				write(STDOUT_FILENO, "Quit (core dumped)\n", 20);
-				*printed = true;
-			}
-			return (128 + SIGQUIT);
-		}
-		else if (sig == SIGINT)
-			return (128 + SIGINT);
-		else
-			return (128 + sig);
-	}
-	else
-	{
-		return ((status >> 8) & 0xFF);
-	}
-}
-//fprintf(stderr, "handle_sub_process_signal  cmd %i ,
-// data->exit_status %i",i, data->exit_status); // debug
-
-
-// static void	waiting_childs(t_data *data, t_exe *exe, int *pid_arr)
-// {
-// 	int		i;
-// 	int		status;
-// 	bool	printed;
-
-// 	if (!data)
-// 		return ;
-// 	i = 0;
-// 	printed = false;
-// 	while (i < exe->valid_cmd_count)
-// 	{
-// 		if (exe->cmd_is_valid_arr[i])
-// 		{
-// 			status = 0;
-// 			waitpid(pid_arr[i], &status, 0);
-// 			handle_sub_process_signal(data, status, &printed);
-// 		}
-// 		i++;
-// 	}
-// }
 static void	waiting_childs(t_data *data, t_exe *exe, int *pid_arr)
 {
 	int		i;
@@ -80,11 +26,11 @@ static void	waiting_childs(t_data *data, t_exe *exe, int *pid_arr)
 	exit_code = 0;
 	i = 0;
 	printed = false;
-	while (i < exe->total_cmd_count) // @ti3
+	while (i < exe->total_cmd_count)
 	{
 		status = 0;
 		waitpid(pid_arr[i], &status, 0);
-		exit_code = handle_sub_process_signal2(data, status, &printed);
+		exit_code = handle_sub_process_signal(status, &printed);
 		if (i + 1 == exe->total_cmd_count && exit_code >= 0)
 			final_exit_status = exit_code;
 		i++;
@@ -100,11 +46,11 @@ void	init_pid_arr(t_data *data, t_exe *exe)
 	if (!data)
 		return ;
 	i = 0;
-	exe->pid_arr = malloc(exe->total_cmd_count * sizeof(int)); // @ti3
+	exe->pid_arr = malloc(exe->total_cmd_count * sizeof(int));
 	if (!exe->pid_arr)
 		strerror(errno);
 	exe->pid_arr_malloced = true;
-	while (i < exe->total_cmd_count) // @ti3
+	while (i < exe->total_cmd_count)
 		exe->pid_arr[i++] = -2;
 }
 // void	init_pid_arr(t_data *data, t_exe *exe)

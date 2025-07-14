@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 17:55:52 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/07/14 11:56:19 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/14 12:36:01 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	run_pipex(t_data *data, t_exe *exe, t_chunk *chunk, int i)
 		perror("dup2 redir");
 	if (i < exe->total_cmd_count - 1)
 		close(exe->pipe_arr[i][1]);
-	if (0 != execve_builtin_in_child(data, exe, chunk, i) && \
+	if (0 != execve_builtin_in_child(data, exe, chunk, i) && chunk->argv && \
 			0 == chunk->chunk_exec_return_status_code)
 		execve(chunk->exec, chunk->argv, ft_env_to_array(data->env_list));
 	else
@@ -99,28 +99,24 @@ void	process_command_iteration(t_data *data, t_chunk *chunk, int i, \
 {
 	chunk->chunk_exec_return_status_code = 0;
 	listen_heredocs(data, chunk);
-	if (data->exe_nfo.cmd_is_valid_arr[i] == true /*|| status == OK*/)
+	if (data->exe_nfo.cmd_is_valid_arr[i] == true)
 	{
 		if (run_builtins(data, &data->exe_nfo, chunk, i) != 1)
 		{
-			data->exe_nfo.pid_arr[i] = fork(); // @ti3
+			data->exe_nfo.pid_arr[i] = fork();
 			if (data->exe_nfo.pid_arr[i] == -1)
 				perror("Fork");
 			if (data->exe_nfo.last_status_code == 0)
 				data->exit_status = 0;
-			if (data->exe_nfo.pid_arr[i] == 0)// @ti3
+			if (data->exe_nfo.pid_arr[i] == 0)
 			{
 				reset_signals_to_default();
 				run_pipex(data, &data->exe_nfo, chunk, i);
 			}
-			/*
-			if ( && or || then )
-				waitpid(pid_arr, &status, 0)
-			*/
 		}
 		(*valid_cmd_i)++;
 	}
-	else /*if (status == OK)*/
+	else
 		process_invalide_cmd(data, &data->exe_nfo, i);
 	close_heredocs_pipes(chunk);
 }

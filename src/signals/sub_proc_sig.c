@@ -6,7 +6,7 @@
 /*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 22:17:16 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/07/12 15:08:58 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/14 12:55:19 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,12 @@
  *
  * This function helps the shell reflect the child's termination reason.
  */
-void	handle_sub_process_signal(t_data *data, int status, bool *printed)
+int	handle_sub_process_signal(int status, bool *printed)
 {
 	int		sig;
 
 	if (!status)
-		return ;
+		return (-1);
 	if ((status & 0x7F) != 0)
 	{
 		sig = status & 0x7F;
@@ -55,16 +55,17 @@ void	handle_sub_process_signal(t_data *data, int status, bool *printed)
 				write(STDOUT_FILENO, "Quit (core dumped)\n", 20);
 				*printed = true;
 			}
-			data->exit_status = 128 + SIGQUIT;
+			return (128 + SIGQUIT);
 		}
 		else if (sig == SIGINT)
-			data->exit_status = 128 + SIGINT;
+			return (128 + SIGINT);
 		else
-			data->exit_status = 128 + sig;
+			return (128 + sig);
 	}
 	else
 	{
-		data->exit_status = (status >> 8) & 0xFF;
-		fprintf(stderr, "handle_sub_process_signal   data->exit_status %i", data->exit_status); // debug
+		return ((status >> 8) & 0xFF);
 	}
 }
+//fprintf(stderr, "handle_sub_process_signal  cmd %i ,
+// data->exit_status %i",i, data->exit_status); // debug
