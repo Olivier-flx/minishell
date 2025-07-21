@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipex.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ofilloux <ofilloux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ofilloux <ofilloux@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 17:55:52 by ofilloux          #+#    #+#             */
-/*   Updated: 2025/07/14 21:40:06 by ofilloux         ###   ########.fr       */
+/*   Updated: 2025/07/21 15:46:18 by ofilloux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void	process_command_iteration(t_data *data, t_chunk *chunk, int i, \
 			data->exe_nfo.pid_arr[i] = fork();
 			if (data->exe_nfo.pid_arr[i] == -1)
 				perror("Fork");
-			if (ft_strcmp(chunk->argv[0], "exit") == 0 \
+			if (chunk->argv && ft_strcmp(chunk->argv[0], "exit") == 0 \
 			&& data->exe_nfo.last_status_code == 0)
 				data->exit_status = 0;
 			if (data->exe_nfo.pid_arr[i] == 0)
